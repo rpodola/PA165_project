@@ -8,6 +8,12 @@
   <name>CaloriesRecordingSystem</name>
   <url>http://maven.apache.org</url>
   
+  <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<maven.compiler.source>1.8</maven.compiler.source>
+	<maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -21,7 +27,14 @@
 		<artifactId>hibernate-core</artifactId>
 		<version>5.2.11.Final</version>
 	</dependency>
-	
+	<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+	<dependency>
+		<groupId>javax.validation</groupId>
+		<artifactId>validation-api</artifactId>
+		<version>1.0.0.GA</version>
+	</dependency>
+
+
 	<!-- For embedded usage -->
 	<dependency>
 		<groupId>org.apache.derby</groupId>

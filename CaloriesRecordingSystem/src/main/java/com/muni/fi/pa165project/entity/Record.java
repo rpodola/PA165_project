@@ -80,5 +80,4 @@ public class Record {
     public void setDuration(int duration) {
         this.duration = duration;
     }
-
 }
