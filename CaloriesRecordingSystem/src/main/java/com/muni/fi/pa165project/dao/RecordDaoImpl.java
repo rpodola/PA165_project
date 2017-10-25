@@ -8,6 +8,7 @@ package com.muni.fi.pa165project.dao;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.enums.Difficulty;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -48,7 +49,7 @@ public class RecordDaoImpl implements RecordDao {
 			Record actual = this.findById(record.getId());
 
 			if (actual != null) {
-				this.em.remove(record);
+				this.em.remove(actual);
 			}	
 		}
 	}
@@ -56,24 +57,25 @@ public class RecordDaoImpl implements RecordDao {
 	@Override
 	public List<Record> findAll() {
 		return this.em.createQuery("SELECT r from Record r", 
-				Record.class).getResultList();
+				Record.class)
+				.getResultList();
 	}
 	
 	@Override
 	public List<Record> findByTime(LocalDate time) {
 		return this.em.createQuery("SELECT r from Record r WHERE r.time=:time",
 				Record.class)
-				.setParameter("time", time).getResultList();
-	}
-	
-	@Override
-	public List<Record> findByTime(LocalDate from, LocalDate to) {
-		return this.em.createQuery("SELECT r from Record r WHERE r.time BETWEEN :from AND :to",
-				Record.class)
-				.setParameter("from", from)
-				.setParameter("to1", to)
+				.setParameter("time", time)
 				.getResultList();
 	}
 	
+	@Override
+	public List<Record> findByTime(LocalDateTime from, LocalDateTime to) {
+		return this.em.createQuery("SELECT r from Record r WHERE r.time BETWEEN :from AND :to",
+				Record.class)
+				.setParameter("from", from)
+				.setParameter("to", to)
+				.getResultList();
+	}
 	
 }
