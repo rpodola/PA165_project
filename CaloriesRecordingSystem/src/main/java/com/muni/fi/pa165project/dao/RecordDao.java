@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.dao;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.muni.fi.pa165project.entity.Record;
@@ -45,13 +46,9 @@ public interface RecordDao {
 	List<Record> findAll();
 	
 	List<Record> findByTime(LocalDate time);
+	
+	List<Record> findByTime(LocalDateTime from, LocalDateTime to) ;
 		
-	List<Record> findByDistance(int distance);
-	
-	List<Record> findByDifficulty(Difficulty difficulty);
-	
-	List<Record> findByBurnedCalories(int burnedCalories);
-	
 	
 	
 }
