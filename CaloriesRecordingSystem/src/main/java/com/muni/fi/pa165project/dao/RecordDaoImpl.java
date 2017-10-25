@@ -1,0 +1,72 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.muni.fi.pa165project.dao;
+
+import com.muni.fi.pa165project.entity.Record;
+import com.muni.fi.pa165project.enums.Difficulty;
+import java.time.LocalDate;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+
+/**
+ *
+ * @author Radoslav Karlik
+ */
+@Repository
+public class RecordDaoImpl {
+	
+	@PersistenceContext
+	private EntityManager em;
+	
+	public Record findById(long id) {
+		return this.em.find(Record.class, id);
+	}
+	
+	public void create(Record record) {
+		this.em.persist(record);
+	}
+	
+	public void update(Record record) {
+		this.em.merge(record);
+	}
+
+	public void delete(Record record) {
+		boolean isManaged = this.em.contains(record);
+		
+		if (isManaged) {
+			this.em.remove(record);
+		} else {
+			Record actual = this.findById(record.getId());
+
+			if (actual != null) {
+				this.em.remove(record);
+			}	
+		}
+	}
+	
+	public List<Record> findAll() {
+		return this.em.createQuery("SELECT r from Record r", 
+				Record.class).getResultList();
+	}
+	
+	public List<Record> findByTime(LocalDate time) {
+		return this.em.createQuery("SELECT r from Record r WHERE r.time=:time",
+				Record.class)
+				.setParameter("time", time).getResultList();
+	}
+	
+	public List<Record> findByTime(LocalDate from, LocalDate to) {
+		return this.em.createQuery("SELECT r from Record r WHERE r.time BETWEEN :from AND :to",
+				Record.class)
+				.setParameter("from", from)
+				.setParameter("to1", to)
+				.getResultList();
+	}
+	
+	
+}
