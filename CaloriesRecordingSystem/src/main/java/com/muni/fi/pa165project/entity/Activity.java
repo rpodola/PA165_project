@@ -1,9 +1,14 @@
 package com.muni.fi.pa165project.entity;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,18 +29,20 @@ public class Activity implements Serializable {
 	private String name;
 		
 	private String description;
-
-        @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "activity")
+	
+	
+	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "activity")
 	private List<BurnedCalories> burnedCaloriesRecords = new ArrayList<>();
 
-        public List<BurnedCalories> getBurnedCaloriesRecords() {
-            return burnedCaloriesRecords;
-        }
+	public List<BurnedCalories> getBurnedCaloriesRecords() {
+		return burnedCaloriesRecords;
+	}
 
-        public void setBurnedCaloriesRecords(List<BurnedCalories> burnedCaloriesRecords) {
-            this.burnedCaloriesRecords = burnedCaloriesRecords;
-        }
-        
+	public void setBurnedCaloriesRecords(List<BurnedCalories> burnedCaloriesRecords) {
+		this.burnedCaloriesRecords = burnedCaloriesRecords;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -59,4 +66,29 @@ public class Activity implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 17;
+		int hash = 1;
+		hash = prime * hash + (this.id != null ? this.id.hashCode() : 0);
+		return hash;
+	}
+	
+	@Override
+    public boolean equals(Object obj) {
+            if (this == obj)
+                    return true;
+            if (obj == null)
+                    return false;
+            if (!(obj instanceof Activity))
+                    return false;
+            Activity other = (Activity) obj;
+            if (name != other.name)
+            	return false;
+            if (description != other.description)
+            	return false;
+            return true;
+            }
+
 }
