@@ -7,7 +7,7 @@ package com.muni.fi.pa165project.enums;
 
 /**
  *
- * @author xpodola
+ * @author Radim Podola
  */
 public enum Difficulty {
     EASY,

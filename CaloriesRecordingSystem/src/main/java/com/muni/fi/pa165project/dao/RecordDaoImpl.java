@@ -18,23 +18,27 @@ import org.springframework.stereotype.Repository;
  * @author Radoslav Karlik
  */
 @Repository
-public class RecordDaoImpl {
+public class RecordDaoImpl implements RecordDao {
 	
 	@PersistenceContext
 	private EntityManager em;
 	
+	@Override
 	public Record findById(long id) {
 		return this.em.find(Record.class, id);
 	}
 	
+	@Override
 	public void create(Record record) {
 		this.em.persist(record);
 	}
 	
+	@Override
 	public void update(Record record) {
 		this.em.merge(record);
 	}
 
+	@Override
 	public void delete(Record record) {
 		boolean isManaged = this.em.contains(record);
 		
@@ -49,17 +53,20 @@ public class RecordDaoImpl {
 		}
 	}
 	
+	@Override
 	public List<Record> findAll() {
 		return this.em.createQuery("SELECT r from Record r", 
 				Record.class).getResultList();
 	}
 	
+	@Override
 	public List<Record> findByTime(LocalDate time) {
 		return this.em.createQuery("SELECT r from Record r WHERE r.time=:time",
 				Record.class)
 				.setParameter("time", time).getResultList();
 	}
 	
+	@Override
 	public List<Record> findByTime(LocalDate from, LocalDate to) {
 		return this.em.createQuery("SELECT r from Record r WHERE r.time BETWEEN :from AND :to",
 				Record.class)
