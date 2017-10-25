@@ -7,13 +7,18 @@ package com.muni.fi.pa165project.entity;
 
 import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.enums.UserEnum;
+import com.muni.fi.pa165project.structures.UserSettings;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -32,15 +37,21 @@ public class User implements Serializable {
 	@NotNull
 	private String name;
 	
-	private int age;
+	private LocalDate birthDate;
 	
 	private double weight;
+	
+	private double height;
 	
 	private GenderEnum gender;
 
 	private UserEnum userRole;
-	
-	private List<Activity> activityRecords = new ArrayList<>();
+
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
+	private List<Record> activityRecords = new ArrayList<>();
+
+	@Embedded
+	private UserSettings settings;
 	
 	public Long getId() {
 		return id;
@@ -58,12 +69,12 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public int getAge() {
-		return age;
+	public LocalDate getBirthDate() {
+		return birthDate;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public double getWeight() {
@@ -74,6 +85,14 @@ public class User implements Serializable {
 		this.weight = weight;
 	}
 
+	public double getHeight() {
+		return height;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
+	
 	public GenderEnum getGender() {
 		return gender;
 	}
@@ -90,20 +109,26 @@ public class User implements Serializable {
 		this.userRole = userRole;
 	}
 
-	public List<Activity> getActivityRecords() {
+	public List<Record> getActivityRecords() {
 		return activityRecords;
 	}
 
-	public void setActivityRecords(List<Activity> activityRecords) {
+	public void setActivityRecords(List<Record> activityRecords) {
 		this.activityRecords = activityRecords;
 	}
 
-	
+	public UserSettings getSettings() {
+		return settings;
+	}
+
+	public void setSettings(UserSettings settings) {
+		this.settings = settings;
+	}
 	
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
+		hash = 97 * hash + this.settings.getUsername().hashCode();
 		return hash;
 	}
 
@@ -119,10 +144,8 @@ public class User implements Serializable {
 			return false;
 		}
 		final User other = (User) obj;
-		if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-			return false;
-		}
-		return true;
+		
+		return this.settings.getUsername().equals(other.settings.getUsername());
 	}
 	
 }
