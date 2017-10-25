@@ -6,8 +6,10 @@
 package com.muni.fi.pa165project.structures;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -16,13 +18,13 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class UserSettings implements Serializable {
 	
-	@NotNull
+	@Column(nullable = false, unique = true)
 	private String username;
 	
-	@NotNull
+	@Column(nullable = false)
 	private String password;
-	
-	@NotNull
+
+	@Email
 	private String email;
 
 	public String getUsername() {

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -38,7 +40,7 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
+	@Column(nullable = false)
 	private String name;
 	
 	private LocalDate birthDate;
@@ -53,11 +55,12 @@ public class User implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private UserEnum userRole;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true)
 	private List<Record> activityRecords = new ArrayList<>();
 
+	@Valid
 	@Embedded
-	private UserSettings settings;
+	private UserSettings settings = new UserSettings();
 	
 	public Long getId() {
 		return id;
@@ -129,6 +132,11 @@ public class User implements Serializable {
 
 	public void setSettings(UserSettings settings) {
 		this.settings = settings;
+	}
+	
+	public void addRecord(Record record) {
+		this.activityRecords.add(record);
+		record.setUser(this);
 	}
 	
 	@Override
