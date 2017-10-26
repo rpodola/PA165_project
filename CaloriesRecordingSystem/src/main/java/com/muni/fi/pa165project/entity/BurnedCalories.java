@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
 
 /**
  *
@@ -22,18 +22,18 @@ public class BurnedCalories implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
     
-    @NotNull
+    @Column(nullable = false)
     @ManyToOne(optional=false)
     private Activity activity;
     
-    @NotNull
+    @Column(nullable = false)
     private int weightRange;
     
-    @NotNull
+    @Column(nullable = false)
     private int amount;
 
     public Long getId() {

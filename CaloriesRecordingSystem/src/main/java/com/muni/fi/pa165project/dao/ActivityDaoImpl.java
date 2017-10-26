@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
+import com.muni.fi.pa165project.enums.Difficulty;
 
 /**
  *
@@ -46,11 +47,15 @@ public class ActivityDaoImpl implements ActivityDao{
     @Override
     public List<Activity> findByName(String text) {
         TypedQuery<Activity> query = em.createQuery(
-                "SELECT a FROM Activity a WHERE a.name LIKE :text",
+                "SELECT a FROM Activity a WHERE a.name LIKE %:text%",
                 Activity.class);
-        query.setParameter("text", "%"+text+"%");
+        query.setParameter("text", text);
         
         return query.getResultList();
     }
     
+    @Override
+    List<Activity> findByDifficulty(Difficulty difficulty){
+        return null;
+    }
 }

@@ -52,10 +52,4 @@ public interface UserDao {
      * @return list of users
      */
     List<User> findAll();
-    
-    /**
-     * Deletes all records of user
-     * @param user
-     */
-    void DeleteRecords(User user);
 }
