@@ -68,16 +68,12 @@ public class ActivityDaoImpl implements ActivityDao{
     
     @Override
     public List<Activity> findByDifficulty(Difficulty difficulty){
-        List<Activity> foundActivities = new ArrayList<>();
-
-        for (Activity a : this.findAll()){
-            for (BurnedCalories b : a.getBurnedCaloriesRecords())
-                if (b.getDifficulty().equals(difficulty)){
-                    foundActivities.add(a);
-                    break;
-                }
-        }
+        TypedQuery<Activity> query;
+        query = this.em.createQuery("SELECT a FROM Activity a "
+                + "JOIN a.burnedCaloriesRecords b "
+                + "WHERE b.difficulty = :diff", Activity.class);
+        query.setParameter("diff", difficulty);
         
-        return foundActivities;
+        return query.getResultList();
     }
 }
