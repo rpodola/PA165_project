@@ -26,7 +26,6 @@ public class BurnedCalories implements Serializable{
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
     
-    @Column(nullable = false)
     @ManyToOne(optional=false)
     private Activity activity;
     
