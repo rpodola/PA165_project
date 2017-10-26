@@ -10,12 +10,11 @@ import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.structures.UserSettings;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,8 +24,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -56,7 +53,7 @@ public class User implements Serializable {
 	private UserEnum userRole;
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true)
-	private List<Record> activityRecords = new ArrayList<>();
+	private Set<Record> activityRecords = new HashSet<>();
 
 	@Valid
 	@Embedded
@@ -118,11 +115,11 @@ public class User implements Serializable {
 		this.userRole = userRole;
 	}
 
-	public List<Record> getActivityRecords() {
+	public Set<Record> getActivityRecords() {
 		return activityRecords;
 	}
 
-	public void setActivityRecords(List<Record> activityRecords) {
+	public void setActivityRecords(Set<Record> activityRecords) {
 		this.activityRecords = activityRecords;
 	}
 

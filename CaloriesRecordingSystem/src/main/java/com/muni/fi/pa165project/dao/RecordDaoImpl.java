@@ -6,7 +6,6 @@
 package com.muni.fi.pa165project.dao;
 
 import com.muni.fi.pa165project.entity.Record;
-import com.muni.fi.pa165project.enums.Difficulty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
