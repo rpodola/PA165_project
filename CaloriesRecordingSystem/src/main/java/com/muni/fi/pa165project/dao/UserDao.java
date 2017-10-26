@@ -1,7 +1,6 @@
 package com.muni.fi.pa165project.dao;
 
 import com.muni.fi.pa165project.entity.User;
-import com.muni.fi.pa165project.structures.UserSettings;
 import java.util.List;
 
 /**
@@ -10,11 +9,35 @@ import java.util.List;
  */
 public interface UserDao {
     /**
+     * Inserts user into database
+     * @param user 
+     */
+    void create(User user);
+
+    /**
+     * Updates user in database
+     * @param user 
+     */
+    void update(User user);
+
+    /**
+     * Deletes user from database
+     * @param user 
+     */
+    void delete(User user);    
+    
+    /**
      * Finds user by id
      * @param id
      * @return found user
      */
     User findById(long id);
+
+    /**
+     * Returns all users
+     * @return list of users
+     */
+    List<User> findAll();
     
     /**
      * Finds user by username
@@ -22,34 +45,4 @@ public interface UserDao {
      * @return found user
      */
     User findByUserName(String username);
-    
-    /**
-     * Insert user into database
-     * @param user 
-     */
-    void create(User user);
-
-    /**
-     * Update user in database
-     * @param user 
-     */
-    void update(User user);
-
-    /**
-     * Delete activity from database
-     * @param user 
-     */
-    void delete(User user);    
-    
-    /**
-     * Update user's setting in database
-     * @param settings 
-     */
-    void updateSettings(UserSettings settings);
-    
-    /**
-     * Returns all users
-     * @return list of users
-     */
-    List<User> findAll();
 }

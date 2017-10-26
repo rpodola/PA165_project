@@ -1,12 +1,14 @@
 package com.muni.fi.pa165project.dao;
 
 import com.muni.fi.pa165project.entity.Activity;
-import java.util.List;
+import com.muni.fi.pa165project.entity.BurnedCalories;
+import com.muni.fi.pa165project.enums.Difficulty;
+import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import org.springframework.stereotype.Repository;
-import com.muni.fi.pa165project.enums.Difficulty;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,11 +19,6 @@ public class ActivityDaoImpl implements ActivityDao{
 
     @PersistenceContext
     private EntityManager em;
-    
-    @Override
-    public Activity findById(long id) {
-        return this.em.find(Activity.class, id);
-    }
 
     @Override
     public void create(Activity activity) {
@@ -35,7 +32,22 @@ public class ActivityDaoImpl implements ActivityDao{
 
     @Override
     public void delete(Activity activity) {
-        this.em.remove(activity);
+        boolean isManaged = this.em.contains(activity);
+        
+        if (isManaged) {
+            this.em.remove(activity);
+        } else {
+            Activity actual = this.findById(activity.getId());
+            
+            if (actual != null) {
+                this.em.remove(actual);
+            }	
+        }
+    }
+
+    @Override
+    public Activity findById(long id) {
+        return this.em.find(Activity.class, id);
     }
 
     @Override
@@ -46,16 +58,26 @@ public class ActivityDaoImpl implements ActivityDao{
 
     @Override
     public List<Activity> findByName(String text) {
-        TypedQuery<Activity> query = em.createQuery(
-                "SELECT a FROM Activity a WHERE a.name LIKE %:text%",
-                Activity.class);
-        query.setParameter("text", text);
+        TypedQuery<Activity> query;
+        query = em.createQuery("SELECT a FROM Activity a "
+                + "WHERE a.name LIKE :text", Activity.class);
+        query.setParameter("text", "%" + text + "%");
         
         return query.getResultList();
     }
     
     @Override
-    List<Activity> findByDifficulty(Difficulty difficulty){
-        return null;
+    public List<Activity> findByDifficulty(Difficulty difficulty){
+        List<Activity> foundActivities = new ArrayList<>();
+
+        for (Activity a : this.findAll()){
+            for (BurnedCalories b : a.getBurnedCaloriesRecords())
+                if (b.getDifficulty().equals(difficulty)){
+                    foundActivities.add(a);
+                    break;
+                }
+        }
+        
+        return foundActivities;
     }
 }
