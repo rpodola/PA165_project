@@ -2,7 +2,10 @@ package com.muni.fi.pa165project.dao;
 
 import java.util.List;
 
-import com.muni.fi.pa165project.entity.Activity;
+import com.muni.fi.pa165project.entity.BurnedCalories;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
 
 /**
 *
