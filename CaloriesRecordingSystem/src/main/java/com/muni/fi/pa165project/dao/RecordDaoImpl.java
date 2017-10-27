@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.muni.fi.pa165project.dao;
 
 import com.muni.fi.pa165project.entity.Record;
@@ -62,10 +57,7 @@ public class RecordDaoImpl implements RecordDao {
 	
 	@Override
 	public List<Record> findByTime(LocalDate time) {
-		return this.em.createQuery("SELECT r from Record r WHERE r.time=:time",
-				Record.class)
-				.setParameter("time", time)
-				.getResultList();
+	    return this.findByTime(time.atStartOfDay(), time.atTime(23, 59, 59, 0));
 	}
 	
 	@Override

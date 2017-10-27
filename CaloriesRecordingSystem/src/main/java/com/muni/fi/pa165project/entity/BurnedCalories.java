@@ -8,31 +8,32 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Column;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Radim Podola
  */
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "weightRange", "activity_id" }) })
 public class BurnedCalories implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
     
     @ManyToOne(optional=false)
+    @JoinColumn(name = "activity_id")
     private Activity activity;
     
-    @Column(nullable = false)
     private int weightRange;
     
-    @Column(nullable = false)
     private int amount;
 
     public Long getId() {
