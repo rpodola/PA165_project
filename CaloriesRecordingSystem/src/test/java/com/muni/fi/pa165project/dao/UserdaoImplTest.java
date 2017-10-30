@@ -3,8 +3,6 @@ package com.muni.fi.pa165project.dao;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.transaction.Transactional;
 
 import org.junit.Assert;
@@ -17,10 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.muni.fi.pa165project.config.TestConfig;
-import com.muni.fi.pa165project.entity.Activity;
-import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
-import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.structures.LoginDetails;
@@ -32,48 +27,8 @@ public class UserdaoImplTest {
 	@Autowired
 	private UserDao userDao;
 
-/*	@Autowired
-	private RecordDao recordDao;
-
-	@Autowired
-	private ActivityDao activityDao;
-*/
-
 	private User user;
-/*
-	private Record record;
 
-	private Activity activity;
-*/
-
-	@Enumerated(EnumType.STRING)
-	private GenderEnum gender;
-
-	@Enumerated(EnumType.STRING)
-	private UserEnum userRole;
-
-
-	@Enumerated(EnumType.STRING)
-	private Category categoryEnum;
-
-	/*
-	@Before
-	public void initActivity() {
-		this.activity = new Activity();
-		this.activity.setName("Swimming");
-		this.activity.setDescription("indoor pool, 25m");
-		this.activity.setCategory(Category.SWIMMING);
-	}
-
-	@Before
-	public void initRecord() {
-		this.record = new Record();
-		this.record.setAtTime(LocalDateTime.now());
-		this.record.setActivity(this.activity);
-		this.record.setUser(this.user);
-		this.record.setDistance(100);
-	}
-	 */
 	@Before
 	public void initUser() {
 		this.user = new User();
