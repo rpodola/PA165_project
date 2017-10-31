@@ -8,8 +8,8 @@ package com.muni.fi.pa165project.structures;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *
@@ -19,12 +19,15 @@ import org.hibernate.validator.constraints.Email;
 public class LoginDetails implements Serializable {
 	
 	@Column(nullable = false, unique = true)
+	@Length(min = 3, max = 255)
 	private String username;
 	
 	@Column(nullable = false)
+	@Length(min = 5, max = 63)
 	private String password;
 
 	@Email
+	@Column(nullable = false, unique = true)
 	private String email;
 
 	public String getUsername() {

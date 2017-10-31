@@ -24,6 +24,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *
@@ -38,12 +40,15 @@ public class User implements Serializable {
 	private Long id;
 	
 	@Column(nullable = false)
+	@Length(min = 1, max = 255)
 	private String name;
 	
 	private LocalDate birthDate;
 	
+	@Min(1)
 	private double weight;
 	
+	@Min(1)
 	private double height;
 	
 	@Enumerated(EnumType.STRING)
