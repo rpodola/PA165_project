@@ -44,7 +44,7 @@ public interface RecordDao {
 	 */
 	List<Record> findAll();
 	
-	List<Record> findByTime(LocalDate time);
+	List<Record> findByDate(LocalDate date);
 	
 	List<Record> findByTime(LocalDateTime from, LocalDateTime to) ;
 		

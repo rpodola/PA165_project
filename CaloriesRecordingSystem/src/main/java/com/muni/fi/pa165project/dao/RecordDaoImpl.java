@@ -56,8 +56,8 @@ public class RecordDaoImpl implements RecordDao {
 	}
 	
 	@Override
-	public List<Record> findByTime(LocalDate time) {
-	    return this.findByTime(time.atStartOfDay(), time.atTime(23, 59, 59, 0));
+	public List<Record> findByDate(LocalDate date) {
+	    return this.findByTime(date.atStartOfDay(), date.atTime(23, 59, 59, 0));
 	}
 	
 	@Override
