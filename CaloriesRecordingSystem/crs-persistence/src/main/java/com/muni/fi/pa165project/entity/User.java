@@ -8,6 +8,7 @@ package com.muni.fi.pa165project.entity;
 import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.structures.LoginDetails;
+import com.muni.fi.pa165project.structures.TrackingSettings;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -63,6 +64,9 @@ public class User implements Serializable {
 	@Valid
 	@Embedded
 	private LoginDetails loginDetails = new LoginDetails();
+	
+	@Embedded
+	private TrackingSettings trackingSettings = new TrackingSettings();
 	
 	public Long getId() {
 		return id;
@@ -134,6 +138,14 @@ public class User implements Serializable {
 
 	public void setLoginDetails(LoginDetails loginDetails) {
 		this.loginDetails = loginDetails;
+	}
+
+	public TrackingSettings getTrackingSettings() {
+		return trackingSettings;
+	}
+
+	public void setTrackingSettings(TrackingSettings trackingSettings) {
+		this.trackingSettings = trackingSettings;
 	}
 	
 	public void addRecord(Record record) {

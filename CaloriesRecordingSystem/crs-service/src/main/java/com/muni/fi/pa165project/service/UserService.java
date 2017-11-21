@@ -9,7 +9,8 @@ import com.muni.fi.pa165project.entity.User;
 
 /**
  *
- * @author Radoslav Karlik, Lukáš Císar
+ * @author Radoslav Karlik
+ * @author Lukáš Císar
  */
 public interface UserService {
 	
@@ -20,5 +21,7 @@ public interface UserService {
 	void createUser(User user);
 	
 	void deleteUser(User user);
+	
+	void updateUser(User user);
 	
 }
