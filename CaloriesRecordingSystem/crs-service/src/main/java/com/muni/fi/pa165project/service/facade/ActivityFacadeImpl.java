@@ -14,6 +14,7 @@ import com.muni.fi.pa165project.entity.BurnedCalories;
 import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.service.ActivityService;
+import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -30,6 +31,9 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 	
 	@Autowired
 	private ActivityService activityService;
+	
+	@Autowired
+	private BurnedCaloriesService burnedCaloriesService;
 	
 	@Override
 	public void createActivity(ActivityDTO activityDTO) {
@@ -75,19 +79,23 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 		return activitiesDTO;
 	}
 
-        @Override
-        public void editActivity(ActivityDTO activityDTO) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+	@Override
+	public void editActivity(ActivityDTO activityDTO) {
+		Activity activity = super.map(activityDTO, Activity.class);
+		this.activityService.update(activity);
+	}
 
-        @Override
-        public void editBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+	@Override
+	public void editBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
+		BurnedCalories bc = super.map(burnedCaloriesDTO, BurnedCalories.class);
+		this.burnedCaloriesService.updateBurnedCalories(bc);
+	}
 
-        @Override
-        public ActivityDetailDTO getActivityDetail(Long id) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+	@Override
+	public ActivityDetailDTO getActivityDetail(Long id) {
+		Activity activity = this.activityService.findById(id);
+		ActivityDetailDTO detail = super.map(activity, ActivityDetailDTO.class);
+		return detail;
+	}
 	
 }
