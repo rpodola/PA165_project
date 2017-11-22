@@ -14,28 +14,34 @@ import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.UserService;
 import com.muni.fi.pa165project.structures.TrackingSettings;
 import java.util.List;
+import javax.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Radoslav Karlik
  */
+@Service
+@Transactional
 public class UserFacadeImpl extends FacadeBase implements UserFacade {
 
 	private UserService userService;
 
 	@Override
 	public void createUser(UserDTO userDto) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		User user = super.map(userDto, User.class);
+		this.userService.createUser(user);
 	}
 
 	@Override
 	public void updateUser(UserDTO userDto) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		User user = super.map(userDto, User.class);
+		this.userService.updateUser(user);
 	}
 
 	@Override
-	public void removeUser(long id) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public void removeUser(long userId) {	
+		this.userService.deleteUser(userId);
 	}
 	
 	@Override
