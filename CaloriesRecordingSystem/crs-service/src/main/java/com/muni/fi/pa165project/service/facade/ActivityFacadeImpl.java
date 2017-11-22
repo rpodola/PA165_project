@@ -11,16 +11,23 @@ import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.BurnedCalories;
+import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.service.ActivityService;
 import com.muni.fi.pa165project.service.BurnedCaloriesService;
+import com.muni.fi.pa165project.service.UserService;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.comparator.Comparators;
 /**
  *
  * @author Radoslav Karlik
@@ -34,6 +41,9 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 	
 	@Autowired
 	private BurnedCaloriesService burnedCaloriesService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Override
 	public void createActivity(ActivityDTO activityDTO) {
@@ -78,7 +88,7 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 		List<ActivityDTO> activitiesDTO = super.mapToList(categories, ActivityDTO.class);
 		return activitiesDTO;
 	}
-
+	
 	@Override
 	public void editActivity(ActivityDTO activityDTO) {
 		Activity activity = super.map(activityDTO, Activity.class);
@@ -96,6 +106,32 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 		Activity activity = this.activityService.findById(id);
 		ActivityDetailDTO detail = super.map(activity, ActivityDetailDTO.class);
 		return detail;
+	}
+
+	@Override
+	public List<ActivityDTO> getActivitiesSortedByBurnedCalories(long userId) {
+		User user  = this.userService.findById(userId);
+		double weight = user.getWeight();
+		
+		Map<Long, Integer> burnedCaloriesPerActivity = new HashMap<>();
+		
+		List<Activity> activities = this.activityService.getAllActivities()
+				.stream()
+				.filter(activity -> !activity.getBurnedCalories().isEmpty())
+				.collect(Collectors.toList());
+		
+		activities.forEach(activity -> burnedCaloriesPerActivity.put(activity.getId(), this.activityService.getBurnedCaloriesPerHour(activity, weight)));
+		
+		activities.sort((Activity a1, Activity a2) -> {
+				double burnedCalories1 = burnedCaloriesPerActivity.get(a1.getId());
+				double burnedCalories2 = burnedCaloriesPerActivity.get(a2.getId());
+
+				return Double.compare(burnedCalories1, burnedCalories2);
+			});
+		
+		List<ActivityDTO> sortedActivitiesDTO = super.mapToList(activities, ActivityDTO.class);
+		
+		return sortedActivitiesDTO;
 	}
 	
 }

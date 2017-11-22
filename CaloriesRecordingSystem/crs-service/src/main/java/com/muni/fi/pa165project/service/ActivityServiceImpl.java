@@ -1,4 +1,4 @@
-/*
+	/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -61,8 +61,12 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public int getBurnedCaloriesPerHour(long id, double weight) {
         Activity activity = this.findById(id);
-
-        Set<BurnedCalories> calories = new TreeSet<>((BurnedCalories c1, BurnedCalories c2) -> {
+		return this.getBurnedCaloriesPerHour(activity, weight);
+    }
+	
+	@Override
+	public int getBurnedCaloriesPerHour(Activity activity, double weight) {
+		Set<BurnedCalories> calories = new TreeSet<>((BurnedCalories c1, BurnedCalories c2) -> {
             int cal1 = c1.getUpperWeightBoundary();
             int cal2 = c2.getUpperWeightBoundary();
             return (cal1 > cal2 ? -1 : (cal1 == cal2 ? 0 : 1));
@@ -74,5 +78,6 @@ public class ActivityServiceImpl implements ActivityService {
                 return calory.getAmount();
         }
         return 0;
-    }
+	}
+	
 }

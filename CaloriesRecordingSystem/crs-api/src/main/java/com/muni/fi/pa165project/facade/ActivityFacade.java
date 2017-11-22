@@ -67,4 +67,12 @@ public interface ActivityFacade {
      * @return list of Activity objects
      */
     List<ActivityDTO> getActivities(ActivityFilterDTO activityFilter);
+	
+	/**
+	 * Get list of activities sorted by how much calories user would burn doing them
+	 * @param userId
+	 * @return 
+	 */
+	List<ActivityDTO> getActivitiesSortedByBurnedCalories(long userId);
+	
 }
