@@ -9,7 +9,11 @@ import com.muni.fi.pa165project.facade.TrackingFacade;
 import com.muni.fi.pa165project.service.ActivityService;
 import com.muni.fi.pa165project.service.RecordService;
 import com.muni.fi.pa165project.service.UserService;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Radoslav Karlik
  * @author Radim Podola
+ * @author Lukáš Císar
  */
 @Service
 @Transactional
@@ -86,18 +91,54 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
     }
 
     @Override
-    public List<RecordDTO> getAllRecords(long userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public  List<RecordDTO> getAllRecords(long userId) {
+    	 User user = super.map(this.userService.findById(userId), User.class);
+    	 Set<Record> recordsSet = user.getActivityRecords();
+    	 
+    	 List<RecordDTO> records = super.mapToList(recordsSet,RecordDTO.class);
+    	 
+    	 return records;
+    	 }
 
     @Override
     public List<RecordDTO> getLastNRecords(long userId, int count) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	 User user = super.map(this.userService.findById(userId), User.class);
+    	 Set<Record> recordsSet = user.getActivityRecords();
+    	 List<RecordDTO> records = super.mapToList(recordsSet,RecordDTO.class);
+    	 List<RecordDTO> nRecords = new ArrayList<RecordDTO>();
+    	 
+    	 for (int i=0; i<count; i++){
+    		 nRecords.add(i, records.get(i));
+    	 }
+    	 
+    	 return nRecords;
+    	 
     }
 
     @Override
     public List<RecordDTO> getFilteredRecords(long userId, RecordTimeFilterDTO timeFilter) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	List<RecordDTO> records = new ArrayList<RecordDTO>();
+    	List<RecordDTO> filteredRecords = new ArrayList<RecordDTO>();
+
+    	if (timeFilter.getDate() != null){
+    		records = 
+    				super.mapToList(this.recordService.getFilteredRecords(timeFilter.getDate()),
+    						RecordDTO.class);
+    	}
+
+    	if (timeFilter.getFrom() != null && timeFilter.getTo() != null){
+    		records = 
+    				super.mapToList(this.recordService.getFilteredRecords(timeFilter.getFrom(), timeFilter.getTo()),
+    						RecordDTO.class);
+    	}
+
+    	for(RecordDTO r : records){	
+    		if(userId == r.getUserId()){
+    			filteredRecords.add(r);
+    		}
+    	}
+
+    	return filteredRecords;
     }
 
     @Override
