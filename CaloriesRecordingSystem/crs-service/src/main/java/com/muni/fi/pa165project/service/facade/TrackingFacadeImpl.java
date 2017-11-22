@@ -44,25 +44,16 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
         Activity activity = this.activityService.findById(recordDto.getActivityId());
         User user = this.userService.findById(recordDto.getUserId());
 
-        double weight = user.getWeight();
-        record.setWeight(weight);
+        record.setWeight(user.getWeight());
         record.setActivity(activity);
         record.setUser(user);        
-        record.setBurnedCalories(calculateAmountOfCalories(record));
-        
+
         this.recordService.create(record);
     }
 
     @Override
     public void updateRecord(RecordDTO recordDto) {
-        
         Record record = super.map(recordDto, Record.class);
-        
-        Record old = this.recordService.getRecord(record.getId());
-        if (!record.getActivity().equals(old.getActivity())
-            || record.getDuration() != old.getDuration()){
-            record.setBurnedCalories(calculateAmountOfCalories(record));
-        }
         
         this.recordService.update(record);
     }
@@ -79,14 +70,6 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
         RecordDTO recordDto = super.map(this.recordService.getRecord(id), RecordDTO.class);
         
         return recordDto;
-    }
-    
-    private int calculateAmountOfCalories(Record record){
-        double weight = record.getUser().getWeight();
-        Long activityId = record.getActivity().getId();
-        
-        int amount = activityService.getBurnedCaloriesPerHour(activityId, weight);
-        return (int) amount * record.getDuration();
     }
 
     @Override

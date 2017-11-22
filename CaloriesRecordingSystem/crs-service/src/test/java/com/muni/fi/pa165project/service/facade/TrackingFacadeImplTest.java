@@ -88,6 +88,7 @@ public class TrackingFacadeImplTest {
         rcFac.createRecord(record);
         
         /*TODO: List<RecordDTO> records = rcFac.getAllRecords();
+        List<RecordDTO> records = rcFac.getAllRecords(user.getId());
         
         Assert.assertEquals(1, records.size());
         Assert.assertTrue(this.user.getId().equals(records.get(0).getUserId()));
@@ -147,6 +148,9 @@ public class TrackingFacadeImplTest {
         /* TODO
 List<RecordDTO> result = instance.getAllRecords();
         assertEquals(expResult, result);
+        //List<RecordDTO> expResult = null;
+        //List<RecordDTO> result = instance.getAllRecords();
+        //assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");*/
     }
