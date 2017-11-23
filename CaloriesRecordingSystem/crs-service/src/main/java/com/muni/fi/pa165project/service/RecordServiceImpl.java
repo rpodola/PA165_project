@@ -54,6 +54,11 @@ public class RecordServiceImpl implements RecordService {
     public List<Record> getAllRecordsOfUser(long userId) {
         return this.recordDao.getAllRecordsOfUserSortedFromNewest(userId);
     }
+	
+	@Override
+	public List<Record> getLastNRecordsOfUser(long userId, int count) {
+		return this.getAllRecordsOfUser(userId).subList(0, count);
+	}
 
     @Override
     public List<Record> getFilteredRecords(long userId, LocalDateTime from, LocalDateTime to) {
@@ -67,4 +72,5 @@ public class RecordServiceImpl implements RecordService {
         int amount = activityService.getBurnedCaloriesPerHour(activityId, weight);
         return (int) amount * record.getDuration();
     }
+
 }

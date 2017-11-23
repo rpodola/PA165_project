@@ -85,9 +85,10 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 
     @Override
     public List<RecordDTO> getLastNRecords(long userId, int count) {
-        List<RecordDTO> records = this.getAllRecords(userId);
-        
-		return records.subList(0, count);
+        List<Record> records = this.recordService.getLastNRecordsOfUser(userId, count);
+		List<RecordDTO> recordsDTO = super.mapToList(records,RecordDTO.class);
+		
+		return recordsDTO;
     }
 
     @Override
@@ -95,7 +96,8 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 		long userId = timeFilter.getUserId();
 		List<Record> filteredRecords = this.recordService.getFilteredRecords(userId, timeFilter.getFrom(), timeFilter.getTo());
 		List<RecordDTO> filteredRecordsDTO = super.mapToList(filteredRecords, RecordDTO.class);
-    	return filteredRecordsDTO;
+    	
+		return filteredRecordsDTO;
     }
 
     @Override
