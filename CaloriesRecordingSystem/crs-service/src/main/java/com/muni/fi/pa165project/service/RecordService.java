@@ -44,17 +44,17 @@ public interface RecordService {
     List<Record> getAllRecords();
     
     /**
-     * Get records at certain date
+     * Get User records at certain date
      * @param date date
      * @return list of records
      */
-    List<Record> getFilteredRecords(LocalDate date);
+    List<Record> getFilteredRecords(long userId, LocalDate date);
     
     /**
-     * Get records between certain times
+     * Get User records between certain times
      * @param from starting time
      * @param to ending time
      * @return list of records
      */
-    List<Record> getFilteredRecords(LocalDateTime from, LocalDateTime to);
+    List<Record> getFilteredRecords(long userId, LocalDateTime from, LocalDateTime to);
 }

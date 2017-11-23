@@ -58,7 +58,6 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
         
         Record record = super.map(recordDto, Record.class);
         
-        //TODO will this work?? Is ID in DTO known??
         Record old = this.recordService.getRecord(record.getId());
         if (!record.getActivity().equals(old.getActivity())
             || record.getDuration() != old.getDuration()){
@@ -116,26 +115,21 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
     }
 
     @Override
-    public List<RecordDTO> getFilteredRecords(long userId, RecordTimeFilterDTO timeFilter) {
+    public List<RecordDTO> getFilteredRecords(RecordTimeFilterDTO timeFilter) {
+		long userId = timeFilter.getUserId();
     	List<RecordDTO> records = new ArrayList<RecordDTO>();
     	List<RecordDTO> filteredRecords = new ArrayList<RecordDTO>();
 
     	if (timeFilter.getDate() != null){
     		records = 
-    				super.mapToList(this.recordService.getFilteredRecords(timeFilter.getDate()),
+    				super.mapToList(this.recordService.getFilteredRecords(userId, timeFilter.getDate()),
     						RecordDTO.class);
     	}
 
     	if (timeFilter.getFrom() != null && timeFilter.getTo() != null){
     		records = 
-    				super.mapToList(this.recordService.getFilteredRecords(timeFilter.getFrom(), timeFilter.getTo()),
+    				super.mapToList(this.recordService.getFilteredRecords(userId, timeFilter.getFrom(), timeFilter.getTo()),
     						RecordDTO.class);
-    	}
-
-    	for(RecordDTO r : records){	
-    		if(userId == r.getUserId()){
-    			filteredRecords.add(r);
-    		}
     	}
 
     	return filteredRecords;

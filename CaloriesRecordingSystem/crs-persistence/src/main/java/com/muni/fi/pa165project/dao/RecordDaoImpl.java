@@ -56,14 +56,10 @@ public class RecordDaoImpl implements RecordDao {
 	}
 	
 	@Override
-	public List<Record> findByDate(LocalDate date) {
-	    return this.findByTime(date.atStartOfDay(), date.atTime(23, 59, 59, 0));
-	}
-	
-	@Override
-	public List<Record> findByTime(LocalDateTime from, LocalDateTime to) {
-		return this.em.createQuery("SELECT r from Record r WHERE r.atTime BETWEEN :from AND :to",
+	public List<Record> findByTime(long userId, LocalDateTime from, LocalDateTime to) {
+		return this.em.createQuery("SELECT r from Record r WHERE r.user.id=:userId AND r.atTime BETWEEN :from AND :to",
 				Record.class)
+				.setParameter("userId", userId)
 				.setParameter("from", from)
 				.setParameter("to", to)
 				.getResultList();

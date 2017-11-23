@@ -177,6 +177,13 @@ public class RecordDaoImplTest {
         
     }
 
+	private LocalDateTime[] getDayTimeBoundaryFromDate(LocalDate date) {
+		return new LocalDateTime[] {
+			date.atStartOfDay(),
+			date.atTime(23, 59, 59, 0)
+		};
+	}
+	
     /**
      * Test of findByTime method, of class RecordDaoImpl.
      */
@@ -189,13 +196,13 @@ public class RecordDaoImplTest {
         usDao.create(user);
         rcDao.create(record);
 
-        LocalDate tomorrow = LocalDate.now().plusDays(1);
-        LocalDate yesterday = LocalDate.now().minusDays(1);
-        LocalDate today = LocalDate.now();
+        LocalDateTime[] tomorrow = this.getDayTimeBoundaryFromDate(LocalDate.now().plusDays(1));
+        LocalDateTime[] yesterday = this.getDayTimeBoundaryFromDate(LocalDate.now().minusDays(1));
+        LocalDateTime[] today = this.getDayTimeBoundaryFromDate(LocalDate.now());
         //any records with date of tomorrow should be in DB
-        Assert.assertTrue(rcDao.findByDate(tomorrow).isEmpty());
+        Assert.assertTrue(rcDao.findByTime(user.getId(), tomorrow[0], tomorrow[1]).isEmpty());
 
-        List<Record> allToday = rcDao.findByDate(today);
+        List<Record> allToday = rcDao.findByTime(user.getId(), today[0], today[1]);
         Assert.assertEquals(1, allToday.size());
         Assert.assertEquals(record, allToday.get(0));
 
@@ -207,7 +214,7 @@ public class RecordDaoImplTest {
         newRec.setUser(this.user);
         rcDao.create(newRec);
 
-        List<Record> allY = rcDao.findByDate(yesterday);
+        List<Record> allY = rcDao.findByTime(user.getId(), yesterday[0], yesterday[1]);
         Assert.assertEquals(1, allY.size());
         Assert.assertEquals(newRec, allY.get(0));
     }
@@ -229,10 +236,10 @@ public class RecordDaoImplTest {
         rcDao.create(record);
   
         //any records with date of tomorrow+ should be in DB
-        Assert.assertTrue(rcDao.findByTime(tomorrow, tomorrow.plusDays(1)).isEmpty());
+        Assert.assertTrue(rcDao.findByTime(user.getId(), tomorrow, tomorrow.plusDays(1)).isEmpty());
         
         //1 record should be in DB till now
-        List<Record> allNow = rcDao.findByTime(yesterday, now);
+        List<Record> allNow = rcDao.findByTime(user.getId(), yesterday, now);
         Assert.assertEquals(1, allNow.size());
         Assert.assertEquals(record, allNow.get(0));
         
@@ -245,14 +252,14 @@ public class RecordDaoImplTest {
         rcDao.create(newRec);
         
         //1 record should be in DB till hour early
-        List<Record> allBefore = rcDao.findByTime(yesterday, now.minusHours(1));
+        List<Record> allBefore = rcDao.findByTime(user.getId(), yesterday, now.minusHours(1));
         Assert.assertEquals(1, allBefore.size());
-        Assert.assertEquals(newRec, allBefore.get(0));
+        Assert.assertTrue(allBefore.contains(newRec));
         
         //2 record should be in DB till now
-        List<Record> allTillNow = rcDao.findByTime(yesterday, now);
+        List<Record> allTillNow = rcDao.findByTime(user.getId(), yesterday, now);
         Assert.assertEquals(2, allTillNow.size());
-        Assert.assertEquals(newRec, allTillNow.get(1));
+        Assert.assertTrue(allBefore.contains(newRec));
     }
     
 }

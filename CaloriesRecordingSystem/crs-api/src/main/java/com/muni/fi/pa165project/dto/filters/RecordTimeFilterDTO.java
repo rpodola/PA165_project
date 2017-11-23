@@ -9,12 +9,22 @@ import java.time.LocalDateTime;
  */
 public class RecordTimeFilterDTO {
 
+	private long userId;
+	
     private LocalDateTime from;
 
     private LocalDateTime to;
     
     private LocalDate date;
 
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	
     public LocalDateTime getFrom() {
         return from;
     }

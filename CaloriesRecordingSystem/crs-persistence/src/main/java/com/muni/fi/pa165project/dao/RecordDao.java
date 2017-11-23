@@ -44,10 +44,13 @@ public interface RecordDao {
 	 */
 	List<Record> findAll();
 	
-	List<Record> findByDate(LocalDate date);
-	
-	List<Record> findByTime(LocalDateTime from, LocalDateTime to) ;
-		
-	
-	
+	/**
+	 *  Returns all records of User from specific time frame
+	 * @param userId
+	 * @param from
+	 * @param to
+	 * @return 
+	 */
+	List<Record> findByTime(long userId, LocalDateTime from, LocalDateTime to) ;
+			
 }

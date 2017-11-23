@@ -57,7 +57,7 @@ public interface TrackingFacade {
      * @param timeFilter filter specifing time
      * @return list of user's records
      */
-    List<RecordDTO> getFilteredRecords(long userId, RecordTimeFilterDTO timeFilter);
+    List<RecordDTO> getFilteredRecords(RecordTimeFilterDTO timeFilter);
 
     /**
      * Get progress of burned calories in the current week
