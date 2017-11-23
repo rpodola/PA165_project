@@ -1,4 +1,4 @@
-package com.muni.fi.pa165project.service;
+	package com.muni.fi.pa165project.service;
 
 import com.muni.fi.pa165project.dao.RecordDao;
 import com.muni.fi.pa165project.entity.Record;
@@ -51,8 +51,8 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public List<Record> getAllRecords() {
-        return this.recordDao.findAll();
+    public List<Record> getAllRecordsOfUser(long userId) {
+        return this.recordDao.getAllRecordsOfUserSortedFromNewest(userId);
     }
 
     @Override

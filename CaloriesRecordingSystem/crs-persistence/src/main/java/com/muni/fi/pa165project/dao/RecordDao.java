@@ -52,4 +52,12 @@ public interface RecordDao {
 	 * @return 
 	 */
 	List<Record> findByTime(long userId, LocalDateTime from, LocalDateTime to) ;
+	
+	/**
+	 * Returns all records of user sorted by time from newest
+	 * @param userId
+	 * @return 
+	 */
+	List<Record> getAllRecordsOfUserSortedFromNewest(long userId);
+	
 }

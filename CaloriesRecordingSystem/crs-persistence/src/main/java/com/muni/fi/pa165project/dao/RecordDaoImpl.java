@@ -49,18 +49,26 @@ public class RecordDaoImpl implements RecordDao {
 	
 	@Override
 	public List<Record> findAll() {
-		return this.em.createQuery("SELECT r from Record r", 
+		return this.em.createQuery("SELECT r FROM Record r", 
 				Record.class)
 				.getResultList();
 	}
 	
 	@Override
 	public List<Record> findByTime(long userId, LocalDateTime from, LocalDateTime to) {
-		return this.em.createQuery("SELECT r from Record r WHERE r.user.id=:userId AND r.atTime BETWEEN :from AND :to ORDER BY r.atTime DESC",
+		return this.em.createQuery("SELECT r FROM Record r WHERE r.user.id=:userId AND r.atTime BETWEEN :from AND :to ORDER BY r.atTime DESC",
 				Record.class)
 				.setParameter("userId", userId)
 				.setParameter("from", from)
 				.setParameter("to", to)
+				.getResultList();
+	}
+	
+	@Override
+	public List<Record> getAllRecordsOfUserSortedFromNewest(long userId) {
+		return this.em.createQuery("SELECT r FROM Record r WHERE r.user.id=:userId ORDER BY r.atTime DESC",
+				Record.class)
+				.setParameter("userId", userId)
 				.getResultList();
 	}
 	

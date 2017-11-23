@@ -38,10 +38,12 @@ public interface RecordService {
     Record getRecord(long id);
     
     /**
-     * Get all records
+     * Get all records of user
+	 * sorted by time
+	 * @param userId
      * @return list of all records
      */
-    List<Record> getAllRecords();
+    List<Record> getAllRecordsOfUser(long userId);
     
     /**
      * Get User records between certain times
