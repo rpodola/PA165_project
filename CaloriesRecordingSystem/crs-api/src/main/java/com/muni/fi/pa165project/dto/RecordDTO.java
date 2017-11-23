@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.muni.fi.pa165project.dto;
 
 import java.time.LocalDateTime;
@@ -14,27 +9,21 @@ import java.util.Objects;
  */
 public class RecordDTO {
 	
-	private Long Id;
+	private long Id;
 	
 	private long activityId;
 	
 	private long userId;
 	
 	private LocalDateTime atTime;
-	
-	private double weight;
 
     private int burnedCalories;
 
-    private int distance;
-
-    private int duration;
-
-	public Long getId() {
+	public long getId() {
 		return Id;
 	}
 
-	public void setId(Long Id) {
+	public void setId(long Id) {
 		this.Id = Id;
 	}
 
@@ -62,36 +51,12 @@ public class RecordDTO {
 		this.atTime = atTime;
 	}
 
-	public double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-
 	public int getBurnedCalories() {
 		return burnedCalories;
 	}
 
 	public void setBurnedCalories(int burnedCalories) {
 		this.burnedCalories = burnedCalories;
-	}
-
-	public int getDistance() {
-		return distance;
-	}
-
-	public void setDistance(int distance) {
-		this.distance = distance;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
 	}
 
 	@Override

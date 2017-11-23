@@ -1,19 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.muni.fi.pa165project.service.facade;
 
-import com.muni.fi.pa165project.dto.RecordDTO;
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
-import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.UserService;
-import com.muni.fi.pa165project.structures.TrackingSettings;
-import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +25,7 @@ public class UserFacadeImpl extends FacadeBase implements UserFacade {
 	}
 
 	@Override
-	public void updateUser(UserDTO userDto) {
+	public void editUser(UserDTO userDto) {
 		User user = super.map(userDto, User.class);
 		this.userService.updateUser(user);
 	}

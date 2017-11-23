@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.RecordDTO;
+import com.muni.fi.pa165project.dto.RecordDetailDTO;
 import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
@@ -38,11 +39,11 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
     private UserService userService;
 
     @Override
-    public void createRecord(RecordDTO recordDto) {
-        Record record = super.map(recordDto, Record.class);
+    public void createRecord(RecordDetailDTO recordDetailDto) {
+        Record record = super.map(recordDetailDto, Record.class);
 
-        Activity activity = this.activityService.findById(recordDto.getActivityId());
-        User user = this.userService.findById(recordDto.getUserId());
+        Activity activity = this.activityService.findById(recordDetailDto.getActivityId());
+        User user = this.userService.findById(recordDetailDto.getUserId());
 
         record.setWeight(user.getWeight());
         record.setActivity(activity);
@@ -52,8 +53,8 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
     }
 
     @Override
-    public void updateRecord(RecordDTO recordDto) {
-        Record record = super.map(recordDto, Record.class);
+    public void editRecord(RecordDetailDTO recordDetailDto) {
+        Record record = super.map(recordDetailDto, Record.class);
         
         this.recordService.update(record);
     }
@@ -65,11 +66,12 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
     }
 
     @Override
-    public RecordDTO getRecord(long id) {
+    public RecordDetailDTO getRecord(long id) {
         
-        RecordDTO recordDto = super.map(this.recordService.getRecord(id), RecordDTO.class);
+        RecordDetailDTO recordDetailDto = super.map(
+                this.recordService.getRecord(id), RecordDetailDTO.class);
         
-        return recordDto;
+        return recordDetailDto;
     }
 
     @Override
@@ -100,8 +102,8 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
     @Override
     public List<RecordDTO> getFilteredRecords(RecordTimeFilterDTO timeFilter) {
 		long userId = timeFilter.getUserId();
-    	List<RecordDTO> records = new ArrayList<RecordDTO>();
-    	List<RecordDTO> filteredRecords = new ArrayList<RecordDTO>();
+    	List<RecordDTO> records = new ArrayList<>();
+    	List<RecordDTO> filteredRecords = new ArrayList<>();
 
     	if (timeFilter.getDate() != null){
     		records = 

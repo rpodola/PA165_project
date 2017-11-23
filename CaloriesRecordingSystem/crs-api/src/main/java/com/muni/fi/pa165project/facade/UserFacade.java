@@ -1,10 +1,6 @@
 package com.muni.fi.pa165project.facade;
 
-import java.util.List;
-
-import com.muni.fi.pa165project.dto.RecordDTO;
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
-import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
 
 /**
@@ -21,10 +17,10 @@ public interface UserFacade {
     void createUser(UserDTO userDto);
 
     /**
-     * Update User
+     * Edit User
      * @param userDto user object
      */
-    void updateUser(UserDTO userDto);
+    void editUser(UserDTO userDto);
 
     /**
      * Remove User
@@ -34,7 +30,7 @@ public interface UserFacade {
 	
 	/**
 	 * Set tracking settings for user (goals)
-	 * @param calories 
+         * @param trackingSettings
 	 */
 	void setTrackingSettings(TrackingSettingsDTO trackingSettings);
 	

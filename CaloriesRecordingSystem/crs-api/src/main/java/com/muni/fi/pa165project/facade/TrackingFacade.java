@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.facade;
 
 import com.muni.fi.pa165project.dto.RecordDTO;
+import com.muni.fi.pa165project.dto.RecordDetailDTO;
 import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 import java.util.List;
 
@@ -15,13 +16,13 @@ public interface TrackingFacade {
      * Create record
      * @param recordDto record to create
      */
-    void createRecord(RecordDTO recordDto);
+    void createRecord(RecordDetailDTO recordDto);
 
     /**
-     * Update record
-     * @param recordDto record to create 
+     * Edit record
+     * @param recordDto record to edit 
      */
-    void updateRecord(RecordDTO recordDto);
+    void editRecord(RecordDetailDTO recordDto);
 
     /**
      * Remove record
@@ -34,7 +35,7 @@ public interface TrackingFacade {
      * @param id record id
      * @return record
      */
-    RecordDTO getRecord(long id);
+    RecordDetailDTO getRecord(long id);
     
     /**
      * Get all user's records
@@ -53,7 +54,6 @@ public interface TrackingFacade {
 
     /**
      * Get filtered user's records
-     * @param userId user id
      * @param timeFilter filter specifing time
      * @return list of user's records
      */
