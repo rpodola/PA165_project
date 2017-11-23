@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.ActivityDTO;
@@ -18,7 +13,6 @@ import com.muni.fi.pa165project.service.ActivityService;
 import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import com.muni.fi.pa165project.service.UserService;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +21,6 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.comparator.Comparators;
 /**
  *
  * @author Radoslav Karlik

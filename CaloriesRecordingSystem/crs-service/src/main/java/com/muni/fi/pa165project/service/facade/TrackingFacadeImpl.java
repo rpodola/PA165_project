@@ -12,6 +12,7 @@ import com.muni.fi.pa165project.service.RecordService;
 import com.muni.fi.pa165project.service.UserService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -86,17 +87,15 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 
     @Override
     public List<RecordDTO> getLastNRecords(long userId, int count) {
-    	 User user = this.userService. findById(userId);
-    	 Set<Record> recordsSet = user.getActivityRecords();
-    	 List<RecordDTO> records = super.mapToList(recordsSet, RecordDTO.class);
-    	 List<RecordDTO> nRecords = new ArrayList<>();
-
-    	 for (int i=0; i<count; i++){
-    		 nRecords.add(i, records.get(i));
-    	 }
-    	 
-    	 return nRecords;
-    	 
+        User user = this.userService. findById(userId);
+        Set<Record> recordsSet = user.getActivityRecords();
+        List<RecordDTO> records = super.mapToList(recordsSet, RecordDTO.class);
+        records.sort((r1, r2) -> { 
+           return (r1.getAtTime().compareTo(r2.getAtTime()));
+           });
+        Collections.reverse(records);
+        
+        return records.subList(0, count);
     }
 
     @Override

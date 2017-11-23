@@ -1,7 +1,6 @@
 package com.muni.fi.pa165project.dao;
 
 import com.muni.fi.pa165project.entity.Record;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -57,7 +56,7 @@ public class RecordDaoImpl implements RecordDao {
 	
 	@Override
 	public List<Record> findByTime(long userId, LocalDateTime from, LocalDateTime to) {
-		return this.em.createQuery("SELECT r from Record r WHERE r.user.id=:userId AND r.atTime BETWEEN :from AND :to",
+		return this.em.createQuery("SELECT r from Record r WHERE r.user.id=:userId AND r.atTime BETWEEN :from AND :to ORDER BY r.atTime DESC",
 				Record.class)
 				.setParameter("userId", userId)
 				.setParameter("from", from)

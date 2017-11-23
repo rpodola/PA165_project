@@ -1,5 +1,6 @@
 package com.muni.fi.pa165project.service;
 
+import com.muni.fi.pa165project.dao.RecordDao;
 import com.muni.fi.pa165project.dao.UserDao;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
@@ -7,11 +8,10 @@ import static java.time.DayOfWeek.MONDAY;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import static java.time.temporal.TemporalAdjusters.previousOrSame;
+import java.util.List;
 /**
  *
  * @author Radoslav Karlik, Lukáš Císar
@@ -21,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
+        
+        @Autowired
+        private RecordDao recordDao;
 	
 	@Override
 	public User findById(long userId) {
@@ -50,26 +53,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int getProgressOfweeklyCaloriesGoal(long userId) {
+        double sum = 0;
         User user = this.findById(userId);
-        int goal = user.getTrackingSettings().getWeeklyCaloriesGoal();
+        double goal = user.getTrackingSettings().getWeeklyCaloriesGoal();
 
         LocalDate monday = LocalDate.now().with(previousOrSame(MONDAY));
         LocalDateTime start = LocalDateTime.of(monday, LocalTime.MIDNIGHT);
         LocalDateTime end = start.plusWeeks(1).minusSeconds(1);
         
-        Set<Record> lastWeekRecords = getUserRecordsByTime(userId, start, end);
-        return 5;
-    }
-
-    @Override
-    public Set<Record> getUserRecordsByTime(long userId, LocalDateTime from, LocalDateTime to) {
-        User user = this.findById(userId);
-        Set<Record> records = user.getActivityRecords();
+        //already sorted from earliest
+        List<Record> lastWeekRecords = this.recordDao.findByTime(userId, start, end);
         
-        Set<Record> recordsByTime = records.stream().
-                filter(r -> r.getAtTime().isAfter(from) 
-                        && r.getAtTime().isBefore(to))
-                .collect(Collectors.toSet());
-        return recordsByTime;
+        for (Record r : lastWeekRecords){
+            sum += r.getBurnedCalories();
+        }
+
+        return (int) (sum / (goal / 100));
     }
 }

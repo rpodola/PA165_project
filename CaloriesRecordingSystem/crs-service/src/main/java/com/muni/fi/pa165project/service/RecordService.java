@@ -45,6 +45,7 @@ public interface RecordService {
     
     /**
      * Get User records at certain date
+     * @param userId user id
      * @param date date
      * @return list of records
      */
@@ -52,6 +53,7 @@ public interface RecordService {
     
     /**
      * Get User records between certain times
+     * @param userId user id
      * @param from starting time
      * @param to ending time
      * @return list of records

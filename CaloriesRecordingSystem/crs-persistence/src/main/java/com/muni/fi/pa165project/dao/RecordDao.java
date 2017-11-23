@@ -45,7 +45,7 @@ public interface RecordDao {
 	List<Record> findAll();
 	
 	/**
-	 *  Returns all records of User from specific time frame
+	 * Returns all records of User from specific time frame ordered from earliest
 	 * @param userId
 	 * @param from
 	 * @param to
