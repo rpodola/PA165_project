@@ -52,5 +52,4 @@ public interface RecordDao {
 	 * @return 
 	 */
 	List<Record> findByTime(long userId, LocalDateTime from, LocalDateTime to) ;
-			
 }

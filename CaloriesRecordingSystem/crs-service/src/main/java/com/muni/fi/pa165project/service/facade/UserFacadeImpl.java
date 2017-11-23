@@ -47,7 +47,7 @@ public class UserFacadeImpl extends FacadeBase implements UserFacade {
 	@Override
 	public void setTrackingSettings(TrackingSettingsDTO trackingSettings) {
 		User user = this.userService.findById(trackingSettings.getUserId());
-		user.getTrackingSettings().setWeeklyCalorieGoal(trackingSettings.getWeeklyCaloriesGoal());
+		user.getTrackingSettings().setWeeklyCaloriesGoal(trackingSettings.getWeeklyCaloriesGoal());
 		this.userService.updateUser(user);
 	}
 

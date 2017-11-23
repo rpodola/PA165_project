@@ -84,11 +84,11 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 
     @Override
     public List<RecordDTO> getLastNRecords(long userId, int count) {
-    	 User user = super.map(this.userService.findById(userId), User.class);
+    	 User user = this.userService. findById(userId);
     	 Set<Record> recordsSet = user.getActivityRecords();
-    	 List<RecordDTO> records = super.mapToList(recordsSet,RecordDTO.class);
-    	 List<RecordDTO> nRecords = new ArrayList<RecordDTO>();
-    	 
+    	 List<RecordDTO> records = super.mapToList(recordsSet, RecordDTO.class);
+    	 List<RecordDTO> nRecords = new ArrayList<>();
+
     	 for (int i=0; i<count; i++){
     		 nRecords.add(i, records.get(i));
     	 }
@@ -120,6 +120,6 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 
     @Override
     public int getWeekProgressOfBurnedCalories(long userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return userService.getProgressOfweeklyCaloriesGoal(userId);
     }
 }

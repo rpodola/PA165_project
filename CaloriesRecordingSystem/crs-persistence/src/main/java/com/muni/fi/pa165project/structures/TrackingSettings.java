@@ -15,14 +15,14 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class TrackingSettings implements Serializable {
 	
-	private int weeklyCalorieGoal;
+	private int weeklyCaloriesGoal;
 
-	public int getWeeklyCalorieGoal() {
-		return weeklyCalorieGoal;
+	public int getWeeklyCaloriesGoal() {
+		return weeklyCaloriesGoal;
 	}
 
-	public void setWeeklyCalorieGoal(int weeklyCalorieGoal) {
-		this.weeklyCalorieGoal = weeklyCalorieGoal;
+	public void setWeeklyCaloriesGoal(int weeklyCaloriesGoal) {
+		this.weeklyCaloriesGoal = weeklyCaloriesGoal;
 	}
 	
 }

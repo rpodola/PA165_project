@@ -1,16 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.muni.fi.pa165project.service;
 
+import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  *
  * @author Radoslav Karlik
  * @author Lukáš Císar
+ * @author Radim Podola
  */
 public interface UserService {
 	
@@ -24,4 +23,7 @@ public interface UserService {
 	
 	void updateUser(User user);
 	
+        Set<Record> getUserRecordsByTime(long userId, LocalDateTime from, LocalDateTime to);
+        
+        int getProgressOfweeklyCaloriesGoal(long userId);
 }
