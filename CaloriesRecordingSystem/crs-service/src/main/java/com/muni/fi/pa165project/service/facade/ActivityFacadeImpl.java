@@ -85,7 +85,7 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 	public List<ActivityDTO> getActivities(ActivityFilterDTO activityFilter) {
 		Collection<Category> categories = activityFilter.getCategories();
 		List<Activity> filteredActivities = this.activityService.getFilteredActivities(categories);
-		List<ActivityDTO> activitiesDTO = super.mapToList(categories, ActivityDTO.class);
+		List<ActivityDTO> activitiesDTO = super.mapToList(filteredActivities, ActivityDTO.class);
 		return activitiesDTO;
 	}
 	
