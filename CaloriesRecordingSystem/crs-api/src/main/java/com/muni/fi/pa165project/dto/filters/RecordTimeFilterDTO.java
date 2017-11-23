@@ -14,8 +14,6 @@ public class RecordTimeFilterDTO {
     private LocalDateTime from;
 
     private LocalDateTime to;
-    
-    private LocalDate date;
 
 	public long getUserId() {
 		return userId;
@@ -39,14 +37,6 @@ public class RecordTimeFilterDTO {
 
     public void setTo(LocalDateTime to) {
         this.to = to;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
     
 }

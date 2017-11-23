@@ -44,14 +44,6 @@ public interface RecordService {
     List<Record> getAllRecords();
     
     /**
-     * Get User records at certain date
-     * @param userId user id
-     * @param date date
-     * @return list of records
-     */
-    List<Record> getFilteredRecords(long userId, LocalDate date);
-    
-    /**
      * Get User records between certain times
      * @param userId user id
      * @param from starting time

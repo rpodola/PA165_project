@@ -56,11 +56,6 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public List<Record> getFilteredRecords(long userId, LocalDate date) {
-        return this.getFilteredRecords(userId, date.atStartOfDay(), date.atTime(23, 59, 59, 0));
-    }
-
-    @Override
     public List<Record> getFilteredRecords(long userId, LocalDateTime from, LocalDateTime to) {
         return this.recordDao.findByTime(userId, from, to);
     }
