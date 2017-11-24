@@ -13,10 +13,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Peter Krasnan
+ * @author Peter Krasnan
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,7 +40,7 @@ public class ActivityDaoImplTest {
     }
 
     @Test
-    @Rollback(true)
+    @Rollback()
     public void createTest() {
         Activity a = new Activity();
 
@@ -57,7 +58,7 @@ public class ActivityDaoImplTest {
     }
 
     @Test
-    @Rollback(true)
+    @Rollback()
     public void updateTest() {
         Activity a = activityDao.findById(activity.getId());
         String desc = "Changed description";
@@ -71,7 +72,7 @@ public class ActivityDaoImplTest {
     }
 
     @Test
-    @Rollback(true)
+    @Rollback()
     public void deleteTest() {
         int initialCount = activityDao.findAll().size();
 
@@ -83,7 +84,7 @@ public class ActivityDaoImplTest {
     }
 
     @Test
-    @Rollback(true)
+    @Rollback()
     public void findByIdTest() {
         Activity a = activityDao.findAll().get(0);
         Activity b = activityDao.findById(a.getId());
@@ -92,7 +93,7 @@ public class ActivityDaoImplTest {
     }
 
     @Test
-    @Rollback(true)
+    @Rollback()
     public void findAllTest() {
         List<Activity> activities = activityDao.findAll();
 
@@ -102,7 +103,7 @@ public class ActivityDaoImplTest {
     }
 
     @Test
-    @Rollback(true)
+    @Rollback()
     public void findByNameTest() {
         List<Activity> activities = activityDao.findByName("Activity");
 
@@ -111,9 +112,22 @@ public class ActivityDaoImplTest {
     }
 
     @Test
-    @Rollback(true)
+    @Rollback()
     public void findByCategoryTest() {
         List<Activity> activities = activityDao.findByCategory(Category.AEROBICS);
+
+        Assert.assertTrue("Activities is null", activities != null);
+        Assert.assertTrue("Activities are empty", !activities.isEmpty());
+        Assert.assertTrue("Activities have incorrect number of results", activities.size() == 1);
+    }
+
+    @Test
+    @Rollback()
+    public void findByCategoriesTest() {
+        List<Category> categories = new ArrayList<>();
+        categories.add(Category.AEROBICS);
+        categories.add(Category.CYCLING);
+        List<Activity> activities = activityDao.findByCategories(categories);
 
         Assert.assertTrue("Activities is null", activities != null);
         Assert.assertTrue("Activities are empty", !activities.isEmpty());
