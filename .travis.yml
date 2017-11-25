@@ -1,5 +1,9 @@
 language: java
 before_script: cd CaloriesRecordingSystem
-script: mvn clean install
+script:
+- mvn -q clean install
+- mvn failsafe:integration-test
 jdk:
 - oraclejdk8
+notifications:
+  email: false
