@@ -4,7 +4,10 @@ import com.muni.fi.pa165project.dao.ActivityDao;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.enums.Category;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,4 +52,21 @@ public class ActivityServiceImpl implements ActivityService {
         return this.activityDao.findByCategories(categories);
     }
 
+	@Override
+	public List<Activity> getActivitiesSortedByBurnedCalories(Function<Long, Integer> getBurnedCaloriesByActivityId) {
+		Map<Long, Integer> burnedCaloriesPerActivity = new HashMap<>();
+		
+		List<Activity> activities = this.getAllActivities();
+		activities.forEach(activity -> burnedCaloriesPerActivity.put(activity.getId(), getBurnedCaloriesByActivityId.apply(activity.getId())));
+		
+		activities.sort((Activity a1, Activity a2) -> {
+				double burnedCalories1 = burnedCaloriesPerActivity.get(a1.getId());
+				double burnedCalories2 = burnedCaloriesPerActivity.get(a2.getId());
+
+				return Double.compare(burnedCalories1, burnedCalories2);
+			});
+		
+		return activities;
+	}
+	
 }

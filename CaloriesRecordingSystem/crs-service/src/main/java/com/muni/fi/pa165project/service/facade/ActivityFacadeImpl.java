@@ -13,10 +13,9 @@ import com.muni.fi.pa165project.service.ActivityService;
 import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import com.muni.fi.pa165project.service.UserService;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -105,19 +104,12 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 		User user  = this.userService.findById(userId);
 		double weight = user.getWeight();
 		
-		Map<Long, Integer> burnedCaloriesPerActivity = new HashMap<>();
+		Function<Long, Integer> fn = (activityId) -> {
+			return this.burnedCaloriesService.getBurnedCaloriesPerHour(activityId, weight);
+		};
 		
-		List<Activity> activities = this.activityService.getAllActivities();
-		activities.forEach(activity -> burnedCaloriesPerActivity.put(activity.getId(), this.burnedCaloriesService.getBurnedCaloriesPerHour(activity.getId(), weight)));
-		
-		activities.sort((Activity a1, Activity a2) -> {
-				double burnedCalories1 = burnedCaloriesPerActivity.get(a1.getId());
-				double burnedCalories2 = burnedCaloriesPerActivity.get(a2.getId());
-
-				return Double.compare(burnedCalories1, burnedCalories2);
-			});
-		
-		List<ActivityDTO> sortedActivitiesDTO = super.mapToList(activities, ActivityDTO.class);
+		List<Activity> sortedActivities = this.activityService.getActivitiesSortedByBurnedCalories(fn);
+		List<ActivityDTO> sortedActivitiesDTO = super.mapToList(sortedActivities, ActivityDTO.class);
 		
 		return sortedActivitiesDTO;
 	}

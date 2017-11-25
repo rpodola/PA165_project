@@ -4,6 +4,7 @@ import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.enums.Category;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  *
@@ -49,5 +50,12 @@ public interface ActivityService {
 	 * @return 
 	 */
     List<Activity> getFilteredActivities(Collection<Category> categories);
+	
+	/**
+	 * Returns activities sorted by the amount of burned calories per one hour
+	 * @param getBurnedCaloriesByActivityId function which returns burned calories per hour after input argument activity id
+	 * @return 
+	 */
+	public List<Activity> getActivitiesSortedByBurnedCalories(Function<Long, Integer> getBurnedCaloriesByActivityId);
 	
 }
