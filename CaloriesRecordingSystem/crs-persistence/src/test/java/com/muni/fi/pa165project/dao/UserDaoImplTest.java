@@ -20,9 +20,12 @@ import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.structures.LoginDetails;
 
+/**
+* @author Lukáš Císar
+*/
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class UserdaoImplTest {
+public class UserDaoImplTest {
 
 	@Autowired
 	private UserDao userDao;
@@ -99,6 +102,15 @@ public class UserdaoImplTest {
 		Assert.assertEquals(user.getName(), foundUser.getName());
 	}
 
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void testFindByEmail(){
+        User foundUser = userDao.findByEmail("ciso112@protonmail.com");
+
+        Assert.assertEquals(user.getLoginDetails().getEmail(), foundUser.getLoginDetails().getEmail());
+    }
+    
 	@Test
 	@Transactional
 	@Rollback(true)

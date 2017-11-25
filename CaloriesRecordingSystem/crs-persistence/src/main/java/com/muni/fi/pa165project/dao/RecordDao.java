@@ -1,6 +1,5 @@
 package com.muni.fi.pa165project.dao;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import com.muni.fi.pa165project.entity.Record;
 *
 * @author Lukáš Císar
 */
-
 public interface RecordDao {
 
 	/**

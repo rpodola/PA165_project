@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.muni.fi.pa165project.dao;
 
 import com.muni.fi.pa165project.config.TestConfig;
@@ -105,7 +100,7 @@ public class BurnedCaloriesDaoImplTest {
 
 		BurnedCalories bc2FromDB = this.bcDao.findById(this.bc2.getId());
 
-		Assert.assertEquals(201, bc2FromDB.getUpperWeightBoundary());
+		Assert.assertTrue(201 == bc2FromDB.getUpperWeightBoundary());
 	}
 
 	@Test
@@ -127,5 +122,24 @@ public class BurnedCaloriesDaoImplTest {
 
 		Assert.assertTrue(bcs.size() == 3);
 	}
+	
+    @Test
+    @Rollback(true)
+    public void testFindById() {
+        BurnedCalories bcs = this.bcDao.findById(bc1.getId());
 
+        Assert.assertTrue(bcs.equals(bc1));
+    }
+    
+    @Test
+    @Rollback(true)
+    public void testgetWeightRange() {
+        BurnedCalories bcs = this.bcDao.getWeightRange(ac.getId(), 20);
+        Assert.assertTrue(bcs.equals(bc1));
+        bcs = this.bcDao.getWeightRange(ac.getId(), 500);
+        Assert.assertTrue(bcs.equals(bc3));
+        bcs = this.bcDao.getWeightRange(ac.getId(), 200);
+        Assert.assertTrue(bcs.equals(bc2));
+        Assert.assertNull(this.bcDao.getWeightRange(2, 500));
+    }
 }

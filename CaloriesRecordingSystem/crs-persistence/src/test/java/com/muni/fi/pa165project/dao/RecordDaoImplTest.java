@@ -4,6 +4,7 @@ import com.muni.fi.pa165project.config.TestConfig;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
+import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import java.time.LocalDate;
@@ -45,7 +46,7 @@ public class RecordDaoImplTest {
         this.act = new Activity();
         this.act.setName("Run");
         this.act.setDescription("running by feet");
-        //this.act.setCategory(null);
+        this.act.setCategory(Category.RUNNING);
     }
     
     @Before
@@ -261,5 +262,37 @@ public class RecordDaoImplTest {
         Assert.assertEquals(2, allTillNow.size());
         Assert.assertTrue(allBefore.contains(newRec));
     }
-    
+
+    /**
+     * Test of getAllRecordsOfUserSortedFromNewest method, of class RecordDaoImpl.
+     */
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void testgetAllRecordsOfUserSortedFromNewest() {
+        LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+
+        acDao.create(act);
+        usDao.create(user);
+        rcDao.create(record);
+        //create another records
+        Record newRec1 = new Record();
+        newRec1.setAtTime(tomorrow);
+        newRec1.setDistance(200);
+        newRec1.setActivity(this.act);
+        newRec1.setUser(this.user);
+        rcDao.create(newRec1);
+        Record newRec2 = new Record();
+        newRec2.setAtTime(yesterday);
+        newRec2.setDistance(200);
+        newRec2.setActivity(this.act);
+        newRec2.setUser(this.user);
+        rcDao.create(newRec2);
+        
+        //3 record should be in DB till now
+        List<Record> allTillNow = rcDao.getAllRecordsOfUserSortedFromNewest(user.getId());
+        Assert.assertEquals(3, allTillNow.size());
+        Assert.assertTrue(allTillNow.get(0).getAtTime().equals(tomorrow));
+    }
 }

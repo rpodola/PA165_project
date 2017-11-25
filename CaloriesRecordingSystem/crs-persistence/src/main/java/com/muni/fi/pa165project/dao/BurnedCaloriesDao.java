@@ -53,7 +53,7 @@ public interface BurnedCaloriesDao {
 	
 	/**
 	 * Get weight range(BurnedCalories) from Activity
-	 * which corresponds to given bodyweight
+	 * which corresponds to given body weight
 	 * @param activityId
 	 * @param bodyweight
 	 * @return 

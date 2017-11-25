@@ -5,6 +5,8 @@ import java.util.List;
 import com.muni.fi.pa165project.entity.BurnedCalories;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 
 /**
@@ -62,11 +64,14 @@ public class BurnedCaloriesDaoImpl implements BurnedCaloriesDao{
 	public BurnedCalories getWeightRange(long activityId, double bodyweight) {
 		List<BurnedCalories> weightRanges = this.em.createQuery("SELECT bc FROM BurnedCalories bc WHERE bc.activity.id=:activityId AND bc.upperWeightBoundary>=:bodyweight ORDER BY bc.upperWeightBoundary ASC", BurnedCalories.class)
 				.setParameter("activityId", activityId)
-				.setParameter("bodyweight", bodyweight)
+				.setParameter("bodyweight", (int) bodyweight)
 				.getResultList();
 		
 		if (weightRanges.isEmpty()) {
-			return null;
+		    weightRanges = this.em.createQuery("SELECT bc FROM BurnedCalories bc WHERE bc.activity.id=:activityId ORDER BY bc.upperWeightBoundary DESC", BurnedCalories.class)
+		        .setParameter("activityId", activityId).getResultList();
+		    if (weightRanges.isEmpty())
+		        return null;
 		}
 		
 		return weightRanges.get(0);

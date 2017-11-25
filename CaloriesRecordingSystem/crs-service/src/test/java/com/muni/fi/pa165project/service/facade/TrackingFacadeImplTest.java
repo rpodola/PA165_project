@@ -169,5 +169,4 @@ public class TrackingFacadeImplTest {
         trackingFacade.getWeekProgressOfBurnedCalories(user.getId());
         verify(userService).getProgressOfweeklyCaloriesGoal(user.getId());
     }
-
 }
