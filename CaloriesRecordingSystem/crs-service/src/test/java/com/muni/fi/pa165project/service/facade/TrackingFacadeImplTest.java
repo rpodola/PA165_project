@@ -66,8 +66,8 @@ public class TrackingFacadeImplTest {
         user.setWeight(50);
         LoginDetails loginDetails = new LoginDetails();
         loginDetails.setUsername("Peter");
-        loginDetails.setEmail("aasdf@gmail.com");
-        loginDetails.setPassword("asdfghjjkki");
+        loginDetails.setEmail("peter@gmail.com");
+        loginDetails.setPassword("PA165asda");
 
         user.setLoginDetails(loginDetails);
         user.setId(1L);
