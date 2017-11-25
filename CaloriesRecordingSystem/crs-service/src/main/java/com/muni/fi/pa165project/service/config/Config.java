@@ -7,6 +7,8 @@ package com.muni.fi.pa165project.service.config;
 
 import com.muni.fi.pa165project.dto.RecordDTO;
 import com.muni.fi.pa165project.entity.Record;
+
+import java.util.Collections;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -73,6 +75,8 @@ public class Config {
    public DozerBeanMapper dozerBeanMapper() {
 	   DozerBeanMapper mapper = new DozerBeanMapper();
 	   mapper.addMapping(mappingConfiguration());
+	   //fix for Dozer issues with JDK8 Time
+	   mapper.setMappingFiles(Collections.singletonList("dozerJdk8Converters.xml"));  
 	   return mapper;
    }
    
