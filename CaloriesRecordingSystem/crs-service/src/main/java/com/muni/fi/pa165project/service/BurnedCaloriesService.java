@@ -8,8 +8,19 @@ import com.muni.fi.pa165project.entity.BurnedCalories;
  */
 public interface BurnedCaloriesService {
 	
+	/**
+	 * Update weight range(burned calories) in its activity
+	 * @param burnedCalories 
+	 */
 	public void updateBurnedCalories(BurnedCalories burnedCalories);
 	
+	/**
+	 * Returns amount of burned calories per hour from activity
+	 * based on bodyweight
+	 * @param activityId
+	 * @param bodyweight
+	 * @return 
+	 */
 	public int getBurnedCaloriesPerHour(long activityId, double bodyweight);
 	
 }
