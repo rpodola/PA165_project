@@ -2,7 +2,6 @@
 
 import com.muni.fi.pa165project.dao.RecordDao;
 import com.muni.fi.pa165project.entity.Record;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class RecordServiceImpl implements RecordService {
     private RecordDao recordDao;
 
     @Autowired
-    private ActivityService activityService;
+    private BurnedCaloriesService burnedCaloriesService;
 
     @Override
     public void create(Record record) {    
@@ -69,7 +68,7 @@ public class RecordServiceImpl implements RecordService {
         double weight = record.getUser().getWeight();
         Long activityId = record.getActivity().getId();
         
-        int amount = activityService.getBurnedCaloriesPerHour(activityId, weight);
+        int amount = burnedCaloriesService.getBurnedCaloriesPerHour(activityId, weight);
         return (int) amount * record.getDuration();
     }
 

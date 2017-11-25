@@ -23,21 +23,5 @@ public interface ActivityService {
     void remove(long id);
 
     List<Activity> getFilteredActivities(Collection<Category> categories);
-
-    /**
-    * Get the burned calory for activity with certain weight
-    * @param id activity id
-    * @param weight weight
-    * @return burned calories per hour
-    */
-    int getBurnedCaloriesPerHour(long id, double weight);
-	
-	/**
-    * Get the burned calory for activity with certain weight
-    * @param activity activity
-    * @param weight weight
-    * @return burned calories per hour
-	*/
-	int getBurnedCaloriesPerHour(Activity activity, double weight);
 	
 }

@@ -2,12 +2,9 @@ package com.muni.fi.pa165project.service;
 
 import com.muni.fi.pa165project.dao.ActivityDao;
 import com.muni.fi.pa165project.entity.Activity;
-import com.muni.fi.pa165project.entity.BurnedCalories;
 import com.muni.fi.pa165project.enums.Category;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,28 +48,6 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public List<Activity> getFilteredActivities(Collection<Category> categories) {
         return this.activityDao.findByCategories(categories);
-    }
-
-    @Override
-    public int getBurnedCaloriesPerHour(long id, double weight) {
-        Activity activity = this.findById(id);
-		return this.getBurnedCaloriesPerHour(activity, weight);
-    }
-	
-    @Override
-    public int getBurnedCaloriesPerHour(Activity activity, double weight) {
-        Set<BurnedCalories> calories = new TreeSet<>((BurnedCalories c1, BurnedCalories c2) -> {
-            int cal1 = c1.getUpperWeightBoundary();
-            int cal2 = c2.getUpperWeightBoundary();
-            return (cal1 > cal2 ? -1 : (cal1 == cal2 ? 0 : 1));
-        });
-        calories.addAll(activity.getBurnedCalories());
-
-        for (BurnedCalories calory : calories){
-            if (weight <= calory.getUpperWeightBoundary())
-                return calory.getAmount();
-        }
-        return 0;
     }
 
 }

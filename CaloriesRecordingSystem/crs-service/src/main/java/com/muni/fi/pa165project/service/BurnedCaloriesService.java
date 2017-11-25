@@ -10,4 +10,6 @@ public interface BurnedCaloriesService {
 	
 	public void updateBurnedCalories(BurnedCalories burnedCalories);
 	
+	public int getBurnedCaloriesPerHour(long activityId, double bodyweight);
+	
 }

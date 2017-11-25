@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,12 +107,8 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 		
 		Map<Long, Integer> burnedCaloriesPerActivity = new HashMap<>();
 		
-		List<Activity> activities = this.activityService.getAllActivities()
-				.stream()
-				.filter(activity -> !activity.getBurnedCalories().isEmpty())
-				.collect(Collectors.toList());
-		
-		activities.forEach(activity -> burnedCaloriesPerActivity.put(activity.getId(), this.activityService.getBurnedCaloriesPerHour(activity, weight)));
+		List<Activity> activities = this.activityService.getAllActivities();
+		activities.forEach(activity -> burnedCaloriesPerActivity.put(activity.getId(), this.burnedCaloriesService.getBurnedCaloriesPerHour(activity.getId(), weight)));
 		
 		activities.sort((Activity a1, Activity a2) -> {
 				double burnedCalories1 = burnedCaloriesPerActivity.get(a1.getId());

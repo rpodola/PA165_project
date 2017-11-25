@@ -53,4 +53,18 @@ public class BurnedCaloriesDaoImpl implements BurnedCaloriesDao{
         		BurnedCalories.class).getResultList();
     }
 
+	@Override
+	public BurnedCalories getWeightRange(long activityId, double bodyweight) {
+		List<BurnedCalories> weightRanges = this.em.createQuery("SELECT bc FROM BurnedCalories bc WHERE bc.activity.id=:activityId AND bc.upperWeightBoundary>=:bodyweight ORDER BY bc.upperWeightBoundary ASC", BurnedCalories.class)
+				.setParameter("activityId", activityId)
+				.setParameter("bodyweight", bodyweight)
+				.getResultList();
+		
+		if (weightRanges.isEmpty()) {
+			return null;
+		}
+		
+		return weightRanges.get(0);
+	}
+	
 }

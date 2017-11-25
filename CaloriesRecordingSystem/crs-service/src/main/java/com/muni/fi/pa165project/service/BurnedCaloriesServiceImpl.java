@@ -19,5 +19,16 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
 	public void updateBurnedCalories(BurnedCalories burnedCalories) {
 		this.burnedCaloriesDao.update(burnedCalories);
 	}
+
+	@Override
+	public int getBurnedCaloriesPerHour(long activityId, double bodyweight) {
+		BurnedCalories bc = this.burnedCaloriesDao.getWeightRange(activityId, bodyweight);
+		
+		if (bc == null) {
+			return 0;
+		}
+		
+		return bc.getAmount();
+	}
 	
 }

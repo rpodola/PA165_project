@@ -44,4 +44,6 @@ public interface BurnedCaloriesDao {
      * @param burnedCalories
      */
     void delete(BurnedCalories burnedCalories);
+	
+	BurnedCalories getWeightRange(long activityId, double bodyweight);
 }
