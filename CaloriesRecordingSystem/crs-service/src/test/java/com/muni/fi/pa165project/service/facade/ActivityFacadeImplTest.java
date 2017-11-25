@@ -72,7 +72,7 @@ public class ActivityFacadeImplTest {
 		when(this.activityService.getAllActivities())
 				.thenReturn(mockedActivities);
 		
-		when(this.burnedCaloriesService.getBurnedCaloriesPerHour(any(Integer.class), any(double.class)))
+		when(this.burnedCaloriesService.getBurnedCaloriesPerHour(any(Long.class), any(double.class)))
 				.thenReturn(mockedBurnedCaloriesPerActivity);
 		
 		List<ActivityDTO> expected = new ArrayList<>();

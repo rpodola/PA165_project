@@ -95,8 +95,8 @@ public class TrackingFacadeImplTest {
         when(dozerHelper.map(recordDetailDTO, Record.class)).thenReturn(record);
         when(recordDetailDTO.getActivityId()).thenReturn(1L);
         when(recordDetailDTO.getUserId()).thenReturn(1L);
-        when(activityService.findById(any(Integer.class))).thenReturn(activity);
-        when(userService.findById(any(Integer.class))).thenReturn(user);
+        when(activityService.findById(any(Long.class))).thenReturn(activity);
+        when(userService.findById(any(Long.class))).thenReturn(user);
         trackingFacade.createRecord(recordDetailDTO);
         verify(recordService).create(record);
     }
@@ -133,7 +133,7 @@ public class TrackingFacadeImplTest {
     @Rollback
     public void getAllRecordsTest() {
         List<Record> records = new ArrayList<>();
-        when(recordService.getAllRecordsOfUser(any(Integer.class))).thenReturn(records);
+        when(recordService.getAllRecordsOfUser(any(Long.class))).thenReturn(records);
         trackingFacade.getAllRecords(user.getId());
         verify(dozerHelper).mapToList(records, RecordDTO.class);
     }
@@ -155,11 +155,11 @@ public class TrackingFacadeImplTest {
         when(timeFilterDTO.getFrom()).thenReturn(LocalDateTime.now());
         when(timeFilterDTO.getTo()).thenReturn(LocalDateTime.now());
         List<Record> filteredRecords = new ArrayList<>();
-        when(recordService.getFilteredRecords(any(Integer.class), any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn(filteredRecords);
+        when(recordService.getFilteredRecords(any(Long.class), any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn(filteredRecords);
 
         trackingFacade.getFilteredRecords(timeFilterDTO);
 
-        verify(recordService).getFilteredRecords(any(Integer.class), any(LocalDateTime.class), any(LocalDateTime.class));
+        verify(recordService).getFilteredRecords(any(Long.class), any(LocalDateTime.class), any(LocalDateTime.class));
     }
 
     @Test

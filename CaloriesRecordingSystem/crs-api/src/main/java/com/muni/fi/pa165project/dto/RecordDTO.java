@@ -13,6 +13,8 @@ public class RecordDTO {
 	
 	private long activityId;
 	
+	private String activityName;
+	
 	private long userId;
 	
 	private LocalDateTime atTime;
@@ -35,6 +37,14 @@ public class RecordDTO {
 		this.activityId = activityId;
 	}
 
+	public String getActivityName() {
+	  return activityName;
+	}
+	
+	public void setActivityName(String activityName) {
+	  this.activityName = activityName;
+	}
+	
 	public long getUserId() {
 		return userId;
 	}
@@ -87,5 +97,5 @@ public class RecordDTO {
 		}
 		return true;
 	}
-	
+
 }

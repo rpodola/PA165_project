@@ -9,7 +9,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * @author Created by Peter Krasnan, Lukáš Císar
+ * @author Peter Krasnan
+ * @author Lukáš Císar
  */
 @Repository
 public class UserDaoImpl implements UserDao {
