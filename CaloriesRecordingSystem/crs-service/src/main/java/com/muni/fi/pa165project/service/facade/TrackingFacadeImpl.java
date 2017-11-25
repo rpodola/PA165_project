@@ -11,7 +11,6 @@ import com.muni.fi.pa165project.service.ActivityService;
 import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import com.muni.fi.pa165project.service.RecordService;
 import com.muni.fi.pa165project.service.UserService;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -37,9 +36,9 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private BurnedCaloriesService burnedCaloriesService;
-
+	@Autowired
+	private BurnedCaloriesService burnedCaloriesService;
+	
     @Override
     public void createRecord(RecordDetailDTO recordDetailDto) {
         Record record = super.map(recordDetailDto, Record.class);
@@ -50,19 +49,30 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
         record.setWeight(user.getWeight());
         record.setActivity(activity);
         record.setUser(user);        
-        record.setBurnedCalories(calculateAmountOfCalories(record));
-        
+
+		record.setBurnedCalories(
+			(int) this.burnedCaloriesService.calculateAmountOfCalories(
+					recordDetailDto.getActivityId(),
+					recordDetailDto.getDuration(),
+					recordDetailDto.getWeight()
+			)
+		);
+
         this.recordService.create(record);
     }
 
     @Override
     public void editRecord(RecordDetailDTO recordDetailDto) {
         Record record = super.map(recordDetailDto, Record.class);
-        Record old = this.recordService.getRecord(record.getId());
-        if (!record.getActivity().equals(old.getActivity())
-            || record.getDuration() != old.getDuration()){
-            record.setBurnedCalories(calculateAmountOfCalories(record));
-        }
+
+        record.setBurnedCalories(
+			(int) this.burnedCaloriesService.calculateAmountOfCalories(
+				recordDetailDto.getActivityId(),
+				recordDetailDto.getDuration(),
+				recordDetailDto.getWeight()
+			)
+		);
+		
         this.recordService.update(record);
     }
 
@@ -85,14 +95,14 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
     public  List<RecordDTO> getAllRecords(long userId) {
 		List<Record> records = this.recordService.getAllRecordsOfUser(userId);
 		
-		return mapRecordList(records);
+		return super.mapToList(records, RecordDTO.class);
 	}
 
     @Override
     public List<RecordDTO> getLastNRecords(long userId, int count) {
         List<Record> records = this.recordService.getLastNRecordsOfUser(userId, count);
 		
-        return mapRecordList(records);
+		return super.mapToList(records, RecordDTO.class);
     }
 
     @Override
@@ -101,7 +111,7 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 		List<Record> filteredRecords = this.recordService.
 		    getFilteredRecords(userId, timeFilter.getFrom(), timeFilter.getTo());
     	
-        return mapRecordList(filteredRecords);
+		return super.mapToList(filteredRecords, RecordDTO.class);
     }
 
     @Override
@@ -109,22 +119,4 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
         return userService.getProgressOfweeklyCaloriesGoal(userId);
     }
 
-    private List<RecordDTO> mapRecordList(List<Record> fromList){
-        List<RecordDTO> recordListDto = new ArrayList<>();
-        for (Record r : fromList){
-            RecordDTO recordDto = super.map(r, RecordDTO.class);
-            recordDto.setActivityName(r.getActivity().getName());
-            recordListDto.add(recordDto);
-        }
-        
-        return recordListDto;
-    }
-    
-    private int calculateAmountOfCalories(Record record){
-        double weight = record.getUser().getWeight();
-        Long activityId = record.getActivity().getId();
-        
-        int amount = burnedCaloriesService.getBurnedCaloriesPerHour(activityId, weight);
-        return (int) amount * record.getDuration();
-    }
 }

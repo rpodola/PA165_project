@@ -36,13 +36,18 @@ public class ActivityDaoImpl implements ActivityDao{
         if (isManaged) {
             this.em.remove(activity);
         } else {
-            Activity actual = this.findById(activity.getId());
-            
-            if (actual != null) {
-                this.em.remove(actual);
-            }	
+            this.delete(activity.getId())	;
         }
     }
+	
+	@Override
+	public void delete(long id) {
+		Activity activity = this.findById(id);
+            
+		if (activity != null) {
+			this.em.remove(activity);
+		}	
+	}
 
     @Override
     public Activity findById(long id) {

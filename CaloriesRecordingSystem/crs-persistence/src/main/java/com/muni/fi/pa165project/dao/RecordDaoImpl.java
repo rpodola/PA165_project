@@ -39,12 +39,17 @@ public class RecordDaoImpl implements RecordDao {
 		if (isManaged) {
 			this.em.remove(record);
 		} else {
-			Record actual = this.findById(record.getId());
-
-			if (actual != null) {
-				this.em.remove(actual);
-			}	
+			this.delete(record.getId());
 		}
+	}
+	
+	@Override
+	public void delete(long id) {
+		Record record = this.findById(id);
+
+		if (record != null) {
+			this.em.remove(record);
+		}	
 	}
 	
 	@Override

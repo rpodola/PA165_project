@@ -31,4 +31,10 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
 		return bc.getAmount();
 	}
 	
+	@Override
+    public double calculateAmountOfCalories(long activityId, double duration, double bodyweight) {
+        int amount = this.getBurnedCaloriesPerHour(activityId, bodyweight);
+        return amount * duration;
+    }
+	
 }

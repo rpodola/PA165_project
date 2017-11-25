@@ -45,5 +45,18 @@ public interface BurnedCaloriesDao {
      */
     void delete(BurnedCalories burnedCalories);
 	
+	/**
+	 * Deletes record from database
+	 * @param id 
+	 */
+	void delete(long id);
+	
+	/**
+	 * Get weight range(BurnedCalories) from Activity
+	 * which corresponds to given bodyweight
+	 * @param activityId
+	 * @param bodyweight
+	 * @return 
+	 */
 	BurnedCalories getWeightRange(long activityId, double bodyweight);
 }

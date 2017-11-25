@@ -39,6 +39,12 @@ public interface RecordDao {
 	void delete(Record record);
 	
 	/**
+	 * Delete record from database
+	 * @param id 
+	 */
+	void delete(long id);
+	
+	/**
 	 * Returns all records
 	 * @return 
 	 */

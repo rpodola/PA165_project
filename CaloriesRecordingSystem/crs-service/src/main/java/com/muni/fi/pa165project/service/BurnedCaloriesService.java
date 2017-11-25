@@ -23,4 +23,13 @@ public interface BurnedCaloriesService {
 	 */
 	public int getBurnedCaloriesPerHour(long activityId, double bodyweight);
 	
+	/**
+	 * Calculate amount of burned calories from activity done for duration at bodyweight
+	 * @param activityId
+	 * @param duration
+	 * @param weight
+	 * @return 
+	 */
+	public double calculateAmountOfCalories(long activityId, double duration, double bodyweight);
+	
 }

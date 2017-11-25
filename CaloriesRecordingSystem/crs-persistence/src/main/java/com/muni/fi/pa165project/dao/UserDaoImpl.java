@@ -56,14 +56,19 @@ public class UserDaoImpl implements UserDao {
         if (isManaged) {
             this.em.remove(user);
         } else {
-            User actual = this.findById(user.getId());
-
-            if (actual != null) {
-                this.em.remove(actual);
-            }
+            this.delete(user.getId());
         }
     }
 
+	@Override
+	public void delete(long id) {
+		User user = this.findById(id);
+
+		if (user != null) {
+			this.em.remove(user);
+		}
+	}
+	
     @Override
     public List<User> findAll() {
         return this.em.createQuery("SELECT u from User u", User.class).getResultList();

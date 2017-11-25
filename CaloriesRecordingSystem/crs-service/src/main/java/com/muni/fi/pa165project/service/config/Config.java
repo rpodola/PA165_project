@@ -5,17 +5,14 @@
  */
 package com.muni.fi.pa165project.service.config;
 
-import com.muni.fi.pa165project.dao.ActivityDao;
-import com.muni.fi.pa165project.dao.ActivityDaoImpl;
-import com.muni.fi.pa165project.facade.ActivityFacade;
-import com.muni.fi.pa165project.service.ActivityService;
-import com.muni.fi.pa165project.service.ActivityServiceImpl;
-import com.muni.fi.pa165project.service.facade.ActivityFacadeImpl;
+import com.muni.fi.pa165project.dto.RecordDTO;
+import com.muni.fi.pa165project.entity.Record;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.dozer.DozerBeanMapper;
 import org.dozer.loader.api.BeanMappingBuilder;
+import org.dozer.loader.api.TypeMappingOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
@@ -28,7 +25,6 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -75,8 +71,27 @@ public class Config {
    
    @Bean
    public DozerBeanMapper dozerBeanMapper() {
-	   return new DozerBeanMapper();
+	   DozerBeanMapper mapper = new DozerBeanMapper();
+	   mapper.addMapping(mappingConfiguration());
+	   return mapper;
    }
+   
+	BeanMappingBuilder mappingConfiguration() {
+		BeanMappingBuilder builder = new BeanMappingBuilder() {
+			@Override
+			protected void configure() {
+				mapping(
+					Record.class, 
+					RecordDTO.class,
+					TypeMappingOptions.oneWay()
+				).fields(
+					"activity.name", "activityName"
+				);
+			}
+		};
+
+		return builder; 
+	}
    
    Properties additionalProperties() {
       Properties properties = new Properties();

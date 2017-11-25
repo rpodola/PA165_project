@@ -26,6 +26,12 @@ public interface UserDao {
      */
     void delete(User user);    
     
+	/**
+	 * Deletes user from database
+	 * @param id 
+	 */
+	void delete(long id);
+	
     /**
      * Finds user by id
      * @param id

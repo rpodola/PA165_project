@@ -42,8 +42,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void deleteUser(long userId){
-		User user = this.userDao.findById(userId);
-		this.userDao.delete(user);
+		this.userDao.delete(userId);
 	}
 
 	@Override

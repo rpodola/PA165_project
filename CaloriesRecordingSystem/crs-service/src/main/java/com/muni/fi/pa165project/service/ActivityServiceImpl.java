@@ -41,8 +41,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public void remove(long id) {
-        Activity activity = this.findById(id);
-        this.activityDao.delete(activity);
+        this.activityDao.delete(id);
     }
 
     @Override

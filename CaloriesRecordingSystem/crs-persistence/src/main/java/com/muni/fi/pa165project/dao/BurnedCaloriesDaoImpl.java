@@ -34,14 +34,19 @@ public class BurnedCaloriesDaoImpl implements BurnedCaloriesDao{
         if (isManaged) {
             this.em.remove(burnedCalories);
         } else {
-        	BurnedCalories actual = this.findById(burnedCalories.getId());
-            
-            if (actual != null) {
-                this.em.remove(actual);
-            }	
+        	this.delete(burnedCalories.getId());
         }
     }
     
+	@Override
+	public void delete(long id) {
+		BurnedCalories burnedCalories = this.findById(id);
+            
+		if (burnedCalories != null) {
+			this.em.remove(burnedCalories);
+		}	
+	}
+	
     @Override
     public BurnedCalories findById(long id) {
         return this.em.find(BurnedCalories.class, id);

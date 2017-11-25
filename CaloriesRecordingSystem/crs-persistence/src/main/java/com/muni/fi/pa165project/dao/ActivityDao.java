@@ -41,6 +41,12 @@ public interface ActivityDao {
 	void delete(Activity activity);
 	
 	/**
+	 * Delete activity from database
+	 * @param id 
+	 */
+	void delete(long id);
+	
+	/**
 	 * Returns all activities
 	 * @return 
 	 */

@@ -30,8 +30,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public void remove(long id) {
-        Record record = this.recordDao.findById(id);
-        this.recordDao.delete(record);
+        this.recordDao.delete(id);
     }
 
     @Override
