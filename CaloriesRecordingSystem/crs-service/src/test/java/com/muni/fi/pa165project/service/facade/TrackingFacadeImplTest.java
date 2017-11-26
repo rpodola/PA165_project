@@ -8,6 +8,7 @@ import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.TrackingFacade;
 import com.muni.fi.pa165project.service.ActivityService;
+import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import com.muni.fi.pa165project.service.RecordService;
 import com.muni.fi.pa165project.service.UserService;
 import com.muni.fi.pa165project.service.utils.DozerHelper;
@@ -44,6 +45,9 @@ public class TrackingFacadeImplTest {
     private ActivityService activityService;
 
     @Mock
+    private BurnedCaloriesService burnedCaloriesService;
+
+    @Mock
     private UserService userService;
 
     @Mock
@@ -77,6 +81,7 @@ public class TrackingFacadeImplTest {
         oldRecord.setId(2L);
         activity = new Activity();
         activity.setId(1L);
+        activity.setName("cycling");
 
         RecordDTO recordDTO = new RecordDTO();
         recordDTO.setId(1L);
@@ -85,6 +90,7 @@ public class TrackingFacadeImplTest {
         recordDTO.setUserId(user.getId());
 
         record.setAtTime(recordDTO.getAtTime());
+        record.setActivity(activity);
     }
 
     @Test
@@ -95,6 +101,7 @@ public class TrackingFacadeImplTest {
         when(dozerHelper.map(recordDetailDTO, Record.class)).thenReturn(record);
         when(recordDetailDTO.getActivityId()).thenReturn(1L);
         when(recordDetailDTO.getUserId()).thenReturn(1L);
+        when(burnedCaloriesService.calculateAmountOfCalories(any(Long.class), any(Double.class), any(Double.class))).thenReturn(500.0);
         when(activityService.findById(any(Long.class))).thenReturn(activity);
         when(userService.findById(any(Long.class))).thenReturn(user);
         trackingFacade.createRecord(recordDetailDTO);
@@ -106,6 +113,10 @@ public class TrackingFacadeImplTest {
     @Rollback
     public void updateRecordTest() {
         RecordDetailDTO recordDetailDTO = mock(RecordDetailDTO.class);
+        when(recordDetailDTO.getActivityId()).thenReturn(1L);
+        when(recordDetailDTO.getDuration()).thenReturn(record.getDistance());
+        when(recordDetailDTO.getWeight()).thenReturn(record.getWeight());
+
         when(dozerHelper.map(recordDetailDTO, Record.class)).thenReturn(record);
         trackingFacade.editRecord(recordDetailDTO);
         verify(recordService).update(record);
@@ -123,7 +134,9 @@ public class TrackingFacadeImplTest {
     @Transactional
     @Rollback
     public void getRecordTest() {
+        RecordDetailDTO recordDetailDTO = mock(RecordDetailDTO.class);
         when(recordService.getRecord(record.getId())).thenReturn(record);
+        when(dozerHelper.map(record, RecordDetailDTO.class)).thenReturn(recordDetailDTO);
         trackingFacade.getRecord(record.getId());
         verify(recordService).getRecord(record.getId());
     }
