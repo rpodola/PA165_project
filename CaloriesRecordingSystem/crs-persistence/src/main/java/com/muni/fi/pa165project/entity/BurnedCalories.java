@@ -12,6 +12,9 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.Immutable;
 
 /**
+ * This class present entity which holds information 
+ * about an amount of a burned calories per hour 
+ * while doing a certain activity.
  *
  * @author Radim Podola
  */
