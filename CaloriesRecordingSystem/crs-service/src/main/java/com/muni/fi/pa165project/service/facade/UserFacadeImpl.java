@@ -38,6 +38,18 @@ public class UserFacadeImpl extends FacadeBase implements UserFacade {
 	}
 	
 	@Override
+	public UserDTO getUser(long id) {
+	    User user = this.userService.findById(id);
+	    return super.map(user, UserDTO.class);
+	}
+
+	@Override
+    public UserDTO getUser(String email) {
+        User user = this.userService.findByEmail(email);
+        return super.map(user, UserDTO.class);
+    }	
+
+	@Override
 	public void setTrackingSettings(TrackingSettingsDTO trackingSettings) {
 		User user = this.userService.findById(trackingSettings.getUserId());
 		user.getTrackingSettings().setWeeklyCaloriesGoal(trackingSettings.getWeeklyCaloriesGoal());
@@ -50,5 +62,4 @@ public class UserFacadeImpl extends FacadeBase implements UserFacade {
 		TrackingSettingsDTO settings = super.map(user.getTrackingSettings(), TrackingSettingsDTO.class);
 		return settings;
 	}
-
 }

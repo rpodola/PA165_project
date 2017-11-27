@@ -1,8 +1,8 @@
 package com.muni.fi.pa165project.service.facade;
 
 import java.time.LocalDate;
-
 import javax.transaction.Transactional;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,6 @@ import com.muni.fi.pa165project.dto.UserDTO;
 import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.facade.UserFacade;
-import com.muni.fi.pa165project.structures.LoginDetails;
 
   /**
 * @author Radim Podola
@@ -38,12 +37,9 @@ public class UserFacadeImplIT {
         user.setHeight(180);
         user.setWeight(77);
         user.setUserRole(UserEnum.ADMINISTRATOR);
-
-        LoginDetails login = new LoginDetails();
-        login.setUsername("ciso112");
-        login.setPassword("abcdefgh");
-        login.setEmail("ciso112@protonmail.com");
-        //this.user.setLoginDetails(login);
+        user.setUsername("ciso112");
+        user.setPassword("abcdefgh");
+        user.setEmail("ciso112@protonmail.com");
     }   
 
     @Test
@@ -51,11 +47,7 @@ public class UserFacadeImplIT {
     @Rollback(true)
     public void testCreate() {
         userFac.createUser(user);
-    }
-
-    @Test
-    @Transactional
-    @Rollback(true)
-    public void testUpdate() {
+        UserDTO foundUser = this.userFac.getUser(user.getEmail());
+        Assert.assertTrue(user.equals(foundUser));
     }
 }

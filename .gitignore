@@ -25,8 +25,8 @@ hs_err_pid*
 #Intellij files
 .idea
 *.iml
-/CaloriesRecordingSystem/nbproject/
-/CaloriesRecordingSystem/crs-persistence/target/
-/CaloriesRecordingSystem/crs-service/target/
-/CaloriesRecordingSystem/crs-api/target/
-/CaloriesRecordingSystem/crs-service/nbproject/
+target/
+nbproject/
+.project
+.settings
+.classpath

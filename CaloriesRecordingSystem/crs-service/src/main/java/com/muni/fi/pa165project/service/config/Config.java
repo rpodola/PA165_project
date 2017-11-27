@@ -6,7 +6,9 @@
 package com.muni.fi.pa165project.service.config;
 
 import com.muni.fi.pa165project.dto.RecordDTO;
+import com.muni.fi.pa165project.dto.UserDTO;
 import com.muni.fi.pa165project.entity.Record;
+import com.muni.fi.pa165project.entity.User;
 
 import java.util.Collections;
 import java.util.Properties;
@@ -91,6 +93,12 @@ public class Config {
 				).fields(
 					"activity.name", "activityName"
 				);
+                mapping(
+                    User.class, 
+                    UserDTO.class
+                ).fields("loginDetails.username", "username"
+                ).fields("loginDetails.password", "password"
+                ).fields("loginDetails.email", "email");
 			}
 		};
 

@@ -27,7 +27,19 @@ public interface UserFacade {
      * @param id user id
      */
 	void removeUser(long id);
-	
+
+    /**
+     * Get information about User
+     * @param id user id
+     */
+    UserDTO getUser(long id);
+
+    /**
+     * Get information about User by email
+     * @param email users's email
+     */
+    UserDTO getUser(String email);
+
 	/**
 	 * Set tracking settings for user (goals)
          * @param trackingSettings

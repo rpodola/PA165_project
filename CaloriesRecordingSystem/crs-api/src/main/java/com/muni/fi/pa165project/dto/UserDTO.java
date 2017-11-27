@@ -26,6 +26,12 @@ public class UserDTO {
 
 	private UserEnum userRole;
 
+    private String username;
+    
+    private String password;
+
+    private String email;
+
 	public Long getId() {
 		return id;
 	}
@@ -81,13 +87,38 @@ public class UserDTO {
 	public void setUserRole(UserEnum userRole) {
 		this.userRole = userRole;
 	}
-	
-	@Override
+
+	public String getUsername() {
+	    return username;
+    }
+  
+    public void setUsername(String username) {
+        this.username = username;
+    }
+  
+    public String getPassword() {
+        return password;
+    }
+  
+    public void setPassword(String password) {
+        this.password = password;
+    }
+  
+    public String getEmail() {
+        return email;
+    }
+  
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+  @Override
 	public int hashCode() {
 		int hash = 11;
 		hash = 7 * hash + Objects.hashCode(this.name);
 		hash = 7 * hash + Objects.hashCode(this.weight);
 		hash = 7 * hash * Objects.hashCode(this.birthDate);
+		hash = 7 * hash + username.hashCode();
 		return hash;
 	}
 
@@ -99,16 +130,16 @@ public class UserDTO {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof RecordDTO)) {
+		if (!(obj instanceof UserDTO)) {
 			return false;
 		}
 		final UserDTO other = (UserDTO) obj;
-		if (this.id != other.id) {
-			return false;
-		}
+  	    if (!this.username.equals(other.username)) {
+  	        return false;
+  	    }
+        if (!this.email.equals(other.email)) {
+            return false;
+        }
 		return true;
 	}
-
-
-
 }

@@ -156,6 +156,8 @@ public class User implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 7;
+		if (this.loginDetails.getUsername() == null)
+		    return hash = 97 * hash;
 		hash = 97 * hash + this.loginDetails.getUsername().hashCode();
 		return hash;
 	}
