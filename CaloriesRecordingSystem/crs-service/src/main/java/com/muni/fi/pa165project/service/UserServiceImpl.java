@@ -16,7 +16,8 @@ import static java.time.DayOfWeek.MONDAY;
 import static java.time.temporal.TemporalAdjusters.previousOrSame;
 /**
  *
- * @author Radoslav Karlik, Lukáš Císar
+ * @author Radoslav Karlik
+ * @author Lukáš Císar
  */
 @Service
 public class UserServiceImpl implements UserService {

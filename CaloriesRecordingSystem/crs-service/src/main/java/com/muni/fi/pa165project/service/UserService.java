@@ -11,41 +11,41 @@ import com.muni.fi.pa165project.entity.User;
 public interface UserService {
 	
 	/**
-	 * Returns user with given id
-	 * @param userId
-	 * @return 
-	 */
+     * Find user by ID
+     * @param userId ID of user to find
+     * @return user object
+     */
 	User findById(long userId);
 	
 	/**
-	 * Returns user with given email
-	 * @param email
-	 * @return 
-	 */
+     * Find user by email
+     * @param email email of user to find
+     * @return user object
+     */
 	User findByEmail(String email);
 	
 	/**
-	 * Creates user
-	 * @param user 
-	 */
+     * Create user
+     * @param user user to create
+     */
 	void createUser(User user);
 	
 	/**
-	 * Deletes user
-	 * @param userId 
-	 */
+     * Delete user
+     * @param userId user to delete
+     */
 	void deleteUser(long userId);
-	
+
 	/**
-	 * Updates user
-	 * @param user 
+	 * Update user
+	 * @param user user to update
 	 */
 	void updateUser(User user);
-    
+
 	/**
-	 * Get weekly calorie progress of User
-	 * @param userId
-	 * @return 
+	 * Get progress of weekly calories goal
+	 * @param user user to update
+	 * @return int percentage of fulfillment of a set week-calories goal
 	 */
 	int getProgressOfweeklyCaloriesGoal(long userId);
 }

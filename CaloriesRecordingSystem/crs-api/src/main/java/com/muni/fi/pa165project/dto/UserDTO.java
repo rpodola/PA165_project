@@ -12,7 +12,7 @@ import com.muni.fi.pa165project.enums.UserEnum;
 
 public class UserDTO {
 
-	private Long id;
+	private long id;
 
 	private String name;
 
@@ -87,6 +87,7 @@ public class UserDTO {
 		int hash = 11;
 		hash = 7 * hash + Objects.hashCode(this.name);
 		hash = 7 * hash + Objects.hashCode(this.weight);
+		hash = 7 * hash * Objects.hashCode(this.birthDate);
 		return hash;
 	}
 

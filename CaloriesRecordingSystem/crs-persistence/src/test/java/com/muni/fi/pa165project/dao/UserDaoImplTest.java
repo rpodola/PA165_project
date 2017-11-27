@@ -21,6 +21,7 @@ import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.structures.LoginDetails;
 
 /**
+*
 * @author Lukáš Císar
 */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -80,7 +81,7 @@ public class UserDaoImplTest {
 	@Test
 	@Transactional
 	@Rollback(true)
-	public void deleteTest() {
+	public void testDelete() {
 
 		int initialCount = userDao.findAll().size();
 		Assert.assertTrue("Nothing to delete",initialCount != 0);
@@ -102,15 +103,6 @@ public class UserDaoImplTest {
 		Assert.assertEquals(user.getName(), foundUser.getName());
 	}
 
-    @Test
-    @Transactional
-    @Rollback(true)
-    public void testFindByEmail(){
-        User foundUser = userDao.findByEmail("ciso112@protonmail.com");
-
-        Assert.assertEquals(user.getLoginDetails().getEmail(), foundUser.getLoginDetails().getEmail());
-    }
-    
 	@Test
 	@Transactional
 	@Rollback(true)
@@ -137,6 +129,13 @@ public class UserDaoImplTest {
 
 		Assert.assertTrue("Users have incorrect number of results2", users.size() == 2);
 
+	}
+	
+	
+	public void testFindByEmail(){
+		
+		User foundUser = userDao.findByEmail("ciso112@protonmail.com");
+		Assert.assertEquals(user.getLoginDetails().getEmail(), foundUser.getLoginDetails().getEmail());
 	}
 }
 
