@@ -13,8 +13,9 @@ public interface UserFacade {
     /**
      * Create User
      * @param userDto user object
+     * @return user id or null if user was not created
      */
-    void createUser(UserDTO userDto);
+    Long createUser(UserDTO userDto);
 
     /**
      * Edit User
