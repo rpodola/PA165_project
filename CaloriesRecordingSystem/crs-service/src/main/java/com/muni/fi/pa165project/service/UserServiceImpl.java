@@ -58,6 +58,9 @@ public class UserServiceImpl implements UserService {
         double sum = 0;
         User user = this.findById(userId);
         double goal = user.getTrackingSettings().getWeeklyCaloriesGoal();
+        
+        if (goal <= 0)
+            return 100;
 
         LocalDate monday = LocalDate.now().with(previousOrSame(MONDAY));
         LocalDateTime start = LocalDateTime.of(monday, LocalTime.MIDNIGHT);
@@ -69,7 +72,8 @@ public class UserServiceImpl implements UserService {
         for (Record r : lastWeekRecords){
             sum += r.getBurnedCalories();
         }
-
-        return (int) (sum / (goal / 100));
+        int progress = (int) ((sum / goal) * 100);
+        
+        return progress;
     }
 }

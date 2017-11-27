@@ -1,20 +1,12 @@
 package com.muni.fi.pa165project.service.utils;
 
-import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static java.time.DayOfWeek.MONDAY;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.transaction.Transactional;
-import javax.validation.constraints.AssertFalse;
-
-import org.hibernate.type.LocalDateType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,10 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.annotation.Rollback;
-
 import com.muni.fi.pa165project.dao.RecordDao;
 import com.muni.fi.pa165project.dao.UserDao;
-import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.service.UserService;
@@ -36,6 +26,7 @@ import com.muni.fi.pa165project.structures.TrackingSettings;
 /**
 *
 * @author Lukáš Císar
+* @author Radim Podola
 */
 
 @RunWith(MockitoJUnitRunner.class)
@@ -54,10 +45,6 @@ public class UserServiceImplTest {
     
     private Record testRecord;
     
-    private Activity testActivity;
-    
-    List<Record> records = new ArrayList<>();
-    
     @Before
     public void prepareData(){
     	testUser =  new User();
@@ -72,9 +59,6 @@ public class UserServiceImplTest {
     	TrackingSettings trackingSettings = new TrackingSettings();
     	trackingSettings.setWeeklyCaloriesGoal(200);
     	testUser.setTrackingSettings(trackingSettings);
-    	//testUser.set
-    	
-    	
     }
     
     @Test
@@ -122,36 +106,36 @@ public class UserServiceImplTest {
     @Test
     @Transactional
     @Rollback
-    public void testGetProgressOfweeklyCaloriesGoal(){
-    	when(userService.findById(testUser.getId())).thenReturn(testUser);
-    	
-    	testActivity = new Activity();
-    	testActivity.setId(6l);
-    	testActivity.setName("aktivita");
+    public void testGetProgressOfweeklyCaloriesGoal(){    	
+        List<Record> records = new ArrayList<>();
+
     	testRecord = new Record();
-        testRecord.setId(2l);
         testRecord.setBurnedCalories(20);
-        testRecord.setDuration(1);
-        testRecord.setAtTime(LocalDateTime.now());
-        testRecord.setUser(testUser);
-        testRecord.setActivity(testActivity);
+
+        when(userService.findById(any(Long.class))).thenReturn(testUser);
+        when(recordDao.findByTime(any(Long.class), any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn(records);
+
+        //lets have 0% progress, no records so far
+        Assert.assertEquals(0, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
+        
+        //add 1 record with 20 burned calories, should be 10% progress 
         records.add(testRecord);
-        
-    	LocalDateTime from = LocalDateTime.now();
-    	LocalDateTime to = from.plusWeeks(1).minusSeconds(1);
-        when(recordDao.findByTime(testUser.getId(), from, to)).thenReturn(records);
-        int skuska = records.get(0).getBurnedCalories();
-        
-        int progress =  userService.getProgressOfweeklyCaloriesGoal(testUser.getId());
-        int expected = 0;
-		
-//		AssertFalse(progress, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
-        Assert.assertSame(expected, progress);
+        Assert.assertEquals(10, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
 
-//		verify(progress,userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
+        //lets add another record and have 50% progress
+        testRecord = new Record();
+        testRecord.setBurnedCalories(80);
+        records.add(testRecord);
+        Assert.assertEquals(50, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
+        
+        //lets add another record and have 200% progress
+        testRecord = new Record();
+        testRecord.setBurnedCalories(300);
+        records.add(testRecord);
+        Assert.assertEquals(200, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
+        
+        //lets set goal to 0 and progress should be always accomplished
+        testUser.getTrackingSettings().setWeeklyCaloriesGoal(0);
+        Assert.assertEquals(100, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
 	}
-	
-
-	
-
 }
