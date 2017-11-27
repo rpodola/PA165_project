@@ -12,7 +12,7 @@ import com.muni.fi.pa165project.enums.UserEnum;
 
 public class UserDTO {
 
-	private long id;
+	private Long id;
 
 	private String name;
 
