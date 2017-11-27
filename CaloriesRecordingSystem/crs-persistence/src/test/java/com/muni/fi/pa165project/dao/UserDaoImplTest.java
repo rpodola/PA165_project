@@ -131,7 +131,9 @@ public class UserDaoImplTest {
 
 	}
 	
-	
+	@Test
+	@Transactional
+	@Rollback(true)
 	public void testFindByEmail(){
 		
 		User foundUser = userDao.findByEmail("ciso112@protonmail.com");
