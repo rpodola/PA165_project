@@ -12,7 +12,7 @@ public interface BurnedCaloriesService {
 	 * Update weight range(burned calories) in its activity
 	 * @param burnedCalories 
 	 */
-	public void updateBurnedCalories(BurnedCalories burnedCalories);
+	void updateBurnedCalories(BurnedCalories burnedCalories);
 	
 	/**
 	 * Returns amount of burned calories per hour from activity
@@ -21,15 +21,15 @@ public interface BurnedCaloriesService {
 	 * @param bodyweight
 	 * @return 
 	 */
-	public int getBurnedCaloriesPerHour(long activityId, double bodyweight);
+	int getBurnedCaloriesPerHour(long activityId, double bodyweight);
 	
 	/**
 	 * Calculate amount of burned calories from activity done for duration at bodyweight
 	 * @param activityId
 	 * @param duration
-	 * @param weight
+	 * @param bodyweight
 	 * @return 
 	 */
-	public double calculateAmountOfCalories(long activityId, double duration, double bodyweight);
+	double calculateAmountOfCalories(long activityId, double duration, double bodyweight);
 	
 }

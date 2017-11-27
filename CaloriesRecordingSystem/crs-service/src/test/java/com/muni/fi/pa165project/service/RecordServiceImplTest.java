@@ -1,10 +1,8 @@
-package com.muni.fi.pa165project.service.utils;
+package com.muni.fi.pa165project.service;
 
 import com.muni.fi.pa165project.dao.RecordDao;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
-import com.muni.fi.pa165project.service.RecordService;
-import com.muni.fi.pa165project.service.RecordServiceImpl;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import org.junit.Assert;
 import org.junit.Before;

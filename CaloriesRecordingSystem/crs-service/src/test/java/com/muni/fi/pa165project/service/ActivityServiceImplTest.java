@@ -1,12 +1,9 @@
-package com.muni.fi.pa165project.service.utils;
+package com.muni.fi.pa165project.service;
 
 import com.muni.fi.pa165project.dao.ActivityDao;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.BurnedCalories;
 import com.muni.fi.pa165project.enums.Category;
-import com.muni.fi.pa165project.service.ActivityService;
-import com.muni.fi.pa165project.service.ActivityServiceImpl;
-import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -4,14 +4,16 @@ import com.muni.fi.pa165project.dao.RecordDao;
 import com.muni.fi.pa165project.dao.UserDao;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
-import static java.time.DayOfWeek.MONDAY;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
 import java.util.List;
+
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 /**
  *
  * @author Radoslav Karlik, Lukáš Císar
