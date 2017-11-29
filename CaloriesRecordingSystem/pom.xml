@@ -145,6 +145,7 @@
         <module>crs-api</module>
 		<module>crs-service</module>
 		<module>crs-persistence</module>
+		<module>crs-ui</module>
 	</modules>
   
 </project>
