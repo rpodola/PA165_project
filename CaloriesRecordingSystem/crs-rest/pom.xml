@@ -9,9 +9,8 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   
-  <groupId>com.muni.fi.pa165project</groupId>
+  <groupId>crs-rest</groupId>
   <artifactId>crs-rest</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <name>crs-rest</name>
   
   <url>http://maven.apache.org</url>
