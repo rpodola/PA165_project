@@ -1,6 +1,6 @@
 package com.muni.fi.pa165project.dao;
 
-import com.muni.fi.pa165project.config.TestConfig;
+import com.muni.fi.pa165project.config.AppConfig;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.enums.Category;
 import org.junit.Assert;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = AppConfig.class)
 @Transactional
 public class ActivityDaoImplTest {
 

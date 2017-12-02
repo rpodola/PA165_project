@@ -2,6 +2,7 @@ package com.muni.fi.pa165project.service;
 
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.enums.Category;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
@@ -56,6 +57,6 @@ public interface ActivityService {
 	 * @param getBurnedCaloriesByActivityId function which returns burned calories per hour after input argument activity id
 	 * @return 
 	 */
-	public List<Activity> getActivitiesSortedByBurnedCalories(Function<Long, Integer> getBurnedCaloriesByActivityId);
+    List<Activity> getActivitiesSortedByBurnedCalories(Function<Long, Integer> getBurnedCaloriesByActivityId);
 	
 }

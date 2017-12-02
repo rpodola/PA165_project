@@ -1,20 +1,5 @@
-package com.muni.fi.pa165project.service.utils;
+package com.muni.fi.pa165project.service;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import javax.transaction.Transactional;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.annotation.Rollback;
 import com.muni.fi.pa165project.dao.RecordDao;
 import com.muni.fi.pa165project.dao.UserDao;
 import com.muni.fi.pa165project.entity.Record;
@@ -23,6 +8,23 @@ import com.muni.fi.pa165project.service.UserService;
 import com.muni.fi.pa165project.service.UserServiceImpl;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import com.muni.fi.pa165project.structures.TrackingSettings;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.annotation.Rollback;
+
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 /**
 *
 * @author Lukáš Císar

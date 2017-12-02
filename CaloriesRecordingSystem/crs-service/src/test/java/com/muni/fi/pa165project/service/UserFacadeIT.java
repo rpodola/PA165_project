@@ -1,7 +1,10 @@
 package com.muni.fi.pa165project.service;
 
-import java.time.LocalDate;
-import javax.transaction.Transactional;
+import com.muni.fi.pa165project.config.AppConfig;
+import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.enums.GenderEnum;
+import com.muni.fi.pa165project.enums.UserEnum;
+import com.muni.fi.pa165project.facade.UserFacade;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,17 +14,15 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.muni.fi.pa165project.config.TestConfig;
-import com.muni.fi.pa165project.dto.UserDTO;
-import com.muni.fi.pa165project.enums.GenderEnum;
-import com.muni.fi.pa165project.enums.UserEnum;
-import com.muni.fi.pa165project.facade.UserFacade;
+
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 
   /**
 * @author Radim Podola
 */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = AppConfig.class)
 public class UserFacadeIT {
 
     @Autowired

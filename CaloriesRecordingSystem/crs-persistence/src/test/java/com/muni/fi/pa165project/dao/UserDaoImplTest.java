@@ -1,10 +1,10 @@
 package com.muni.fi.pa165project.dao;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import com.muni.fi.pa165project.config.AppConfig;
+import com.muni.fi.pa165project.entity.User;
+import com.muni.fi.pa165project.enums.GenderEnum;
+import com.muni.fi.pa165project.enums.UserEnum;
+import com.muni.fi.pa165project.structures.LoginDetails;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,18 +14,16 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.muni.fi.pa165project.config.TestConfig;
-import com.muni.fi.pa165project.entity.User;
-import com.muni.fi.pa165project.enums.GenderEnum;
-import com.muni.fi.pa165project.enums.UserEnum;
-import com.muni.fi.pa165project.structures.LoginDetails;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
 *
 * @author Lukáš Císar
 */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = AppConfig.class)
 public class UserDaoImplTest {
 
 	@Autowired

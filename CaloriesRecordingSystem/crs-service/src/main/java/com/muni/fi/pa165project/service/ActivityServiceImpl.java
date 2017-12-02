@@ -3,13 +3,14 @@ package com.muni.fi.pa165project.service;
 import com.muni.fi.pa165project.dao.ActivityDao;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.enums.Category;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
