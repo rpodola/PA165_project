@@ -19,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @author Radim Podola
@@ -84,6 +85,7 @@ public class TrackingFacadeIT {
         record.setDistance(100);
         record.setDuration(2);
         record.setActivityId(activity.getId());
+        record.setAtTime(LocalDateTime.now());
     }
 
     @Test

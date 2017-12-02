@@ -84,7 +84,7 @@ public class Activity implements Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + name.hashCode();
+        result = 31 * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 

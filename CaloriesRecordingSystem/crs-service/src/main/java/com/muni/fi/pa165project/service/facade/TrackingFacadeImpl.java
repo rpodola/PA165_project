@@ -46,7 +46,6 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
         User user = this.userService.findById(recordDetailDto.getUserId());
         Activity activity = this.activityService.findById(recordDetailDto.getActivityId());
 
-        user.addRecord(record);
         record.setWeight(user.getWeight());
         record.setActivity(activity);
         record.setBurnedCalories(
@@ -56,9 +55,13 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
                     record.getWeight()
             )
         );
-
-        this.recordService.create(record);
-        return record.getId();
+        user.addRecord(record);
+        //TODO fix this dirty hack
+        recordService.update(record);
+        List<Record> records = recordService.getFilteredRecords(user.getId(), record.getAtTime(), record.getAtTime());
+        if (records.isEmpty())
+            return null;
+        return records.get(0).getId();
     }
 
     @Override
@@ -86,6 +89,7 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
         Record record = this.recordService.getRecord(id);
         RecordDetailDTO recordDetailDto = super.map(record, RecordDetailDTO.class);
         recordDetailDto.setActivityName(record.getActivity().getName());
+        recordDetailDto.setUserId(record.getUser().getId());
         
         return recordDetailDto;
     }
