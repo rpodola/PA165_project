@@ -30,5 +30,22 @@ public class TrackingSettingsDTO {
 	public void setWeeklyCaloriesGoal(int weeklyCaloriesGoal) {
 		this.weeklyCaloriesGoal = weeklyCaloriesGoal;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof TrackingSettingsDTO)) {
+			return false;
+		}
+		final TrackingSettingsDTO other = (TrackingSettingsDTO) obj;
+		if (this.weeklyCaloriesGoal != other.getWeeklyCaloriesGoal()) {
+			return false;
+		}
+		return true;
+	}
 }

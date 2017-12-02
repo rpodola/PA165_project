@@ -77,8 +77,8 @@ public class Activity implements Serializable {
     }
 
     public void addBurnedCaloriesItem(BurnedCalories burnedCaloriesItem){
-        this.burnedCalories.add(burnedCaloriesItem);
         burnedCaloriesItem.setActivity(this);
+        this.burnedCalories.add(burnedCaloriesItem);
     }
 
     @Override

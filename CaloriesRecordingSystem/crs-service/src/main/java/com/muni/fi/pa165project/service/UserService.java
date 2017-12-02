@@ -44,8 +44,8 @@ public interface UserService {
 
 	/**
 	 * Get progress of weekly calories goal
-	 * @param user user to update
+	 * @param userId user's id to update
 	 * @return int percentage of fulfillment of a set week-calories goal
 	 */
-	int getProgressOfweeklyCaloriesGoal(long userId);
+	int getProgressOfWeeklyCaloriesGoal(long userId);
 }

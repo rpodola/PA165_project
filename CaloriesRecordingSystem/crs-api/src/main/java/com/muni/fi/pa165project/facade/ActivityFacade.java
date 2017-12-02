@@ -15,8 +15,9 @@ public interface ActivityFacade {
     /**
      * Create Activity object
      * @param activityDTO activity information
+     * @return activity id or null if activity was not created
      */
-    void createActivity(ActivityDTO activityDTO);
+    Long createActivity(ActivityDTO activityDTO);
 
     /**
      * Edit Activity object

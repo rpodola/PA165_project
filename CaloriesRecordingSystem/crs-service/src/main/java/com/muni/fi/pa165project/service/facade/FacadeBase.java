@@ -23,11 +23,11 @@ public abstract class FacadeBase {
 	private DozerHelper dozerHelper;
 	
 	protected <T> T map(Object source, Class<T> destinationClass) {
-		return this.dozerHelper.map(source, destinationClass);
+		return source == null ? null : this.dozerHelper.map(source, destinationClass);
 	}
 	
 	protected <T, Z> List<T> mapToList(Collection<Z> source, Class<T> destinationClass) {
-		return this.dozerHelper.mapToList(source, destinationClass);
+		return source == null ? null : this.dozerHelper.mapToList(source, destinationClass);
 	}
 	
 }

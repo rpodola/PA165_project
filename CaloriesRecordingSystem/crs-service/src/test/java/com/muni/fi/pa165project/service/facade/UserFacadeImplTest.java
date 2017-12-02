@@ -105,6 +105,6 @@ public class UserFacadeImplTest {
     public void getTrackingSettingsTest() {
         when(userService.findById(1L)).thenReturn(user);
         userFacade.getTrackingSettings(1L);
-        verify(dozerHelper).map(user.getTrackingSettings(),TrackingSettingsDTO.class);
+        verify(dozerHelper).map(user.getTrackingSettings(), TrackingSettingsDTO.class);
     }
 }

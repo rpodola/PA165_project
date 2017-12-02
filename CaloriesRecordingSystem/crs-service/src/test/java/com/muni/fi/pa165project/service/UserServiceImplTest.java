@@ -4,8 +4,6 @@ import com.muni.fi.pa165project.dao.RecordDao;
 import com.muni.fi.pa165project.dao.UserDao;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
-import com.muni.fi.pa165project.service.UserService;
-import com.muni.fi.pa165project.service.UserServiceImpl;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import com.muni.fi.pa165project.structures.TrackingSettings;
 import org.junit.Assert;
@@ -118,26 +116,26 @@ public class UserServiceImplTest {
         when(recordDao.findByTime(any(Long.class), any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn(records);
 
         //lets have 0% progress, no records so far
-        Assert.assertEquals(0, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
+        Assert.assertEquals(0, userService.getProgressOfWeeklyCaloriesGoal(testUser.getId()));
         
         //add 1 record with 20 burned calories, should be 10% progress 
         records.add(testRecord);
-        Assert.assertEquals(10, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
+        Assert.assertEquals(10, userService.getProgressOfWeeklyCaloriesGoal(testUser.getId()));
 
         //lets add another record and have 50% progress
         testRecord = new Record();
         testRecord.setBurnedCalories(80);
         records.add(testRecord);
-        Assert.assertEquals(50, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
+        Assert.assertEquals(50, userService.getProgressOfWeeklyCaloriesGoal(testUser.getId()));
         
         //lets add another record and have 200% progress
         testRecord = new Record();
         testRecord.setBurnedCalories(300);
         records.add(testRecord);
-        Assert.assertEquals(200, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
+        Assert.assertEquals(200, userService.getProgressOfWeeklyCaloriesGoal(testUser.getId()));
         
         //lets set goal to 0 and progress should be always accomplished
         testUser.getTrackingSettings().setWeeklyCaloriesGoal(0);
-        Assert.assertEquals(100, userService.getProgressOfweeklyCaloriesGoal(testUser.getId()));
+        Assert.assertEquals(100, userService.getProgressOfWeeklyCaloriesGoal(testUser.getId()));
 	}
 }

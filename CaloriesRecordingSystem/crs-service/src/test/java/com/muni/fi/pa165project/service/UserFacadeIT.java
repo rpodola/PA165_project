@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.service;
 
 import com.muni.fi.pa165project.config.AppConfig;
+import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
 import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.enums.UserEnum;
@@ -14,11 +15,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 
-  /**
+/**
 * @author Radim Podola
 */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -46,7 +46,7 @@ public class UserFacadeIT {
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback()
     public void testCreateUser() {
         Long userId = userFac.createUser(user);
         UserDTO foundUser = this.userFac.getUser(userId);
@@ -55,7 +55,7 @@ public class UserFacadeIT {
     
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback()
     public void testEditUser() {
         final String newName = "Martin";
         Long userId = userFac.createUser(user);
@@ -73,7 +73,7 @@ public class UserFacadeIT {
     
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback()
     public void testRemoveUser() {
         Long userId = userFac.createUser(user);
         userFac.removeUser(userId);
@@ -83,7 +83,7 @@ public class UserFacadeIT {
     
     @Test(expected = DataAccessException.class)
     @Transactional
-    @Rollback(true)
+    @Rollback()
     public void testGetUserById() {
         Long userId = userFac.createUser(user);
         UserDTO foundUser = this.userFac.getUser(userId);
@@ -94,7 +94,7 @@ public class UserFacadeIT {
 
     @Test(expected = DataAccessException.class)
     @Transactional
-    @Rollback(true)
+    @Rollback()
     public void testCreateUserFail() {
         user.setUsername(null);
         userFac.createUser(user);
@@ -102,10 +102,26 @@ public class UserFacadeIT {
 
     @Test
     @Transactional
-    @Rollback(true)
+    @Rollback()
     public void testGetUserByEmail() {
         userFac.createUser(user);
         UserDTO foundUser = this.userFac.getUser(user.getEmail());
         Assert.assertEquals(user, foundUser);
+    }
+
+    @Test
+    @Transactional
+    @Rollback()
+    public void testGetSetTrackingSettings() {
+        Long userId = userFac.createUser(user);
+
+        TrackingSettingsDTO settings = new TrackingSettingsDTO();
+        settings.setUserId(userId);
+        settings.setWeeklyCaloriesGoal(100);
+
+        userFac.setTrackingSettings(settings);
+        TrackingSettingsDTO settingsFound = userFac.getTrackingSettings(userId);
+        Assert.assertEquals(settings, settingsFound);
+        Assert.assertNull(userFac.getTrackingSettings(58));
     }
 }

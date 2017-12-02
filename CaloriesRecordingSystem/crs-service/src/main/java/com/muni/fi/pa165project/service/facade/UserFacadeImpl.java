@@ -7,7 +7,6 @@ import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 
 /**
@@ -35,20 +34,20 @@ public class UserFacadeImpl extends FacadeBase implements UserFacade {
 	}
 
 	@Override
-	public void removeUser(long userId) {	
+	public void removeUser(long userId) {
 		this.userService.deleteUser(userId);
 	}
 	
 	@Override
 	public UserDTO getUser(long id) {
 	    User user = this.userService.findById(id);
-	    return user != null ? super.map(user, UserDTO.class) : null;
+	    return super.map(user, UserDTO.class);
 	}
 
 	@Override
     public UserDTO getUser(String email) {
         User user = this.userService.findByEmail(email);
-        return user != null ? super.map(user, UserDTO.class) : null;
+        return super.map(user, UserDTO.class);
     }	
 
 	@Override
@@ -66,6 +65,9 @@ public class UserFacadeImpl extends FacadeBase implements UserFacade {
         if (user == null)
             return null;
 		TrackingSettingsDTO settings = super.map(user.getTrackingSettings(), TrackingSettingsDTO.class);
+		if (settings == null)
+			return null;
+		settings.setUserId(user.getId());
 		return settings;
 	}
 }

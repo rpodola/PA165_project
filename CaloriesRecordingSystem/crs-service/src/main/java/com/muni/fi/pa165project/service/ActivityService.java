@@ -16,47 +16,46 @@ public interface ActivityService {
 
 	/**
 	 * Creates activity
-	 * @param activity 
+	 * @param activity activity entity
 	 */
     void create(Activity activity);
 
 	/**
 	 * Return activity with given id
-	 * @param id
-	 * @return 
+	 * @param id activity id
+	 * @return activity entity
 	 */
     Activity findById(long id);
 
 	/**
 	 * Updates activity
-	 * @param activity 
+	 * @param activity activity entity
 	 */
     void update(Activity activity);
 
 	/**
 	 * Return all activities
-	 * @return 
+	 * @return list of activity entities
 	 */
     List<Activity> getAllActivities();
 
 	/**
 	 * Remove activity
-	 * @param id 
+	 * @param id activity id
 	 */
     void remove(long id);
 
 	/**
 	 * Return all activities from given categories
-	 * @param categories
-	 * @return 
+	 * @param categories list of categories
+	 * @return list of activity entities
 	 */
     List<Activity> getFilteredActivities(Collection<Category> categories);
 	
 	/**
 	 * Returns activities sorted by the amount of burned calories per one hour
 	 * @param getBurnedCaloriesByActivityId function which returns burned calories per hour after input argument activity id
-	 * @return 
+	 * @return list of activity entities
 	 */
     List<Activity> getActivitiesSortedByBurnedCalories(Function<Long, Integer> getBurnedCaloriesByActivityId);
-	
 }

@@ -40,16 +40,16 @@ public interface RecordService {
     /**
      * Get all records of user
 	 * sorted by time
-	 * @param userId
+	 * @param userId user's id
      * @return list of all records
      */
     List<Record> getAllRecordsOfUser(long userId);
 	
 	/**
 	 * get last N records of user
-	 * @param userId
-	 * @param count
-	 * @return 
+	 * @param userId user's id
+	 * @param count count of last records
+	 * @return list of records
 	 */
 	List<Record> getLastNRecordsOfUser(long userId, int count);
     

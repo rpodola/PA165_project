@@ -56,7 +56,6 @@ public class BurnedCaloriesDTO {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 97 * hash + Objects.hashCode(this.activityId);
 		hash = 97 * hash + this.upperWeightBoundary;
 		hash = 97 * hash + this.amount;
 		return hash;

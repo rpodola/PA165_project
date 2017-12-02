@@ -27,44 +27,26 @@ import java.util.function.Function;
 @Service
 @Transactional
 public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
-	
+
 	@Autowired
 	private ActivityService activityService;
-	
+
 	@Autowired
 	private BurnedCaloriesService burnedCaloriesService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Override
-	public void createActivity(ActivityDTO activityDTO) {
+	public Long createActivity(ActivityDTO activityDTO) {
 		Activity activity = super.map(activityDTO, Activity.class);
 		this.activityService.create(activity);
+		return activity.getId();
 	}
 
 	@Override
-	public void addBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
-		BurnedCalories bc = super.map(burnedCaloriesDTO, BurnedCalories.class);
-		
-		long activityId = burnedCaloriesDTO.getActivityId();
-		
-		Activity activity = this.activityService.findById(activityId);
-		activity.getBurnedCalories().add(bc);
-		this.activityService.update(activity);
-	}
-
-	@Override
-	public List<ActivityDTO> getAllActivities() {
-		List<Activity> activities = this.activityService.getAllActivities();
-		List<ActivityDTO> activitiesDto = super.mapToList(activities, ActivityDTO.class);
-		return activitiesDto;
-	}
-
-	@Override
-	public void removeBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
-		Activity activity = this.activityService.findById(burnedCaloriesDTO.getActivityId());
-		activity.getBurnedCalories().removeIf(bc -> Objects.equals(bc.getId(), burnedCaloriesDTO.getId()));
+	public void editActivity(ActivityDTO activityDTO) {
+		Activity activity = super.map(activityDTO, Activity.class);
 		this.activityService.update(activity);
 	}
 
@@ -74,16 +56,39 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 	}
 
 	@Override
+	public ActivityDetailDTO getActivityDetail(Long id) {
+		Activity activity = this.activityService.findById(id);
+		ActivityDetailDTO activityDTO = super.map(activity, ActivityDetailDTO.class);
+		if (activityDTO != null
+				&& activityDTO.getBurnedCalories() != null
+				&& !activityDTO.getBurnedCalories().isEmpty())
+			for (BurnedCaloriesDTO b : activityDTO.getBurnedCalories()) {
+				b.setActivityId(id);
+			}
+		return activityDTO;
+	}
+
+	@Override
+	public List<ActivityDTO> getAllActivities() {
+		List<Activity> activities = this.activityService.getAllActivities();
+		return super.mapToList(activities, ActivityDTO.class);
+	}
+
+	@Override
 	public List<ActivityDTO> getActivities(ActivityFilterDTO activityFilter) {
 		Collection<Category> categories = activityFilter.getCategories();
 		List<Activity> filteredActivities = this.activityService.getFilteredActivities(categories);
-		List<ActivityDTO> activitiesDTO = super.mapToList(filteredActivities, ActivityDTO.class);
-		return activitiesDTO;
+		return super.mapToList(filteredActivities, ActivityDTO.class);
 	}
-	
+
 	@Override
-	public void editActivity(ActivityDTO activityDTO) {
-		Activity activity = super.map(activityDTO, Activity.class);
+	public void addBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
+		BurnedCalories bc = super.map(burnedCaloriesDTO, BurnedCalories.class);
+
+		long activityId = burnedCaloriesDTO.getActivityId();
+
+		Activity activity = this.activityService.findById(activityId);
+		activity.addBurnedCaloriesItem(bc);
 		this.activityService.update(activity);
 	}
 
@@ -94,10 +99,10 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 	}
 
 	@Override
-	public ActivityDetailDTO getActivityDetail(Long id) {
-		Activity activity = this.activityService.findById(id);
-		ActivityDetailDTO detail = super.map(activity, ActivityDetailDTO.class);
-		return detail;
+	public void removeBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
+		Activity activity = this.activityService.findById(burnedCaloriesDTO.getActivityId());
+		activity.getBurnedCalories().removeIf(bc -> Objects.equals(bc.getId(), burnedCaloriesDTO.getId()));
+		this.activityService.update(activity);
 	}
 
 	@Override
@@ -105,10 +110,8 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 		User user  = this.userService.findById(userId);
 		double weight = user.getWeight();
 		
-		Function<Long, Integer> fn = (activityId) -> {
-			return this.burnedCaloriesService.getBurnedCaloriesPerHour(activityId, weight);
-		};
-		
+		Function<Long, Integer> fn = (activityId) -> this.burnedCaloriesService.getBurnedCaloriesPerHour(activityId, weight);
+
 		List<Activity> sortedActivities = this.activityService.getActivitiesSortedByBurnedCalories(fn);
 		List<ActivityDTO> sortedActivitiesDTO = super.mapToList(sortedActivities, ActivityDTO.class);
 		

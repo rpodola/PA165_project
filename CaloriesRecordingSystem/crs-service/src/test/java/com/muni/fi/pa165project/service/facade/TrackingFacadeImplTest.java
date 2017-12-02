@@ -180,6 +180,6 @@ public class TrackingFacadeImplTest {
     @Rollback
     public void getWeekProgressOfBurnedCaloriesTest() {
         trackingFacade.getWeekProgressOfBurnedCalories(user.getId());
-        verify(userService).getProgressOfweeklyCaloriesGoal(user.getId());
+        verify(userService).getProgressOfWeeklyCaloriesGoal(user.getId());
     }
 }

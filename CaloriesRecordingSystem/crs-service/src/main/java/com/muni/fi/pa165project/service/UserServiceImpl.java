@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 	}
 
     @Override
-    public int getProgressOfweeklyCaloriesGoal(long userId) {
+    public int getProgressOfWeeklyCaloriesGoal(long userId) {
         double sum = 0;
         User user = this.findById(userId);
         double goal = user.getTrackingSettings().getWeeklyCaloriesGoal();
@@ -72,8 +72,7 @@ public class UserServiceImpl implements UserService {
         for (Record r : lastWeekRecords){
             sum += r.getBurnedCalories();
         }
-        int progress = (int) ((sum / goal) * 100);
         
-        return progress;
+        return (int) ((sum / goal) * 100);
     }
 }

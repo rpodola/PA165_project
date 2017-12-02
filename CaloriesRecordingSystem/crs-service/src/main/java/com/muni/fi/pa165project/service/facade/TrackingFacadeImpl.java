@@ -40,25 +40,25 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 	private BurnedCaloriesService burnedCaloriesService;
 	
     @Override
-    public void createRecord(RecordDetailDTO recordDetailDto) {
+    public Long createRecord(RecordDetailDTO recordDetailDto) {
         Record record = super.map(recordDetailDto, Record.class);
 
-        Activity activity = this.activityService.findById(recordDetailDto.getActivityId());
         User user = this.userService.findById(recordDetailDto.getUserId());
+        Activity activity = this.activityService.findById(recordDetailDto.getActivityId());
 
+        user.addRecord(record);
         record.setWeight(user.getWeight());
         record.setActivity(activity);
-        record.setUser(user);        
-
-		record.setBurnedCalories(
-			(int) this.burnedCaloriesService.calculateAmountOfCalories(
-					recordDetailDto.getActivityId(),
-					recordDetailDto.getDuration(),
-					recordDetailDto.getWeight()
-			)
-		);
+        record.setBurnedCalories(
+            (int) this.burnedCaloriesService.calculateAmountOfCalories(
+                    record.getActivity().getId(),
+                    record.getDuration(),
+                    record.getWeight()
+            )
+        );
 
         this.recordService.create(record);
+        return record.getId();
     }
 
     @Override
@@ -78,7 +78,6 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 
     @Override
     public void removeRecord(long id) {
-        
         this.recordService.remove(id);
     }
 
@@ -116,7 +115,7 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 
     @Override
     public int getWeekProgressOfBurnedCalories(long userId) {
-        return userService.getProgressOfweeklyCaloriesGoal(userId);
+        return userService.getProgressOfWeeklyCaloriesGoal(userId);
     }
 
 }
