@@ -12,6 +12,8 @@ import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import com.muni.fi.pa165project.service.RecordService;
 import com.muni.fi.pa165project.service.UserService;
 import com.muni.fi.pa165project.service.MappingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,8 @@ import java.util.List;
 @Service
 @Transactional
 public class TrackingFacadeImpl implements TrackingFacade {
+
+    final static Logger log = LoggerFactory.getLogger(TrackingFacadeImpl.class);
 
     @Autowired
     private MappingService mapper;
@@ -45,6 +49,9 @@ public class TrackingFacadeImpl implements TrackingFacade {
 	
     @Override
     public Long createRecord(RecordDetailDTO recordDetailDto) {
+        log.debug("Creating Record for user with id <{}>",
+                recordDetailDto.getUserId());
+
         Record record = mapper.map(recordDetailDto, Record.class);
 
         User user = this.userService.findById(recordDetailDto.getUserId());
@@ -70,8 +77,9 @@ public class TrackingFacadeImpl implements TrackingFacade {
 
     @Override
     public void editRecord(RecordDetailDTO recordDetailDto) {
-        Record record = mapper.map(recordDetailDto, Record.class);
+        log.debug("Editing Record with id <{}>", recordDetailDto.getId());
 
+        Record record = mapper.map(recordDetailDto, Record.class);
         record.setBurnedCalories(
 			(int) this.burnedCaloriesService.calculateAmountOfCalories(
 				recordDetailDto.getActivityId(),
@@ -79,17 +87,20 @@ public class TrackingFacadeImpl implements TrackingFacade {
 				recordDetailDto.getWeight()
 			)
 		);
-		
         this.recordService.update(record);
     }
 
     @Override
     public void removeRecord(long id) {
+        log.debug("Removing Record with id <{}>", id);
+
         this.recordService.remove(id);
     }
 
     @Override
     public RecordDetailDTO getRecord(long id) {
+        log.debug("Getting Record with id <{}>", id);
+
         Record record = this.recordService.getRecord(id);
         RecordDetailDTO recordDetailDto = mapper.map(record, RecordDetailDTO.class);
         recordDetailDto.setActivityName(record.getActivity().getName());
@@ -100,20 +111,24 @@ public class TrackingFacadeImpl implements TrackingFacade {
 
     @Override
     public  List<RecordDTO> getAllRecords(long userId) {
-		List<Record> records = this.recordService.getAllRecordsOfUser(userId);
-		
+        log.debug("Getting all Records for user with id <{}>", userId);
+
+        List<Record> records = this.recordService.getAllRecordsOfUser(userId);
 		return mapper.mapToList(records, RecordDTO.class);
 	}
 
     @Override
     public List<RecordDTO> getLastNRecords(long userId, int count) {
+        log.debug("Getting last <{}> Records for user with id <{}>", count, userId);
+
         List<Record> records = this.recordService.getLastNRecordsOfUser(userId, count);
-		
 		return mapper.mapToList(records, RecordDTO.class);
     }
 
     @Override
     public List<RecordDTO> getFilteredRecords(RecordTimeFilterDTO timeFilter) {
+        log.debug("Getting filtered Records by: {}", timeFilter.toString());
+
 		long userId = timeFilter.getUserId();
 		List<Record> filteredRecords = this.recordService.
 		    getFilteredRecords(userId, timeFilter.getFrom(), timeFilter.getTo());
@@ -123,6 +138,8 @@ public class TrackingFacadeImpl implements TrackingFacade {
 
     @Override
     public int getWeekProgressOfBurnedCalories(long userId) {
+        log.debug("Getting week progress of burned calories for user with id <{}>", userId);
+
         return userService.getProgressOfWeeklyCaloriesGoal(userId);
     }
 

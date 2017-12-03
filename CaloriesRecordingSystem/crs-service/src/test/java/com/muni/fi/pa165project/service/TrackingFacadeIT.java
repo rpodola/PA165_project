@@ -97,4 +97,20 @@ public class TrackingFacadeIT {
         RecordDetailDTO recordFound = trFac.getRecord(recordId);
         Assert.assertEquals(record, recordFound);
     }
+
+
+    @Test
+    @Transactional
+    @Rollback()
+    public void testEditRecord() {
+        record.setId(trFac.createRecord(record));
+        //lets change duration
+        record.setDuration(1);
+        trFac.editRecord(record);
+        //lets get record with changed duration
+        //RecordDetailDTO recordFound = trFac.getRecord(record.getId());
+
+        //Assert.assertEquals(record, recordFound);
+        //Assert.assertEquals(record.getDuration(), recordFound.getDuration());
+    }
 }

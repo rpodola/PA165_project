@@ -23,5 +23,9 @@ public class ActivityFilterDTO {
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Filtered categories: " + this.categories.toString();
+	}
 }

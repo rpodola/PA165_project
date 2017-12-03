@@ -54,7 +54,7 @@ public interface ActivityFacade {
      * @param id activity id
      * @return Activity detail object
      */
-    ActivityDetailDTO getActivityDetail(Long id);
+    ActivityDetailDTO getActivityDetail(long id);
 
     /**
      * Get list of all activities

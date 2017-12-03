@@ -6,6 +6,8 @@ import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.UserService;
 import com.muni.fi.pa165project.service.MappingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -18,6 +20,8 @@ import javax.transaction.Transactional;
 @Transactional
 public class UserFacadeImpl implements UserFacade {
 
+	final static Logger log = LoggerFactory.getLogger(UserFacadeImpl.class);
+
 	@Autowired
 	private MappingService mapper;
 
@@ -26,6 +30,8 @@ public class UserFacadeImpl implements UserFacade {
 
 	@Override
 	public Long createUser(UserDTO userDto) {
+		log.debug("Creating User with username <{}>", userDto.getUsername());
+
 		User user = mapper.map(userDto, User.class);
 		this.userService.createUser(user);
 		return user.getId();
@@ -33,29 +39,40 @@ public class UserFacadeImpl implements UserFacade {
 
 	@Override
 	public void editUser(UserDTO userDto) {
+		log.debug("Editing User with id <{}>", userDto.getId());
+
 		User user = mapper.map(userDto, User.class);
 		this.userService.updateUser(user);
 	}
 
 	@Override
 	public void removeUser(long userId) {
+		log.debug("Removing User with id <{}>", userId);
+
 		this.userService.deleteUser(userId);
 	}
 	
 	@Override
 	public UserDTO getUser(long id) {
+		log.debug("Getting User with id <{}>", id);
+
 	    User user = this.userService.findById(id);
 	    return mapper.map(user, UserDTO.class);
 	}
 
 	@Override
     public UserDTO getUser(String email) {
+		log.debug("Getting User with email <{}>", email);
+
         User user = this.userService.findByEmail(email);
         return mapper.map(user, UserDTO.class);
     }	
 
 	@Override
 	public void setTrackingSettings(TrackingSettingsDTO trackingSettings) {
+		log.debug("Setting tracking settings with goal <{}> to User with id <{}>",
+				trackingSettings.getWeeklyCaloriesGoal(), trackingSettings.getUserId());
+
 		User user = this.userService.findById(trackingSettings.getUserId());
 		if (user != null){
 		    user.getTrackingSettings().setWeeklyCaloriesGoal(trackingSettings.getWeeklyCaloriesGoal());
@@ -65,6 +82,8 @@ public class UserFacadeImpl implements UserFacade {
 
 	@Override
 	public TrackingSettingsDTO getTrackingSettings(long userId) {
+		log.debug("Getting tracking settings for User with id <{}>", userId);
+
 		User user = this.userService.findById(userId);
         if (user == null)
             return null;

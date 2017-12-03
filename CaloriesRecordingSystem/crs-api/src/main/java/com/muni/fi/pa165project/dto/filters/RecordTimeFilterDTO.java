@@ -38,5 +38,9 @@ public class RecordTimeFilterDTO {
     public void setTo(LocalDateTime to) {
         this.to = to;
     }
-    
+
+    @Override
+    public String toString() {
+        return "userId <" + userId + "> from <" + from + "> to <" + to + ">";
+    }
 }
