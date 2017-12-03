@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.ActivityDTO;
@@ -17,7 +12,7 @@ import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.service.ActivityService;
 import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import com.muni.fi.pa165project.service.UserService;
-import com.muni.fi.pa165project.service.utils.DozerHelper;
+import com.muni.fi.pa165project.service.MappingService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +32,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 /**
  * @author Peter Krasnan, Radoslav Karlik
  */
@@ -54,7 +48,7 @@ public class ActivityFacadeImplTest {
     private UserService userService;
 
     @Mock
-    private DozerHelper dozerHelper;
+    private MappingService mapper;
 
     @InjectMocks
     private final ActivityFacade activityFacade = new ActivityFacadeImpl();
@@ -77,7 +71,7 @@ public class ActivityFacadeImplTest {
     @Transactional
     @Test
     public void createActivityTest() {
-        when(dozerHelper.map(activityDTO, Activity.class)).thenReturn(activity);
+        when(mapper.map(activityDTO, Activity.class)).thenReturn(activity);
         activityFacade.createActivity(activityDTO);
         verify(activityService).create(activity);
     }
@@ -90,7 +84,7 @@ public class ActivityFacadeImplTest {
         BurnedCaloriesDTO burnedCaloriesDTO = new BurnedCaloriesDTO();
         burnedCaloriesDTO.setId(1L);
         burnedCaloriesDTO.setActivityId(activity.getId());
-        when(dozerHelper.map(burnedCaloriesDTO, BurnedCalories.class)).thenReturn(burnedCalories);
+        when(mapper.map(burnedCaloriesDTO, BurnedCalories.class)).thenReturn(burnedCalories);
         when(activityService.findById(activity.getId())).thenReturn(activity);
         activityFacade.addBurnedCalorie(burnedCaloriesDTO);
 
@@ -108,7 +102,7 @@ public class ActivityFacadeImplTest {
         List<ActivityDTO> activitiesDTOs = new ArrayList<>();
         activitiesDTOs.add(activityDTO);
 
-        when(dozerHelper.mapToList(activities, ActivityDTO.class)).thenReturn(activitiesDTOs);
+        when(mapper.mapToList(activities, ActivityDTO.class)).thenReturn(activitiesDTOs);
         when(activityService.getAllActivities()).thenReturn(activities);
         List<ActivityDTO> result = activityFacade.getAllActivities();
 
@@ -154,7 +148,7 @@ public class ActivityFacadeImplTest {
         }};
         when(activityService.getFilteredActivities(activityFilterDTO.getCategories())).thenReturn(activities);
 
-        when(dozerHelper.mapToList(activities, ActivityDTO.class)).thenReturn(expected);
+        when(mapper.mapToList(activities, ActivityDTO.class)).thenReturn(expected);
 
         List<ActivityDTO> result = activityFacade.getActivities(activityFilterDTO);
 
@@ -165,7 +159,7 @@ public class ActivityFacadeImplTest {
     @Transactional
     @Test
     public void editActivityTest() {
-        when(dozerHelper.map(activityDTO, Activity.class)).thenReturn(activity);
+        when(mapper.map(activityDTO, Activity.class)).thenReturn(activity);
         activityFacade.editActivity(activityDTO);
         verify(activityService).update(activity);
     }
@@ -178,7 +172,7 @@ public class ActivityFacadeImplTest {
         burnedCaloriesDTO.setId(1L);
         burnedCaloriesDTO.setActivityId(activity.getId());
         BurnedCalories burnedCalories = new BurnedCalories();
-        when(dozerHelper.map(burnedCaloriesDTO, BurnedCalories.class)).thenReturn(burnedCalories);
+        when(mapper.map(burnedCaloriesDTO, BurnedCalories.class)).thenReturn(burnedCalories);
         activityFacade.editBurnedCalorie(burnedCaloriesDTO);
         verify(burnedCaloriesService).updateBurnedCalories(burnedCalories);
     }
@@ -189,7 +183,7 @@ public class ActivityFacadeImplTest {
     public void getActivityDetailTest() {
         ActivityDetailDTO expected = new ActivityDetailDTO();
         when(activityService.findById(activity.getId())).thenReturn(activity);
-        when(dozerHelper.map(activity, ActivityDetailDTO.class)).thenReturn(expected);
+        when(mapper.map(activity, ActivityDetailDTO.class)).thenReturn(expected);
         ActivityDetailDTO result = activityFacade.getActivityDetail(activity.getId());
 
         Assert.assertEquals(expected, result);
@@ -212,7 +206,7 @@ public class ActivityFacadeImplTest {
         when(burnedCaloriesService.getBurnedCaloriesPerHour(activity.getId(), user.getWeight())).thenReturn(500);
         when(activityService.getActivitiesSortedByBurnedCalories(any(Function.class))).thenReturn(activities);
 
-        when(dozerHelper.mapToList(activities, ActivityDTO.class)).thenReturn(expected);
+        when(mapper.mapToList(activities, ActivityDTO.class)).thenReturn(expected);
 
         List<ActivityDTO> result = activityFacade.getActivitiesSortedByBurnedCalories(userId);
 

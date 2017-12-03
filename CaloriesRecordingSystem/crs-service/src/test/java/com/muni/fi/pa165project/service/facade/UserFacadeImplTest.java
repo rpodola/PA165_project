@@ -5,7 +5,7 @@ import com.muni.fi.pa165project.dto.UserDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.UserService;
-import com.muni.fi.pa165project.service.utils.DozerHelper;
+import com.muni.fi.pa165project.service.MappingService;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import com.muni.fi.pa165project.structures.TrackingSettings;
 import org.junit.Before;
@@ -31,7 +31,7 @@ public class UserFacadeImplTest {
     private UserService userService;
 
     @Mock
-    private DozerHelper dozerHelper;
+    private MappingService mapper;
 
     @InjectMocks
     private UserFacade userFacade = new UserFacadeImpl();
@@ -61,7 +61,7 @@ public class UserFacadeImplTest {
     @Rollback
     public void createUserTest() {
         UserDTO userDTO = mock(UserDTO.class);
-        when(dozerHelper.map(userDTO, User.class)).thenReturn(user);
+        when(mapper.map(userDTO, User.class)).thenReturn(user);
         userFacade.createUser(userDTO);
         verify(userService).createUser(user);
 
@@ -72,7 +72,7 @@ public class UserFacadeImplTest {
     @Rollback
     public void editUserTest() {
         UserDTO userDTO = mock(UserDTO.class);
-        when(dozerHelper.map(userDTO, User.class)).thenReturn(user);
+        when(mapper.map(userDTO, User.class)).thenReturn(user);
         userFacade.editUser(userDTO);
         verify(userService).updateUser(user);
     }
@@ -105,6 +105,6 @@ public class UserFacadeImplTest {
     public void getTrackingSettingsTest() {
         when(userService.findById(1L)).thenReturn(user);
         userFacade.getTrackingSettings(1L);
-        verify(dozerHelper).map(user.getTrackingSettings(), TrackingSettingsDTO.class);
+        verify(mapper).map(user.getTrackingSettings(), TrackingSettingsDTO.class);
     }
 }

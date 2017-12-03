@@ -12,6 +12,7 @@ import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.service.ActivityService;
 import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import com.muni.fi.pa165project.service.UserService;
+import com.muni.fi.pa165project.service.MappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,10 @@ import java.util.function.Function;
  */
 @Service
 @Transactional
-public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
+public class ActivityFacadeImpl implements ActivityFacade {
+
+	@Autowired
+	private MappingService mapper;
 
 	@Autowired
 	private ActivityService activityService;
@@ -39,14 +43,14 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 
 	@Override
 	public Long createActivity(ActivityDTO activityDTO) {
-		Activity activity = super.map(activityDTO, Activity.class);
+		Activity activity = mapper.map(activityDTO, Activity.class);
 		this.activityService.create(activity);
 		return activity.getId();
 	}
 
 	@Override
 	public void editActivity(ActivityDTO activityDTO) {
-		Activity activity = super.map(activityDTO, Activity.class);
+		Activity activity = mapper.map(activityDTO, Activity.class);
 		this.activityService.update(activity);
 	}
 
@@ -58,7 +62,7 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 	@Override
 	public ActivityDetailDTO getActivityDetail(Long id) {
 		Activity activity = this.activityService.findById(id);
-		ActivityDetailDTO activityDTO = super.map(activity, ActivityDetailDTO.class);
+		ActivityDetailDTO activityDTO = mapper.map(activity, ActivityDetailDTO.class);
 		if (activityDTO != null
 				&& activityDTO.getBurnedCalories() != null
 				&& !activityDTO.getBurnedCalories().isEmpty())
@@ -71,19 +75,19 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 	@Override
 	public List<ActivityDTO> getAllActivities() {
 		List<Activity> activities = this.activityService.getAllActivities();
-		return super.mapToList(activities, ActivityDTO.class);
+		return mapper.mapToList(activities, ActivityDTO.class);
 	}
 
 	@Override
 	public List<ActivityDTO> getActivities(ActivityFilterDTO activityFilter) {
 		Collection<Category> categories = activityFilter.getCategories();
 		List<Activity> filteredActivities = this.activityService.getFilteredActivities(categories);
-		return super.mapToList(filteredActivities, ActivityDTO.class);
+		return mapper.mapToList(filteredActivities, ActivityDTO.class);
 	}
 
 	@Override
 	public void addBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
-		BurnedCalories bc = super.map(burnedCaloriesDTO, BurnedCalories.class);
+		BurnedCalories bc = mapper.map(burnedCaloriesDTO, BurnedCalories.class);
 
 		long activityId = burnedCaloriesDTO.getActivityId();
 
@@ -94,7 +98,7 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 
 	@Override
 	public void editBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
-		BurnedCalories bc = super.map(burnedCaloriesDTO, BurnedCalories.class);
+		BurnedCalories bc = mapper.map(burnedCaloriesDTO, BurnedCalories.class);
 		this.burnedCaloriesService.updateBurnedCalories(bc);
 	}
 
@@ -113,7 +117,7 @@ public class ActivityFacadeImpl extends FacadeBase implements ActivityFacade {
 		Function<Long, Integer> fn = (activityId) -> this.burnedCaloriesService.getBurnedCaloriesPerHour(activityId, weight);
 
 		List<Activity> sortedActivities = this.activityService.getActivitiesSortedByBurnedCalories(fn);
-		List<ActivityDTO> sortedActivitiesDTO = super.mapToList(sortedActivities, ActivityDTO.class);
+		List<ActivityDTO> sortedActivitiesDTO = mapper.mapToList(sortedActivities, ActivityDTO.class);
 		
 		return sortedActivitiesDTO;
 	}

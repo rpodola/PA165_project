@@ -5,6 +5,7 @@ import com.muni.fi.pa165project.dto.UserDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.UserService;
+import com.muni.fi.pa165project.service.MappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -15,21 +16,24 @@ import javax.transaction.Transactional;
  */
 @Service
 @Transactional
-public class UserFacadeImpl extends FacadeBase implements UserFacade {
+public class UserFacadeImpl implements UserFacade {
+
+	@Autowired
+	private MappingService mapper;
 
 	@Autowired
 	private UserService userService;
 
 	@Override
 	public Long createUser(UserDTO userDto) {
-		User user = super.map(userDto, User.class);
+		User user = mapper.map(userDto, User.class);
 		this.userService.createUser(user);
 		return user.getId();
 	}
 
 	@Override
 	public void editUser(UserDTO userDto) {
-		User user = super.map(userDto, User.class);
+		User user = mapper.map(userDto, User.class);
 		this.userService.updateUser(user);
 	}
 
@@ -41,13 +45,13 @@ public class UserFacadeImpl extends FacadeBase implements UserFacade {
 	@Override
 	public UserDTO getUser(long id) {
 	    User user = this.userService.findById(id);
-	    return super.map(user, UserDTO.class);
+	    return mapper.map(user, UserDTO.class);
 	}
 
 	@Override
     public UserDTO getUser(String email) {
         User user = this.userService.findByEmail(email);
-        return super.map(user, UserDTO.class);
+        return mapper.map(user, UserDTO.class);
     }	
 
 	@Override
@@ -64,7 +68,7 @@ public class UserFacadeImpl extends FacadeBase implements UserFacade {
 		User user = this.userService.findById(userId);
         if (user == null)
             return null;
-		TrackingSettingsDTO settings = super.map(user.getTrackingSettings(), TrackingSettingsDTO.class);
+		TrackingSettingsDTO settings = mapper.map(user.getTrackingSettings(), TrackingSettingsDTO.class);
 		if (settings == null)
 			return null;
 		settings.setUserId(user.getId());

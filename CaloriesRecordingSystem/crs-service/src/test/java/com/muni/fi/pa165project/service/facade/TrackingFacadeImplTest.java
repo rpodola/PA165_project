@@ -11,7 +11,7 @@ import com.muni.fi.pa165project.service.ActivityService;
 import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import com.muni.fi.pa165project.service.RecordService;
 import com.muni.fi.pa165project.service.UserService;
-import com.muni.fi.pa165project.service.utils.DozerHelper;
+import com.muni.fi.pa165project.service.MappingService;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public class TrackingFacadeImplTest {
     private UserService userService;
 
     @Mock
-    private DozerHelper dozerHelper;
+    private MappingService mapper;
 
     @InjectMocks
     private TrackingFacade trackingFacade = new TrackingFacadeImpl();
@@ -98,7 +98,7 @@ public class TrackingFacadeImplTest {
     @Rollback()
     public void createRecord() {
         RecordDetailDTO recordDetailDTO = mock(RecordDetailDTO.class);
-        when(dozerHelper.map(recordDetailDTO, Record.class)).thenReturn(record);
+        when(mapper.map(recordDetailDTO, Record.class)).thenReturn(record);
         when(recordDetailDTO.getActivityId()).thenReturn(1L);
         when(recordDetailDTO.getUserId()).thenReturn(1L);
         when(burnedCaloriesService.calculateAmountOfCalories(any(Long.class), any(Double.class), any(Double.class))).thenReturn(500.0);
@@ -117,7 +117,7 @@ public class TrackingFacadeImplTest {
         when(recordDetailDTO.getDuration()).thenReturn(record.getDistance());
         when(recordDetailDTO.getWeight()).thenReturn(record.getWeight());
 
-        when(dozerHelper.map(recordDetailDTO, Record.class)).thenReturn(record);
+        when(mapper.map(recordDetailDTO, Record.class)).thenReturn(record);
         trackingFacade.editRecord(recordDetailDTO);
         verify(recordService).update(record);
     }
@@ -136,7 +136,7 @@ public class TrackingFacadeImplTest {
     public void getRecordTest() {
         RecordDetailDTO recordDetailDTO = mock(RecordDetailDTO.class);
         when(recordService.getRecord(record.getId())).thenReturn(record);
-        when(dozerHelper.map(record, RecordDetailDTO.class)).thenReturn(recordDetailDTO);
+        when(mapper.map(record, RecordDetailDTO.class)).thenReturn(recordDetailDTO);
         trackingFacade.getRecord(record.getId());
         verify(recordService).getRecord(record.getId());
     }
@@ -148,7 +148,7 @@ public class TrackingFacadeImplTest {
         List<Record> records = new ArrayList<>();
         when(recordService.getAllRecordsOfUser(any(Long.class))).thenReturn(records);
         trackingFacade.getAllRecords(user.getId());
-        verify(dozerHelper).mapToList(records, RecordDTO.class);
+        verify(mapper).mapToList(records, RecordDTO.class);
     }
 
     @Test

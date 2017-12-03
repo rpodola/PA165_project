@@ -11,6 +11,7 @@ import com.muni.fi.pa165project.service.ActivityService;
 import com.muni.fi.pa165project.service.BurnedCaloriesService;
 import com.muni.fi.pa165project.service.RecordService;
 import com.muni.fi.pa165project.service.UserService;
+import com.muni.fi.pa165project.service.MappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,10 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
+public class TrackingFacadeImpl implements TrackingFacade {
+
+    @Autowired
+    private MappingService mapper;
 
     @Autowired
     private RecordService recordService;
@@ -41,7 +45,7 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 	
     @Override
     public Long createRecord(RecordDetailDTO recordDetailDto) {
-        Record record = super.map(recordDetailDto, Record.class);
+        Record record = mapper.map(recordDetailDto, Record.class);
 
         User user = this.userService.findById(recordDetailDto.getUserId());
         Activity activity = this.activityService.findById(recordDetailDto.getActivityId());
@@ -66,7 +70,7 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 
     @Override
     public void editRecord(RecordDetailDTO recordDetailDto) {
-        Record record = super.map(recordDetailDto, Record.class);
+        Record record = mapper.map(recordDetailDto, Record.class);
 
         record.setBurnedCalories(
 			(int) this.burnedCaloriesService.calculateAmountOfCalories(
@@ -87,7 +91,7 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
     @Override
     public RecordDetailDTO getRecord(long id) {
         Record record = this.recordService.getRecord(id);
-        RecordDetailDTO recordDetailDto = super.map(record, RecordDetailDTO.class);
+        RecordDetailDTO recordDetailDto = mapper.map(record, RecordDetailDTO.class);
         recordDetailDto.setActivityName(record.getActivity().getName());
         recordDetailDto.setUserId(record.getUser().getId());
         
@@ -98,14 +102,14 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
     public  List<RecordDTO> getAllRecords(long userId) {
 		List<Record> records = this.recordService.getAllRecordsOfUser(userId);
 		
-		return super.mapToList(records, RecordDTO.class);
+		return mapper.mapToList(records, RecordDTO.class);
 	}
 
     @Override
     public List<RecordDTO> getLastNRecords(long userId, int count) {
         List<Record> records = this.recordService.getLastNRecordsOfUser(userId, count);
 		
-		return super.mapToList(records, RecordDTO.class);
+		return mapper.mapToList(records, RecordDTO.class);
     }
 
     @Override
@@ -114,7 +118,7 @@ public class TrackingFacadeImpl extends FacadeBase implements TrackingFacade {
 		List<Record> filteredRecords = this.recordService.
 		    getFilteredRecords(userId, timeFilter.getFrom(), timeFilter.getTo());
     	
-		return super.mapToList(filteredRecords, RecordDTO.class);
+		return mapper.mapToList(filteredRecords, RecordDTO.class);
     }
 
     @Override

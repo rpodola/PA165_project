@@ -1,12 +1,9 @@
 package com.muni.fi.pa165project.service.config;
 
-import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
 import com.muni.fi.pa165project.dto.RecordDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
-import com.muni.fi.pa165project.entity.BurnedCalories;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
-
 import java.util.Collections;
 import org.dozer.DozerBeanMapper;
 import org.dozer.loader.api.BeanMappingBuilder;
@@ -18,7 +15,7 @@ import org.springframework.context.annotation.*;
  * @author Radoslav Karlik
  */
 @Configuration
-@ComponentScans(value = {@ComponentScan("com.muni.fi.pa165project") })
+@ComponentScans(value = {@ComponentScan("com.muni.fi.pa165project.service") })
 public class MappingConfig {
 
    @Bean
