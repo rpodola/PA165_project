@@ -1,0 +1,39 @@
+<div>
+  <label>
+    Name:
+    {{ activity.name }}
+  </label>
+  <br />
+  <label>
+    Category:
+    {{ activity.category }}
+  </label>
+  <br />
+  <label>
+    Description:
+    {{ activity.description }}
+  </label>
+</div>
+
+<div *ngIf="activity.burnedCaloriesList">
+  <table class="table">
+    <thead>
+      <th>
+        Weight
+      </th>
+      <th>
+        Calories
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let burnedCalories of activity.burnedCaloriesList">
+        <td>
+          {{ burnedCalories.upperWeightBoundary }}
+        </td>
+        <td>
+          {{ burnedCalories.amount }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

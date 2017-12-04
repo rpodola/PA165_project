@@ -1,0 +1,35 @@
+<table class="table table-striped ">
+  <thead class="thead-default">
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Category
+      </th>
+      <th>
+        Description
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let activity of activities">
+      <td>
+        {{ activity.name }}
+      </td>
+      <td>
+        {{ activity.category }}
+      </td>
+      <td>
+        {{ activity.description }}
+      </td>
+      <td>
+        <a
+          class="btn btn-primary"
+          routerLink="/activity/{{activity.id}}">
+          View details
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
