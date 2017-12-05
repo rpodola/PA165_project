@@ -4,6 +4,7 @@ import { ActivityDetailComponent } from './activity-detail/activity-detail.compo
 import {ActivityListComponent} from './activity-list/activity-list.component';
 import {RecordListComponent} from './record-list/record-list.component';
 import {RecordDetailComponent} from './record-detail/record-detail.component';
+import {WrongPathComponent} from './wrong-path/wrong-path.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
@@ -12,6 +13,8 @@ const routes: Routes = [
   { path: 'records', component: RecordListComponent },
   { path: 'record/:id', component: RecordDetailComponent },
   { path: 'settings', component: ActivityListComponent },
+  //  catch all
+  { path: '**', component: WrongPathComponent },
 ];
 
 @NgModule({

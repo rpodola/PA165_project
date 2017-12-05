@@ -12,6 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { RecordListComponent } from './record-list/record-list.component';
 import {RecordService} from './services/record.service';
 import { RecordDetailComponent } from './record-detail/record-detail.component';
+import { WrongPathComponentComponent } from './wrong-path-component/wrong-path-component.component';
+import { WrongPathComponent } from './wrong-path/wrong-path.component';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { RecordDetailComponent } from './record-detail/record-detail.component';
     ActivityListComponent,
     RecordListComponent,
     RecordDetailComponent,
+    WrongPathComponentComponent,
+    WrongPathComponent,
   ],
   imports: [
     BrowserModule,
