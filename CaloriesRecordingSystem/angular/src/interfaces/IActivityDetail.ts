@@ -1,11 +1,6 @@
-import {Category} from '../enums/Category';
 import {IBurnedCalories} from './IBurnedCalories';
-import {ICategory} from './ICategory';
+import {IActivity} from './IActivity';
 
-export interface IActivityDetail {
-  id: number;
-  name: string;
-  description: string;
-  category: ICategory;
-  burnedCaloriesList: IBurnedCalories[],
+export interface IActivityDetail extends IActivity {
+  burnedCaloriesList: IBurnedCalories[];
 }

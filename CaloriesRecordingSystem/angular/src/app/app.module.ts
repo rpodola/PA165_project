@@ -9,6 +9,9 @@ import { ActivityListComponent } from './activity-list/activity-list.component';
 import {ActivityService} from './services/activity.service';
 import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { RecordListComponent } from './record-list/record-list.component';
+import {RecordService} from './services/record.service';
+import { RecordDetailComponent } from './record-detail/record-detail.component';
 
 
 @NgModule({
@@ -16,6 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
     AppComponent,
     ActivityDetailComponent,
     ActivityListComponent,
+    RecordListComponent,
+    RecordDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +30,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   providers: [
     ActivityService,
+    RecordService,
   ],
   bootstrap: [AppComponent],
 })

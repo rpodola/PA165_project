@@ -1,0 +1,33 @@
+<div *ngIf="record">
+  <label>
+    Activity:
+    <a routerLink="/activity/{{record.activityId}}">
+      {{ record.activityName }}
+    </a>
+  </label>
+  <br />
+  <label>
+    Date:
+    {{ record.date }}
+  </label>
+  <br />
+  <label>
+    Burned calories:
+    {{ record.burnedCalories }}
+  </label>
+  <br />
+  <label>
+    Distance:
+    {{ record.distance }}
+  </label>
+  <br />
+  <label>
+    Duration:
+    {{ record.duration }}
+  </label>
+  <br />
+  <label>
+    Bodyweight:
+    {{ record.weight }}
+  </label>
+</div>

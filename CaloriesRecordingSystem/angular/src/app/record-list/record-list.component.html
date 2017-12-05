@@ -1,0 +1,38 @@
+<table class="table table-striped ">
+  <thead class="thead-default">
+  <tr>
+    <th>
+      Activity
+    </th>
+    <th>
+      Date
+    </th>
+    <th>
+      Burned calories
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let userRecord of userRecords">
+    <td>
+      <a routerLink="/activity/{{userRecord.activityId}}">
+        {{ userRecord.activityName }}
+      </a>
+    </td>
+    <td>
+      {{ userRecord.date }}
+    </td>
+    <td>
+      {{ userRecord.burnedCalories }}
+    </td>
+    <td>
+      <a
+        class="btn btn-primary"
+        routerLink="/record/{{userRecord.id}}"
+      >
+        View details
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</table>
