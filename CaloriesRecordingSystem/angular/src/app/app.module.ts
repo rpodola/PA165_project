@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms';
-import { ActivityDetailComponent } from './activity/activity-detail.component';
+import { ActivityDetailComponent } from './activity-detail/activity-detail.component';
 import { ActivityListComponent } from './activity-list/activity-list.component';
 import {ActivityService} from './services/activity.service';
 import {HttpClientModule} from '@angular/common/http';

@@ -10,6 +10,14 @@
       <th>
         Description
       </th>
+      <th>
+        <a (click)="getAllActivities()"
+          class="btn btn-primary"
+          routerLink="."
+        >
+         View all activities
+        </a>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -17,8 +25,13 @@
       <td>
         {{ activity.name }}
       </td>
-      <td>
-        {{ activity.category }}
+      <td (click)="getActivity(activity.category.category)">
+        <a
+          routerLink="."
+          [queryParams]="{ category: activity.category.category  }"
+        >
+          {{ activity.category.name }}
+        </a>
       </td>
       <td>
         {{ activity.description }}
@@ -26,7 +39,8 @@
       <td>
         <a
           class="btn btn-primary"
-          routerLink="/activity/{{activity.id}}">
+          routerLink="/activity/{{activity.id}}"
+        >
           View details
         </a>
       </td>

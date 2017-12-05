@@ -6,7 +6,13 @@
   <br />
   <label>
     Category:
-    {{ activity.category }}
+    <a
+      class="btn btn-primary"
+      routerLink="/activities"
+      [queryParams]="{ category: activity.category.category  }"
+    >
+      {{ activity.category.name }}
+    </a>
   </label>
   <br />
   <label>

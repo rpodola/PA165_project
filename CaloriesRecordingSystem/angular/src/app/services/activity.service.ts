@@ -11,19 +11,28 @@ export class ActivityService {
 
   static allActivitiesUrl = 'something';
 
+  /**
+   * Should be cached after loading from REST
+   */
   activities: IActivityDetail[] = [
     {
       id: 0,
       name: 'firstActivity',
       description: 'desc',
-      category: Category[Category.Aerobics],
+      category: {
+        category: Category.Aerobics,
+        name: Category[Category.Aerobics],
+      },
       burnedCaloriesList: [],
     },
     {
       id: 1,
       name: 'secondActivity',
       description: 'desc2',
-      category: Category[Category.Exercise],
+      category: {
+        category: Category.Exercise,
+        name: Category[Category.Exercise],
+      },
       burnedCaloriesList: [
         {
           upperWeightBoundary: 50,
@@ -41,9 +50,12 @@ export class ActivityService {
     private http: HttpClient,
   ) { }
 
-  getActivities(): Observable<IActivity[]> {
+  getAllActivities(): Observable<IActivity[]> {
     return of(this.activities);
-    //  return of (this.http.get<IActivity[]>(this.allActivitiesUrl));
+  }
+
+  getActivities(categories: number[]): Observable<IActivity[]> {
+    return of(this.activities.filter(activity => categories.indexOf(activity.category.category) !== -1));
   }
 
   getActivityDetail(id: number): Observable<IActivityDetail> {
