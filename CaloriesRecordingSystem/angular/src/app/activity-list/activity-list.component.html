@@ -1,3 +1,8 @@
+<app-category-checkboxes
+  [selectedCategory]="selectedCategory"
+  (filterChange)="getActivitiesFromCategories($event)"
+></app-category-checkboxes>
+
 <table class="table table-hover ">
   <thead>
     <tr>
@@ -10,14 +15,6 @@
       <th>
         Description
       </th>
-      <th>
-        <a (click)="getAllActivities()"
-          class="btn btn-primary"
-          routerLink="."
-        >
-         View all activities
-        </a>
-      </th>
     </tr>
   </thead>
   <tbody>
@@ -25,13 +22,8 @@
       <td>
         {{ activity.name }}
       </td>
-      <td (click)="getActivity(activity.category.category)">
-        <a
-          routerLink="."
-          [queryParams]="{ category: activity.category.category  }"
-        >
-          {{ activity.category.name }}
-        </a>
+      <td (click)="selectCategory(activity.category.category)">
+        {{ activity.category.name }}
       </td>
       <td>
         {{ activity.description }}

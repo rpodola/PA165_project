@@ -1,4 +1,4 @@
-import {Category} from '../enums/Category';
+import {CategoryEnum} from '../enums/CategoryEnum';
 
 export interface IBurnedCalories {
   upperWeightBoundary: number;

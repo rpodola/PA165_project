@@ -1,4 +1,4 @@
-export enum Category {
+export enum CategoryEnum {
   Cycling = 0,
   Running = 1,
   Walking = 2,

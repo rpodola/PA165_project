@@ -14,6 +14,8 @@ import {RecordService} from '../services/record.service';
 import { RecordDetailComponent } from './record-detail/record-detail.component';
 import { WrongPathComponent } from './wrong-path/wrong-path.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { CategoryCheckboxesComponent } from './category-checkboxes/category-checkboxes.component';
+import {CategoryService} from '../services/category.service';
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     RecordDetailComponent,
     WrongPathComponent,
     NavBarComponent,
+    CategoryCheckboxesComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
   providers: [
     ActivityService,
     RecordService,
+    CategoryService,
   ],
   bootstrap: [AppComponent],
 })

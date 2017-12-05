@@ -1,6 +1,6 @@
-import {Category} from '../enums/Category';
+import {CategoryEnum} from '../enums/CategoryEnum';
 
 export interface ICategory {
-  category: Category;
+  category: CategoryEnum;
   name: string;
 }

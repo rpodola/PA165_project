@@ -3,8 +3,9 @@ import {Observable} from 'rxjs/Observable';
 import {IActivity} from '../interfaces/IActivity';
 import {of} from 'rxjs/observable/of';
 import {HttpClient} from '@angular/common/http';
-import {Category} from '../enums/Category';
+import {CategoryEnum} from '../enums/CategoryEnum';
 import {IActivityDetail} from '../interfaces/IActivityDetail';
+import {Category} from '../classes/Category';
 
 @Injectable()
 export class ActivityService {
@@ -19,20 +20,14 @@ export class ActivityService {
       id: 0,
       name: 'firstActivity',
       description: 'desc',
-      category: {
-        category: Category.Aerobics,
-        name: Category[Category.Aerobics],
-      },
+      category: new Category(CategoryEnum.Aerobics),
       burnedCaloriesList: [],
     },
     {
       id: 1,
       name: 'secondActivity',
       description: 'desc2',
-      category: {
-        category: Category.Exercise,
-        name: Category[Category.Exercise],
-      },
+      category: new Category(CategoryEnum.Exercise),
       burnedCaloriesList: [
         {
           upperWeightBoundary: 50,
