@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivityService} from '../services/activity.service';
+import {ActivityService} from '../../services/activity.service';
 import {ActivatedRoute} from '@angular/router';
 import { Location } from '@angular/common';
 import {IActivityDetail} from '../../interfaces/IActivityDetail';

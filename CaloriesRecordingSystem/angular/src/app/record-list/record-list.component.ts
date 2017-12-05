@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {RecordService} from '../services/record.service';
+import {RecordService} from '../../services/record.service';
 import {IRecord} from '../../interfaces/IRecord';
 
 @Component({

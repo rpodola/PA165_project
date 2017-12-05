@@ -9,9 +9,9 @@ import {WrongPathComponent} from './wrong-path/wrong-path.component';
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
   { path: 'activities', component: ActivityListComponent },
-  { path: 'activity/:id', component: ActivityDetailComponent },
+  { path: 'activities/:id', component: ActivityDetailComponent },
   { path: 'records', component: RecordListComponent },
-  { path: 'record/:id', component: RecordDetailComponent },
+  { path: 'records/:id', component: RecordDetailComponent },
   { path: 'settings', component: ActivityListComponent },
   //  catch all
   { path: '**', component: WrongPathComponent },

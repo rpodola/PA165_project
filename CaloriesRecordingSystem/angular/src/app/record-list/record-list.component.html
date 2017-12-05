@@ -1,5 +1,5 @@
-<table class="table table-striped ">
-  <thead class="thead-default">
+<table class="table table-hover">
+  <thead>
   <tr>
     <th>
       Activity
@@ -15,7 +15,7 @@
   <tbody>
   <tr *ngFor="let userRecord of userRecords">
     <td>
-      <a routerLink="/activity/{{userRecord.activityId}}">
+      <a routerLink="/activities/{{userRecord.activityId}}">
         {{ userRecord.activityName }}
       </a>
     </td>
@@ -28,7 +28,7 @@
     <td>
       <a
         class="btn btn-primary"
-        routerLink="/record/{{userRecord.id}}"
+        routerLink="/records/{{userRecord.id}}"
       >
         View details
       </a>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {IActivity} from '../../interfaces/IActivity';
-import {ActivityService} from '../services/activity.service';
+import {ActivityService} from '../../services/activity.service';
 import {Location} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
@@ -26,7 +26,7 @@ export class ActivityListComponent implements OnInit {
   }
 
   getActivitiesFromCategories(categories: number[]) {
-    this.activities = this.activitiesCache.filter(activity => categories.indexOf(activity.category.category) !== -1);
+    this.activities = this.activitiesCache.filter(activity => categories.includes(activity.category.category));
     /*
     this.activityService
       .getActivities(categories)

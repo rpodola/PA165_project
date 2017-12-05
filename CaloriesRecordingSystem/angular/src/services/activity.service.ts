@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {IActivity} from '../../interfaces/IActivity';
+import {IActivity} from '../interfaces/IActivity';
 import {of} from 'rxjs/observable/of';
 import {HttpClient} from '@angular/common/http';
-import {Category} from '../../enums/Category';
-import {IActivityDetail} from '../../interfaces/IActivityDetail';
+import {Category} from '../enums/Category';
+import {IActivityDetail} from '../interfaces/IActivityDetail';
 
 @Injectable()
 export class ActivityService {
@@ -55,7 +55,7 @@ export class ActivityService {
   }
 
   getActivities(categories: number[]): Observable<IActivity[]> {
-    return of(this.activities.filter(activity => categories.indexOf(activity.category.category) !== -1));
+    return of(this.activities.filter(activity => categories.includes(activity.category.category)));
   }
 
   getActivityDetail(id: number): Observable<IActivityDetail> {
