@@ -1,4 +1,4 @@
-package com.muni.fi.pa165project.service;
+package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.config.AppConfig;
 import com.muni.fi.pa165project.dto.ActivityDTO;
@@ -34,11 +34,8 @@ public class ActivityFacadeIT {
     private ActivityDetailDTO activity;
 
     @Before
-    public void initActivity() {
-        activity = new ActivityDetailDTO();
-        activity.setName("Running as hell");
-        activity.setDescription("Some dummy description");
-        activity.setCategory(Category.RUNNING);
+    public void setup() {
+        activity = FacadeTestHelper.initActivity();
     }
 
     @Test
@@ -143,10 +140,7 @@ public class ActivityFacadeIT {
     public void testAddBurnedCalorie() {
         activity.setId(acFac.createActivity(activity));
 
-        BurnedCaloriesDTO bc = new BurnedCaloriesDTO();
-        bc.setActivityId(activity.getId());
-        bc.setUpperWeightBoundary(200);
-        bc.setAmount(50);
+        BurnedCaloriesDTO bc = FacadeTestHelper.initBurnedCalories(activity.getId());
         acFac.addBurnedCalorie(bc);
 
         ActivityDetailDTO found = this.acFac.getActivityDetail(activity.getId());
@@ -160,10 +154,7 @@ public class ActivityFacadeIT {
     public void testEditBurnedCalorie() {
         activity.setId(acFac.createActivity(activity));
 
-        BurnedCaloriesDTO bc = new BurnedCaloriesDTO();
-        bc.setActivityId(activity.getId());
-        bc.setUpperWeightBoundary(200);
-        bc.setAmount(50);
+        BurnedCaloriesDTO bc = FacadeTestHelper.initBurnedCalories(activity.getId());
         //lets persist burned calories
         acFac.addBurnedCalorie(bc);
         //lets get burned calories
@@ -186,10 +177,7 @@ public class ActivityFacadeIT {
     public void testRemoveBurnedCalorie() {
         activity.setId(acFac.createActivity(activity));
 
-        BurnedCaloriesDTO bc = new BurnedCaloriesDTO();
-        bc.setActivityId(activity.getId());
-        bc.setUpperWeightBoundary(200);
-        bc.setAmount(50);
+        BurnedCaloriesDTO bc = FacadeTestHelper.initBurnedCalories(activity.getId());
         acFac.addBurnedCalorie(bc);
 
         ActivityDetailDTO found = acFac.getActivityDetail(activity.getId());

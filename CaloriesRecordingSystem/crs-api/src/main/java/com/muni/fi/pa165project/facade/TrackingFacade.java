@@ -39,14 +39,14 @@ public interface TrackingFacade {
     RecordDetailDTO getRecord(long id);
     
     /**
-     * Get all user's records
+     * Get all user's records sorted by time from newest
      * @param userId User id
      * @return list of all user's records
      */
     List<RecordDTO> getAllRecords(long userId);
     
     /**
-     * Get last N user's records
+     * Get last N user's records sorted by time from newest
      * @param userId user id
      * @param count number of last records
      * @return list of last N user's records

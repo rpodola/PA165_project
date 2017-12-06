@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.service.config;
 
 import com.muni.fi.pa165project.dto.RecordDTO;
+import com.muni.fi.pa165project.dto.RecordDetailDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
@@ -31,19 +32,20 @@ public class MappingConfig {
 		BeanMappingBuilder builder = new BeanMappingBuilder() {
 			@Override
 			protected void configure() {
-				mapping(
-					Record.class,
-					RecordDTO.class,
-					TypeMappingOptions.oneWay()
-				).fields(
-					"activity.name", "activityName"
-				);
-                mapping(
-                    User.class,
-                    UserDTO.class
-                ).fields("loginDetails.username", "username"
-                ).fields("loginDetails.password", "password"
-                ).fields("loginDetails.email", "email");
+				mapping(Record.class, RecordDTO.class,
+                        TypeMappingOptions.oneWay())
+                        .fields("activity.name", "activityName")
+                        .fields("activity.id", "activityId")
+                        .fields("user.id", "userId");
+                mapping(Record.class, RecordDetailDTO.class,
+                        TypeMappingOptions.oneWay())
+                        .fields("activity.name", "activityName")
+                        .fields("activity.id", "activityId")
+                        .fields("user.id", "userId");
+                mapping(User.class, UserDTO.class)
+                    .fields("loginDetails.username", "username")
+                    .fields("loginDetails.password", "password")
+                    .fields("loginDetails.email", "email");
 			}
 		};
 

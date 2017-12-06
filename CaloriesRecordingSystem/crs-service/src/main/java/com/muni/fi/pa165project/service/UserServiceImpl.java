@@ -5,6 +5,7 @@ import com.muni.fi.pa165project.dao.UserDao;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -57,8 +58,10 @@ public class UserServiceImpl implements UserService {
     public int getProgressOfWeeklyCaloriesGoal(long userId) {
         double sum = 0;
         User user = this.findById(userId);
+        if (user == null)
+			throw new DataRetrievalFailureException("User not found");
+
         double goal = user.getTrackingSettings().getWeeklyCaloriesGoal();
-        
         if (goal <= 0)
             return 100;
 

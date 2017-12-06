@@ -113,6 +113,7 @@ public class TrackingFacadeImplTest {
     @Rollback
     public void updateRecordTest() {
         RecordDetailDTO recordDetailDTO = mock(RecordDetailDTO.class);
+        when(recordService.getRecord(any(Long.class))).thenReturn(record);
         when(recordDetailDTO.getActivityId()).thenReturn(1L);
         when(recordDetailDTO.getDuration()).thenReturn(record.getDistance());
         when(recordDetailDTO.getWeight()).thenReturn(record.getWeight());

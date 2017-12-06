@@ -46,7 +46,11 @@ public class RecordServiceImpl implements RecordService {
 	
 	@Override
 	public List<Record> getLastNRecordsOfUser(long userId, int count) {
-		return this.getAllRecordsOfUser(userId).subList(0, count);
+        List<Record> records = this.getAllRecordsOfUser(userId);
+        if (count < records.size())
+            return records.subList(0, count);
+		else
+            return records;
 	}
 
     @Override

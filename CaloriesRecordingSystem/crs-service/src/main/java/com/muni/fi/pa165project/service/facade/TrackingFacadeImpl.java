@@ -7,21 +7,17 @@ import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.TrackingFacade;
-import com.muni.fi.pa165project.service.ActivityService;
-import com.muni.fi.pa165project.service.BurnedCaloriesService;
-import com.muni.fi.pa165project.service.RecordService;
-import com.muni.fi.pa165project.service.UserService;
-import com.muni.fi.pa165project.service.MappingService;
+import com.muni.fi.pa165project.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 /**
- *
  * @author Radoslav Karlik
  * @author Radim Podola
  * @author Lukáš Císar
@@ -46,7 +42,7 @@ public class TrackingFacadeImpl implements TrackingFacade {
 
     @Autowired
     private BurnedCaloriesService burnedCaloriesService;
-	
+
     @Override
     public Long createRecord(RecordDetailDTO recordDetailDto) {
         log.debug("Creating Record for user with id <{}>",
@@ -56,15 +52,18 @@ public class TrackingFacadeImpl implements TrackingFacade {
 
         User user = this.userService.findById(recordDetailDto.getUserId());
         Activity activity = this.activityService.findById(recordDetailDto.getActivityId());
+        if (user == null || activity == null) {
+            throw new DataRetrievalFailureException("Activity or User ID not valid");
+        }
 
         record.setWeight(user.getWeight());
         record.setActivity(activity);
         record.setBurnedCalories(
-            (int) this.burnedCaloriesService.calculateAmountOfCalories(
-                    record.getActivity().getId(),
-                    record.getDuration(),
-                    record.getWeight()
-            )
+                (int) this.burnedCaloriesService.calculateAmountOfCalories(
+                        record.getActivity().getId(),
+                        record.getDuration(),
+                        record.getWeight()
+                )
         );
         user.addRecord(record);
         recordService.create(record);
@@ -75,14 +74,21 @@ public class TrackingFacadeImpl implements TrackingFacade {
     public void editRecord(RecordDetailDTO recordDetailDto) {
         log.debug("Editing Record with id <{}>", recordDetailDto.getId());
 
-        Record record = mapper.map(recordDetailDto, Record.class);
+        Record record = this.recordService.getRecord(recordDetailDto.getId());
+        record.setAtTime(recordDetailDto.getAtTime());
+        record.setDistance(recordDetailDto.getDistance());
+        record.setDuration(recordDetailDto.getDuration());
         record.setBurnedCalories(
-			(int) this.burnedCaloriesService.calculateAmountOfCalories(
-				recordDetailDto.getActivityId(),
-				recordDetailDto.getDuration(),
-				recordDetailDto.getWeight()
-			)
-		);
+                (int) this.burnedCaloriesService.calculateAmountOfCalories(
+                        recordDetailDto.getActivityId(),
+                        recordDetailDto.getDuration(),
+                        recordDetailDto.getWeight()
+                )
+        );
+        if (record.getActivity().getId() != recordDetailDto.getActivityId()) {
+            Activity activity = this.activityService.findById(recordDetailDto.getActivityId());
+            record.setActivity(activity);
+        }
         this.recordService.update(record);
     }
 
@@ -98,38 +104,39 @@ public class TrackingFacadeImpl implements TrackingFacade {
         log.debug("Getting Record with id <{}>", id);
 
         Record record = this.recordService.getRecord(id);
+        if (record == null)
+            throw new DataRetrievalFailureException("Record not found");
+
         RecordDetailDTO recordDetailDto = mapper.map(record, RecordDetailDTO.class);
-        recordDetailDto.setActivityName(record.getActivity().getName());
-        recordDetailDto.setUserId(record.getUser().getId());
-        
+
         return recordDetailDto;
     }
 
     @Override
-    public  List<RecordDTO> getAllRecords(long userId) {
+    public List<RecordDTO> getAllRecords(long userId) {
         log.debug("Getting all Records for user with id <{}>", userId);
 
         List<Record> records = this.recordService.getAllRecordsOfUser(userId);
-		return mapper.mapToList(records, RecordDTO.class);
-	}
+        return mapper.mapToList(records, RecordDTO.class);
+    }
 
     @Override
     public List<RecordDTO> getLastNRecords(long userId, int count) {
         log.debug("Getting last <{}> Records for user with id <{}>", count, userId);
 
         List<Record> records = this.recordService.getLastNRecordsOfUser(userId, count);
-		return mapper.mapToList(records, RecordDTO.class);
+        return mapper.mapToList(records, RecordDTO.class);
     }
 
     @Override
     public List<RecordDTO> getFilteredRecords(RecordTimeFilterDTO timeFilter) {
         log.debug("Getting filtered Records by: {}", timeFilter.toString());
 
-		long userId = timeFilter.getUserId();
-		List<Record> filteredRecords = this.recordService.
-		    getFilteredRecords(userId, timeFilter.getFrom(), timeFilter.getTo());
-    	
-		return mapper.mapToList(filteredRecords, RecordDTO.class);
+        long userId = timeFilter.getUserId();
+        List<Record> filteredRecords = this.recordService.
+                getFilteredRecords(userId, timeFilter.getFrom(), timeFilter.getTo());
+
+        return mapper.mapToList(filteredRecords, RecordDTO.class);
     }
 
     @Override
@@ -138,5 +145,4 @@ public class TrackingFacadeImpl implements TrackingFacade {
 
         return userService.getProgressOfWeeklyCaloriesGoal(userId);
     }
-
 }

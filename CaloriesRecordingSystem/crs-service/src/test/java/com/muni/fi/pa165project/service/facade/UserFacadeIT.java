@@ -1,10 +1,8 @@
-package com.muni.fi.pa165project.service;
+package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.config.AppConfig;
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
-import com.muni.fi.pa165project.enums.GenderEnum;
-import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.facade.UserFacade;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +14,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 
 /**
 * @author Radim Podola
@@ -31,17 +28,8 @@ public class UserFacadeIT {
     private UserDTO user;
 
     @Before
-    public void initUser() {
-        this.user = new UserDTO();
-        user.setBirthDate(LocalDate.now());
-        user.setGender(GenderEnum.MALE);
-        user.setName("Lukas");
-        user.setHeight(180);
-        user.setWeight(77);
-        user.setUserRole(UserEnum.ADMINISTRATOR);
-        user.setUsername("ciso112");
-        user.setPassword("abcdefgh");
-        user.setEmail("ciso112@protonmail.com");
+    public void setup() {
+        this.user = FacadeTestHelper.initUser();
     }   
 
     @Test

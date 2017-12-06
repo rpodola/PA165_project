@@ -17,9 +17,10 @@ public class RecordDaoImpl implements RecordDao {
 	@PersistenceContext
 	private EntityManager em;
 	
-	@Override
+    @Override
 	public Record findById(long id) {
 		return this.em.find(Record.class, id);
+
 	}
 	
 	@Override
@@ -61,7 +62,7 @@ public class RecordDaoImpl implements RecordDao {
 	
 	@Override
 	public List<Record> findByTime(long userId, LocalDateTime from, LocalDateTime to) {
-		return this.em.createQuery("SELECT r FROM Record r WHERE r.user.id=:userId AND r.atTime BETWEEN :from AND :to ORDER BY r.atTime DESC",
+		return this.em.createQuery("SELECT r FROM Record r WHERE r.user.id=:userId AND r.atTime BETWEEN :from AND :to ORDER BY r.atTime ASC",
 				Record.class)
 				.setParameter("userId", userId)
 				.setParameter("from", from)
