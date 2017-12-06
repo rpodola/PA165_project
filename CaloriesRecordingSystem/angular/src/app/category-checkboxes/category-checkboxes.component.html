@@ -1,5 +1,5 @@
-<div *ngIf="categories">
-  <div *ngIf="categories.length >= 2">
+<div *ngIf="categoriesSelection">
+  <div *ngIf="categoriesSelection.length >= 2">
     <label>
       Select all
       <input
@@ -9,12 +9,12 @@
       />
     </label>
   </div>
-  <div *ngFor="let category of categories">
+  <div *ngFor="let selection of categoriesSelection">
     <label>
-      {{category.category.name}}
+      {{selection.category.name}}
       <input
         type="checkbox"
-        [(ngModel)]="category.checked"
+        [(ngModel)]="selection.checked"
         (change)="filterChanged()"
       />
     </label>

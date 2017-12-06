@@ -14,14 +14,23 @@
     (click)="collapse=true"
     [hidden]="collapse"
   >
-    <ul class="navbar-nav mr-auto">
+    <div class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        routerLink="activities"
+        routerLinkActive="active"
+      >
+        Activities
+      </a>
+    </li>
       <li class="nav-item">
         <a
           class="nav-link"
-          routerLink="activities"
+          routerLink="categories"
           routerLinkActive="active"
         >
-          Activities
+          Activity categories
         </a>
       </li>
       <li class="nav-item">
@@ -42,6 +51,6 @@
           Settings
         </a>
       </li>
-    </ul>
+    </div>
   </div>
 </nav>

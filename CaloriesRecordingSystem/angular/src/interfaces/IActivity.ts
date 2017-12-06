@@ -1,4 +1,3 @@
-import {CategoryEnum} from '../enums/CategoryEnum';
 import {ICategory} from './ICategory';
 
 export interface IActivity {

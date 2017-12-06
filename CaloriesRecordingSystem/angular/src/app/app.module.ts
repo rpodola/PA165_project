@@ -16,6 +16,9 @@ import { WrongPathComponent } from './wrong-path/wrong-path.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { CategoryCheckboxesComponent } from './category-checkboxes/category-checkboxes.component';
 import {CategoryService} from '../services/category.service';
+import { CategoryDetailComponent } from './category-detail/category-detail.component';
+import { ActivitiesComponent } from './activities/activities.component';
+import { CategoryListComponent } from './category-list/category-list.component';
 
 
 @NgModule({
@@ -28,6 +31,9 @@ import {CategoryService} from '../services/category.service';
     WrongPathComponent,
     NavBarComponent,
     CategoryCheckboxesComponent,
+    CategoryDetailComponent,
+    ActivitiesComponent,
+    CategoryListComponent,
   ],
   imports: [
     BrowserModule,

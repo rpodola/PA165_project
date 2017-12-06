@@ -6,7 +6,9 @@
   <br />
   <label>
     Category:
-    {{ activity.category.name }}
+    <a routerLink="/categories/{{ activity.category.id }}" >
+      {{ activity.category.name }}
+    </a>
   </label>
   <br />
   <label>

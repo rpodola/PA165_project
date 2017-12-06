@@ -1,41 +1,10 @@
 <app-category-checkboxes
-  [selectedCategory]="selectedCategory"
+  [selectedCategoryId]="selectedCategoryId"
   (filterChange)="getActivitiesFromCategories($event)"
-></app-category-checkboxes>
+>
+</app-category-checkboxes>
 
-<table class="table table-hover ">
-  <thead>
-    <tr>
-      <th>
-        Name
-      </th>
-      <th>
-        Category
-      </th>
-      <th>
-        Description
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let activity of activities">
-      <td>
-        {{ activity.name }}
-      </td>
-      <td (click)="selectCategory(activity.category.category)">
-        {{ activity.category.name }}
-      </td>
-      <td>
-        {{ activity.description }}
-      </td>
-      <td>
-        <a
-          class="btn btn-primary"
-          routerLink="/activities/{{activity.id}}"
-        >
-          View details
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<app-activities
+  [activities]="activities"
+>
+</app-activities>

@@ -1,6 +1,4 @@
-import {CategoryEnum} from '../enums/CategoryEnum';
-
 export interface ICategory {
-  category: CategoryEnum;
+  id: number;
   name: string;
 }

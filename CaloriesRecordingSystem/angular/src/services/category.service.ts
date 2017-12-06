@@ -1,24 +1,31 @@
 import { Injectable } from '@angular/core';
-import {ICategory} from '../interfaces/ICategory';
 import {Observable} from 'rxjs/Observable';
-import {CategoryEnum} from '../enums/CategoryEnum';
-import {Category} from '../classes/Category';
 import {of} from 'rxjs/observable/of';
+import {ICategory} from '../interfaces/ICategory';
+import {Category} from '../classes/Category';
 
 @Injectable()
 export class CategoryService {
 
-  categories: ICategory[];
+  categories: ICategory[] = [
+    new Category(0, 'Exercise'),
+    new Category(1, 'Aerobics'),
+    new Category(2, 'Walking'),
+    new Category(3, 'Running'),
+    new Category(4, 'Swimming'),
+    new Category(5, 'Work'),
+  ];
 
-  constructor() {
-    this.categories = Object
-      .keys(CategoryEnum)
-      .filter(key => !isNaN(Number(CategoryEnum[key])))
-      .map(key => new Category(CategoryEnum[key]));
-  }
+  constructor() {}
 
   getAllCategories(): Observable<ICategory[]> {
     return of(this.categories);
+  }
+
+  getCategory(id: number): Observable<ICategory> {
+    return of(
+      this.categories.find(cat => cat.id === id)
+    );
   }
 
 }

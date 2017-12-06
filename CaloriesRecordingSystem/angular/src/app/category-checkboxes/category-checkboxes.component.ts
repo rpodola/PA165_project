@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {Category} from '../../classes/Category';
 import {CategoryService} from '../../services/category.service';
-import {CategoryEnum} from '../../enums/CategoryEnum';
+import {ICategory} from '../../interfaces/ICategory';
+import {isNumber} from 'util';
 
 @Component({
   selector: 'app-category-checkboxes',
@@ -10,13 +10,13 @@ import {CategoryEnum} from '../../enums/CategoryEnum';
 })
 export class CategoryCheckboxesComponent implements OnInit, OnChanges {
 
-  categories: {
-    category: Category,
+  categoriesSelection: {
+    category: ICategory,
     checked: boolean,
   }[];
 
-  @Input() selectedCategory: CategoryEnum;
-  @Output() filterChange = new EventEmitter<CategoryEnum[]>();
+  @Input() selectedCategoryId: number;
+  @Output() filterChange = new EventEmitter<number[]>();
 
   selectedAll = false;
 
@@ -25,16 +25,18 @@ export class CategoryCheckboxesComponent implements OnInit, OnChanges {
   ) { }
 
   filterChanged() {
-    const selectedCategories = this.categories
-      .filter(category => category.checked)
-      .map(cat => cat.category.category);
+    this.selectedCategoryId = undefined;
+    const selectedCategories = this.categoriesSelection
+      .filter(selection => selection.checked)
+      .map(selection => selection.category.id);
 
     this.filterChange.emit(selectedCategories);
-    this.selectedAll = this.categories.every(cat => cat.checked === true);
+    this.selectedAll = this.categoriesSelection.every(selection => selection.checked === true);
   }
 
   selectAll() {
-    this.categories.forEach(cat => cat.checked = this.selectedAll);
+    this.selectedCategoryId = undefined;
+    this.categoriesSelection.forEach(selection => selection.checked = this.selectedAll);
     this.filterChanged();
   }
 
@@ -42,8 +44,8 @@ export class CategoryCheckboxesComponent implements OnInit, OnChanges {
     this.categoryService
       .getAllCategories()
       .subscribe(categories =>
-        this.categories = categories.map(cat => ({
-          category: cat ,
+        this.categoriesSelection = categories.map(cat => ({
+          category: cat,
           checked: false,
         })));
   }
@@ -53,9 +55,9 @@ export class CategoryCheckboxesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.selectedCategory) {
-      this.categories.forEach(cat => cat.checked = cat.category.category === this.selectedCategory);
-      this.filterChange.emit([this.selectedCategory]);
+    if (isNumber(this.selectedCategoryId)) {
+      this.categoriesSelection.forEach(selection => selection.checked = selection.category.id === this.selectedCategoryId);
+      this.filterChanged();
     }
   }
 

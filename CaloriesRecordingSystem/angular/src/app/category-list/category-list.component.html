@@ -1,0 +1,30 @@
+<table class="table table-hover ">
+  <thead>
+  <tr>
+    <th>
+      Name
+    </th>
+    <th>
+      Description
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let category of categories">
+    <td>
+      {{ category.name }}
+    </td>
+    <td>
+      {{ category.description }}
+    </td>
+    <td>
+      <a
+        class="btn btn-primary"
+        routerLink="/categories/{{category.id}}"
+      >
+        View activities
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</table>
