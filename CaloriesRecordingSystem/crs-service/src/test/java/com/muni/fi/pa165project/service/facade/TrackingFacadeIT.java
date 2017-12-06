@@ -37,7 +37,7 @@ public class TrackingFacadeIT {
     private ActivityFacade acFac;
 
     private UserDTO user;
-    private ActivityDetailDTO activity;
+    private ActivityDTO  activity;
     private RecordDetailDTO record;
 
     @Before

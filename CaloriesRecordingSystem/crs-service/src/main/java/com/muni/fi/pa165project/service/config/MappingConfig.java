@@ -1,8 +1,10 @@
 package com.muni.fi.pa165project.service.config;
 
+import com.muni.fi.pa165project.dto.ActivityDTO;
 import com.muni.fi.pa165project.dto.RecordDTO;
 import com.muni.fi.pa165project.dto.RecordDetailDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
 import org.dozer.DozerBeanMapper;
@@ -35,6 +37,9 @@ public class MappingConfig {
         BeanMappingBuilder builder = new BeanMappingBuilder() {
             @Override
             protected void configure() {
+                mapping(Activity.class, ActivityDTO.class,
+                        TypeMappingOptions.oneWay())
+                        .fields("categoryObject", "category");
                 mapping(Record.class, RecordDTO.class,
                         TypeMappingOptions.oneWay())
                         .fields("activity.name", "activityName")

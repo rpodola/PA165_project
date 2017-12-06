@@ -2,7 +2,8 @@ package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.config.AppConfig;
 import com.muni.fi.pa165project.dto.ActivityDTO;
-import com.muni.fi.pa165project.dto.ActivityDetailDTO;
+import com.muni.fi.pa165project.dto.ActivityDetailExportDTO;
+import com.muni.fi.pa165project.dto.ActivityExportDTO;
 import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
 import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 import com.muni.fi.pa165project.enums.Category;
@@ -32,22 +33,24 @@ public class ActivityFacadeIT {
     @Autowired
     private ActivityFacade acFac;
 
-    private ActivityDetailDTO activity;
+    private ActivityDTO activity;
+    private ActivityDetailExportDTO activityDetail;
 
     @Before
     public void setup() {
         activity = FacadeTestHelper.initActivity();
+        activityDetail = FacadeTestHelper.initActivityDetail();
     }
 
     @Test
     @Transactional
     @Rollback()
     public void testCreateActivity() {
-        //persist activity
+        //persist activityDetail
         Long activityId = acFac.createActivity(activity);
         Assert.assertNotNull(activityId);
-        ActivityDetailDTO found = acFac.getActivityDetail(activityId);
-        Assert.assertEquals(activity, found);
+        ActivityDetailExportDTO found = acFac.getActivityDetail(activityId);
+        Assert.assertEquals(activityDetail, found);
     }
 
     @Test(expected = DataAccessException.class)
@@ -69,9 +72,12 @@ public class ActivityFacadeIT {
         activity.setName(newName);
         acFac.editActivity(activity);
         //lets get user with changed name
-        ActivityDetailDTO found = this.acFac.getActivityDetail(activity.getId());
-
-        Assert.assertEquals(found, activity);
+        ActivityDetailExportDTO found = this.acFac.getActivityDetail(activity.getId());
+        ActivityDetailExportDTO expected = new ActivityDetailExportDTO();
+        expected.setId(activity.getId());
+        expected.setName(activity.getName());
+        
+        Assert.assertEquals(found, expected);
         Assert.assertEquals(activity.getName(), newName);
     }
 
@@ -81,7 +87,7 @@ public class ActivityFacadeIT {
     public void testRemoveActivity() {
         activity.setId(acFac.createActivity(activity));
         acFac.removeActivity(activity.getId());
-        ActivityDetailDTO found = this.acFac.getActivityDetail(activity.getId());
+        ActivityDetailExportDTO found = this.acFac.getActivityDetail(activity.getId());
         Assert.assertNull(found);
     }
 
@@ -90,8 +96,13 @@ public class ActivityFacadeIT {
     @Rollback()
     public void testGetActivityDetail() {
         activity.setId(acFac.createActivity(activity));
-        ActivityDetailDTO found = this.acFac.getActivityDetail(activity.getId());
-        Assert.assertEquals(found, activity);
+        ActivityDetailExportDTO found = this.acFac.getActivityDetail(activity.getId());
+        
+        ActivityDetailExportDTO expected = new ActivityDetailExportDTO();
+        expected.setId(activity.getId());
+        expected.setName(activity.getName());
+        
+        Assert.assertEquals(found, expected);
         //lets try to find nobody
         Assert.assertNull(this.acFac.getActivityDetail(new Long(100)));
     }
@@ -103,11 +114,16 @@ public class ActivityFacadeIT {
         Assert.assertTrue(this.acFac.getAllActivities().isEmpty());
 
         activity.setId(acFac.createActivity(activity));
-        List<ActivityDTO> found = this.acFac.getAllActivities();
+        List<ActivityExportDTO> found = this.acFac.getAllActivities();
+        
+        ActivityDetailExportDTO expected = new ActivityDetailExportDTO();
+        expected.setId(activity.getId());
+        expected.setName(activity.getName());
+        
         Assert.assertEquals(found.size(), 1);
-        Assert.assertEquals(found.get(0), activity);
+        Assert.assertEquals(found.get(0), expected);
 
-        ActivityDetailDTO newAc = new ActivityDetailDTO();
+        ActivityDTO newAc = new ActivityDTO();
         newAc.setName("fail");
         acFac.createActivity(newAc);
         found = this.acFac.getAllActivities();
@@ -120,19 +136,23 @@ public class ActivityFacadeIT {
     public void testGetActivities() {
         activity.setId(acFac.createActivity(activity));
 
-        HashSet<Category> categories = new HashSet<>();
+        HashSet<Integer> categories = new HashSet<>();
         ActivityFilterDTO filter = new ActivityFilterDTO();
         filter.setCategories(categories);
         Assert.assertTrue(this.acFac.getActivities(filter).isEmpty());
 
-        categories.add(Category.AEROBICS);
+        categories.add(Category.AEROBICS.getId());
         filter.setCategories(categories);
         Assert.assertTrue(this.acFac.getActivities(filter).isEmpty());
 
-        categories.add(Category.RUNNING);
-        List<ActivityDTO> found = this.acFac.getActivities(filter);
+        ActivityDetailExportDTO expected = new ActivityDetailExportDTO();
+        expected.setId(activity.getId());
+        expected.setName(activity.getName());
+        
+        categories.add(Category.RUNNING.getId());
+        List<ActivityExportDTO> found = this.acFac.getActivities(filter);
         Assert.assertEquals(found.size(), 1);
-        Assert.assertEquals(found.get(0), activity);
+        Assert.assertEquals(found.get(0), expected);
     }
 
     @Test
@@ -144,7 +164,7 @@ public class ActivityFacadeIT {
         BurnedCaloriesDTO bc = FacadeTestHelper.initBurnedCalories(activity.getId());
         acFac.addBurnedCalorie(bc);
 
-        ActivityDetailDTO found = this.acFac.getActivityDetail(activity.getId());
+        ActivityDetailExportDTO found = this.acFac.getActivityDetail(activity.getId());
         Assert.assertEquals(found.getBurnedCalories().size(), 1);
         Assert.assertTrue(found.getBurnedCalories().contains(bc));
     }
@@ -159,7 +179,7 @@ public class ActivityFacadeIT {
         //lets persist burned calories
         acFac.addBurnedCalorie(bc);
         //lets get burned calories
-        ActivityDetailDTO found = acFac.getActivityDetail(activity.getId());
+        ActivityDetailExportDTO found = acFac.getActivityDetail(activity.getId());
         List<BurnedCaloriesDTO> listBC = new ArrayList<>();
         listBC.addAll(found.getBurnedCalories());
         bc.setId(listBC.get(0).getId());
@@ -181,7 +201,7 @@ public class ActivityFacadeIT {
         BurnedCaloriesDTO bc = FacadeTestHelper.initBurnedCalories(activity.getId());
         acFac.addBurnedCalorie(bc);
 
-        ActivityDetailDTO found = acFac.getActivityDetail(activity.getId());
+        ActivityDetailExportDTO found = acFac.getActivityDetail(activity.getId());
         Assert.assertEquals(found.getBurnedCalories().size(), 1);
 
         //lets get burned calories and set id

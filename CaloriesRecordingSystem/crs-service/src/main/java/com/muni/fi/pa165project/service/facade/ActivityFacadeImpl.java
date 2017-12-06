@@ -1,7 +1,8 @@
 package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.ActivityDTO;
-import com.muni.fi.pa165project.dto.ActivityDetailDTO;
+import com.muni.fi.pa165project.dto.ActivityDetailExportDTO;
+import com.muni.fi.pa165project.dto.ActivityExportDTO;
 import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
 import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 import com.muni.fi.pa165project.entity.Activity;
@@ -23,6 +24,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Radoslav Karlik
@@ -70,11 +72,11 @@ public class ActivityFacadeImpl implements ActivityFacade {
     }
 
     @Override
-    public ActivityDetailDTO getActivityDetail(long id) {
+    public ActivityDetailExportDTO getActivityDetail(long id) {
         log.debug("Getting activity detail with id <{}>", id);
 
         Activity activity = this.activityService.findById(id);
-        ActivityDetailDTO activityDTO = mapper.map(activity, ActivityDetailDTO.class);
+        ActivityDetailExportDTO activityDTO = mapper.map(activity, ActivityDetailExportDTO.class);
         if (activityDTO != null
                 && activityDTO.getBurnedCalories() != null
                 && !activityDTO.getBurnedCalories().isEmpty())
@@ -85,20 +87,24 @@ public class ActivityFacadeImpl implements ActivityFacade {
     }
 
     @Override
-    public List<ActivityDTO> getAllActivities() {
+    public List<ActivityExportDTO> getAllActivities() {
         log.debug("Calling getAllActivities()");
 
         List<Activity> activities = this.activityService.getAllActivities();
-        return mapper.mapToList(activities, ActivityDTO.class);
+        return mapper.mapToList(activities, ActivityExportDTO.class);
     }
 
     @Override
-    public List<ActivityDTO> getActivities(ActivityFilterDTO activityFilter) {
+    public List<ActivityExportDTO> getActivities(ActivityFilterDTO activityFilter) {
         log.debug("Calling getActivities(): {}", activityFilter.toString());
 
-        Collection<Category> categories = activityFilter.getCategories();
+        Collection<Integer> categoryIds = activityFilter.getCategories();
+        Collection<Category> categories = categoryIds
+                .stream()
+                .map(catId -> Category.values()[catId])
+                .collect(Collectors.toSet());
         List<Activity> filteredActivities = this.activityService.getFilteredActivities(categories);
-        return mapper.mapToList(filteredActivities, ActivityDTO.class);
+        return mapper.mapToList(filteredActivities, ActivityExportDTO.class);
     }
 
     @Override
@@ -132,7 +138,7 @@ public class ActivityFacadeImpl implements ActivityFacade {
     }
 
     @Override
-    public List<ActivityDTO> getActivitiesSortedByBurnedCalories(long userId) {
+    public List<ActivityExportDTO> getActivitiesSortedByBurnedCalories(long userId) {
         log.trace("Calling getActivitiesSortedByBurnedCalories for user with id <{}>", userId);
 
         User user = this.userService.findById(userId);
@@ -141,7 +147,7 @@ public class ActivityFacadeImpl implements ActivityFacade {
         Function<Long, Integer> fn = (activityId) -> this.burnedCaloriesService.getBurnedCaloriesPerHour(activityId, weight);
 
         List<Activity> sortedActivities = this.activityService.getActivitiesSortedByBurnedCalories(fn);
-        List<ActivityDTO> sortedActivitiesDTO = mapper.mapToList(sortedActivities, ActivityDTO.class);
+        List<ActivityExportDTO> sortedActivitiesDTO = mapper.mapToList(sortedActivities, ActivityExportDTO.class);
 
         return sortedActivitiesDTO;
     }

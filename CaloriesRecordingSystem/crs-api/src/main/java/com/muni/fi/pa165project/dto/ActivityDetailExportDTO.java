@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @author Radim Podola
  */
-public class ActivityDetailDTO extends ActivityDTO {
+public class ActivityDetailExportDTO extends ActivityExportDTO {
 
     private Set<BurnedCaloriesDTO> burnedCalories = new HashSet<>();
 

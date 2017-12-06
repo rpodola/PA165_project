@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.entity;
 
 import com.muni.fi.pa165project.enums.Category;
+import com.muni.fi.pa165project.structures.CategoryObject;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -73,6 +74,10 @@ public class Activity implements Serializable {
         this.burnedCalories.add(burnedCaloriesItem);
     }
 
+    public CategoryObject getCategoryObject() {
+        return CategoryObject.from(this.category);
+    }
+    
     @Override
     public int hashCode() {
         int result = 17;

@@ -1,25 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.muni.fi.pa165project.dto;
 
 import java.util.Objects;
 
 /**
+ *
  * @author Radoslav Karlik
  */
-public class ActivityDTO {
-
-    private Long id;
-
+public class CategoryDTO {
+    
+    private int id;
+    
     private String name;
-
+    
     private String description;
+    
+    public CategoryDTO() {
+        
+    }
+    
+    public CategoryDTO(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 
-    private int category;
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -39,18 +53,10 @@ public class ActivityDTO {
         this.description = description;
     }
 
-    public int getCategory() {
-        return category;
-    }
-
-    public void setCategory(int category) {
-        this.category = category;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 13 * hash + Objects.hashCode(this.name);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.name);
         return hash;
     }
 
@@ -62,13 +68,14 @@ public class ActivityDTO {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof ActivityDTO)) {
+        if (!(obj instanceof CategoryDTO)) {
             return false;
         }
-        final ActivityDTO other = (ActivityDTO) obj;
-        if (!Objects.equals(this.name, other.getName())) {
+        final CategoryDTO other = (CategoryDTO) obj;
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         return true;
     }
+    
 }

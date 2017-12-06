@@ -1,7 +1,5 @@
 package com.muni.fi.pa165project.dto.filters;
 
-import com.muni.fi.pa165project.enums.Category;
-
 import java.util.Set;
 
 /**
@@ -9,13 +7,13 @@ import java.util.Set;
  */
 public class ActivityFilterDTO {
 
-    private Set<Category> categories;
+    private Set<Integer> categories;
 
-    public Set<Category> getCategories() {
+    public Set<Integer> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(Set<Integer> categories) {
         this.categories = categories;
     }
 

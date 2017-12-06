@@ -1,7 +1,8 @@
 package com.muni.fi.pa165project.facade;
 
 import com.muni.fi.pa165project.dto.ActivityDTO;
-import com.muni.fi.pa165project.dto.ActivityDetailDTO;
+import com.muni.fi.pa165project.dto.ActivityDetailExportDTO;
+import com.muni.fi.pa165project.dto.ActivityExportDTO;
 import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
 import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 
@@ -61,14 +62,14 @@ public interface ActivityFacade {
      * @param id activity id
      * @return Activity detail object
      */
-    ActivityDetailDTO getActivityDetail(long id);
+    ActivityDetailExportDTO getActivityDetail(long id);
 
     /**
      * Get list of all activities
      *
      * @return list of Activity objects
      */
-    List<ActivityDTO> getAllActivities();
+    List<ActivityExportDTO> getAllActivities();
 
     /**
      * Get list of filtered activities
@@ -76,7 +77,7 @@ public interface ActivityFacade {
      * @param activityFilter activity filter
      * @return list of Activity objects
      */
-    List<ActivityDTO> getActivities(ActivityFilterDTO activityFilter);
+    List<ActivityExportDTO> getActivities(ActivityFilterDTO activityFilter);
 
     /**
      * Get list of activities sorted by how much calories user would burn doing them
@@ -84,5 +85,5 @@ public interface ActivityFacade {
      * @param userId user id
      * @return list of Activity objects
      */
-    List<ActivityDTO> getActivitiesSortedByBurnedCalories(long userId);
+    List<ActivityExportDTO> getActivitiesSortedByBurnedCalories(long userId);
 }
