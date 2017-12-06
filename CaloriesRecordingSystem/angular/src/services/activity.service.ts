@@ -37,6 +37,18 @@ export class ActivityService {
           amount: 200,
         },
       ],
+    },
+    {
+      id: 3,
+      name: 'hating on Dozer',
+      description: 'Automapper Dozer sucks',
+      category: new Category(0, 'Exercise'),
+      burnedCaloriesList: [
+        {
+          upperWeightBoundary: 0,
+          amount: 800,
+        },
+      ],
     }
   ];
 

@@ -1,16 +1,22 @@
-<div *ngIf="categoriesSelection">
-  <div *ngIf="categoriesSelection.length >= 2">
-    <label>
-      Select all
+<div class="categories ml-2">
+  <span
+    *ngIf="categoriesSelection"
+  >
+    <label
+      *ngIf="categoriesSelection.length >= 2"
+    >
+      All
       <input
         type="checkbox"
         [(ngModel)]="selectedAll"
         (change)="selectAll()"
       />
     </label>
-  </div>
-  <div *ngFor="let selection of categoriesSelection">
-    <label>
+  </span>
+  <span>
+    <label
+      *ngFor="let selection of categoriesSelection"
+    >
       {{selection.category.name}}
       <input
         type="checkbox"
@@ -18,5 +24,5 @@
         (change)="filterChanged()"
       />
     </label>
-  </div>
+  </span>
 </div>
