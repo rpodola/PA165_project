@@ -22,26 +22,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- *
  * @author Radim Podola
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
 public class RecordDaoImplTest {
-    
+
     @Autowired
     private RecordDao rcDao;
-    
+
     @Autowired
     private ActivityDao acDao;
-    
+
     @Autowired
     private UserDao usDao;
-    
+
     private Activity act;
     private User user;
     private Record record;
-    
+
     @Before
     public void initActivity() {
         this.act = new Activity();
@@ -49,7 +48,7 @@ public class RecordDaoImplTest {
         this.act.setDescription("running by feet");
         this.act.setCategory(Category.RUNNING);
     }
-    
+
     @Before
     public void initUser() {
         this.user = new User();
@@ -64,7 +63,7 @@ public class RecordDaoImplTest {
         login.setEmail("rp@see.com");
         this.user.setLoginDetails(login);
     }
-    
+
     @Before
     public void initRecord() {
         this.record = new Record();
@@ -73,7 +72,7 @@ public class RecordDaoImplTest {
         this.record.setUser(this.user);
         this.record.setDistance(100);
     }
-    
+
     /**
      * Test of create method, of class RecordDaoImpl.
      */
@@ -85,9 +84,9 @@ public class RecordDaoImplTest {
         usDao.create(user);
         acDao.create(act);
         rcDao.create(record);
-        
+
         List<Record> records = rcDao.findAll();
-        
+
         Assert.assertEquals(1, records.size());
         Assert.assertEquals(this.user, records.get(0).getUser());
         Assert.assertEquals(this.act, records.get(0).getActivity());
@@ -100,14 +99,14 @@ public class RecordDaoImplTest {
     @Transactional
     @Rollback(true)
     public void testUpdate() {
-        
+
         acDao.create(act);
         usDao.create(user);
         rcDao.create(record);
 
         record.setDistance(200);
         rcDao.update(record);
-        
+
         Record dbRec = rcDao.findById(record.getId());
         Assert.assertEquals(200, dbRec.getDistance());
         Assert.assertEquals(this.user, dbRec.getUser());
@@ -120,14 +119,14 @@ public class RecordDaoImplTest {
     @Transactional
     @Rollback(true)
     public void testDelete() {
-      
+
         acDao.create(act);
         usDao.create(user);
         rcDao.create(record);
-        
+
         Record dbRec = rcDao.findById(record.getId());
         Assert.assertEquals(record, dbRec);
-        
+
         rcDao.delete(record);
         Assert.assertNull(rcDao.findById(record.getId()));
     }
@@ -139,11 +138,11 @@ public class RecordDaoImplTest {
     @Transactional
     @Rollback(true)
     public void testFindById() {
-      
+
         acDao.create(act);
         usDao.create(user);
         rcDao.create(record);
-        
+
         Assert.assertEquals(record, rcDao.findById(record.getId()));
         Assert.assertNull(rcDao.findById(8));
     }
@@ -155,16 +154,16 @@ public class RecordDaoImplTest {
     @Transactional
     @Rollback(true)
     public void testFindAll() {
-      
+
         Assert.assertTrue(rcDao.findAll().isEmpty());
-        
+
         acDao.create(act);
         usDao.create(user);
         rcDao.create(record);
-        
+
         List<Record> all = rcDao.findAll();
         Assert.assertEquals(record, all.get(0));
-        
+
         //create another record
         Record newRec = new Record();
         newRec.setAtTime(LocalDateTime.now());
@@ -172,20 +171,20 @@ public class RecordDaoImplTest {
         newRec.setActivity(this.act);
         newRec.setUser(this.user);
         rcDao.create(newRec);
-        
+
         all = rcDao.findAll();
         Assert.assertEquals(2, all.size());
         Assert.assertEquals(newRec, all.get(1));
-        
+
     }
 
-	private LocalDateTime[] getDayTimeBoundaryFromDate(LocalDate date) {
-		return new LocalDateTime[] {
-			date.atStartOfDay(),
-			date.atTime(23, 59, 59, 0)
-		};
-	}
-	
+    private LocalDateTime[] getDayTimeBoundaryFromDate(LocalDate date) {
+        return new LocalDateTime[]{
+                date.atStartOfDay(),
+                date.atTime(23, 59, 59, 0)
+        };
+    }
+
     /**
      * Test of findByTime method, of class RecordDaoImpl.
      */
@@ -228,7 +227,7 @@ public class RecordDaoImplTest {
     @Transactional
     @Rollback(true)
     public void testFindByTime_LocalDateTime_LocalDateTime() {
-        
+
         LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
         LocalDateTime now = LocalDateTime.now();
@@ -236,15 +235,15 @@ public class RecordDaoImplTest {
         acDao.create(act);
         usDao.create(user);
         rcDao.create(record);
-  
+
         //any records with date of tomorrow+ should be in DB
         Assert.assertTrue(rcDao.findByTime(user.getId(), tomorrow, tomorrow.plusDays(1)).isEmpty());
-        
+
         //1 record should be in DB till now
         List<Record> allNow = rcDao.findByTime(user.getId(), yesterday, now);
         Assert.assertEquals(1, allNow.size());
         Assert.assertEquals(record, allNow.get(0));
-        
+
         //create another record
         Record newRec = new Record();
         newRec.setAtTime(yesterday);
@@ -252,12 +251,12 @@ public class RecordDaoImplTest {
         newRec.setActivity(this.act);
         newRec.setUser(this.user);
         rcDao.create(newRec);
-        
+
         //1 record should be in DB till hour early
         List<Record> allBefore = rcDao.findByTime(user.getId(), yesterday, now.minusHours(1));
         Assert.assertEquals(1, allBefore.size());
         Assert.assertTrue(allBefore.contains(newRec));
-        
+
         //2 record should be in DB till now
         List<Record> allTillNow = rcDao.findByTime(user.getId(), yesterday, now);
         Assert.assertEquals(2, allTillNow.size());
@@ -290,7 +289,7 @@ public class RecordDaoImplTest {
         newRec2.setActivity(this.act);
         newRec2.setUser(this.user);
         rcDao.create(newRec2);
-        
+
         //3 record should be in DB till now
         List<Record> allTillNow = rcDao.getAllRecordsOfUserSortedFromNewest(user.getId());
         Assert.assertEquals(3, allTillNow.size());

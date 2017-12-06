@@ -4,13 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
  * @author Radim Podola
  */
-public class ActivityDetailDTO extends ActivityDTO{
+public class ActivityDetailDTO extends ActivityDTO {
 
     private Set<BurnedCaloriesDTO> burnedCalories = new HashSet<>();
-    
+
     public Set<BurnedCaloriesDTO> getBurnedCalories() {
         return burnedCalories;
     }

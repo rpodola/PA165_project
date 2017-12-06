@@ -1,181 +1,166 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.muni.fi.pa165project.entity;
 
 import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import com.muni.fi.pa165project.structures.TrackingSettings;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import org.hibernate.validator.constraints.Length;
 
 /**
- *
  * @author Radoslav Karlik
  */
 @Entity
 @Table(name = "trackedUser")
 public class User implements Serializable {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(nullable = false)
-	@Length(min = 1, max = 255)
-	private String name;
-	
-	private LocalDate birthDate;
-	
-	@Min(1)
-	private double weight;
-	
-	@Min(1)
-	private double height;
-	
-	@Enumerated(EnumType.STRING)
-	private GenderEnum gender;
 
-	@Enumerated(EnumType.STRING)
-	private UserEnum userRole;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true)
-	private Set<Record> activityRecords = new HashSet<>();
+    @Column(nullable = false)
+    @Length(min = 1, max = 255)
+    private String name;
 
-	@Valid
-	@Embedded
-	private LoginDetails loginDetails = new LoginDetails();
-	
-	@Embedded
-	private TrackingSettings trackingSettings = new TrackingSettings();
-	
-	public Long getId() {
-		return id;
-	}
+    private LocalDate birthDate;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getName() {
-		return name;
-	}
+    @Min(1)
+    private double weight;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Min(1)
+    private double height;
 
-	public LocalDate getBirthDate() {
-		return birthDate;
-	}
+    @Enumerated(EnumType.STRING)
+    private GenderEnum gender;
 
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
+    @Enumerated(EnumType.STRING)
+    private UserEnum userRole;
 
-	public double getWeight() {
-		return weight;
-	}
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true)
+    private Set<Record> activityRecords = new HashSet<>();
 
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
+    @Valid
+    @Embedded
+    private LoginDetails loginDetails = new LoginDetails();
 
-	public double getHeight() {
-		return height;
-	}
+    @Embedded
+    private TrackingSettings trackingSettings = new TrackingSettings();
 
-	public void setHeight(double height) {
-		this.height = height;
-	}
-	
-	public GenderEnum getGender() {
-		return gender;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setGender(GenderEnum gender) {
-		this.gender = gender;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public UserEnum getUserRole() {
-		return userRole;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setUserRole(UserEnum userRole) {
-		this.userRole = userRole;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Set<Record> getActivityRecords() {
-		return activityRecords;
-	}
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
 
-	public void setActivityRecords(Set<Record> activityRecords) {
-		this.activityRecords = activityRecords;
-	}
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
 
-	public LoginDetails getLoginDetails() {
-		return loginDetails;
-	}
+    public double getWeight() {
+        return weight;
+    }
 
-	public void setLoginDetails(LoginDetails loginDetails) {
-		this.loginDetails = loginDetails;
-	}
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
 
-	public TrackingSettings getTrackingSettings() {
-		return trackingSettings;
-	}
+    public double getHeight() {
+        return height;
+    }
 
-	public void setTrackingSettings(TrackingSettings trackingSettings) {
-		this.trackingSettings = trackingSettings;
-	}
-	
-	public void addRecord(Record record) {
-		this.activityRecords.add(record);
-		record.setUser(this);
-	}
-	
-	@Override
-	public int hashCode() {
-		int hash = 7;
-		if (this.loginDetails.getUsername() == null)
-		    return hash = 97 * hash;
-		hash = 97 * hash + this.loginDetails.getUsername().hashCode();
-		return hash;
-	}
+    public void setHeight(double height) {
+        this.height = height;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof User)) {
-			return false;
-		}
-		final User other = (User) obj;
-		
-		return this.loginDetails.getUsername().equals(other.loginDetails.getUsername());
-	}
-	
+    public GenderEnum getGender() {
+        return gender;
+    }
+
+    public void setGender(GenderEnum gender) {
+        this.gender = gender;
+    }
+
+    public UserEnum getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserEnum userRole) {
+        this.userRole = userRole;
+    }
+
+    public Set<Record> getActivityRecords() {
+        return activityRecords;
+    }
+
+    public void setActivityRecords(Set<Record> activityRecords) {
+        this.activityRecords = activityRecords;
+    }
+
+    public LoginDetails getLoginDetails() {
+        return loginDetails;
+    }
+
+    public void setLoginDetails(LoginDetails loginDetails) {
+        this.loginDetails = loginDetails;
+    }
+
+    public TrackingSettings getTrackingSettings() {
+        return trackingSettings;
+    }
+
+    public void setTrackingSettings(TrackingSettings trackingSettings) {
+        this.trackingSettings = trackingSettings;
+    }
+
+    public void addRecord(Record record) {
+        this.activityRecords.add(record);
+        record.setUser(this);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        if (this.loginDetails.getUsername() == null)
+            return hash = 97 * hash;
+        hash = 97 * hash + this.loginDetails.getUsername().hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof User)) {
+            return false;
+        }
+        final User other = (User) obj;
+
+        return this.loginDetails.getUsername().equals(other.loginDetails.getUsername());
+    }
+
 }

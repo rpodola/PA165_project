@@ -1,21 +1,13 @@
 package com.muni.fi.pa165project.entity;
 
+import com.muni.fi.pa165project.enums.Category;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
-import com.muni.fi.pa165project.enums.Category;
 
 /**
- *
  * @author Lukáš Císar
  */
 @Entity
@@ -25,7 +17,7 @@ public class Activity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique=true)
+    @Column(nullable = false, unique = true)
     private String name;
 
     private String description;
@@ -59,24 +51,24 @@ public class Activity implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public Category getCategory() {
         return category;
     }
-    
+
     public void setCategory(Category category) {
         this.category = category;
     }
-    
+
     public Set<BurnedCalories> getBurnedCalories() {
         return burnedCalories;
     }
-    
+
     public void setBurnedCalories(Set<BurnedCalories> burnedCalories) {
         this.burnedCalories = burnedCalories;
     }
 
-    public void addBurnedCaloriesItem(BurnedCalories burnedCaloriesItem){
+    public void addBurnedCaloriesItem(BurnedCalories burnedCaloriesItem) {
         burnedCaloriesItem.setActivity(this);
         this.burnedCalories.add(burnedCaloriesItem);
     }
@@ -90,16 +82,16 @@ public class Activity implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-  
+
         if (this == obj)
             return true;
         if (obj == null)
             return false;
         if (!(obj instanceof Activity))
             return false;
-    
+
         final Activity other = (Activity) obj;
-    
+
         if (name == null) {
             return false;
         } else if (!name.equals(other.name))

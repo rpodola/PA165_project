@@ -25,15 +25,17 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByUserName(String username) {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.loginDetails.username = :username", User.class);
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u " +
+                "WHERE u.loginDetails.username = :username", User.class);
         query.setParameter("username", username);
 
         return query.getSingleResult();
     }
-    
+
     @Override
     public User findByEmail(String email) {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.loginDetails.email = :email", User.class);
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u " +
+                "WHERE u.loginDetails.email = :email", User.class);
         query.setParameter("email", email);
 
         return query.getSingleResult();
@@ -60,15 +62,15 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-	@Override
-	public void delete(long id) {
-		User user = this.findById(id);
+    @Override
+    public void delete(long id) {
+        User user = this.findById(id);
 
-		if (user != null) {
-			this.em.remove(user);
-		}
-	}
-	
+        if (user != null) {
+            this.em.remove(user);
+        }
+    }
+
     @Override
     public List<User> findAll() {
         return this.em.createQuery("SELECT u from User u", User.class).getResultList();

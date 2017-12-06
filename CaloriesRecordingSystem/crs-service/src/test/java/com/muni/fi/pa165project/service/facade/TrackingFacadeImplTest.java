@@ -7,11 +7,7 @@ import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.TrackingFacade;
-import com.muni.fi.pa165project.service.ActivityService;
-import com.muni.fi.pa165project.service.BurnedCaloriesService;
-import com.muni.fi.pa165project.service.RecordService;
-import com.muni.fi.pa165project.service.UserService;
-import com.muni.fi.pa165project.service.MappingService;
+import com.muni.fi.pa165project.service.*;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,14 +26,12 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- *
  * @author Radim Podola
  * @author Peter Krasnan
- *
  */
 @RunWith(MockitoJUnitRunner.class)
 public class TrackingFacadeImplTest {
-    
+
     @Mock
     private RecordService recordService;
 
@@ -62,7 +56,7 @@ public class TrackingFacadeImplTest {
     private Activity activity;
 
     @Before
-    public void init(){
+    public void init() {
         record = new Record();
         record.setId(1L);
 

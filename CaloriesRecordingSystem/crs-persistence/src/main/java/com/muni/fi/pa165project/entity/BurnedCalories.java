@@ -1,38 +1,32 @@
 package com.muni.fi.pa165project.entity;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.Immutable;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /**
- * This class present entity which holds information 
- * about an amount of a burned calories per hour 
+ * This class present entity which holds information
+ * about an amount of a burned calories per hour
  * while doing a certain activity.
  *
  * @author Radim Podola
  */
 @Entity
 @Immutable
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "upperWeightBoundary", "activity_id", "amount" }) })
-public class BurnedCalories implements Serializable{
-    
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"upperWeightBoundary", "activity_id", "amount"})})
+public class BurnedCalories implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @ManyToOne(optional=false)
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "activity_id")
     private Activity activity;
-    
+
     private int upperWeightBoundary;
- 
+
     private int amount;
 
     public Long getId() {
@@ -58,7 +52,7 @@ public class BurnedCalories implements Serializable{
     public void setUpperWeightBoundary(int weight) {
         this.upperWeightBoundary = weight;
     }
-    
+
     public int getAmount() {
         return amount;
     }
@@ -66,7 +60,7 @@ public class BurnedCalories implements Serializable{
     public void setAmount(int amount) {
         this.amount = amount;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -76,7 +70,7 @@ public class BurnedCalories implements Serializable{
         result = prime * result + ((activity == null) ? 0 : activity.hashCode());
         return result;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
 
@@ -86,20 +80,20 @@ public class BurnedCalories implements Serializable{
             return false;
         if (!(obj instanceof BurnedCalories))
             return false;
-        
+
         final BurnedCalories other = (BurnedCalories) obj;
-        
+
         if (activity == null) {
             return false;
         } else if (!activity.equals(other.activity))
             return false;
-        
+
         if (upperWeightBoundary != other.upperWeightBoundary)
             return false;
-        
+
         if (amount != other.amount)
             return false;
-        
+
         return true;
     }
 }

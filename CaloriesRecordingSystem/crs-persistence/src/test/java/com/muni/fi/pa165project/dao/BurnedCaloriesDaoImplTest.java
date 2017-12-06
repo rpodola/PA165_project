@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
 /**
- *
  * @author Radoslav Karlik
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,105 +25,105 @@ import java.util.List;
 @Transactional
 public class BurnedCaloriesDaoImplTest {
 
-	@Autowired
-	private BurnedCaloriesDao bcDao;
+    @Autowired
+    private BurnedCaloriesDao bcDao;
 
-	@Autowired
-	private ActivityDao acDao;
+    @Autowired
+    private ActivityDao acDao;
 
-	private BurnedCalories bc1;
-	private BurnedCalories bc2;
-	private BurnedCalories bc3;
+    private BurnedCalories bc1;
+    private BurnedCalories bc2;
+    private BurnedCalories bc3;
 
-	private Activity ac;
-	
-	@Transactional
-	private void createDummyActivity() {
-		this.ac = new Activity();
-		this.ac.setName("Activity 1");
-		this.ac.setDescription("test activity");
-		this.ac.setCategory(Category.RUNNING);
-		this.acDao.create(ac);
-	}
-	
-	@Before
-	public void init() {
-		createDummyActivity();
+    private Activity ac;
 
-		this.bc1 = new BurnedCalories();
-		this.bc1.setUpperWeightBoundary(100);
-		this.bc1.setActivity(ac);
-		
-		this.bc2 = new BurnedCalories();
-		this.bc2.setUpperWeightBoundary(200);
-		this.bc2.setActivity(ac);
-		
-		this.bc3 = new BurnedCalories();
-		this.bc3.setUpperWeightBoundary(300);
-		this.bc3.setActivity(ac);
+    @Transactional
+    private void createDummyActivity() {
+        this.ac = new Activity();
+        this.ac.setName("Activity 1");
+        this.ac.setDescription("test activity");
+        this.ac.setCategory(Category.RUNNING);
+        this.acDao.create(ac);
+    }
 
-		this.bcDao.create(bc1);
-		this.bcDao.create(bc2);
-		this.bcDao.create(bc3);
-	}
+    @Before
+    public void init() {
+        createDummyActivity();
 
-	@Test
-	@Rollback(true)
-	public void testCreate() {
-		BurnedCalories bc = new BurnedCalories();
+        this.bc1 = new BurnedCalories();
+        this.bc1.setUpperWeightBoundary(100);
+        this.bc1.setActivity(ac);
 
-		bc.setUpperWeightBoundary(75);
-		bc.setAmount(200);
-		bc.setActivity(ac);
+        this.bc2 = new BurnedCalories();
+        this.bc2.setUpperWeightBoundary(200);
+        this.bc2.setActivity(ac);
 
-		this.bcDao.create(bc);
+        this.bc3 = new BurnedCalories();
+        this.bc3.setUpperWeightBoundary(300);
+        this.bc3.setActivity(ac);
 
-		List<BurnedCalories> bcs = this.bcDao.findAll();
-		Assert.assertTrue(bcs.size() == 4);
-	}
+        this.bcDao.create(bc1);
+        this.bcDao.create(bc2);
+        this.bcDao.create(bc3);
+    }
 
-	@Test(expected = DataIntegrityViolationException.class)
-	@Rollback(true)
-	public void testCreateWithoutActivity() {
-		BurnedCalories bc = new BurnedCalories();
+    @Test
+    @Rollback(true)
+    public void testCreate() {
+        BurnedCalories bc = new BurnedCalories();
 
-		bc.setUpperWeightBoundary(75);
-		bc.setAmount(200);
+        bc.setUpperWeightBoundary(75);
+        bc.setAmount(200);
+        bc.setActivity(ac);
 
-		this.bcDao.create(bc);
-	}
-	
-	@Test
-	@Rollback(true)
-	public void testUpdate() {
-		this.bc2.setUpperWeightBoundary(201);
-		this.bcDao.update(bc2);
+        this.bcDao.create(bc);
 
-		BurnedCalories bc2FromDB = this.bcDao.findById(this.bc2.getId());
+        List<BurnedCalories> bcs = this.bcDao.findAll();
+        Assert.assertTrue(bcs.size() == 4);
+    }
 
-		Assert.assertTrue(201 == bc2FromDB.getUpperWeightBoundary());
-	}
+    @Test(expected = DataIntegrityViolationException.class)
+    @Rollback(true)
+    public void testCreateWithoutActivity() {
+        BurnedCalories bc = new BurnedCalories();
 
-	@Test
-	@Rollback(true)
-	public void testRemove() {
-		int initialCount = this.bcDao.findAll().size();
+        bc.setUpperWeightBoundary(75);
+        bc.setAmount(200);
 
-		this.bcDao.delete(bc1);
+        this.bcDao.create(bc);
+    }
 
-		int finalCount = this.bcDao.findAll().size();
+    @Test
+    @Rollback(true)
+    public void testUpdate() {
+        this.bc2.setUpperWeightBoundary(201);
+        this.bcDao.update(bc2);
 
-		Assert.assertEquals(initialCount, finalCount + 1);
-	}
+        BurnedCalories bc2FromDB = this.bcDao.findById(this.bc2.getId());
 
-	@Test
-	@Rollback(true)
-	public void testFindAll() {
-		List<BurnedCalories> bcs = this.bcDao.findAll();
+        Assert.assertTrue(201 == bc2FromDB.getUpperWeightBoundary());
+    }
 
-		Assert.assertTrue(bcs.size() == 3);
-	}
-	
+    @Test
+    @Rollback(true)
+    public void testRemove() {
+        int initialCount = this.bcDao.findAll().size();
+
+        this.bcDao.delete(bc1);
+
+        int finalCount = this.bcDao.findAll().size();
+
+        Assert.assertEquals(initialCount, finalCount + 1);
+    }
+
+    @Test
+    @Rollback(true)
+    public void testFindAll() {
+        List<BurnedCalories> bcs = this.bcDao.findAll();
+
+        Assert.assertTrue(bcs.size() == 3);
+    }
+
     @Test
     @Rollback(true)
     public void testFindById() {
@@ -131,7 +131,7 @@ public class BurnedCaloriesDaoImplTest {
 
         Assert.assertTrue(bcs.equals(bc1));
     }
-    
+
     @Test
     @Rollback(true)
     public void testgetWeightRange() {

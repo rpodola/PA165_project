@@ -16,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;

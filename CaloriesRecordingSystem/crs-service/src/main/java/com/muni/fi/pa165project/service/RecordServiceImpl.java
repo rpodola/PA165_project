@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- *
  * @author Radoslav Karlik
  * @author Radim Podola
  */
@@ -20,7 +19,7 @@ public class RecordServiceImpl implements RecordService {
     private RecordDao recordDao;
 
     @Override
-    public void create(Record record) {    
+    public void create(Record record) {
         this.recordDao.create(record);
     }
 
@@ -43,15 +42,15 @@ public class RecordServiceImpl implements RecordService {
     public List<Record> getAllRecordsOfUser(long userId) {
         return this.recordDao.getAllRecordsOfUserSortedFromNewest(userId);
     }
-	
-	@Override
-	public List<Record> getLastNRecordsOfUser(long userId, int count) {
+
+    @Override
+    public List<Record> getLastNRecordsOfUser(long userId, int count) {
         List<Record> records = this.getAllRecordsOfUser(userId);
         if (count < records.size())
             return records.subList(0, count);
-		else
+        else
             return records;
-	}
+    }
 
     @Override
     public List<Record> getFilteredRecords(long userId, LocalDateTime from, LocalDateTime to) {

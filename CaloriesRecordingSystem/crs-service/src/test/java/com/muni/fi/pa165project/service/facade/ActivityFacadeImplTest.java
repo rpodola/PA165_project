@@ -11,8 +11,8 @@ import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.service.ActivityService;
 import com.muni.fi.pa165project.service.BurnedCaloriesService;
-import com.muni.fi.pa165project.service.UserService;
 import com.muni.fi.pa165project.service.MappingService;
+import com.muni.fi.pa165project.service.UserService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,21 +38,16 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ActivityFacadeImplTest {
 
-    @Mock
-    private ActivityService activityService;
-
-    @Mock
-    private BurnedCaloriesService burnedCaloriesService;
-
-    @Mock
-    private UserService userService;
-
-    @Mock
-    private MappingService mapper;
-
     @InjectMocks
     private final ActivityFacade activityFacade = new ActivityFacadeImpl();
-
+    @Mock
+    private ActivityService activityService;
+    @Mock
+    private BurnedCaloriesService burnedCaloriesService;
+    @Mock
+    private UserService userService;
+    @Mock
+    private MappingService mapper;
     private Activity activity;
     private ActivityDTO activityDTO;
 
@@ -192,7 +187,7 @@ public class ActivityFacadeImplTest {
     @Rollback
     @Transactional
     @Test
-    public void getActivitiesSortedByBurnedCaloriesTest(){
+    public void getActivitiesSortedByBurnedCaloriesTest() {
         long userId = 1L;
         User user = new User();
         user.setWeight(90);

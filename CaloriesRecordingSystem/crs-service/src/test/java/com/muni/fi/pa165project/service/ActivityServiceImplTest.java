@@ -83,7 +83,7 @@ public class ActivityServiceImplTest {
         Activity ac = activityService.findById(activity.getId());
         Assert.assertEquals(ac, activity);
     }
-    
+
     @Transactional
     @Rollback
     @Test

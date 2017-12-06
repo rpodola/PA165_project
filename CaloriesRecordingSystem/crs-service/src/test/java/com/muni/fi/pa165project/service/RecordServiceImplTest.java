@@ -129,7 +129,7 @@ public class RecordServiceImplTest {
 
         when(recordDao.findByTime(record.getUser().getId(), from, to)).thenReturn(expected);
 
-        List<Record> result = recordService.getFilteredRecords(record.getUser().getId(),  from, to);
+        List<Record> result = recordService.getFilteredRecords(record.getUser().getId(), from, to);
 
         Assert.assertEquals(expected, result);
     }

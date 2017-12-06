@@ -1,28 +1,26 @@
 package com.muni.fi.pa165project.dto.filters;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- *
  * @author Radim Podola
  */
 public class RecordTimeFilterDTO {
 
-	private long userId;
-	
+    private long userId;
+
     private LocalDateTime from;
 
     private LocalDateTime to;
 
-	public long getUserId() {
-		return userId;
-	}
+    public long getUserId() {
+        return userId;
+    }
 
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-	
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
     public LocalDateTime getFrom() {
         return from;
     }

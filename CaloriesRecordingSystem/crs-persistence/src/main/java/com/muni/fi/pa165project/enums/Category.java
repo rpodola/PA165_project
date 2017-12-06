@@ -1,7 +1,6 @@
 package com.muni.fi.pa165project.enums;
 
 /**
- *
  * @author Radim Podola
  */
 public enum Category {

@@ -4,93 +4,93 @@ import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
-import com.muni.fi.pa165project.service.UserService;
 import com.muni.fi.pa165project.service.MappingService;
+import com.muni.fi.pa165project.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 
 /**
- *
  * @author Radoslav Karlik
  */
 @Service
 @Transactional
 public class UserFacadeImpl implements UserFacade {
 
-	final static Logger log = LoggerFactory.getLogger(UserFacadeImpl.class);
+    final static Logger log = LoggerFactory.getLogger(UserFacadeImpl.class);
 
-	@Autowired
-	private MappingService mapper;
+    @Autowired
+    private MappingService mapper;
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Override
-	public Long createUser(UserDTO userDto) {
-		log.debug("Creating User with username <{}>", userDto.getUsername());
+    @Override
+    public Long createUser(UserDTO userDto) {
+        log.debug("Creating User with username <{}>", userDto.getUsername());
 
-		User user = mapper.map(userDto, User.class);
-		this.userService.createUser(user);
-		return user.getId();
-	}
+        User user = mapper.map(userDto, User.class);
+        this.userService.createUser(user);
+        return user.getId();
+    }
 
-	@Override
-	public void editUser(UserDTO userDto) {
-		log.debug("Editing User with id <{}>", userDto.getId());
+    @Override
+    public void editUser(UserDTO userDto) {
+        log.debug("Editing User with id <{}>", userDto.getId());
 
-		User user = mapper.map(userDto, User.class);
-		this.userService.updateUser(user);
-	}
+        User user = mapper.map(userDto, User.class);
+        this.userService.updateUser(user);
+    }
 
-	@Override
-	public void removeUser(long userId) {
-		log.debug("Removing User with id <{}>", userId);
+    @Override
+    public void removeUser(long userId) {
+        log.debug("Removing User with id <{}>", userId);
 
-		this.userService.deleteUser(userId);
-	}
-	
-	@Override
-	public UserDTO getUser(long id) {
-		log.debug("Getting User with id <{}>", id);
+        this.userService.deleteUser(userId);
+    }
 
-	    User user = this.userService.findById(id);
-	    return mapper.map(user, UserDTO.class);
-	}
+    @Override
+    public UserDTO getUser(long id) {
+        log.debug("Getting User with id <{}>", id);
 
-	@Override
+        User user = this.userService.findById(id);
+        return mapper.map(user, UserDTO.class);
+    }
+
+    @Override
     public UserDTO getUser(String email) {
-		log.debug("Getting User with email <{}>", email);
+        log.debug("Getting User with email <{}>", email);
 
         User user = this.userService.findByEmail(email);
         return mapper.map(user, UserDTO.class);
-    }	
+    }
 
-	@Override
-	public void setTrackingSettings(TrackingSettingsDTO trackingSettings) {
-		log.debug("Setting tracking settings with goal <{}> to User with id <{}>",
-				trackingSettings.getWeeklyCaloriesGoal(), trackingSettings.getUserId());
+    @Override
+    public void setTrackingSettings(TrackingSettingsDTO trackingSettings) {
+        log.debug("Setting tracking settings with goal <{}> to User with id <{}>",
+                trackingSettings.getWeeklyCaloriesGoal(), trackingSettings.getUserId());
 
-		User user = this.userService.findById(trackingSettings.getUserId());
-		if (user != null){
-		    user.getTrackingSettings().setWeeklyCaloriesGoal(trackingSettings.getWeeklyCaloriesGoal());
-		    this.userService.updateUser(user);		  
-		}
-	}
+        User user = this.userService.findById(trackingSettings.getUserId());
+        if (user != null) {
+            user.getTrackingSettings().setWeeklyCaloriesGoal(trackingSettings.getWeeklyCaloriesGoal());
+            this.userService.updateUser(user);
+        }
+    }
 
-	@Override
-	public TrackingSettingsDTO getTrackingSettings(long userId) {
-		log.debug("Getting tracking settings for User with id <{}>", userId);
+    @Override
+    public TrackingSettingsDTO getTrackingSettings(long userId) {
+        log.debug("Getting tracking settings for User with id <{}>", userId);
 
-		User user = this.userService.findById(userId);
+        User user = this.userService.findById(userId);
         if (user == null)
             return null;
-		TrackingSettingsDTO settings = mapper.map(user.getTrackingSettings(), TrackingSettingsDTO.class);
-		if (settings == null)
-			return null;
-		settings.setUserId(user.getId());
-		return settings;
-	}
+        TrackingSettingsDTO settings = mapper.map(user.getTrackingSettings(), TrackingSettingsDTO.class);
+        if (settings == null)
+            return null;
+        settings.setUserId(user.getId());
+        return settings;
+    }
 }

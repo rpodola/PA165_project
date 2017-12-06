@@ -1,10 +1,9 @@
 package com.muni.fi.pa165project.dto;
 
 /**
- *
  * @author Radim Podola
  */
-public class RecordDetailDTO extends RecordDTO{
+public class RecordDetailDTO extends RecordDTO {
 
     private int distance;
 

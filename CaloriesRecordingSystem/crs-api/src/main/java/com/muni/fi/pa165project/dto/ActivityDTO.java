@@ -1,83 +1,75 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.muni.fi.pa165project.dto;
 
 import com.muni.fi.pa165project.enums.Category;
 import java.util.Objects;
 
 /**
- *
  * @author Radoslav Karlik
  */
 public class ActivityDTO {
-	
-	private Long id;
 
-	private String name;
-		
-	private String description;
-	
-	private Category category;
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    private String name;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private String description;
 
-	public String getName() {
-		return name;
-	}
+    private Category category;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Category getCategory() {
-		return category;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCategory(Category category) {
-		this.category = category;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	@Override
-	public int hashCode() {
-		int hash = 5;
-		hash = 13 * hash + Objects.hashCode(this.name);
-		return hash;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof ActivityDTO)) {
-			return false;
-		}
-		final ActivityDTO other = (ActivityDTO) obj;
-		if (!Objects.equals(this.name, other.getName())) {
-			return false;
-		}
-		return true;
-	}
+    public Category getCategory() {
+        return category;
+    }
 
-	
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 13 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof ActivityDTO)) {
+            return false;
+        }
+        final ActivityDTO other = (ActivityDTO) obj;
+        if (!Objects.equals(this.name, other.getName())) {
+            return false;
+        }
+        return true;
+    }
 }

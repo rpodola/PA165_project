@@ -12,7 +12,7 @@ public interface BurnedCaloriesDao {
     /**
      * Finds BurnedCalories by id
      *
-     * @param id
+     * @param id burned calories id
      * @return found Burned Calories
      */
     BurnedCalories findById(long id);
@@ -27,36 +27,38 @@ public interface BurnedCaloriesDao {
     /**
      * Inserts record into database
      *
-     * @param burnedCalories
+     * @param burnedCalories burned calories object
      */
     void create(BurnedCalories burnedCalories);
 
     /**
      * Updates record in database
      *
-     * @param burnedCalories
+     * @param burnedCalories burned calories object
      */
     void update(BurnedCalories burnedCalories);
 
     /**
      * Deletes record from database
      *
-     * @param burnedCalories
+     * @param burnedCalories burned calories object
      */
     void delete(BurnedCalories burnedCalories);
-	
-	/**
-	 * Deletes record from database
-	 * @param id 
-	 */
-	void delete(long id);
-	
-	/**
-	 * Get weight range(BurnedCalories) from Activity
-	 * which corresponds to given body weight
-	 * @param activityId
-	 * @param bodyweight
-	 * @return 
-	 */
-	BurnedCalories getWeightRange(long activityId, double bodyweight);
+
+    /**
+     * Deletes record from database
+     *
+     * @param id burned calories id
+     */
+    void delete(long id);
+
+    /**
+     * Get weight range(BurnedCalories) from Activity
+     * which corresponds to given body weight
+     *
+     * @param activityId activity id
+     * @param bodyweight body weight
+     * @return burned calories object
+     */
+    BurnedCalories getWeightRange(long activityId, double bodyweight);
 }

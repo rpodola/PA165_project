@@ -15,51 +15,51 @@ import java.util.List;
 
 import static java.time.DayOfWeek.MONDAY;
 import static java.time.temporal.TemporalAdjusters.previousOrSame;
+
 /**
- *
  * @author Radoslav Karlik
  * @author Lukáš Císar
  */
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserDao userDao;
-        
-        @Autowired
-        private RecordDao recordDao;
-	
-	@Override
-	public User findById(long userId) {
-		return this.userDao.findById(userId);
-	}
-	
-	@Override
-	public User findByEmail(String email){
-		return this.userDao.findByEmail(email);
-	}
-	
-	@Override
-	public void createUser(User user){
-		this.userDao.create(user);
-	}
-	
-	@Override
-	public void deleteUser(long userId){
-		this.userDao.delete(userId);
-	}
+    @Autowired
+    private UserDao userDao;
 
-	@Override
-	public void updateUser(User user) {
-		this.userDao.update(user);
-	}
+    @Autowired
+    private RecordDao recordDao;
+
+    @Override
+    public User findById(long userId) {
+        return this.userDao.findById(userId);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return this.userDao.findByEmail(email);
+    }
+
+    @Override
+    public void createUser(User user) {
+        this.userDao.create(user);
+    }
+
+    @Override
+    public void deleteUser(long userId) {
+        this.userDao.delete(userId);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        this.userDao.update(user);
+    }
 
     @Override
     public int getProgressOfWeeklyCaloriesGoal(long userId) {
         double sum = 0;
         User user = this.findById(userId);
         if (user == null)
-			throw new DataRetrievalFailureException("User not found");
+            throw new DataRetrievalFailureException("User not found");
 
         double goal = user.getTrackingSettings().getWeeklyCaloriesGoal();
         if (goal <= 0)
@@ -68,14 +68,14 @@ public class UserServiceImpl implements UserService {
         LocalDate monday = LocalDate.now().with(previousOrSame(MONDAY));
         LocalDateTime start = LocalDateTime.of(monday, LocalTime.MIDNIGHT);
         LocalDateTime end = start.plusWeeks(1).minusSeconds(1);
-        
+
         //already sorted from earliest
         List<Record> lastWeekRecords = this.recordDao.findByTime(userId, start, end);
-        
-        for (Record r : lastWeekRecords){
+
+        for (Record r : lastWeekRecords) {
             sum += r.getBurnedCalories();
         }
-        
+
         return (int) ((sum / goal) * 100);
     }
 }

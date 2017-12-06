@@ -13,11 +13,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import javax.transaction.Transactional;
 
 /**
-* @author Radim Podola
-*/
+ * @author Radim Podola
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
 public class UserFacadeIT {
@@ -30,7 +31,7 @@ public class UserFacadeIT {
     @Before
     public void setup() {
         this.user = FacadeTestHelper.initUser();
-    }   
+    }
 
     @Test
     @Transactional
@@ -40,7 +41,7 @@ public class UserFacadeIT {
         UserDTO foundUser = this.userFac.getUser(userId);
         Assert.assertTrue(user.equals(foundUser));
     }
-    
+
     @Test
     @Transactional
     @Rollback()
@@ -54,11 +55,11 @@ public class UserFacadeIT {
         userFac.editUser(user);
         //lets get user with changed name
         UserDTO foundUser = this.userFac.getUser(userId);
-        
+
         Assert.assertEquals(foundUser, user);
         Assert.assertEquals(user.getName(), newName);
     }
-    
+
     @Test
     @Transactional
     @Rollback()
@@ -68,7 +69,7 @@ public class UserFacadeIT {
         UserDTO foundUser = this.userFac.getUser(userId);
         Assert.assertNull(foundUser);
     }
-    
+
     @Test(expected = DataAccessException.class)
     @Transactional
     @Rollback()
