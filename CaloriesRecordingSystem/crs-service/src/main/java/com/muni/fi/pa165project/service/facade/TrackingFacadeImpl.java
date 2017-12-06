@@ -44,8 +44,8 @@ public class TrackingFacadeImpl implements TrackingFacade {
     @Autowired
     private UserService userService;
 
-	@Autowired
-	private BurnedCaloriesService burnedCaloriesService;
+    @Autowired
+    private BurnedCaloriesService burnedCaloriesService;
 	
     @Override
     public Long createRecord(RecordDetailDTO recordDetailDto) {
@@ -67,12 +67,8 @@ public class TrackingFacadeImpl implements TrackingFacade {
             )
         );
         user.addRecord(record);
-        //TODO fix this dirty hack
-        recordService.update(record);
-        List<Record> records = recordService.getFilteredRecords(user.getId(), record.getAtTime(), record.getAtTime());
-        if (records.isEmpty())
-            return null;
-        return records.get(0).getId();
+        recordService.create(record);
+        return record.getId();
     }
 
     @Override

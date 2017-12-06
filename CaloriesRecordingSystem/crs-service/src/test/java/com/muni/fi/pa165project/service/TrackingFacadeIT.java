@@ -98,7 +98,6 @@ public class TrackingFacadeIT {
         Assert.assertEquals(record, recordFound);
     }
 
-
     @Test
     @Transactional
     @Rollback()

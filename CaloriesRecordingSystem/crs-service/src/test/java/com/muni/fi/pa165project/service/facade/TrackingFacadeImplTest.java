@@ -86,7 +86,7 @@ public class TrackingFacadeImplTest {
         RecordDTO recordDTO = new RecordDTO();
         recordDTO.setId(1L);
         recordDTO.setAtTime(LocalDateTime.now());
-        recordDTO.setActivityId(1L);
+        recordDTO.setActivityId(activity.getId());
         recordDTO.setUserId(user.getId());
 
         record.setAtTime(recordDTO.getAtTime());

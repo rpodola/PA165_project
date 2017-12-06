@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class RecordDTO {
 	
-	private long Id;
+	private Long Id;
 	
 	private long activityId;
 	
@@ -21,11 +21,11 @@ public class RecordDTO {
 
     private int burnedCalories;
 
-	public long getId() {
+	public Long getId() {
 		return Id;
 	}
 
-	public void setId(long Id) {
+	public void setId(Long Id) {
 		this.Id = Id;
 	}
 
