@@ -1,8 +1,8 @@
 package com.muni.fi.pa165project.config;
 
+import com.muni.fi.pa165project.dao.UserDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
@@ -24,8 +24,8 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
-@ComponentScans(value = @ComponentScan("com.muni.fi.pa165project"))
-public class AppConfig {
+@ComponentScan(basePackageClasses={UserDao.class})
+public class AppContextConfiguration {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

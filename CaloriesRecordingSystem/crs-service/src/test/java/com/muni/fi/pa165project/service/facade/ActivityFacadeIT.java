@@ -1,6 +1,5 @@
 package com.muni.fi.pa165project.service.facade;
 
-import com.muni.fi.pa165project.config.AppConfig;
 import com.muni.fi.pa165project.dto.ActivityDTO;
 import com.muni.fi.pa165project.dto.ActivityDetailExportDTO;
 import com.muni.fi.pa165project.dto.ActivityExportDTO;
@@ -8,6 +7,7 @@ import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
 import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
+import com.muni.fi.pa165project.service.config.ServiceConfiguration;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ import java.util.List;
  * @author Radim Podola
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppConfig.class)
+@ContextConfiguration(classes = ServiceConfiguration.class)
 public class ActivityFacadeIT {
 
     @Autowired

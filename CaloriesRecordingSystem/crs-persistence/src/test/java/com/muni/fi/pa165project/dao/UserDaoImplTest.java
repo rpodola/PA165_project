@@ -1,6 +1,6 @@
 package com.muni.fi.pa165project.dao;
 
-import com.muni.fi.pa165project.config.AppConfig;
+import com.muni.fi.pa165project.config.AppContextConfiguration;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.enums.UserEnum;
@@ -22,7 +22,7 @@ import java.util.List;
  * @author Lukáš Císar
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppConfig.class)
+@ContextConfiguration(classes = AppContextConfiguration.class)
 public class UserDaoImplTest {
 
     @Autowired

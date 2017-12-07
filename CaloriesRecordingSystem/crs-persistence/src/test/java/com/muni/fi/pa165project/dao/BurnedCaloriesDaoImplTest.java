@@ -1,6 +1,6 @@
 package com.muni.fi.pa165project.dao;
 
-import com.muni.fi.pa165project.config.AppConfig;
+import com.muni.fi.pa165project.config.AppContextConfiguration;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.BurnedCalories;
 import com.muni.fi.pa165project.enums.Category;
@@ -21,7 +21,7 @@ import java.util.List;
  * @author Radoslav Karlik
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppConfig.class)
+@ContextConfiguration(classes = AppContextConfiguration.class)
 @Transactional
 public class BurnedCaloriesDaoImplTest {
 

@@ -22,7 +22,11 @@
     </appender>
     <logger name="com.muni.fi.pa165project.service.facade">
         <level value="DEBUG"/>
-        <!-- <appender-ref ref="console" /> -->
+        <appender-ref ref="console" />
+    </logger>
+    <logger name="com.muni.fi.pa165project.rest">
+        <level value="DEBUG"/>
+        <appender-ref ref="console" />
     </logger>
     <root>
         <level value="ERROR"/>

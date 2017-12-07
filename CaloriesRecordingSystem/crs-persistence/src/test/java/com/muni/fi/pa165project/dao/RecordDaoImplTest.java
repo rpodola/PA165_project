@@ -1,6 +1,6 @@
 package com.muni.fi.pa165project.dao;
 
-import com.muni.fi.pa165project.config.AppConfig;
+import com.muni.fi.pa165project.config.AppContextConfiguration;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
@@ -25,7 +25,7 @@ import java.util.List;
  * @author Radim Podola
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppConfig.class)
+@ContextConfiguration(classes = AppContextConfiguration.class)
 public class RecordDaoImplTest {
 
     @Autowired

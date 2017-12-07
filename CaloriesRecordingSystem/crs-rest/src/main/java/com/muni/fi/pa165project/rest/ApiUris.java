@@ -1,4 +1,4 @@
-package com.muni.fi.pa165project.rest.controllers;
+package com.muni.fi.pa165project.rest;
 
 /**
  * Represents the entry points for the API

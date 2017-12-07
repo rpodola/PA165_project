@@ -1,11 +1,11 @@
 package com.muni.fi.pa165project.service.facade;
 
-import com.muni.fi.pa165project.config.AppConfig;
 import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.facade.TrackingFacade;
 import com.muni.fi.pa165project.facade.UserFacade;
+import com.muni.fi.pa165project.service.config.ServiceConfiguration;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,7 @@ import java.util.List;
  * @author Radim Podola
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppConfig.class)
+@ContextConfiguration(classes = ServiceConfiguration.class)
 public class TrackingFacadeIT {
 
     @Autowired
