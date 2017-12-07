@@ -1,42 +1,293 @@
-<h1 class="ml-5">Settings</h1>
-<hr>
-<div class="container body-content">
-  <dl class="dl-horizontal">
-    <dt>
-      Username:
-    </dt>
-    <dd>
-      {{ userSettings.username }}
-    </dd>
-    <dt>
-      Password:
-    </dt>
-    <dd>
-      {{ userSettings.password }}
-    </dd>
-    <dt>
-      Name:
-    </dt>
-    <dd>
-      {{ userSettings.name }}
-    </dd>
-    <dt>
-      Bodyweight:
-    </dt>
-    <dd>
-      {{ userSettings.weight}}
-    </dd>
-    <dt>
-      Height:
-    </dt>
-    <dd>
-      {{ userSettings.height}}
-    </dd>
-    <dt>
-      E-mail:
-    </dt>
-    <dd>
-      {{ userSettings.email }}
-    </dd>
-  </dl>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h2>
+        Settings
+      </h2>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="name">
+        Name
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-user">
+            </i>
+          </div>
+
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            id="name"
+            placeholder="Username"
+            [(ngModel)]="userSettings.name"
+            required autofocus
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="wrongName"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+            <i class="fa fa-close">
+              {{ wrongNameMessage }}
+            </i>
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="email">
+        E-Mail Address
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-at">
+            </i>
+          </div>
+
+          <input
+            type="text"
+            name="email"
+            class="form-control"
+            id="email"
+            placeholder="you@example.com"
+            [(ngModel)]="userSettings.email"
+            required autofocus
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="wrongEmail"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+            <i class="fa fa-close">
+              {{ wrongEmailMessage }}
+            </i>
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="password">
+        Password
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group has-danger">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div
+            class="input-group-addon"
+            style="width: 2.6rem"
+          >
+            <i class="fa fa-key">
+            </i>
+          </div>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+            required
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="wrongPassword"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ wrongPasswordMessage }}
+              </i>
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="newPassword">
+        New Password
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group has-danger">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div
+            class="input-group-addon"
+            style="width: 2.6rem"
+          >
+            <i class="fa fa-key">
+            </i>
+          </div>
+          <input
+            type="password"
+            name="newPassword"
+            class="form-control"
+            id="newPassword"
+            placeholder="Password"
+            required
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="wrongPassword"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ wrongPasswordMessage }}
+              </i>
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="password">
+        Confirm Password
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-repeat">
+            </i>
+          </div>
+
+          <input
+            type="password"
+            name="password-confirmation"
+            class="form-control"
+            id="password-confirm"
+            placeholder="Password"
+            required
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="passwordsDontMatch"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ passwordsDontMatchMessage }}
+              </i>
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="height">
+        Height
+      </label>
+    </div>
+    <div class="col-md-auto">
+      <div class="form-group has-danger">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <input
+            type="number"
+            name="height"
+            class="form-control"
+            id="height"
+            required
+            [(ngModel)]="userSettings.height"
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="wrongHeight"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ wrongHeightMessage }}
+              </i>
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="bodyweight">
+        Bodyweight
+      </label>
+    </div>
+    <div class="col-md-auto">
+      <div class="form-group has-danger">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <input
+            type="number"
+            name="bodyweight"
+            class="form-control"
+            id="bodyweight"
+            required
+            [(ngModel)]="userSettings.weight"
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="wrongWeight"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ wrongWeightMessage }}
+              </i>
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <button
+        type="submit"
+        class="btn btn-success"
+      >
+        <i class="fa fa-save">
+        </i>
+        Save settings
+      </button>
+    </div>
 </div>
