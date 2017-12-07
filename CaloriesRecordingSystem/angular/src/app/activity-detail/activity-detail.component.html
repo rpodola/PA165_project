@@ -1,20 +1,35 @@
-<div *ngIf="activity">
-  <label>
-    Name:
-    {{ activity.name }}
-  </label>
-  <br />
-  <label>
-    Category:
-    <a routerLink="/categories/{{ activity.category.id }}" >
-      {{ activity.category.name }}
-    </a>
-  </label>
-  <br />
-  <label>
-    Description:
-    {{ activity.description }}
-  </label>
+<a
+  class="btn btn-outline-primary"
+  routerLink="/activities"
+>
+  View all activities
+</a>
+<div
+  class="container body-content"
+  *ngIf="activity"
+>
+  <dl>
+    <dt>
+      Name:
+    </dt>
+    <dd>
+      {{ activity.name }}
+    </dd>
+    <dt>
+      Category:
+    </dt>
+    <dd>
+      <a routerLink="/categories/{{ activity.category.id }}" >
+        {{ activity.category.name }}
+      </a>
+    </dd>
+    <dt>
+      Description:
+    </dt>
+    <dd>
+      {{ activity.description }}
+    </dd>
+  </dl>
 </div>
 
 <div *ngIf="activity.burnedCaloriesList">

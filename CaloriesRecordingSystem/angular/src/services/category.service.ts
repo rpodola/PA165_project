@@ -8,7 +8,7 @@ import {Category} from '../classes/Category';
 export class CategoryService {
 
   categories: ICategory[] = [
-    new Category(0, 'Exercise'),
+    new Category(0, 'Exercise', 'Exercise is the best activity'),
     new Category(1, 'Aerobics'),
     new Category(2, 'Walking'),
     new Category(3, 'Running'),

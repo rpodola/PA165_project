@@ -1,33 +1,51 @@
-<div *ngIf="record">
-  <label>
-    Activity:
-    <a routerLink="/activity/{{record.activityId}}">
-      {{ record.activityName }}
-    </a>
-  </label>
-  <br />
-  <label>
-    Date:
-    {{ record.date }}
-  </label>
-  <br />
-  <label>
-    Burned calories:
-    {{ record.burnedCalories }}
-  </label>
-  <br />
-  <label>
-    Distance:
-    {{ record.distance }}
-  </label>
-  <br />
-  <label>
-    Duration:
-    {{ record.duration }}
-  </label>
-  <br />
-  <label>
-    Bodyweight:
-    {{ record.weight }}
-  </label>
+<a
+  class="btn btn-outline-primary"
+  routerLink="/records"
+>
+  View all records
+</a>
+<div
+  class="container body-content"
+  *ngIf="record"
+>
+  <dl class="dl-horizontal">
+    <dt>
+      Activity:
+    </dt>
+    <dd>
+      <a routerLink="/activity/{{record.activityId}}">
+        {{ record.activityName }}
+      </a>
+    </dd>
+    <dt>
+      Date:
+    </dt>
+    <dd>
+      {{ record.date }}
+    </dd>
+    <dt>
+      Burned calories:
+    </dt>
+    <dd>
+      {{ record.burnedCalories }}
+    </dd>
+    <dt>
+      Distance:
+    </dt>
+    <dd>
+      {{ record.distance }}
+    </dd>
+    <dt>
+      Duration:
+    </dt>
+    <dd>
+      {{ record.duration }}
+    </dd>
+    <dt>
+      Bodyweight:
+    </dt>
+    <dd>
+      {{ record.weight }}
+    </dd>
+  </dl>
 </div>

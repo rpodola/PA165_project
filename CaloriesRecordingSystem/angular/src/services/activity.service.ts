@@ -19,14 +19,14 @@ export class ActivityService {
       id: 0,
       name: 'firstActivity',
       description: 'desc',
-      category: new Category(0, 'Exercise'),
+      category: new Category(0, 'Exercise', 'Exercise is best activity'),
       burnedCaloriesList: [],
     },
     {
       id: 1,
       name: 'secondActivity',
       description: 'desc2',
-      category: new Category(1, 'Aerobics'),
+      category: new Category(1, 'Aerobics', 'Aerobics sucks'),
       burnedCaloriesList: [
         {
           upperWeightBoundary: 50,

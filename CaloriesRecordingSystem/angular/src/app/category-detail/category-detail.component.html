@@ -1,12 +1,20 @@
-<div>
-  <label>
-    Name:
-    {{category.name}}
-  </label>
+<a
+  class="btn btn-outline-primary"
+  routerLink="/categories"
+>
+  View all categories
+</a>
+<div *ngIf="category">
+  <div>
+    <label>
+      Name:
+      {{category.name}}
+    </label>
+  </div>
+  <app-activities
+    [activities]="activitiesInCategory"
+    [hideCategory]="true"
+  >
+  </app-activities>
 </div>
 
-<app-activities
-  [activities]="activitiesInCategory"
-  [hideCategory]="true"
->
-</app-activities>
