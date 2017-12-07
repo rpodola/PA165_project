@@ -19,6 +19,8 @@ import {CategoryService} from '../services/category.service';
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
 import { ActivitiesComponent } from './activities/activities.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { SettingsComponent } from './settings/settings.component';
+import {SettingsService} from '../services/settings.service';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
     CategoryDetailComponent,
     ActivitiesComponent,
     CategoryListComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
     ActivityService,
     RecordService,
     CategoryService,
+    SettingsService,
   ],
   bootstrap: [AppComponent],
 })

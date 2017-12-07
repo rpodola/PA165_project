@@ -7,6 +7,7 @@ import {RecordDetailComponent} from './record-detail/record-detail.component';
 import {WrongPathComponent} from './wrong-path/wrong-path.component';
 import {CategoryDetailComponent} from './category-detail/category-detail.component';
 import {CategoryListComponent} from './category-list/category-list.component';
+import {SettingsComponent} from './settings/settings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'categories/:id', component: CategoryDetailComponent },
   { path: 'records', component: RecordListComponent },
   { path: 'records/:id', component: RecordDetailComponent },
-  { path: 'settings', component: ActivityListComponent },
+  { path: 'settings', component: SettingsComponent },
   //  catch all
   { path: '**', component: WrongPathComponent },
 ];
