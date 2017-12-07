@@ -21,6 +21,8 @@ import { ActivitiesComponent } from './activities/activities.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { SettingsComponent } from './settings/settings.component';
 import {SettingsService} from '../services/settings.service';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { RegisterFormComponent } from './register-form/register-form.component';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import {SettingsService} from '../services/settings.service';
     ActivitiesComponent,
     CategoryListComponent,
     SettingsComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
   ],
   imports: [
     BrowserModule,

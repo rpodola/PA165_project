@@ -8,6 +8,8 @@ import {WrongPathComponent} from './wrong-path/wrong-path.component';
 import {CategoryDetailComponent} from './category-detail/category-detail.component';
 import {CategoryListComponent} from './category-list/category-list.component';
 import {SettingsComponent} from './settings/settings.component';
+import {LoginFormComponent} from './login-form/login-form.component';
+import {RegisterFormComponent} from './register-form/register-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'records', component: RecordListComponent },
   { path: 'records/:id', component: RecordDetailComponent },
   { path: 'settings', component: SettingsComponent },
+  { path: 'login', component: LoginFormComponent },
+  { path: 'register', component: RegisterFormComponent },
   //  catch all
   { path: '**', component: WrongPathComponent },
 ];
