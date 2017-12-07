@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms';
@@ -24,7 +25,6 @@ import {SettingsService} from '../services/settings.service';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +47,7 @@ import { RegisterFormComponent } from './register-form/register-form.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    NgDatepickerModule,
   ],
   providers: [
     ActivityService,

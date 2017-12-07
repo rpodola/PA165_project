@@ -13,6 +13,7 @@ export class SettingsService {
     name: 'Jozo',
     password: 'Jozis123',
     username: 'jozinator',
+    birthday: new Date(),
   };
 
   constructor() { }

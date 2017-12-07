@@ -5,4 +5,5 @@ export interface IUserSettings {
   username: string;
   password: string;
   email: string;
+  birthday: Date;
 }

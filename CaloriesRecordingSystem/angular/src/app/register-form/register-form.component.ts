@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {IUserSettings} from '../../interfaces/IUserSettings';
+import {SettingsService} from '../../services/settings.service';
 
 @Component({
   selector: 'app-register-form',
@@ -6,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register-form.component.css']
 })
 export class RegisterFormComponent implements OnInit {
+
+  userSettings: IUserSettings;
+
+  male = true;
 
   wrongUsername: boolean;
   wrongUsernameMessage = 'Wrong username';
@@ -19,9 +25,23 @@ export class RegisterFormComponent implements OnInit {
   passwordsDontMatch: boolean;
   passwordsDontMatchMessage = 'Passwords don\'t match';
 
-  constructor() { }
+  constructor(
+    private settingsService: SettingsService
+  ) { }
 
   ngOnInit() {
+    this.settingsService.getUserSettings().subscribe(st => this.userSettings = st);
+  }
+
+  /**
+   * Required hack to override datepicker position which is implicitly under other components :/
+   */
+  overridePopupWindowStyle(): void {
+    const el = document.getElementsByClassName('ngx-datepicker-calendar-container');
+
+    if (el.length > 0) {
+      el[0]['style']['marginLeft'] = '75px';
+    }
   }
 
 }
