@@ -1,49 +1,86 @@
-<a
-  class="btn btn-outline-primary"
-  routerLink="/activities"
->
-  View all activities
-</a>
-<hr>
-<div
-  class="container body-content"
-  *ngIf="activity"
->
-  <dl>
-    <dt>
-      Name:
-    </dt>
-    <dd>
-      {{ activity.name }}
-    </dd>
-    <dt>
-      Category:
-    </dt>
-    <dd>
-      <a routerLink="/categories/{{ activity.category.id }}" >
-        {{ activity.category.name }}
-      </a>
-    </dd>
-    <dt>
-      Description:
-    </dt>
-    <dd>
-      {{ activity.description }}
-    </dd>
-  </dl>
+<div>
+  <a
+    class="btn btn-outline-primary"
+    routerLink="/activities"
+  >
+    View all activities
+  </a>
 </div>
 
-<div *ngIf="activity.burnedCaloriesList">
-  <table class="table">
-    <thead>
+<div
+  class="container"
+  *ngIf="activity"
+>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h2>
+        {{ activity.name }}
+      </h2>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="category">
+        Category
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-user">
+            </i>
+          </div>
+          <a
+            id="category"
+            class="form-control text-primary"
+            routerLink="/categories/{{activity.category.id}}"
+          >
+            {{ activity.category.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="description">
+        Description
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-user">
+            </i>
+          </div>
+          <span
+            class="form-control"
+            id="description"
+          >
+            {{ activity.description }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <table class="table">
+      <thead>
       <th>
         Weight
       </th>
       <th>
         Calories
       </th>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
       <tr *ngFor="let burnedCalories of activity.burnedCaloriesList">
         <td>
           {{ burnedCalories.upperWeightBoundary }}
@@ -52,6 +89,8 @@
           {{ burnedCalories.amount }}
         </td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </div>
+

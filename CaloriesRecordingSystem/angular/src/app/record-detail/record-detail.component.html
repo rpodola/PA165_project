@@ -1,52 +1,180 @@
-<a
-  class="btn btn-outline-primary"
-  routerLink="/records"
->
-  View all records
-</a>
-<hr>
+<div>
+  <a
+    class="btn btn-outline-primary"
+    routerLink="/records"
+  >
+    View all records
+  </a>
+</div>
+
 <div
-  class="container body-content"
+  class="container"
   *ngIf="record"
 >
-  <dl class="dl-horizontal">
-    <dt>
-      Activity:
-    </dt>
-    <dd>
-      <a routerLink="/activity/{{record.activityId}}">
-        {{ record.activityName }}
-      </a>
-    </dd>
-    <dt>
-      Date:
-    </dt>
-    <dd>
-      {{ record.date }}
-    </dd>
-    <dt>
-      Burned calories:
-    </dt>
-    <dd>
-      {{ record.burnedCalories }}
-    </dd>
-    <dt>
-      Distance:
-    </dt>
-    <dd>
-      {{ record.distance }}
-    </dd>
-    <dt>
-      Duration:
-    </dt>
-    <dd>
-      {{ record.duration }}
-    </dd>
-    <dt>
-      Bodyweight:
-    </dt>
-    <dd>
-      {{ record.weight }}
-    </dd>
-  </dl>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h2>
+        Record
+      </h2>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="activity">
+        Activity
+      </label>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-user">
+            </i>
+          </div>
+
+          <a
+            routerLink="/activities/{{record.activityId}}"
+            class="form-control text-primary"
+          >
+            {{ record.activityName }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="birthday">
+        Time
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-birthday-cake">
+            </i>
+          </div>
+
+          <span (click)="overridePopupWindowStyle()">
+              <ng-datepicker
+                id="birthday"
+                position="bottom-right"
+                [(ngModel)]="record.date"
+              >
+              </ng-datepicker>
+            </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="calories">
+        Burned calories
+      </label>
+    </div>
+    <div class="col-md-auto">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-birthday-cake">
+            </i>
+          </div>
+
+          <input
+            type="number"
+            name="calories"
+            class="form-control"
+            id="calories"
+            [(ngModel)]="record.burnedCalories"
+            disabled
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="distance">
+        Distance
+      </label>
+    </div>
+    <div class="col-md-auto">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-birthday-cake">
+            </i>
+          </div>
+
+          <input
+            type="number"
+            name="distance"
+            class="form-control"
+            id="distance"
+            [(ngModel)]="record.distance"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="duration">
+        Duration
+      </label>
+    </div>
+    <div class="col-md-auto">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-birthday-cake">
+            </i>
+          </div>
+
+          <input
+            type="number"
+            name="duration"
+            class="form-control"
+            id="duration"
+            [(ngModel)]="record.duration"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="bodyweight">
+        Bodyweight
+      </label>
+    </div>
+    <div class="col-md-auto">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-birthday-cake">
+            </i>
+          </div>
+
+          <input
+            type="number"
+            name="bodyweight"
+            class="form-control"
+            id="bodyweight"
+            [(ngModel)]="record.weight"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

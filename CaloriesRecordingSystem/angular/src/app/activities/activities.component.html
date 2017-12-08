@@ -15,12 +15,18 @@
   <tbody>
   <tr *ngFor="let activity of activities">
     <td>
-      {{ activity.name }}
+      <a
+        *ngIf="!useButtonForActivityLink; else activityNameTextOnly"
+        routerLink="/activities/{{activity.id}}"
+        disabled=""
+        >
+        {{ activity.name }}
+      </a>
+      <ng-template #activityNameTextOnly>
+        {{ activity.name }}
+      </ng-template>
     </td>
-    <td
-      *ngIf="!hideCategory"
-
-    >
+    <td *ngIf="!hideCategory">
       <a routerLink="/categories/{{activity.category.id}}">
         {{activity.category.name}}
       </a>
@@ -28,7 +34,7 @@
     <td>
       {{ activity.description }}
     </td>
-    <td>
+    <td *ngIf="useButtonForActivityLink">
       <a
         class="btn btn-primary"
         routerLink="/activities/{{activity.id}}"

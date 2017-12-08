@@ -10,6 +10,7 @@ export class ActivitiesComponent implements OnInit {
 
   @Input() activities: IActivity[];
   @Input() hideCategory: boolean;
+  @Input() useButtonForActivityLink: boolean;
 
   constructor() {}
 

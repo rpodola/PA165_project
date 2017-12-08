@@ -1,27 +1,50 @@
-<a
-  class="btn btn-outline-primary"
-  routerLink="/categories"
+<div>
+  <a
+    class="btn btn-outline-primary"
+    routerLink="/categories"
+  >
+    View all categories
+  </a>
+</div>
+
+<div
+  class="container"
+  *ngIf="category"
 >
-  View all categories
-</a>
-<hr>
-<div *ngIf="category">
-  <div class="container body-content">
-    <dl class="dl-horizontal">
-      <dt>
-        Name:
-      </dt>
-      <dd>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h2>
         {{ category.name }}
-      </dd>
-      <dt>
-        Description:
-      </dt>
-      <dd>
-        {{ category.description }}
-      </dd>
-    </dl>
+      </h2>
+      <hr>
+    </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="description">
+        Description
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon" style="width: 2.6rem">
+            <i class="fa fa-user">
+            </i>
+          </div>
+          <span
+            class="form-control"
+            id="description"
+          >
+            {{ category.description }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <app-activities
     [activities]="activitiesInCategory"
     [hideCategory]="true"
