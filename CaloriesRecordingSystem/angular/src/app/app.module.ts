@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { NgDatepickerModule } from 'ng2-datepicker';
 
 import { AppComponent } from './app.component';
-import {FormsModule} from '@angular/forms';
+import { FormsModule} from '@angular/forms';
 import { ActivityDetailComponent } from './activity-detail/activity-detail.component';
 import { ActivityListComponent } from './activity-list/activity-list.component';
 import {ActivityService} from '../services/activity.service';
@@ -24,6 +24,10 @@ import { SettingsComponent } from './settings/settings.component';
 import {SettingsService} from '../services/settings.service';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
+import { ValidateEmailDirective } from '../validators/validate-email.directive';
+import { PasswordsEqualDirective } from '../validators/passwords-equal.directive';
+import { ValidateLengthDirective } from '../validators/validate-length.directive';
+import {AccountService} from '../services/account.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +45,9 @@ import { RegisterFormComponent } from './register-form/register-form.component';
     SettingsComponent,
     LoginFormComponent,
     RegisterFormComponent,
+    ValidateEmailDirective,
+    PasswordsEqualDirective,
+    ValidateLengthDirective,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +61,7 @@ import { RegisterFormComponent } from './register-form/register-form.component';
     RecordService,
     CategoryService,
     SettingsService,
+    AccountService,
   ],
   bootstrap: [AppComponent],
 })

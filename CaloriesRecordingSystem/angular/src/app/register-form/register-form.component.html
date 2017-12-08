@@ -16,7 +16,7 @@
     </div>
     <div class="row">
       <div class="col-md-3 field-label-responsive">
-        <label for="name">
+        <label for="username">
           Username
         </label>
       </div>
@@ -30,23 +30,30 @@
 
             <input
               type="text"
-              name="name"
+              name="username"
               class="form-control"
-              id="name"
+              id="username"
               placeholder="Username"
+              [(ngModel)]="username"
               required autofocus
+              appValidateLength
+              #usernameValidation="ngModel"
+              [minLength]="3"
+              [maxLength]="255"
+              [noValueMessage]="'Username is required'"
+              [wrongValueMessage]="'Wrong username'"
             >
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div
-          *ngIf="wrongUsername"
+          *ngIf="usernameValidation.errors && (usernameValidation.dirty || usernameValidation.touched)"
           class="form-control-feedback"
         >
           <span class="text-danger align-middle">
               <i class="fa fa-close">
-                {{ wrongUsernameMessage }}
+                {{ usernameValidation.errors.message }}
               </i>
           </span>
         </div>
@@ -72,19 +79,23 @@
               class="form-control"
               id="email"
               placeholder="you@example.com"
-              required autofocus
-            >
+              [(ngModel)]="email"
+              autofocus
+              required
+              appValidateEmail
+              #emailValidator="ngModel"
+            />
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div
-          *ngIf="wrongEmail"
+          *ngIf="emailValidator.errors && (emailValidator.dirty || emailValidator.touched)"
           class="form-control-feedback"
         >
           <span class="text-danger align-middle">
             <i class="fa fa-close">
-              {{ wrongEmailMessage }}
+              {{ emailValidator.errors.message }}
             </i>
           </span>
         </div>
@@ -112,19 +123,26 @@
               class="form-control"
               id="password"
               placeholder="Password"
-              required
+              [(ngModel)]="password"
+              required autofocus
+              appValidateLength
+              #passwordValidation="ngModel"
+              [minLength]="5"
+              [maxLength]="63"
+              [noValueMessage]="'Password is required'"
+              [wrongValueMessage]="'Wrong password'"
             >
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div
-          *ngIf="wrongPassword"
+          *ngIf="passwordValidation.errors && (passwordValidation.dirty || passwordValidation.touched)"
           class="form-control-feedback"
         >
           <span class="text-danger align-middle">
               <i class="fa fa-close">
-                {{ wrongPasswordMessage }}
+                {{ passwordValidation.errors.message }}
               </i>
           </span>
         </div>
@@ -133,7 +151,7 @@
 
     <div class="row">
       <div class="col-md-3 field-label-responsive">
-        <label for="password">
+        <label for="password-confirmation">
           Confirm Password
         </label>
       </div>
@@ -149,21 +167,27 @@
               type="password"
               name="password-confirmation"
               class="form-control"
-              id="password-confirm"
+              id="password-confirmation"
               placeholder="Password"
+              [(ngModel)]="passwordRepeat"
               required
+              appPasswordsEqual="password"
+              #passwordEqualValidator="ngModel"
             >
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div
-          *ngIf="passwordsDontMatch"
+          *ngIf="passwordEqualValidator.errors && (passwordEqualValidator.dirty || passwordEqualValidator.touched)"
           class="form-control-feedback"
         >
           <span class="text-danger align-middle">
               <i class="fa fa-close">
-                {{ passwordsDontMatchMessage }}
+                {{ passwordEqualValidator.errors.message }}
+                <span *ngIf="passwordEqualValidator.errors.required">
+                  Password is required
+                </span>
               </i>
           </span>
         </div>
@@ -187,8 +211,9 @@
             <span (click)="overridePopupWindowStyle()">
               <ng-datepicker
                 id="birthday"
+                name="birthday"
                 position="bottom-right"
-                [(ngModel)]="userSettings.birthday"
+                [(ngModel)]="birthday"
               >
               </ng-datepicker>
             </span>
@@ -222,15 +247,36 @@
 
     <div class="row">
       <div class="col-md-3"></div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <button
           type="submit"
           class="btn btn-success"
+          (click)="registerAccount()"
+          [disabled]="usernameValidation.errors || passwordValidation.errors || passwordEqualValidator.errors || emailValidator.errors"
         >
           <i class="fa fa-user-plus">
           </i>
           Register
         </button>
+      </div>
+      <div class="col-md-3">
+        <div
+          *ngIf="usernameExists || emailExists"
+          class="form-control-feedback"
+        >
+          <span class="text-danger align-middle">
+            <div *ngIf="usernameExists">
+              <i class="fa fa-close">
+              </i>
+              Username already exists
+            </div>
+            <div *ngIf="emailExists">
+              <i class="fa fa-close">
+              </i>
+              E-Mail already exists
+            </div>
+          </span>
+        </div>
       </div>
     </div>
   </form>

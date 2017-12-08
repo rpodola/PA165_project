@@ -1,36 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import {IUserSettings} from '../../interfaces/IUserSettings';
 import {SettingsService} from '../../services/settings.service';
+import {AccountService} from '../../services/account.service';
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.css']
+  styleUrls: ['./register-form.component.css'],
 })
 export class RegisterFormComponent implements OnInit {
 
-  userSettings: IUserSettings;
-
   male = true;
+  username: string;
+  email: string;
+  password: string;
+  passwordRepeat: string;
+  birthday = new Date();
 
-  wrongUsername: boolean;
-  wrongUsernameMessage = 'Wrong username';
-
-  wrongEmail: boolean;
-  wrongEmailMessage = 'Wrong email';
-
-  wrongPassword: boolean;
-  wrongPasswordMessage = 'Wrong password';
-
-  passwordsDontMatch: boolean;
-  passwordsDontMatchMessage = 'Passwords don\'t match';
+  usernameExists: boolean;
+  emailExists: boolean;
 
   constructor(
-    private settingsService: SettingsService
+    private accountService: AccountService,
   ) { }
 
-  ngOnInit() {
-    this.settingsService.getUserSettings().subscribe(st => this.userSettings = st);
+  ngOnInit() { }
+
+  authenticate() {
+    if (!this.usernameExists && !this.emailExists {
+
+    }
+  }
+
+  registerAccount() {
+    this.accountService
+      .loginExists({ username: this.username, email: this.email })
+      .subscribe(result => {
+        this.emailExists = result.emailExists;
+        this.usernameExists = result.usernameExists;
+
+        authenticate();
+      });
   }
 
   /**

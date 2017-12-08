@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-md-3 field-label-responsive">
         <label for="name">
-          Username
+          Login
         </label>
       </div>
       <div class="col-md-6">
@@ -35,20 +35,9 @@
               id="name"
               placeholder="Username or E-mail"
               required autofocus
+              [(ngModel)]="nameOrEmail"
             >
           </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div
-          *ngIf="wrongUsername"
-          class="form-control-feedback"
-        >
-          <span class="text-danger align-middle">
-              <i class="fa fa-close">
-                {{ wrongUsernameMessage }}
-              </i>
-          </span>
         </div>
       </div>
     </div>
@@ -76,20 +65,9 @@
               id="password"
               placeholder="Password"
               required
+              [(ngModel)]="password"
             >
           </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div
-          *ngIf="wrongPassword"
-          class="form-control-feedback"
-        >
-          <span class="text-danger align-middle">
-              <i class="fa fa-close">
-                {{ wrongPasswordMessage }}
-              </i>
-          </span>
         </div>
       </div>
     </div>
@@ -100,6 +78,7 @@
         <button
           type="submit"
           class="btn btn-success"
+          [disabled]="!password || !nameOrEmail"
         >
           <i class="fa fa-sign-in">
           </i>
@@ -113,10 +92,7 @@
       <div class="col-md-6">
         <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
           Don't have an account?
-          <a
-            routerLink="/register"
-            onClick="$('#loginbox').hide(); $('#signupbox').show()"
-          >
+          <a routerLink="/register">
             Sign Up Here
           </a>
         </div>
