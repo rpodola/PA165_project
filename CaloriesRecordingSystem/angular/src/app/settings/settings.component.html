@@ -30,19 +30,24 @@
             id="name"
             placeholder="Username"
             [(ngModel)]="userSettings.name"
-            required autofocus
+            autofocus
+            appValidateLength
+            #nameValidation="ngModel"
+            [minLength]="1"
+            [maxLength]="255"
+            [wrongValueMessage]="'Wrong name'"
           >
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div
-        *ngIf="wrongName"
+        *ngIf="nameValidation.errors && (nameValidation.dirty || nameValidation.touched)"
         class="form-control-feedback"
       >
           <span class="text-danger align-middle">
             <i class="fa fa-close">
-              {{ wrongNameMessage }}
+              {{ nameValidation.errors.message }}
             </i>
           </span>
       </div>
@@ -71,18 +76,20 @@
             placeholder="you@example.com"
             [(ngModel)]="userSettings.email"
             required autofocus
+            appValidateEmail
+            #emailValidator="ngModel"
           >
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div
-        *ngIf="wrongEmail"
+        *ngIf="emailValidator.errors && (emailValidator.dirty || emailValidator.touched)"
         class="form-control-feedback"
       >
           <span class="text-danger align-middle">
             <i class="fa fa-close">
-              {{ wrongEmailMessage }}
+              {{ emailValidator.errors.message }}
             </i>
           </span>
       </div>
@@ -153,18 +160,24 @@
             id="newPassword"
             placeholder="Password"
             required
+            appValidateLength
+            #validatePassword="ngModel"
+            [minLength]="5"
+            [maxLength]="63"
+            [noValueMessage]="'Password is required'"
+            [wrongValueMessage]="'Wrong password'"
           >
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div
-        *ngIf="wrongPassword"
+        *ngIf="validatePassword.errors && (validatePassword.dirty || validatePassword.touched)"
         class="form-control-feedback"
       >
           <span class="text-danger align-middle">
               <i class="fa fa-close">
-                {{ wrongPasswordMessage }}
+                {{ validatePassword.errors.message }}
               </i>
           </span>
       </div>
@@ -191,19 +204,21 @@
             class="form-control"
             id="password-confirm"
             placeholder="Password"
-            required
+            required autofocus
+            appPasswordsEqual="newPassword"
+            #validateEqualPassword="ngModel"
           >
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div
-        *ngIf="passwordsDontMatch"
+        *ngIf="validateEqualPassword.errors && (validateEqualPassword.dirty || validateEqualPassword.touched)"
         class="form-control-feedback"
       >
           <span class="text-danger align-middle">
               <i class="fa fa-close">
-                {{ passwordsDontMatchMessage }}
+                {{ validateEqualPassword.errors.message }}
               </i>
           </span>
       </div>
@@ -226,18 +241,22 @@
             id="height"
             required
             [(ngModel)]="userSettings.height"
+            appNumberMinMax
+            #heightValidator="ngModel"
+            [minValue]="1"
+            [wrongNumberMessage]="'Wrong height'"
           >
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div
-        *ngIf="wrongHeight"
+        *ngIf="heightValidator.errors && (heightValidator.dirty || heightValidator.touched)"
         class="form-control-feedback"
       >
           <span class="text-danger align-middle">
               <i class="fa fa-close">
-                {{ wrongHeightMessage }}
+                {{ heightValidator.errors.message }}
               </i>
           </span>
       </div>
@@ -260,18 +279,22 @@
             id="bodyweight"
             required
             [(ngModel)]="userSettings.weight"
+            appNumberMinMax
+            #bodyweightValidation="ngModel"
+            [minValue]="1"
+            [wrongNumberMessage]="Wrong bodyweight"
           >
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div
-        *ngIf="wrongWeight"
+        *ngIf="bodyweightValidation.errors && (bodyweightValidation.dirty || bodyweightValidation.touched)"
         class="form-control-feedback"
       >
           <span class="text-danger align-middle">
               <i class="fa fa-close">
-                {{ wrongWeightMessage }}
+                {{ bodyweightValidation.errors.message }}
               </i>
           </span>
       </div>

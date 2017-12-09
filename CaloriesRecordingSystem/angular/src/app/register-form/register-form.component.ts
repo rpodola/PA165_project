@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {IUserSettings} from '../../interfaces/IUserSettings';
-import {SettingsService} from '../../services/settings.service';
 import {AccountService} from '../../services/account.service';
 
 @Component({
@@ -27,7 +25,7 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit() { }
 
   authenticate() {
-    if (!this.usernameExists && !this.emailExists {
+    if (!this.usernameExists && !this.emailExists) {
 
     }
   }
@@ -39,7 +37,7 @@ export class RegisterFormComponent implements OnInit {
         this.emailExists = result.emailExists;
         this.usernameExists = result.usernameExists;
 
-        authenticate();
+        this.authenticate();
       });
   }
 

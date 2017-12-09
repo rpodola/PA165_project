@@ -18,7 +18,11 @@ export class ValidateLengthDirective implements Validator {
 
   validate(c: AbstractControl): { [key: string]: any } {
     if (!c.value) {
-      return { message: this.noValueMessage };
+      if (this.noValueMessage) {
+        return { message: this.noValueMessage };
+      } else {
+        return null;
+      }
     }
 
     const { length } = c.value;

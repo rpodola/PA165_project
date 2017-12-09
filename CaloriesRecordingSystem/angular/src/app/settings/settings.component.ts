@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {IUserSettings} from '../../interfaces/IUserSettings';
-import {SettingsService} from '../../services/settings.service';
+import {AccountService} from '../../services/account.service';
 
 @Component({
   selector: 'app-settings',
@@ -12,13 +12,13 @@ export class SettingsComponent implements OnInit {
   userSettings: IUserSettings;
 
   constructor(
-    private settingsService: SettingsService,
+    private accountService: AccountService,
   ) { }
 
   getUserSettings() {
-    this.settingsService
+   /* this.accountService
       .getUserSettings()
-      .subscribe(userSettings => this.userSettings = userSettings);
+      .subscribe(userSettings => this.userSettings = userSettings);*/
   }
 
   ngOnInit() {

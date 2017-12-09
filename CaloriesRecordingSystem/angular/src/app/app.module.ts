@@ -21,13 +21,13 @@ import { CategoryDetailComponent } from './category-detail/category-detail.compo
 import { ActivitiesComponent } from './activities/activities.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { SettingsComponent } from './settings/settings.component';
-import {SettingsService} from '../services/settings.service';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { ValidateEmailDirective } from '../validators/validate-email.directive';
 import { PasswordsEqualDirective } from '../validators/passwords-equal.directive';
 import { ValidateLengthDirective } from '../validators/validate-length.directive';
 import {AccountService} from '../services/account.service';
+import { NumberMinMaxDirective } from '../validators/number-min-max.directive';
 
 @NgModule({
   declarations: [
@@ -48,6 +48,7 @@ import {AccountService} from '../services/account.service';
     ValidateEmailDirective,
     PasswordsEqualDirective,
     ValidateLengthDirective,
+    NumberMinMaxDirective,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +61,6 @@ import {AccountService} from '../services/account.service';
     ActivityService,
     RecordService,
     CategoryService,
-    SettingsService,
     AccountService,
   ],
   bootstrap: [AppComponent],

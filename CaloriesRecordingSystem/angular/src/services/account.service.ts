@@ -37,7 +37,7 @@ export class AccountService {
   }
 
   loginIsValid({ login, password }): Observable<boolean> {
-    return of(this.accounts.findIndex(a => (a.username === login || a.email === login) && a.password === password));
+    return of(this.accounts.findIndex(a => (a.username === login || a.email === login) && a.password === password) !== -1);
   }
 
 }
