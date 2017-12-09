@@ -1,4 +1,4 @@
-package com.muni.fi.pa165project.rest;
+package com.muni.fi.pa165project.rest.config;
 
 import com.muni.fi.pa165project.rest.controllers.UsersController;
 import com.muni.fi.pa165project.service.config.ServiceConfiguration;

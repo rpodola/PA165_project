@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Radoslav Karlik
@@ -59,15 +60,17 @@ public class RecordDaoImpl implements RecordDao {
                 .getResultList();
     }
 
+    //Due to weird BETWEEN behaviour with Java8 Times, t has to be like this
     @Override
     public List<Record> findByTime(long userId, LocalDateTime from, LocalDateTime to) {
-        return this.em.createQuery("SELECT r FROM Record r " +
-                "WHERE r.user.id=:userId AND r.atTime BETWEEN :from AND :to " +
-                "ORDER BY r.atTime ASC", Record.class)
+        List<Record> sorted = this.em.createQuery("SELECT r FROM Record r " +
+                        "WHERE r.user.id=:userId ORDER BY r.atTime ASC", Record.class)
                 .setParameter("userId", userId)
-                .setParameter("from", from)
-                .setParameter("to", to)
                 .getResultList();
+        return sorted.stream()
+                .filter(r -> r.getAtTime().isAfter(from) && r.getAtTime().isBefore(to)
+                        || r.getAtTime().isEqual(from) || r.getAtTime().isEqual(to))
+                .collect(Collectors.toList());
     }
 
     @Override

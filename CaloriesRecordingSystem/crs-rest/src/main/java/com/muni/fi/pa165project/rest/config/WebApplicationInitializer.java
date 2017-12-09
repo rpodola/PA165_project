@@ -1,4 +1,4 @@
-package com.muni.fi.pa165project.rest;
+package com.muni.fi.pa165project.rest.config;
 
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
