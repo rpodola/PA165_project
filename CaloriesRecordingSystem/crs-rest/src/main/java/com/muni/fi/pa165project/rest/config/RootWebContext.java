@@ -1,5 +1,6 @@
 package com.muni.fi.pa165project.rest.config;
 
+import com.muni.fi.pa165project.data.config.DataConfiguration;
 import com.muni.fi.pa165project.rest.controllers.UsersController;
 import com.muni.fi.pa165project.service.config.ServiceConfiguration;
 import org.springframework.context.annotation.*;
@@ -13,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.*;
  */
 @EnableWebMvc
 @Configuration
-@Import({ServiceConfiguration.class})
+@Import({ServiceConfiguration.class, DataConfiguration.class})
 @ComponentScan(basePackageClasses = {UsersController.class})
 public class RootWebContext extends WebMvcConfigurerAdapter {
     @Override

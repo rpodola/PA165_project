@@ -6,6 +6,8 @@ import com.muni.fi.pa165project.dto.ActivityExportDTO;
 import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
 import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -86,4 +88,11 @@ public interface ActivityFacade {
      * @return list of Activity objects
      */
     List<ActivityExportDTO> getActivitiesSortedByBurnedCalories(long userId);
+
+    /**
+     * Import Activities data from file in JSON format
+     *
+     * @param file file with data
+     */
+    void importActivitiesData(File file) throws IOException;
 }

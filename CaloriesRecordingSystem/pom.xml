@@ -80,6 +80,7 @@
         <module>crs-persistence</module>
         <module>crs-ui</module>
         <module>crs-rest</module>
+        <module>crs-sample-data</module>
     </modules>
 
 </project>

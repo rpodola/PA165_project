@@ -20,6 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOError;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -150,5 +153,18 @@ public class ActivityFacadeImpl implements ActivityFacade {
         List<ActivityExportDTO> sortedActivitiesDTO = mapper.mapToList(sortedActivities, ActivityExportDTO.class);
 
         return sortedActivitiesDTO;
+    }
+
+    @Override
+    public void importActivitiesData(File file) throws IOException {
+        log.debug("Importing Activities data from file <{}>", file.getName());
+
+        if (!file.canRead())
+            throw new IOException();
+        Activity a = new Activity();
+        a.setName("aaa");
+        a.setDescription("ddddd");
+        a.setCategory(Category.EXERCISE);
+        activityService.create(a);
     }
 }
