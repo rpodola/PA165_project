@@ -15,7 +15,7 @@ export class CategoryCheckboxesComponent implements OnInit, OnChanges {
     checked: boolean,
   }[];
 
-  @Input() selectedCategoryId: number;
+  @Input() selectedCategoryIds: number[];
   @Output() filterChange = new EventEmitter<number[]>();
 
   selectedAll = false;
@@ -25,7 +25,8 @@ export class CategoryCheckboxesComponent implements OnInit, OnChanges {
   ) { }
 
   filterChanged() {
-    this.selectedCategoryId = undefined;
+    this.selectedCategoryIds = undefined;
+
     const selectedCategories = this.categoriesSelection
       .filter(selection => selection.checked)
       .map(selection => selection.category.id);
@@ -35,7 +36,7 @@ export class CategoryCheckboxesComponent implements OnInit, OnChanges {
   }
 
   selectAll() {
-    this.selectedCategoryId = undefined;
+    this.selectedCategoryIds = undefined;
     this.categoriesSelection.forEach(selection => selection.checked = this.selectedAll);
     this.filterChanged();
   }
@@ -43,22 +44,26 @@ export class CategoryCheckboxesComponent implements OnInit, OnChanges {
   getAllCategories() {
     this.categoryService
       .getAllCategories()
-      .subscribe(categories =>
+      .subscribe(categories => {
         this.categoriesSelection = categories.map(cat => ({
           category: cat,
           checked: false,
-        })));
+        }));
+      });
   }
 
-  ngOnInit() {
-    this.getAllCategories();
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
-    if (isNumber(this.selectedCategoryId)) {
-      this.categoriesSelection.forEach(selection => selection.checked = selection.category.id === this.selectedCategoryId);
+    if (!this.categoriesSelection) {
+      this.getAllCategories();
+    }
+
+    if (this.selectedCategoryIds) {
+      this.categoriesSelection
+        .forEach(selection => selection.checked = this.selectedCategoryIds.includes(selection.category.id));
+
       this.filterChanged();
     }
   }
-
 }

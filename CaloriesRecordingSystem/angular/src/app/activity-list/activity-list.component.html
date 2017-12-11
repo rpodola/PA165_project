@@ -1,12 +1,28 @@
 <div class="row">
-  <div class="col-auto">
+  <div
+    class="col-auto"
+    *ngIf="showCategories"
+  >
+    <span
+      class="show-categories"
+      (click)="showHide()"
+    >
+      Hide categories
+    </span>
     <app-category-checkboxes
-      [selectedCategoryId]="selectedCategoryId"
+      [selectedCategoryIds]="selectedCategoryIds"
       (filterChange)="getActivitiesFromCategories($event)"
     >
     </app-category-checkboxes>
   </div>
   <div class="col">
+    <span
+      *ngIf="!showCategories"
+      class="show-categories"
+      (click)="showHide()"
+    >
+      Show categories
+    </span>
     <app-activities
       [activities]="activities"
       [useButtonForActivityLink]="true"

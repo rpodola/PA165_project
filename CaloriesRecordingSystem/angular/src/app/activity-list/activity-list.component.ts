@@ -12,13 +12,17 @@ export class ActivityListComponent implements OnInit {
   activitiesCache: IActivity[];
   activities: IActivity[];
 
-  selectedCategoryId: number;
+  selectedCategoryIds: number[];
+
+  showCategories: boolean;
 
   constructor(
     private activityService: ActivityService,
   ) { }
 
   getActivitiesFromCategories(categoryIds: number[]) {
+    this.selectedCategoryIds = categoryIds;
+
     if (categoryIds.length === 0) {
       this.activities = this.activitiesCache;
     } else {
@@ -34,6 +38,10 @@ export class ActivityListComponent implements OnInit {
 
   getAllActivities() {
     this.activities = this.activitiesCache;
+  }
+
+  showHide() {
+    this.showCategories = !this.showCategories;
   }
 
   ngOnInit() {

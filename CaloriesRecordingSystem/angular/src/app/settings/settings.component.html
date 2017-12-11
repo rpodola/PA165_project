@@ -123,18 +123,6 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div
-        *ngIf="wrongPassword"
-        class="form-control-feedback"
-      >
-          <span class="text-danger align-middle">
-              <i class="fa fa-close">
-                {{ wrongPasswordMessage }}
-              </i>
-          </span>
-      </div>
-    </div>
   </div>
 
   <div class="row">
@@ -160,6 +148,7 @@
             id="newPassword"
             placeholder="Password"
             required
+            [(ngModel)]="userSettings.password"
             appValidateLength
             #validatePassword="ngModel"
             [minLength]="5"
@@ -205,6 +194,7 @@
             id="password-confirm"
             placeholder="Password"
             required autofocus
+            [(ngModel)]="userSettings.password"
             appPasswordsEqual="newPassword"
             #validateEqualPassword="ngModel"
           >
@@ -282,7 +272,7 @@
             appNumberMinMax
             #bodyweightValidation="ngModel"
             [minValue]="1"
-            [wrongNumberMessage]="Wrong bodyweight"
+            [wrongNumberMessage]="'Wrong bodyweight'"
           >
         </div>
       </div>
