@@ -5,6 +5,7 @@ import {of} from 'rxjs/observable/of';
 import {HttpClient} from '@angular/common/http';
 import {IActivityDetail} from '../interfaces/IActivityDetail';
 import {Category} from '../classes/Category';
+import {Activity} from '../classes/Activity';
 
 @Injectable()
 export class ActivityService {
@@ -39,7 +40,7 @@ export class ActivityService {
       ],
     },
     {
-      id: 3,
+      id: 2,
       name: 'hating on Dozer',
       description: 'Automapper Dozer sucks',
       category: new Category(0, 'Exercise'),
@@ -66,6 +67,32 @@ export class ActivityService {
 
   getActivityDetail(id: number): Observable<IActivityDetail> {
     return of(this.activities.find(activity => activity.id === id));
+  }
+
+  createNewActivity(activity: Activity): Observable<number> {
+    const nameExists = this.activities
+      .filter(ac => ac.name === activity.name)
+      .length > 0;
+
+    if (nameExists) {
+      return of(undefined);
+    }
+
+    const activityDetail: IActivityDetail = {
+      name: activity.name,
+      id: this.activities.length,
+      category: {
+        id: activity.categoryId,
+        name: 'fake',
+        description: 'fake',
+      },
+      burnedCaloriesList: [],
+      description: activity.description
+    };
+
+    this.activities.push(activityDetail);
+
+    return of(activityDetail.id);
   }
 
 }

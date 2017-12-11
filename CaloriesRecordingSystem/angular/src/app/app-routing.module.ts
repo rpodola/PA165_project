@@ -10,6 +10,7 @@ import {CategoryListComponent} from './category-list/category-list.component';
 import {SettingsComponent} from './settings/settings.component';
 import {LoginFormComponent} from './login-form/login-form.component';
 import {RegisterFormComponent} from './register-form/register-form.component';
+import {ActivityFormComponent} from './activity-form/activity-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
@@ -22,6 +23,8 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'register', component: RegisterFormComponent },
+  { path: 'activityNew', component: ActivityFormComponent
+  },
   //  catch all
   { path: '**', component: WrongPathComponent },
 ];
