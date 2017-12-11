@@ -70,27 +70,15 @@
     </div>
   </div>
 
-  <div>
-    <table class="table">
-      <thead>
-      <th>
-        Weight
-      </th>
-      <th>
-        Calories
-      </th>
-      </thead>
-      <tbody>
-      <tr *ngFor="let burnedCalories of activity.burnedCaloriesList">
-        <td>
-          {{ burnedCalories.upperWeightBoundary }}
-        </td>
-        <td>
-          {{ burnedCalories.amount }}
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <app-burned-calories-list
+    [burnedCaloriesList]="activity.burnedCaloriesList"
+    (addBurnedCalories)="onAddBurnedCalories($event)"
+    (removeBurnedCalories)="onRemoveBurnedCalories($event)"
+  >
+  </app-burned-calories-list>
+
+  <button class="btn btn-success">
+    Save changes
+  </button>
 </div>
 

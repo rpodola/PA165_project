@@ -1,0 +1,61 @@
+<label>
+  Weight
+</label>
+<input
+  class="form-control"
+  type="number"
+  id="weight"
+  name="weight"
+  min="1"
+  [(ngModel)]="upperWeightBoundary"
+>
+
+<label>
+  Amount
+</label>
+<input
+  class="form-control"
+  type="number"
+  id="amount"
+  name="amount"
+  min="1"
+  [(ngModel)]="amount"
+>
+
+<button
+  class="btn btn-primary"
+  (click)="addBurnedCaloriesToList()"
+>
+  Add
+</button>
+
+<div>
+  <table class="table">
+    <thead>
+    <th>
+      Weight
+    </th>
+    <th>
+      Calories
+    </th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let burnedCalories of burnedCaloriesList">
+      <td>
+        {{ burnedCalories.upperWeightBoundary }}
+      </td>
+      <td>
+        {{ burnedCalories.amount }}
+      </td>
+      <td>
+        <button
+          class="btn btn-danger"
+          (click)="removeBurnedCaloriesFromList(burnedCalories)"
+        >
+          Remove
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

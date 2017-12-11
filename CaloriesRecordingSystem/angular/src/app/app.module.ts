@@ -29,6 +29,7 @@ import { ValidateLengthDirective } from '../validators/validate-length.directive
 import {AccountService} from '../services/account.service';
 import { NumberMinMaxDirective } from '../validators/number-min-max.directive';
 import { ActivityFormComponent } from './activity-form/activity-form.component';
+import { BurnedCaloriesListComponent } from './burned-calories-list/burned-calories-list.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ActivityFormComponent } from './activity-form/activity-form.component';
     ValidateLengthDirective,
     NumberMinMaxDirective,
     ActivityFormComponent,
+    BurnedCaloriesListComponent,
   ],
   imports: [
     BrowserModule,
