@@ -28,6 +28,7 @@ import { PasswordsEqualDirective } from '../validators/passwords-equal.directive
 import { ValidateLengthDirective } from '../validators/validate-length.directive';
 import {AccountService} from '../services/account.service';
 import { NumberMinMaxDirective } from '../validators/number-min-max.directive';
+import { ActivityFormComponent } from './activity-form/activity-form.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { NumberMinMaxDirective } from '../validators/number-min-max.directive';
     PasswordsEqualDirective,
     ValidateLengthDirective,
     NumberMinMaxDirective,
+    ActivityFormComponent,
   ],
   imports: [
     BrowserModule,
