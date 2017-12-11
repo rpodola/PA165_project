@@ -14,6 +14,7 @@
         <hr>
       </div>
     </div>
+
     <div class="row">
       <div class="col-md-3 field-label-responsive">
         <label for="username">
@@ -60,6 +61,54 @@
         </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-3 field-label-responsive">
+        <label for="name">
+          Name
+        </label>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <div class="input-group-addon" style="width: 2.6rem">
+              <i class="fa fa-user">
+              </i>
+            </div>
+
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              id="name"
+              placeholder="Name"
+              [(ngModel)]="name"
+              autofocus
+              appValidateLength
+              #nameValidation="ngModel"
+              [minLength]="3"
+              [maxLength]="63"
+              [minLengthMessage]="'Name must be at least 3 characters long'"
+              [maxLengthMessage]="'Name must be at max 63 characters long'"
+              [noValueMessage]="'Name is required'"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div
+          *ngIf="nameValidation.errors && (nameValidation.dirty || nameValidation.touched)"
+          class="form-control-feedback"
+        >
+          <span class="text-danger align-middle">
+            <i class="fa fa-close">
+              {{ nameValidation.errors.message }}
+            </i>
+          </span>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-md-3 field-label-responsive">
         <label for="email">

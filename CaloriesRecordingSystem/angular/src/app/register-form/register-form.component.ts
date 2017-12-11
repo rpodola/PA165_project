@@ -9,6 +9,7 @@ import {AccountService} from '../../services/account.service';
 export class RegisterFormComponent implements OnInit {
 
   male = true;
+  name: string;
   username: string;
   email: string;
   password: string;
