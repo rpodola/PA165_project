@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class LoginDetails implements Serializable {
 
     @Column(nullable = false, unique = true)
-    @Length(min = 3, max = 255)
+    @Length(min = 3, max = 63)
     private String username;
 
     @Column(nullable = false)

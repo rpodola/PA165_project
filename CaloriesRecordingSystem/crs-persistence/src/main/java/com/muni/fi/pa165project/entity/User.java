@@ -26,7 +26,7 @@ public class User implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    @Length(min = 1, max = 255)
+    @Length(min = 3, max = 63)
     private String name;
 
     private LocalDate birthDate;

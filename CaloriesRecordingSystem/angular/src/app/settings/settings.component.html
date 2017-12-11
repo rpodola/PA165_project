@@ -33,9 +33,10 @@
             autofocus
             appValidateLength
             #nameValidation="ngModel"
-            [minLength]="1"
-            [maxLength]="255"
-            [wrongValueMessage]="'Wrong name'"
+            [minLength]="3"
+            [maxLength]="63"
+            [minLengthMessage]="'Name must be at least 3 characters long'"
+            [maxLengthMessage]="'Name must be at max 63 characters long'"
           >
         </div>
       </div>
@@ -154,7 +155,8 @@
             [minLength]="5"
             [maxLength]="63"
             [noValueMessage]="'Password is required'"
-            [wrongValueMessage]="'Wrong password'"
+            [minLengthMessage]="'Password must be at least 5 characters long'"
+            [maxLengthMessage]="'Password must be at max 63 characters long'"
           >
         </div>
       </div>

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * @author Lukáš Císar
@@ -19,6 +20,7 @@ public class Activity implements Serializable {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @Length(min = 3, max = 127)
     private String name;
 
     private String description;

@@ -3,6 +3,7 @@ package com.muni.fi.pa165project.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.validation.constraints.Min;
 
 /**
  * @author Peter Krasnan
@@ -25,8 +26,10 @@ public class Record implements Serializable {
     @Column(nullable = false)
     private LocalDateTime atTime;
 
+    @Min(1)
     private double weight;
 
+    @Min(1)
     private int burnedCalories;
 
     private int distance;

@@ -11,7 +11,8 @@ export class ValidateLengthDirective implements Validator {
 
   @Input() minLength;
   @Input() maxLength;
-  @Input() wrongValueMessage;
+  @Input() minLengthMessage;
+  @Input() maxLengthMessage;
   @Input() noValueMessage;
 
   constructor() { }
@@ -27,7 +28,15 @@ export class ValidateLengthDirective implements Validator {
 
     const { length } = c.value;
 
-    return (length >= this.minLength && length <= this.maxLength) ? null : { message: this.wrongValueMessage };
+    if (length <= this.minLength) {
+      return { message: this.minLengthMessage };
+    }
+
+    if (length >= this.maxLength) {
+      return { message: this.maxLengthMessage };
+    }
+
+    return null;
   }
 
 }

@@ -36,7 +36,8 @@
             appValidateLength
             [minLength]="3"
             [maxLength]="127"
-            [wrongValueMessage]="'Name must be at least 3 characters long'"
+            [minLengthMessage]="'Name must be at least 3 characters long'"
+            [maxLengthMessage]="'Name must be at max 63 characters long'"
             [noValueMessage]="'Name is required'"
           >
         </div>

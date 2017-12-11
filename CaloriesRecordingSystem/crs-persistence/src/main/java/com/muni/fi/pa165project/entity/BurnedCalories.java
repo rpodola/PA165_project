@@ -4,6 +4,7 @@ import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import javax.validation.constraints.Min;
 
 /**
  * This class present entity which holds information
@@ -25,8 +26,10 @@ public class BurnedCalories implements Serializable {
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
+    @Min(1)
     private int upperWeightBoundary;
 
+    @Min(1)
     private int amount;
 
     public Long getId() {
