@@ -15,6 +15,7 @@ import {ActivityFormComponent} from './activity-form/activity-form.component';
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
   { path: 'activities', component: ActivityListComponent },
+  { path: 'activities/new', component: ActivityFormComponent },
   { path: 'activities/:id', component: ActivityDetailComponent },
   { path: 'categories', component: CategoryListComponent },
   { path: 'categories/:id', component: CategoryDetailComponent },
@@ -23,8 +24,6 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'register', component: RegisterFormComponent },
-  { path: 'activityNew', component: ActivityFormComponent
-  },
   //  catch all
   { path: '**', component: WrongPathComponent },
 ];
