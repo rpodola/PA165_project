@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 
 /**
@@ -167,7 +168,7 @@ public class RecordDaoImplTest {
 
         //create another record
         Record newRec = new Record();
-        newRec.setAtTime(LocalDateTime.now());
+        newRec.setAtTime(LocalDateTime.of(2015, Month.MARCH, 1, 1, 1));
         newRec.setDistance(200);
         newRec.setActivity(this.act);
         newRec.setUser(this.user);
