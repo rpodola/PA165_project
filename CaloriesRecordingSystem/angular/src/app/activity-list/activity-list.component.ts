@@ -12,7 +12,9 @@ export class ActivityListComponent implements OnInit {
   activitiesCache: IActivity[];
   activities: IActivity[];
 
-  selectedCategoryIds: number[];
+  selectedCategoryIds: number[] = [];
+
+  nameFilter: string;
 
   showCategories: boolean;
 
@@ -20,14 +22,18 @@ export class ActivityListComponent implements OnInit {
     private activityService: ActivityService,
   ) { }
 
+  filterChanged() {
+    if (this.selectedCategoryIds.length === 0) {
+      this.activities = this.activitiesCache.filter(activity => activity.name.includes(this.nameFilter));
+    } else {
+      this.activities = this.activitiesCache.filter(activity => activity.name.includes(this.nameFilter) && this.selectedCategoryIds.includes(activity.category.id));
+    }
+  }
+
   getActivitiesFromCategories(categoryIds: number[]) {
     this.selectedCategoryIds = categoryIds;
 
-    if (categoryIds.length === 0) {
-      this.activities = this.activitiesCache;
-    } else {
-      this.activities = this.activitiesCache.filter(activity => categoryIds.includes(activity.category.id));
-    }
+    this.filterChanged();
   }
 
   loadAllActivitesFromServer() {
@@ -42,6 +48,12 @@ export class ActivityListComponent implements OnInit {
 
   showHide() {
     this.showCategories = !this.showCategories;
+  }
+
+  onSubmitText(text: string) {
+    this.nameFilter = text;
+
+    this.filterChanged();
   }
 
   ngOnInit() {

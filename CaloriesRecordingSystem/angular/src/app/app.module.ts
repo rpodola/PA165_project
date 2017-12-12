@@ -30,6 +30,7 @@ import {AccountService} from '../services/account.service';
 import { NumberMinMaxDirective } from '../validators/number-min-max.directive';
 import { ActivityFormComponent } from './activity-form/activity-form.component';
 import { BurnedCaloriesListComponent } from './burned-calories-list/burned-calories-list.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { BurnedCaloriesListComponent } from './burned-calories-list/burned-calor
     NumberMinMaxDirective,
     ActivityFormComponent,
     BurnedCaloriesListComponent,
+    SearchBarComponent,
   ],
   imports: [
     BrowserModule,

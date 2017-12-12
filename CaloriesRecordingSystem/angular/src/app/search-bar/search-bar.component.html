@@ -1,0 +1,27 @@
+<div class="row">
+  <label for="text">
+    {{ labelText }}
+  </label>
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="input-group">
+        <input
+          class="form-control"
+          id="text"
+          name="text"
+          type="text"
+          [(ngModel)]="text"
+          (keyup.enter)="onSubmit()"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="cold-md-3">
+    <button
+      class="btn btn-primary"
+      (click)="onSubmit()"
+    >
+      Submit
+    </button>
+  </div>
+</div>
