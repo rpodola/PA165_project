@@ -44,17 +44,6 @@
                 <artifactId>dozer</artifactId>
                 <version>5.5.1</version>
             </dependency>
-            <dependency>
-                <groupId>com.jayway.jsonpath</groupId>
-                <artifactId>json-path</artifactId>
-                <version>1.2.0</version><!-- spring-test 4.1.8 uses this version as compile dependency -->
-            </dependency>
-            <!-- just the logging API should be included in a project that's used as a library in other projects, not an implementation -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.12</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

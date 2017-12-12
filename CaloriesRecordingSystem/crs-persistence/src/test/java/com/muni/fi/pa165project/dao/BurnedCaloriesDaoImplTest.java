@@ -53,14 +53,17 @@ public class BurnedCaloriesDaoImplTest {
         this.bc1 = new BurnedCalories();
         this.bc1.setUpperWeightBoundary(100);
         this.bc1.setActivity(ac);
+        this.bc1.setAmount(50);
 
         this.bc2 = new BurnedCalories();
         this.bc2.setUpperWeightBoundary(200);
         this.bc2.setActivity(ac);
+        this.bc2.setAmount(100);
 
         this.bc3 = new BurnedCalories();
         this.bc3.setUpperWeightBoundary(300);
         this.bc3.setActivity(ac);
+        this.bc3.setAmount(200);
 
         this.bcDao.create(bc1);
         this.bcDao.create(bc2);

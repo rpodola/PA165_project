@@ -29,7 +29,7 @@ public class Record implements Serializable {
     @Min(1)
     private double weight;
 
-    @Min(1)
+    @Min(0)
     private int burnedCalories;
 
     private int distance;

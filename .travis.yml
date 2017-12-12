@@ -1,7 +1,7 @@
 language: java
 before_script: cd CaloriesRecordingSystem
 script:
-- mvn -Dmaven.test.failure.ignore=true --fail-at-end clean install
+- mvn clean install
 - mvn failsafe:integration-test
 jdk:
 - oraclejdk8

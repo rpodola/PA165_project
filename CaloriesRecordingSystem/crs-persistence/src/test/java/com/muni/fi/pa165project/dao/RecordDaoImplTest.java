@@ -71,6 +71,7 @@ public class RecordDaoImplTest {
         this.record.setActivity(this.act);
         this.record.setUser(this.user);
         this.record.setDistance(100);
+        this.record.setWeight(user.getWeight());
     }
 
     /**
@@ -170,6 +171,7 @@ public class RecordDaoImplTest {
         newRec.setDistance(200);
         newRec.setActivity(this.act);
         newRec.setUser(this.user);
+        newRec.setWeight(user.getWeight());
         rcDao.create(newRec);
 
         all = rcDao.findAll();
@@ -213,6 +215,7 @@ public class RecordDaoImplTest {
         newRec.setDistance(200);
         newRec.setActivity(this.act);
         newRec.setUser(this.user);
+        newRec.setWeight(user.getWeight());
         rcDao.create(newRec);
 
         List<Record> allY = rcDao.findByTime(user.getId(), yesterday[0], yesterday[1]);
@@ -250,6 +253,7 @@ public class RecordDaoImplTest {
         newRec.setDistance(200);
         newRec.setActivity(this.act);
         newRec.setUser(this.user);
+        newRec.setWeight(user.getWeight());
         rcDao.create(newRec);
 
         //1 record should be in DB till hour early
@@ -282,12 +286,14 @@ public class RecordDaoImplTest {
         newRec1.setDistance(200);
         newRec1.setActivity(this.act);
         newRec1.setUser(this.user);
+        newRec1.setWeight(user.getWeight());
         rcDao.create(newRec1);
         Record newRec2 = new Record();
         newRec2.setAtTime(yesterday);
         newRec2.setDistance(200);
         newRec2.setActivity(this.act);
         newRec2.setUser(this.user);
+        newRec2.setWeight(user.getWeight());
         rcDao.create(newRec2);
 
         //3 record should be in DB till now
