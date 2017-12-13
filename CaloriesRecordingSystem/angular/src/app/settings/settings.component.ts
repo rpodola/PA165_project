@@ -14,9 +14,20 @@ export class SettingsComponent implements OnInit {
   passwordOld: string;
   passwordConfirm: string;
 
+  passwordsMatch: boolean;
+
+  oldPasswordIsWrong: boolean;
+
   constructor(
     private accountService: AccountService,
-  ) { }
+  ) {
+    this.userSettings.weight = 1;
+    this.userSettings.height = 1;
+  }
+
+  passwordChanged() {
+    this.passwordsMatch = this.userSettings.password === this.passwordConfirm;
+  }
 
   getUserSettings() {
    /* this.accountService

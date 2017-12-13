@@ -30,7 +30,6 @@
             id="name"
             placeholder="Name"
             [(ngModel)]="userSettings.name"
-            required
             autofocus
             appValidateLength
             #nameValidation="ngModel"
@@ -78,7 +77,7 @@
             id="email"
             placeholder="you@example.com"
             [(ngModel)]="userSettings.email"
-            required autofocus
+            autofocus
             appValidateEmail
             #emailValidator="ngModel"
           >
@@ -126,6 +125,18 @@
         </div>
       </div>
     </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="oldPasswordIsWrong"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                Current password is wrong
+              </i>
+          </span>
+      </div>
+    </div>
   </div>
 
   <div class="row">
@@ -150,8 +161,8 @@
             class="form-control"
             id="passwordNew"
             placeholder="Password"
-            required
             [(ngModel)]="userSettings.password"
+            (ngModelChange)="passwordChanged()"
             appValidateLength
             #validatePassword="ngModel"
             [minLength]="5"
@@ -197,10 +208,23 @@
             class="form-control"
             id="passwordConfirm"
             placeholder="Password"
-            required autofocus
+            autofocus
             [(ngModel)]="passwordConfirm"
+            (ngModelChange)="passwordChanged()"
           >
         </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="!passwordsMatch && (userSettings.password || passwordConfirm)"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                Passwords do not match
+              </i>
+          </span>
       </div>
     </div>
   </div>
@@ -224,7 +248,7 @@
             appNumberMinMax
             #heightValidator="ngModel"
             [minValue]="1"
-            [wrongNumberMessage]="'Wrong height'"
+            [wrongNumberMessage]="'Height must be at least 1'"
           >
         </div>
       </div>
@@ -262,7 +286,7 @@
             appNumberMinMax
             #bodyweightValidation="ngModel"
             [minValue]="1"
-            [wrongNumberMessage]="'Wrong bodyweight'"
+            [wrongNumberMessage]="'Bodyweight must be at least 1'"
           >
         </div>
       </div>
@@ -287,10 +311,12 @@
       <button
         type="submit"
         class="btn btn-success"
+        [disabled]="nameValidation.errors || emailValidator.errors || !passwordsMatch || heightValidator.errors || bodyweightValidation.errors || validatePassword.errors"
       >
         <i class="fa fa-save">
         </i>
         Save settings
       </button>
     </div>
+  </div>
 </div>
