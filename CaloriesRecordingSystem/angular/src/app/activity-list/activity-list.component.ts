@@ -14,7 +14,7 @@ export class ActivityListComponent implements OnInit {
 
   selectedCategoryIds: number[] = [];
 
-  nameFilter: string;
+  nameFilter: string = '';
 
   showCategories: boolean;
 

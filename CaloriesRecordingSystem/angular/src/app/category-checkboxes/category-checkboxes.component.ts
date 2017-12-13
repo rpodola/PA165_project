@@ -58,7 +58,7 @@ export class CategoryCheckboxesComponent implements OnInit, OnChanges {
       this.getAllCategories();
     }
 
-    if (this.selectedCategoryIds) {
+    if (this.selectedCategoryIds.length > 0) {
       this.categoriesSelection
         .forEach(selection => selection.checked = this.selectedCategoryIds.includes(selection.category.id));
 
