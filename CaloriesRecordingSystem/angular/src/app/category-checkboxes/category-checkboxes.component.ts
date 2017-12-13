@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {CategoryService} from '../../services/category.service';
-import {ICategory} from '../../interfaces/ICategory';
-import {isNumber} from 'util';
+import {Category} from '../_classes/Category';
 
 @Component({
   selector: 'app-category-checkboxes',
@@ -11,7 +10,7 @@ import {isNumber} from 'util';
 export class CategoryCheckboxesComponent implements OnInit, OnChanges {
 
   categoriesSelection: {
-    category: ICategory,
+    category: Category,
     checked: boolean,
   }[];
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IActivity} from '../../interfaces/IActivity';
+import {Activity} from '../_classes/Activity';
 import {ActivityService} from '../../services/activity.service';
 
 @Component({
@@ -9,8 +9,8 @@ import {ActivityService} from '../../services/activity.service';
 })
 export class ActivityListComponent implements OnInit {
 
-  activitiesCache: IActivity[];
-  activities: IActivity[];
+  activitiesCache: Activity[];
+  activities: Activity[];
 
   selectedCategoryIds: number[] = [];
 

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IBurnedCalories} from '../../interfaces/IBurnedCalories';
+import {BurnedCalories} from '../_classes/BurnedCalories';
 
 @Component({
   selector: 'app-burned-calories-list',
@@ -8,9 +8,9 @@ import {IBurnedCalories} from '../../interfaces/IBurnedCalories';
 })
 export class BurnedCaloriesListComponent implements OnInit {
 
-  @Input() burnedCaloriesList: IBurnedCalories[];
-  @Output() addBurnedCalories = new EventEmitter<IBurnedCalories>();
-  @Output() removeBurnedCalories = new EventEmitter<IBurnedCalories>();
+  @Input() burnedCaloriesList: BurnedCalories[];
+  @Output() addBurnedCalories = new EventEmitter<BurnedCalories>();
+  @Output() removeBurnedCalories = new EventEmitter<BurnedCalories>();
 
   upperWeightBoundary = 1;
   amount = 1;
@@ -18,7 +18,7 @@ export class BurnedCaloriesListComponent implements OnInit {
   constructor() { }
 
   addBurnedCaloriesToList() {
-    const burnedCalories: IBurnedCalories = {
+    const burnedCalories: BurnedCalories = {
       upperWeightBoundary: this.upperWeightBoundary,
       amount: this.amount,
     };
@@ -26,7 +26,7 @@ export class BurnedCaloriesListComponent implements OnInit {
     this.addBurnedCalories.emit(burnedCalories);
   }
 
-  removeBurnedCaloriesFromList(burnedCalories: IBurnedCalories) {
+  removeBurnedCaloriesFromList(burnedCalories: BurnedCalories) {
     this.removeBurnedCalories.emit(burnedCalories);
   }
 

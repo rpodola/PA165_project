@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RecordService} from '../../services/record.service';
-import {IRecordDetail} from '../../interfaces/IRecordDetail';
+import {RecordDetail} from '../_classes/RecordDetail';
 
 @Component({
   selector: 'app-record-detail',
@@ -10,7 +10,7 @@ import {IRecordDetail} from '../../interfaces/IRecordDetail';
 })
 export class RecordDetailComponent implements OnInit {
 
-  record: IRecordDetail;
+  record: RecordDetail;
 
   constructor(
     private route: ActivatedRoute,

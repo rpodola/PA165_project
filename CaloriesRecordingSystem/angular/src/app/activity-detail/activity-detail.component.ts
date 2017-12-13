@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivityService} from '../../services/activity.service';
 import {ActivatedRoute} from '@angular/router';
 import { Location } from '@angular/common';
-import {IActivityDetail} from '../../interfaces/IActivityDetail';
-import {IBurnedCalories} from '../../interfaces/IBurnedCalories';
+import {ActivityDetail} from '../_classes/ActivityDetail';
+import {BurnedCalories} from '../_classes/BurnedCalories';
 
 @Component({
   selector: 'app-activity-detail',
@@ -12,7 +12,7 @@ import {IBurnedCalories} from '../../interfaces/IBurnedCalories';
 })
 export class ActivityDetailComponent implements OnInit {
 
-  activity: IActivityDetail;
+  activity: ActivityDetail;
 
   constructor(
     private activityService: ActivityService,
@@ -33,7 +33,7 @@ export class ActivityDetailComponent implements OnInit {
       });
   }
 
-  onAddBurnedCalories(burnedCalories: IBurnedCalories) {
+  onAddBurnedCalories(burnedCalories: BurnedCalories) {
     const burned = this.activity.burnedCaloriesList.filter(bc => bc.upperWeightBoundary === burnedCalories.upperWeightBoundary);
 
     if (burned.length > 0) {
@@ -44,7 +44,7 @@ export class ActivityDetailComponent implements OnInit {
     }
   }
 
-  onRemoveBurnedCalories(burnedCalories: IBurnedCalories) {
+  onRemoveBurnedCalories(burnedCalories: BurnedCalories) {
     this.activity.burnedCaloriesList = this.activity.burnedCaloriesList.filter(bc => bc !== burnedCalories);
   }
 }

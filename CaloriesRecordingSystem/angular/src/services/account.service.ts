@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
-
-interface IAccount {
-  id: number;
-  username: string;
-  password: string;
-  email: string;
-}
+import {Account} from '../app/_classes/Account';
 
 @Injectable()
 export class AccountService {
 
-  accounts: IAccount[] = [
+  accounts: Account[] = [
     {
       id: 0,
       username: 'jozo',

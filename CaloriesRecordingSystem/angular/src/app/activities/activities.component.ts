@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IActivity} from '../../interfaces/IActivity';
+import {Activity} from '../_classes/Activity';
 
 @Component({
   selector: 'app-activities',
@@ -8,7 +8,7 @@ import {IActivity} from '../../interfaces/IActivity';
 })
 export class ActivitiesComponent implements OnInit {
 
-  @Input() activities: IActivity[];
+  @Input() activities: Activity[];
   @Input() hideCategory: boolean;
   @Input() useButtonForActivityLink: boolean;
 

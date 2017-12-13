@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {IUserSettings} from '../../interfaces/IUserSettings';
+import {UserSettings} from '../_classes/UserSettings';
 import {AccountService} from '../../services/account.service';
 
 @Component({
@@ -9,7 +9,7 @@ import {AccountService} from '../../services/account.service';
 })
 export class SettingsComponent implements OnInit {
 
-  userSettings: IUserSettings;
+  userSettings = new UserSettings();
 
   constructor(
     private accountService: AccountService,

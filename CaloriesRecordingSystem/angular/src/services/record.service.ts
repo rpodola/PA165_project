@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {IRecord} from '../interfaces/IRecord';
+import {Record} from '../app/_classes/Record';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
-import {IRecordDetail} from '../interfaces/IRecordDetail';
+import {RecordDetail} from '../app/_classes/RecordDetail';
 
 @Injectable()
 export class RecordService {
 
-  records: IRecordDetail[] = [
+  records: RecordDetail[] = [
     {
       activityId: 0,
       activityName: 'First activity',
@@ -38,13 +38,13 @@ export class RecordService {
   ) {
   }
 
-  getAllRecordsOfUser(userId: number = 0): Observable<IRecord[]> {
+  getAllRecordsOfUser(userId: number = 0): Observable<Record[]> {
     return of(
       this.records.filter(record => record.userId === userId)
     );
   }
 
-  getRecorDetail(recordId: number): Observable<IRecordDetail> {
+  getRecorDetail(recordId: number): Observable<RecordDetail> {
     return of(
       this.records.find(record => record.id === recordId)
     );

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Activity} from '../../classes/Activity';
-import {ICategory} from '../../interfaces/ICategory';
+import {Activity2} from '../_classes/Activity2';
+import {Category} from '../_classes/Category';
 import {CategoryService} from '../../services/category.service';
 import {ActivityService} from '../../services/activity.service';
 import {Router} from '@angular/router';
@@ -12,8 +12,8 @@ import {Router} from '@angular/router';
 })
 export class ActivityFormComponent implements OnInit {
 
-  activity = new Activity();
-  categories: ICategory[];
+  activity = new Activity2();
+  categories: Category[];
 
   activityNameExists: boolean;
 

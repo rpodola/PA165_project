@@ -1,4 +1,4 @@
-export interface IUserSettings {
+export class UserSettings {
   name: string;
   weight: number;
   height: number;

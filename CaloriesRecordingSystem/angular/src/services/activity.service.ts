@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {IActivity} from '../interfaces/IActivity';
+import {Activity} from '../app/_classes/Activity';
 import {of} from 'rxjs/observable/of';
 import {HttpClient} from '@angular/common/http';
-import {IActivityDetail} from '../interfaces/IActivityDetail';
-import {Category} from '../classes/Category';
-import {Activity} from '../classes/Activity';
+import {ActivityDetail} from '../app/_classes/ActivityDetail';
+import {Category} from '../app/_classes/Category';
+import {Activity2} from '../app/_classes/Activity2';
 
 @Injectable()
 export class ActivityService {
@@ -15,19 +15,27 @@ export class ActivityService {
   /**
    * Should be cached after loading from REST
    */
-  activities: IActivityDetail[] = [
+  activities: ActivityDetail[] = [
     {
       id: 0,
       name: 'firstActivity',
       description: 'desc',
-      category: new Category(0, 'Exercise', 'Exercise is best activity'),
+      category: {
+        name: 'Exercise',
+        description: 'Exercise is best activity',
+        id: 0,
+      },
       burnedCaloriesList: [],
     },
     {
       id: 1,
       name: 'secondActivity',
       description: 'desc2',
-      category: new Category(1, 'Aerobics', 'Aerobics sucks'),
+      category: {
+        id: 1,
+        name: 'Aerobics',
+        description: 'Aerobics sucks',
+      },
       burnedCaloriesList: [
         {
           upperWeightBoundary: 50,
@@ -43,7 +51,11 @@ export class ActivityService {
       id: 2,
       name: 'hating on Dozer',
       description: 'Automapper Dozer sucks',
-      category: new Category(0, 'Exercise'),
+      category: {
+        id: 0,
+        name: 'Exercise',
+        description: '',
+      },
       burnedCaloriesList: [
         {
           upperWeightBoundary: 0,
@@ -57,19 +69,19 @@ export class ActivityService {
     private http: HttpClient,
   ) { }
 
-  getAllActivities(): Observable<IActivity[]> {
+  getAllActivities(): Observable<Activity[]> {
     return of(this.activities);
   }
 
-  getActivities(categoryIds: number[]): Observable<IActivity[]> {
+  getActivities(categoryIds: number[]): Observable<Activity[]> {
     return of(this.activities.filter(activity => categoryIds.includes(activity.category.id)));
   }
 
-  getActivityDetail(id: number): Observable<IActivityDetail> {
+  getActivityDetail(id: number): Observable<ActivityDetail> {
     return of(this.activities.find(activity => activity.id === id));
   }
 
-  createNewActivity(activity: Activity): Observable<number> {
+  createNewActivity(activity: Activity2): Observable<number> {
     const nameExists = this.activities
       .filter(ac => ac.name === activity.name)
       .length > 0;
@@ -78,7 +90,7 @@ export class ActivityService {
       return of(undefined);
     }
 
-    const activityDetail: IActivityDetail = {
+    const activityDetail: ActivityDetail = {
       name: activity.name,
       id: this.activities.length,
       category: {

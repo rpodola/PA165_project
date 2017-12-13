@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
-import {ICategory} from '../interfaces/ICategory';
-import {Category} from '../classes/Category';
+import {Category} from '../app/_classes/Category';
 
 @Injectable()
 export class CategoryService {
 
-  categories: ICategory[] = [
+  categories: Category[] = [
     new Category(0, 'Exercise', 'Exercise is the best activity'),
     new Category(1, 'Aerobics'),
     new Category(2, 'Walking'),
@@ -26,11 +25,11 @@ export class CategoryService {
 
   constructor() {}
 
-  getAllCategories(): Observable<ICategory[]> {
+  getAllCategories(): Observable<Category[]> {
     return of(this.categories);
   }
 
-  getCategory(id: number): Observable<ICategory> {
+  getCategory(id: number): Observable<Category> {
     return of(
       this.categories.find(cat => cat.id === id)
     );
