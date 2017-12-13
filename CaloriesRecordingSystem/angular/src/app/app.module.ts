@@ -24,7 +24,6 @@ import { SettingsComponent } from './settings/settings.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { ValidateEmailDirective } from './_validators/validate-email.directive';
-import { PasswordsEqualDirective } from './_validators/passwords-equal.directive';
 import { ValidateLengthDirective } from './_validators/validate-length.directive';
 import {AccountService} from './_services/account.service';
 import { NumberMinMaxDirective } from './_validators/number-min-max.directive';
@@ -49,7 +48,6 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     LoginFormComponent,
     RegisterFormComponent,
     ValidateEmailDirective,
-    PasswordsEqualDirective,
     ValidateLengthDirective,
     NumberMinMaxDirective,
     ActivityFormComponent,

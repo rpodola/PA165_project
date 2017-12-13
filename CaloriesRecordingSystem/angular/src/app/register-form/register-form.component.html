@@ -35,7 +35,7 @@
               class="form-control"
               id="username"
               placeholder="Username"
-              [(ngModel)]="username"
+              [(ngModel)]="registerSettings.username"
               required autofocus
               appValidateLength
               #usernameValidation="ngModel"
@@ -82,7 +82,7 @@
               class="form-control"
               id="name"
               placeholder="Name"
-              [(ngModel)]="name"
+              [(ngModel)]="registerSettings.name"
               autofocus
               appValidateLength
               #nameValidation="ngModel"
@@ -129,7 +129,7 @@
               class="form-control"
               id="email"
               placeholder="you@example.com"
-              [(ngModel)]="email"
+              [(ngModel)]="registerSettings.email"
               autofocus
               required
               appValidateEmail
@@ -173,8 +173,9 @@
               class="form-control"
               id="password"
               placeholder="Password"
-              [(ngModel)]="password"
-              required autofocus
+              [(ngModel)]="registerSettings.password"
+              (ngModelChange)="passwordChanged()"
+              autofocus
               appValidateLength
               #passwordValidation="ngModel"
               [minLength]="5"
@@ -202,7 +203,7 @@
 
     <div class="row">
       <div class="col-md-3 field-label-responsive">
-        <label for="password-confirmation">
+        <label for="passwordConfirm">
           Confirm Password
         </label>
       </div>
@@ -216,35 +217,29 @@
 
             <input
               type="password"
-              name="password-confirmation"
+              name="passwordConfirm"
               class="form-control"
-              id="password-confirmation"
+              id="passwordConfirm"
               placeholder="Password"
               [(ngModel)]="passwordRepeat"
-              required
-              appPasswordsEqual="password"
-              #passwordEqualValidator="ngModel"
+              (ngModelChange)="passwordChanged()"
             >
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div
-          *ngIf="passwordEqualValidator.errors && (passwordEqualValidator.dirty || passwordEqualValidator.touched)"
+          *ngIf="!passwordsMatch && (password || passwordRepeat)"
           class="form-control-feedback"
         >
           <span class="text-danger align-middle">
               <i class="fa fa-close">
-                {{ passwordEqualValidator.errors.message }}
-                <span *ngIf="passwordEqualValidator.errors.required">
-                  Password is required
-                </span>
+                Passwords do not match
               </i>
           </span>
         </div>
       </div>
     </div>
-
     <div class="row">
       <div class="col-md-3 field-label-responsive">
         <label for="birthday">
@@ -264,7 +259,7 @@
                 id="birthday"
                 name="birthday"
                 position="bottom-right"
-                [(ngModel)]="birthday"
+                [(ngModel)]="registerSettings.birthday"
               >
               </ng-datepicker>
             </span>
@@ -303,7 +298,7 @@
           type="submit"
           class="btn btn-success"
           (click)="registerAccount()"
-          [disabled]="usernameValidation.errors || passwordValidation.errors || passwordEqualValidator.errors || emailValidator.errors"
+          [disabled]="usernameValidation.errors || passwordValidation.errors || !passwordsMatch || emailValidator.errors || nameValidation.errors"
         >
           <i class="fa fa-user-plus">
           </i>

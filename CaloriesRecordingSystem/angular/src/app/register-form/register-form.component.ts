@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AccountService} from '../_services/account.service';
+import {RegisterSettings} from '../_classes/RegisterSettings';
 
 @Component({
   selector: 'app-register-form',
@@ -7,21 +8,23 @@ import {AccountService} from '../_services/account.service';
   styleUrls: ['./register-form.component.css'],
 })
 export class RegisterFormComponent implements OnInit {
-
-  male = true;
-  name: string;
-  username: string;
-  email: string;
-  password: string;
-  passwordRepeat: string;
-  birthday = new Date();
+  registerSettings = new RegisterSettings();
 
   usernameExists: boolean;
   emailExists: boolean;
 
+  passwordRepeat: string;
+  passwordsMatch: boolean;
+
   constructor(
     private accountService: AccountService,
-  ) { }
+  ) {
+    this.registerSettings.birthday = new Date();
+  }
+
+  passwordChanged() {
+    this.passwordsMatch = this.registerSettings.password === this.passwordRepeat;
+  }
 
   ngOnInit() { }
 
@@ -33,7 +36,7 @@ export class RegisterFormComponent implements OnInit {
 
   registerAccount() {
     this.accountService
-      .loginExists({ username: this.username, email: this.email })
+      .loginExists({ username: this.registerSettings.username, email: this.registerSettings.email })
       .subscribe(result => {
         this.emailExists = result.emailExists;
         this.usernameExists = result.usernameExists;

@@ -11,6 +11,9 @@ export class SettingsComponent implements OnInit {
 
   userSettings = new UserSettings();
 
+  passwordOld: string;
+  passwordConfirm: string;
+
   constructor(
     private accountService: AccountService,
   ) { }

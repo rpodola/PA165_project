@@ -30,6 +30,7 @@
             id="name"
             placeholder="Name"
             [(ngModel)]="userSettings.name"
+            required
             autofocus
             appValidateLength
             #nameValidation="ngModel"
@@ -37,6 +38,7 @@
             [maxLength]="63"
             [minLengthMessage]="'Name must be at least 3 characters long'"
             [maxLengthMessage]="'Name must be at max 63 characters long'"
+            [noValueMessage]="'Name is required'"
           >
         </div>
       </div>
@@ -99,8 +101,8 @@
 
   <div class="row">
     <div class="col-md-3 field-label-responsive">
-      <label for="password">
-        Password
+      <label for="passwordOld">
+        Old Password
       </label>
     </div>
     <div class="col-md-6">
@@ -115,11 +117,11 @@
           </div>
           <input
             type="password"
-            name="password"
+            name="passwordOld"
             class="form-control"
-            id="password"
+            id="passwordOld"
             placeholder="Password"
-            required
+            [(ngModel)]="passwordOld"
           >
         </div>
       </div>
@@ -128,7 +130,7 @@
 
   <div class="row">
     <div class="col-md-3 field-label-responsive">
-      <label for="newPassword">
+      <label for="passwordNew">
         New Password
       </label>
     </div>
@@ -144,9 +146,9 @@
           </div>
           <input
             type="password"
-            name="newPassword"
+            name="passwordNew"
             class="form-control"
-            id="newPassword"
+            id="passwordNew"
             placeholder="Password"
             required
             [(ngModel)]="userSettings.password"
@@ -177,7 +179,7 @@
 
   <div class="row">
     <div class="col-md-3 field-label-responsive">
-      <label for="password">
+      <label for="passwordConfirm">
         Confirm Password
       </label>
     </div>
@@ -191,28 +193,14 @@
 
           <input
             type="password"
-            name="password-confirmation"
+            name="passwordConfirm"
             class="form-control"
-            id="password-confirm"
+            id="passwordConfirm"
             placeholder="Password"
             required autofocus
-            [(ngModel)]="userSettings.password"
-            appPasswordsEqual="newPassword"
-            #validateEqualPassword="ngModel"
+            [(ngModel)]="passwordConfirm"
           >
         </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div
-        *ngIf="validateEqualPassword.errors && (validateEqualPassword.dirty || validateEqualPassword.touched)"
-        class="form-control-feedback"
-      >
-          <span class="text-danger align-middle">
-              <i class="fa fa-close">
-                {{ validateEqualPassword.errors.message }}
-              </i>
-          </span>
       </div>
     </div>
   </div>

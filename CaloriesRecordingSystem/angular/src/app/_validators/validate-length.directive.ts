@@ -28,11 +28,11 @@ export class ValidateLengthDirective implements Validator {
 
     const { length } = c.value;
 
-    if (length <= this.minLength) {
+    if (length < this.minLength) {
       return { message: this.minLengthMessage };
     }
 
-    if (length >= this.maxLength) {
+    if (length > this.maxLength) {
       return { message: this.maxLengthMessage };
     }
 
