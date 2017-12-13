@@ -2,7 +2,6 @@ package com.muni.fi.pa165project.dao;
 
 import com.muni.fi.pa165project.config.AppContextConfiguration;
 import com.muni.fi.pa165project.entity.User;
-import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import org.junit.Assert;
 import org.junit.Before;
