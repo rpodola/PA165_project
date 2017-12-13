@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * @author Radoslav Karlik
+ * * @author Lukáš Císar
  */
 public interface ActivityFacade {
 
@@ -21,7 +22,7 @@ public interface ActivityFacade {
      * @param activityDTO activity information
      * @return activity id or null if activity was not created
      */
-    Long createActivity(ActivityDTO activityDTO);
+    void createActivity(ActivityDTO activityDTO);
 
     /**
      * Edit Activity object

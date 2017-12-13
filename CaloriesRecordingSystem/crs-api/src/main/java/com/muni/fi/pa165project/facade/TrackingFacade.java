@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * @author Radoslav Karlik
  * @author Radim Podola
+ * @author Lukáš Císar
  */
 public interface TrackingFacade {
 
@@ -18,7 +19,7 @@ public interface TrackingFacade {
      * @param recordDto record to create
      * @return record id or null if record was not created
      */
-    Long createRecord(RecordDetailDTO recordDto);
+    void createRecord(RecordDetailDTO recordDto);
 
     /**
      * Edit record

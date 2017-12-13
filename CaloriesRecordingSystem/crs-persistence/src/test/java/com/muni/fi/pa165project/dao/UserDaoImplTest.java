@@ -3,7 +3,6 @@ package com.muni.fi.pa165project.dao;
 import com.muni.fi.pa165project.config.AppContextConfiguration;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.enums.GenderEnum;
-import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,11 +33,11 @@ public class UserDaoImplTest {
     public void initUser() {
         this.user = new User();
         user.setBirthDate(LocalDate.now());
-        user.setGender(GenderEnum.MALE);
+        user.setIsMale(true);
         user.setName("Lukas");
         user.setHeight(180);
         user.setWeight(77);
-        user.setUserRole(UserEnum.ADMINISTRATOR);
+        user.setIsAdmin(true);
 
         LoginDetails login = new LoginDetails();
         login.setUsername("ciso112");
@@ -115,7 +114,7 @@ public class UserDaoImplTest {
         usr.setBirthDate(LocalDate.now());
         usr.setName("Vlado");
         usr.setWeight(75);
-        usr.setHeight(125);
+        usr.setHeight(175);
         LoginDetails login = new LoginDetails();
         login.setUsername("eavf");
         login.setPassword("abcdefgh");

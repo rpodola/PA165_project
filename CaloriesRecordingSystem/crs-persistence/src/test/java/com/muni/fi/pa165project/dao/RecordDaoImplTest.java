@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * @author Radim Podola
+ * @author Lukáš Císar
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppContextConfiguration.class)
@@ -54,8 +55,9 @@ public class RecordDaoImplTest {
     public void initUser() {
         this.user = new User();
         this.user.setName("Radim");
-        this.user.setGender(GenderEnum.MALE);
+        this.user.setIsMale(true);
         this.user.setBirthDate(LocalDate.now());
+        this.user.setIsAdmin(false);
         LoginDetails login = new LoginDetails();
         user.setHeight(123);
         user.setWeight(75);

@@ -1,9 +1,11 @@
 package com.muni.fi.pa165project.rest.controllers;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 import com.muni.fi.pa165project.rest.ApiUris;
-import com.muni.fi.pa165project.rest.exceptions.AlreadyExistsException;
+import com.muni.fi.pa165project.rest.exceptions.ResourceNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +38,13 @@ public class UsersController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public final UserDTO getUser(@PathVariable("user_id") long userId) {
 
-		logger.debug("rest getOrders({},{})");
+		logger.debug("rest getUser({})", userId);
 		UserDTO user = userFacade.getUser(userId); 
 
 		return user;
 	}
+	
+	
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,10 +53,11 @@ public class UsersController {
 
         try {
             Long id = userFacade.createUser(userDTO);
-            return null;//TODO
+            return userFacade.getUser(id);
         } catch (Exception ex) {
-            throw new AlreadyExistsException();
+            throw new ResourceNotFoundException();
         }
-    }
+        
+	}
 
 }

@@ -38,10 +38,8 @@ public class User implements Serializable {
     @Min(1)
     private double height;
 
-    @Enumerated(EnumType.STRING)
-    private GenderEnum gender;
+    private boolean isMale;
 
-    @Column(nullable = false)
     private boolean isAdmin;
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true)
@@ -94,12 +92,12 @@ public class User implements Serializable {
         this.height = height;
     }
 
-    public GenderEnum getGender() {
+    public boolean getIsMale() {
         return gender;
     }
 
-    public void setGender(GenderEnum gender) {
-        this.gender = gender;
+    public void setIsMale(boolean isMale) {
+        this.isMale = isMale;
     }
     
     public Boolean getIsAdmin() {

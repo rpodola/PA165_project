@@ -2,6 +2,7 @@ package com.muni.fi.pa165project.dto;
 
 /**
  * @author Radoslav Karlik
+ *  @author Lukáš Císar
  */
 public class TrackingSettingsDTO {
 
@@ -41,5 +42,9 @@ public class TrackingSettingsDTO {
             return false;
         }
         return true;
+    }
+    
+    public String toString() {
+    	return "userId <" + userId + "> weekly categories goal <" + weeklyCaloriesGoal + ">";
     }
 }
