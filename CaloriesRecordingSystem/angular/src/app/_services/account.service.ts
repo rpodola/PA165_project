@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
-import {Account} from '../app/_classes/Account';
+import {Account} from '../_classes/Account';
 
 @Injectable()
 export class AccountService {

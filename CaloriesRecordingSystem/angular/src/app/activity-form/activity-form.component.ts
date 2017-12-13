@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Activity2} from '../_classes/Activity2';
 import {Category} from '../_classes/Category';
-import {CategoryService} from '../../services/category.service';
-import {ActivityService} from '../../services/activity.service';
+import {CategoryService} from '../_services/category.service';
+import {ActivityService} from '../_services/activity.service';
 import {Router} from '@angular/router';
 
 @Component({

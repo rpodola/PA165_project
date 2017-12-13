@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Record} from '../app/_classes/Record';
+import {Record} from '../_classes/Record';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
-import {RecordDetail} from '../app/_classes/RecordDetail';
+import {RecordDetail} from '../_classes/RecordDetail';
 
 @Injectable()
 export class RecordService {

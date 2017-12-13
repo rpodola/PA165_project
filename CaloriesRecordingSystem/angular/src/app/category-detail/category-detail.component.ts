@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {CategoryService} from '../../services/category.service';
+import {CategoryService} from '../_services/category.service';
 import {Category} from '../_classes/Category';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {Activity} from '../_classes/Activity';
-import {ActivityService} from '../../services/activity.service';
+import {ActivityService} from '../_services/activity.service';
 
 @Component({
   selector: 'app-category-detail',

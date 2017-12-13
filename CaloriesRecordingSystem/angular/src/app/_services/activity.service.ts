@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Activity} from '../app/_classes/Activity';
+import {Activity} from '../_classes/Activity';
 import {of} from 'rxjs/observable/of';
 import {HttpClient} from '@angular/common/http';
-import {ActivityDetail} from '../app/_classes/ActivityDetail';
-import {Category} from '../app/_classes/Category';
-import {Activity2} from '../app/_classes/Activity2';
+import {ActivityDetail} from '../_classes/ActivityDetail';
+import {Category} from '../_classes/Category';
+import {Activity2} from '../_classes/Activity2';
 
 @Injectable()
 export class ActivityService {

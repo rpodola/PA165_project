@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Activity} from '../_classes/Activity';
-import {ActivityService} from '../../services/activity.service';
+import {ActivityService} from '../_services/activity.service';
 
 @Component({
   selector: 'app-activity-list',
