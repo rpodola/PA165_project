@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.muni.fi.pa165project.dto.UserDTO;
@@ -52,7 +51,7 @@ public class UsersController {
         logger.debug("rest createUser()");
 
         try {
-            Long id = userFacade.createUser(userDTO);
+            long id = userFacade.createUser(userDTO);
             return userFacade.getUser(id);
         } catch (Exception ex) {
             throw new ResourceNotFoundException();

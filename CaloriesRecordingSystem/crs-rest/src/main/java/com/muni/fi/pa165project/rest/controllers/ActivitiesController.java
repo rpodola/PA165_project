@@ -2,6 +2,7 @@ package com.muni.fi.pa165project.rest.controllers;
 
 import com.muni.fi.pa165project.dto.ActivityDTO;
 import com.muni.fi.pa165project.dto.ActivityExportDTO;
+import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.rest.ApiUris;
 import com.muni.fi.pa165project.rest.exceptions.AlreadyExistsException;
@@ -18,6 +19,7 @@ import java.util.List;
  * REST Controller for Activities
  *
  * @author Radim Podola
+ * @author Lukáš Císar
  */
 @RestController
 @RequestMapping(ApiUris.ROOT_URI_ACTIVITIES)
@@ -27,7 +29,7 @@ public class ActivitiesController {
 
     @Inject
     private ActivityFacade acFacade;
-
+    
     /**
      * Get Activity detail by identifier id
      *
@@ -36,7 +38,7 @@ public class ActivitiesController {
      * @throws ResourceNotFoundException
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ActivityExportDTO getActivityDetail(@PathVariable("id") long id) {
+    public final ActivityExportDTO getActivityDetail(@PathVariable("act_id") long id) {
         logger.debug("rest getActivityDetail({})", id);
 
         ActivityExportDTO ac = acFacade.getActivityDetail(id);
@@ -64,7 +66,7 @@ public class ActivitiesController {
             throw new ResourceNotFoundException();
         }
     }
-
+   
     /**
      * Delete Activity by id
      *
@@ -85,16 +87,14 @@ public class ActivitiesController {
      * Create a new Activity by POST method
      *
      * @param activity ActivityDTO with required fields for creation
-     * @return the created activity ActivityDTO
-     */
+    */
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ActivityDTO createActivity(@RequestBody ActivityDTO activity){
+    public final void createActivity(@RequestBody ActivityDTO activity){
         logger.debug("rest createActivity()");
 
         try {
-            Long id = acFacade.createActivity(activity);
-            return null;//TODO
+            acFacade.createActivity(activity);
         } catch (Exception ex) {
             throw new AlreadyExistsException();
         }

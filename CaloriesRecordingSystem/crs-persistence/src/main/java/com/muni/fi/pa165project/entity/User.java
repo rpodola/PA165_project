@@ -1,7 +1,5 @@
 package com.muni.fi.pa165project.entity;
 
-import com.muni.fi.pa165project.enums.GenderEnum;
-import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import com.muni.fi.pa165project.structures.TrackingSettings;
 import org.hibernate.validator.constraints.Length;
@@ -93,7 +91,7 @@ public class User implements Serializable {
     }
 
     public boolean getIsMale() {
-        return gender;
+        return isMale;
     }
 
     public void setIsMale(boolean isMale) {

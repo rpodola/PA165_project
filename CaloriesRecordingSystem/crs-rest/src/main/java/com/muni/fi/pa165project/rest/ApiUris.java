@@ -12,4 +12,5 @@ public abstract class ApiUris {
     public static final String ROOT_URI_ACTIVITIES = "/activities";
     public static final String ROOT_URI_USERS = "/users";
     public static final String ROOT_URI_RECORDS = "/records";
+	public static final String ROOT_URI_CATEGORIES = "/categories";
 }
