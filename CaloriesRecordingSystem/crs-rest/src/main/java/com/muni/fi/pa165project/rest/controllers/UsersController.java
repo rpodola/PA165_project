@@ -1,7 +1,22 @@
 package com.muni.fi.pa165project.rest.controllers;
 
 
+import javax.inject.Inject;
+import com.muni.fi.pa165project.rest.ApiUris;
+import com.muni.fi.pa165project.rest.exceptions.AlreadyExistsException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.facade.UserFacade;
 
 /**
  * REST Controller for Users
@@ -10,19 +25,34 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-//@RequestMapping(ApiUris.ROOT_URI_ORDERS)
+@RequestMapping(ApiUris.ROOT_URI_USERS)
 public class UsersController {
-//	 final static Logger logger = LoggerFactory.getLogger(UserController.class);
-//
-//	    @Inject
-//	    private UserFacade userFacade;
 
-//	    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//	    public final UserDTO getUser(@RequestParam(@PathVariable("user_id") long userId)) {
-//	        
-//	        logger.debug("rest getOrders({},{})", lastWeek, status);
-//
-//	       
-//	        }
+	final static Logger logger = LoggerFactory.getLogger(UsersController.class);
+
+	@Inject
+	private UserFacade userFacade;
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public final UserDTO getUser(@PathVariable("user_id") long userId) {
+
+		logger.debug("rest getOrders({},{})");
+		UserDTO user = userFacade.getUser(userId); 
+
+		return user;
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public final UserDTO createUser(@RequestBody UserDTO  userDTO){
+        logger.debug("rest createUser()");
+
+        try {
+            Long id = userFacade.createUser(userDTO);
+            return null;//TODO
+        } catch (Exception ex) {
+            throw new AlreadyExistsException();
+        }
+    }
 
 }

@@ -16,6 +16,7 @@ import java.util.Set;
 
 /**
  * @author Radoslav Karlik
+ * @author Lukáš Císar
  */
 @Entity
 @Table(name = "trackedUser")
@@ -40,8 +41,8 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
 
-    @Enumerated(EnumType.STRING)
-    private UserEnum userRole;
+    @Column(nullable = false)
+    private boolean isAdmin;
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", orphanRemoval = true)
     private Set<Record> activityRecords = new HashSet<>();
@@ -100,13 +101,13 @@ public class User implements Serializable {
     public void setGender(GenderEnum gender) {
         this.gender = gender;
     }
-
-    public UserEnum getUserRole() {
-        return userRole;
+    
+    public Boolean getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setUserRole(UserEnum userRole) {
-        this.userRole = userRole;
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public Set<Record> getActivityRecords() {
