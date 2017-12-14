@@ -1,3 +1,2 @@
 #angular build
-webapp/
-!webapp/WEB-INF/
+resources/angular/
