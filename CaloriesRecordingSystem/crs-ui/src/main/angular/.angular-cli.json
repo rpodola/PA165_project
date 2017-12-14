@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "../crs-ui/src/main/webapp",
+      "outDir": "../webapp/ng",
       "assets": [
         "assets",
         "favicon.ico"

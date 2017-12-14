@@ -1,0 +1,4 @@
+<servlet-mapping>
+    <servlet-name>jsp</servlet-name>
+    <url-pattern>*.html</url-pattern>
+</servlet-mapping>
