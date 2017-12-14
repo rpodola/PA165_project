@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @author Radoslav Karlik
  * @author Radim Podola
- * @author Lukáš Císar
  */
 public interface TrackingFacade {
 
