@@ -44,7 +44,7 @@ public class TrackingFacadeImpl implements TrackingFacade {
     private BurnedCaloriesService burnedCaloriesService;
 
     @Override
-    public void createRecord(RecordDetailDTO recordDetailDto) {
+    public Long createRecord(RecordDetailDTO recordDetailDto) {
         log.debug("Creating Record for user with id <{}>",
                 recordDetailDto.getUserId());
 
@@ -67,6 +67,7 @@ public class TrackingFacadeImpl implements TrackingFacade {
         );
         user.addRecord(record);
         recordService.create(record);
+		return record.getId();
     }
 
     @Override

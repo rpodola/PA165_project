@@ -19,7 +19,7 @@ public interface TrackingFacade {
      * @param recordDto record to create
      * @return record id or null if record was not created
      */
-    void createRecord(RecordDetailDTO recordDto);
+    Long createRecord(RecordDetailDTO recordDto);
 
     /**
      * Edit record

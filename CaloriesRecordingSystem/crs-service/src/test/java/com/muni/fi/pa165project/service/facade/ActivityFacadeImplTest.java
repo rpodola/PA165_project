@@ -36,7 +36,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * @author Peter Krasnan, Radoslav Karlik
+ * @author Peter Krasnan
+ * @author Radoslav Karlik
  */
 @RunWith(MockitoJUnitRunner.class)
 public class ActivityFacadeImplTest {

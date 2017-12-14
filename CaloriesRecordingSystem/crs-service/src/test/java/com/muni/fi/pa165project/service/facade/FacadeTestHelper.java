@@ -16,17 +16,18 @@ import java.time.LocalDateTime;
 
 /**
  * @author Radim Podola
+ * @author Lukáš Císar
  */
 public class FacadeTestHelper {
 
     public static UserDTO initUser() {
         UserDTO user = new UserDTO();
         user.setBirthDate(LocalDate.now());
-        user.setGender(GenderEnum.MALE);
+        user.setIsMale(true);
         user.setName("Lukas");
         user.setHeight(180);
         user.setWeight(77);
-        user.setUserRole(UserEnum.ADMINISTRATOR);
+        user.setIsAdmin(false);
         user.setUsername("ciso112");
         user.setPassword("abcdefgh");
         user.setEmail("ciso112@protonmail.com");

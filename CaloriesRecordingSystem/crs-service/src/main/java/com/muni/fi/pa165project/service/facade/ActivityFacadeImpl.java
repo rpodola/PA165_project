@@ -51,11 +51,12 @@ public class ActivityFacadeImpl implements ActivityFacade {
     private UserService userService;
 
     @Override
-    public void createActivity(ActivityDTO activityDTO) {
+    public Long createActivity(ActivityDTO activityDTO) {
         log.debug("Creating activity with name <{}>", activityDTO.getName());
 
         Activity activity = mapper.map(activityDTO, Activity.class);
         this.activityService.create(activity);
+        return activity.getId();
     }
 
     @Override

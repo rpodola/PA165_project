@@ -22,9 +22,9 @@ public class UserDTO {
 
     private double height;
 
-    private GenderEnum gender;
+    private boolean isMale;
 
-    private UserEnum userRole;
+    private boolean isAdmin;
 
     private String username;
 
@@ -72,20 +72,20 @@ public class UserDTO {
         this.height = height;
     }
 
-    public GenderEnum getGender() {
-        return gender;
+    public boolean getIsMale() {
+        return isMale;
     }
 
-    public void setGender(GenderEnum gender) {
-        this.gender = gender;
+    public void setIsMale(boolean isMale) {
+        this.isMale = isMale;
     }
 
-    public UserEnum getUserRole() {
-        return userRole;
+    public boolean getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setUserRole(UserEnum userRole) {
-        this.userRole = userRole;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public String getUsername() {
