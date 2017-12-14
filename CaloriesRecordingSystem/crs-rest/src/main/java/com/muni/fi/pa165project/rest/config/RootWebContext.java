@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.*;
  */
 @EnableWebMvc
 @Configuration
-@Import({ServiceConfiguration.class, DataConfiguration.class})
+@Import({ServiceConfiguration.class})
 @ComponentScan(basePackageClasses = {UsersController.class})
 public class RootWebContext extends WebMvcConfigurerAdapter {
     @Override

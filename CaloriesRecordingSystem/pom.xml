@@ -44,10 +44,12 @@
                 <artifactId>dozer</artifactId>
                 <version>5.5.1</version>
             </dependency>
+		
         </dependencies>
     </dependencyManagement>
 
     <build>
+		<defaultGoal>jetty:run</defaultGoal>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -61,6 +63,31 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+		<plugins>
+			<plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>9.2.6.v20141205</version>
+            <configuration>
+                <scanIntervalSeconds>0</scanIntervalSeconds>
+                <webApp>
+                    <contextPath>/</contextPath>
+                </webApp>
+                <contextHandlers>
+                    <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
+                        <war>${project.basedir}/crs-rest/target/crs-rest-1.0-SNAPSHOT.war</war>
+                        <contextPath>/pa165/rest</contextPath>
+                    </contextHandler>
+                    <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
+                        <war>${project.basedir}/crs-ui/target/crs-ui-1.0-SNAPSHOT.war</war>
+                        <contextPath>/pa165</contextPath>
+                    </contextHandler>
+                </contextHandlers>
+                <stopPort>9999</stopPort>
+                <stopKey>STOP</stopKey>
+            </configuration>
+        </plugin>
+		</plugins>
     </build>
 
     <modules>
