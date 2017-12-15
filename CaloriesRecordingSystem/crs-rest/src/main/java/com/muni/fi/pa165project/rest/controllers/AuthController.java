@@ -50,7 +50,7 @@ public class AuthController {
     
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final TokenDTO register(@RequestBody UserRegisterDTO userDTO){
-        logger.debug("rest createUser()");
+        logger.debug("rest register()");
 
         long userId = this.userFacade.createUser(userDTO);
         

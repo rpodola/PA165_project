@@ -53,11 +53,11 @@ public class ServiceConfiguration {
                 mapping(UserRegisterDTO.class, User.class)
                         .fields("username", "loginDetails.username")
                         .fields("password", "loginDetails.password")
-                        .fields("email", "loginDetails.email");
-                mapping(UserUpdateDTO.class, User.class)
-                        .fields("password", "loginDetails.password")
                         .fields("email", "loginDetails.email")
                         .fields("birthDate", "birthDate", FieldsMappingOptions.customConverter(LocalDateConverter.class));
+                mapping(UserUpdateDTO.class, User.class)
+                        .fields("password", "loginDetails.password")
+                        .fields("email", "loginDetails.email");
             }
         };
 

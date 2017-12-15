@@ -25,7 +25,7 @@ public class FacadeTestHelper {
 
     public static UserRegisterDTO initUserRegister() {
         UserRegisterDTO user = new UserRegisterDTO();
-        user.setBirthDate(LocalDate.of(2017, Month.DECEMBER, 15).format(DateTimeFormatter.BASIC_ISO_DATE));
+        user.setBirthDate(LocalDate.of(2017, Month.DECEMBER, 15).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         user.setIsMale(true);
         user.setName("Lukas");
         user.setUsername("ciso112");
