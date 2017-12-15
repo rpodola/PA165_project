@@ -2,6 +2,8 @@ package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserRegisterDTO;
+import com.muni.fi.pa165project.dto.UserUpdateDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.MappingService;
@@ -36,6 +38,7 @@ public class UserFacadeImplTest {
     @InjectMocks
     private UserFacade userFacade = new UserFacadeImpl();
 
+    private UserRegisterDTO userRegisterDto;
     private User user;
 
     @Before
@@ -60,7 +63,7 @@ public class UserFacadeImplTest {
     @Transactional
     @Rollback
     public void createUserTest() {
-        UserDTO userDTO = mock(UserDTO.class);
+        UserRegisterDTO userDTO = mock(UserRegisterDTO.class);
         when(mapper.map(userDTO, User.class)).thenReturn(user);
         userFacade.createUser(userDTO);
         verify(userService).createUser(user);
@@ -71,7 +74,7 @@ public class UserFacadeImplTest {
     @Transactional
     @Rollback
     public void editUserTest() {
-        UserDTO userDTO = mock(UserDTO.class);
+        UserUpdateDTO userDTO = mock(UserUpdateDTO.class);
         when(mapper.map(userDTO, User.class)).thenReturn(user);
         userFacade.editUser(userDTO);
         verify(userService).updateUser(user);

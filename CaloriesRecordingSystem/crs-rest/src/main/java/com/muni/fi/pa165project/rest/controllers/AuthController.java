@@ -52,7 +52,7 @@ public class AuthController {
     public final TokenDTO register(@RequestBody UserRegisterDTO userDTO){
         logger.debug("rest createUser()");
 
-        long userId = this.userFacade.createUser(userDto);
+        long userId = this.userFacade.createUser(userDTO);
         
         String token = AuthorizationService.getTokenForUser(userId);
         return new TokenDTO(token);

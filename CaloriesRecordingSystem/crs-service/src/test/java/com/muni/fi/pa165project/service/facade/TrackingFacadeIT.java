@@ -36,18 +36,19 @@ public class TrackingFacadeIT {
     @Autowired
     private ActivityFacade acFac;
 
-    private UserDTO user;
+    private UserRegisterDTO userRegisterDto;
     private ActivityDTO  activity;
     private RecordDetailDTO record;
-
+    private long userId;
+    
     @Before
     public void setup() {
-        user = FacadeTestHelper.initUser();
-        user.setId(usFac.createUser(user));
+        userRegisterDto = FacadeTestHelper.initUserRegister();
+        userId = usFac.createUser(userRegisterDto);
         activity = FacadeTestHelper.initActivity();
         activity.setId(acFac.createActivity(activity));
         acFac.addBurnedCalorie(FacadeTestHelper.initBurnedCalories(activity.getId()));
-        record = FacadeTestHelper.initRecord(user.getId(), activity.getId());
+        record = FacadeTestHelper.initRecord(userId, activity.getId());
     }
 
     @Test
@@ -138,11 +139,11 @@ public class TrackingFacadeIT {
         //lets persist record
         record.setId(trFac.createRecord(record));
         //lets persist another record
-        RecordDetailDTO rec2 = FacadeTestHelper.initRecord(user.getId(), activity.getId());
+        RecordDetailDTO rec2 = FacadeTestHelper.initRecord(userId, activity.getId());
         rec2.setAtTime(LocalDateTime.now().plusMinutes(5));
         rec2.setId(trFac.createRecord(rec2));
         //lets find all
-        List<RecordDTO> recordsFound = trFac.getAllRecords(user.getId());
+        List<RecordDTO> recordsFound = trFac.getAllRecords(userId);
         Assert.assertEquals(recordsFound.size(), 2);
         //records should be sorted from newest
         Assert.assertEquals(rec2, recordsFound.get(0));
@@ -159,20 +160,20 @@ public class TrackingFacadeIT {
         //lets persist record
         record.setId(trFac.createRecord(record));
         //lets persist another record
-        RecordDetailDTO rec2 = FacadeTestHelper.initRecord(user.getId(), activity.getId());
+        RecordDetailDTO rec2 = FacadeTestHelper.initRecord(userId, activity.getId());
         rec2.setAtTime(LocalDateTime.now().plusMinutes(5));
         rec2.setId(trFac.createRecord(rec2));
         //lets find all 2 records
-        List<RecordDTO> recordsFound = trFac.getLastNRecords(user.getId(), 10);
+        List<RecordDTO> recordsFound = trFac.getLastNRecords(userId, 10);
         Assert.assertEquals(recordsFound.size(), 2);
         //records should be sorted from newest
         Assert.assertEquals(rec2, recordsFound.get(0));
         //lets find just 1 record
-        recordsFound = trFac.getLastNRecords(user.getId(), 1);
+        recordsFound = trFac.getLastNRecords(userId, 1);
         Assert.assertEquals(recordsFound.size(), 1);
         Assert.assertEquals(rec2, recordsFound.get(0));
         //lets find 0 records
-        recordsFound = trFac.getLastNRecords(user.getId(), 0);
+        recordsFound = trFac.getLastNRecords(userId, 0);
         Assert.assertTrue(recordsFound.isEmpty());
     }
 
@@ -182,13 +183,13 @@ public class TrackingFacadeIT {
     public void testFilteredRecords() {
         //prepare filter for all
         RecordTimeFilterDTO filter = new RecordTimeFilterDTO();
-        filter.setUserId(user.getId());
+        filter.setUserId(userId);
         filter.setFrom(record.getAtTime().minusDays(1));
         filter.setTo(record.getAtTime().plusDays(1));
         //lets persist record
         record.setId(trFac.createRecord(record));
         //lets persist another record
-        RecordDetailDTO rec2 = FacadeTestHelper.initRecord(user.getId(), activity.getId());
+        RecordDetailDTO rec2 = FacadeTestHelper.initRecord(userId, activity.getId());
         rec2.setAtTime(LocalDateTime.now().plusMinutes(5));
         rec2.setId(trFac.createRecord(rec2));
         //lets find all 2 records
@@ -215,16 +216,16 @@ public class TrackingFacadeIT {
         record.setId(trFac.createRecord(record));
         //lets add weekly goal
         TrackingSettingsDTO settings = new TrackingSettingsDTO();
-        settings.setUserId(user.getId());
+        settings.setUserId(userId);
         settings.setWeeklyCaloriesGoal(100);
         usFac.setTrackingSettings(settings);
         //record should have 50 burnedCalories, so 50% progress
-        Assert.assertEquals(trFac.getWeekProgressOfBurnedCalories(user.getId()), 50);
+        Assert.assertEquals(trFac.getWeekProgressOfBurnedCalories(userId), 50);
         //lets change goal
         settings.setWeeklyCaloriesGoal(0);
         usFac.setTrackingSettings(settings);
         //record should have 50 burnedCalories, so 100% progress
-        Assert.assertEquals(trFac.getWeekProgressOfBurnedCalories(user.getId()), 100);
+        Assert.assertEquals(trFac.getWeekProgressOfBurnedCalories(userId), 100);
     }
 
     @Test(expected = DataAccessException.class)

@@ -4,6 +4,8 @@ import com.muni.fi.pa165project.config.AppContextConfiguration;
 import com.muni.fi.pa165project.dto.ActivityDTO;
 import com.muni.fi.pa165project.dto.RecordDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserRegisterDTO;
+import com.muni.fi.pa165project.dto.UserUpdateDTO;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
@@ -15,6 +17,7 @@ import org.dozer.loader.api.TypeMappingOptions;
 import org.springframework.context.annotation.*;
 
 import java.util.Collections;
+import org.dozer.loader.api.FieldsMappingOptions;
 
 /**
  * @author Radoslav Karlik
@@ -47,6 +50,14 @@ public class ServiceConfiguration {
                         .fields("loginDetails.username", "username")
                         .fields("loginDetails.password", "password")
                         .fields("loginDetails.email", "email");
+                mapping(UserRegisterDTO.class, User.class)
+                        .fields("username", "loginDetails.username")
+                        .fields("password", "loginDetails.password")
+                        .fields("email", "loginDetails.email");
+                mapping(UserUpdateDTO.class, User.class)
+                        .fields("password", "loginDetails.password")
+                        .fields("email", "loginDetails.email")
+                        .fields("birthDate", "birthDate", FieldsMappingOptions.customConverter(LocalDateConverter.class));
             }
         };
 

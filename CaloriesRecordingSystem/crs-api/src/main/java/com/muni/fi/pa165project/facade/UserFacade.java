@@ -3,6 +3,8 @@ package com.muni.fi.pa165project.facade;
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserCredentialsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserRegisterDTO;
+import com.muni.fi.pa165project.dto.UserUpdateDTO;
 
 /**
  * @author Radoslav Karlik
@@ -16,14 +18,14 @@ public interface UserFacade {
      * @param userDto user object
      * @return user id or null if user was not created
      */
-    Long createUser(UserDTO userDto);
+    Long createUser(UserRegisterDTO userDto);
 
     /**
      * Edit User
      *
      * @param userDto user object
      */
-    void editUser(UserDTO userDto);
+    void editUser(UserUpdateDTO userDto);
 
     /**
      * Remove User

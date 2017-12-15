@@ -3,6 +3,8 @@ package com.muni.fi.pa165project.service.facade;
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserCredentialsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserRegisterDTO;
+import com.muni.fi.pa165project.dto.UserUpdateDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.MappingService;
@@ -30,7 +32,7 @@ public class UserFacadeImpl implements UserFacade {
     private UserService userService;
 
     @Override
-    public Long createUser(UserDTO userDto) {
+    public Long createUser(UserRegisterDTO userDto) {
         log.debug("Creating User with username <{}>", userDto.getUsername());
 
         User user = mapper.map(userDto, User.class);
@@ -39,7 +41,7 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void editUser(UserDTO userDto) {
+    public void editUser(UserUpdateDTO userDto) {
         log.debug("Editing User with id <{}>", userDto.getId());
 
         User user = mapper.map(userDto, User.class);

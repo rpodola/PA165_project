@@ -6,6 +6,7 @@ import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
 import com.muni.fi.pa165project.dto.CategoryDTO;
 import com.muni.fi.pa165project.dto.RecordDetailDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.enums.GenderEnum;
 import com.muni.fi.pa165project.enums.UserEnum;
@@ -13,6 +14,8 @@ import com.muni.fi.pa165project.structures.CategoryObject;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Radim Podola
@@ -20,6 +23,17 @@ import java.time.LocalDateTime;
  */
 public class FacadeTestHelper {
 
+    public static UserRegisterDTO initUserRegister() {
+        UserRegisterDTO user = new UserRegisterDTO();
+        user.setBirthDate(LocalDate.of(2017, Month.DECEMBER, 15).format(DateTimeFormatter.BASIC_ISO_DATE));
+        user.setIsMale(true);
+        user.setName("Lukas");
+        user.setUsername("ciso112");
+        user.setPassword("abcdefgh");
+        user.setEmail("ciso112@protonmail.com");
+        return user;
+    }
+    
     public static UserDTO initUser() {
         UserDTO user = new UserDTO();
         user.setBirthDate(LocalDate.now());

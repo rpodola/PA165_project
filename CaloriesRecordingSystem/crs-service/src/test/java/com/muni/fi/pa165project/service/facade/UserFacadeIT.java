@@ -2,6 +2,8 @@ package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserRegisterDTO;
+import com.muni.fi.pa165project.dto.UserUpdateDTO;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.config.ServiceConfiguration;
 import org.junit.Assert;
@@ -26,20 +28,20 @@ public class UserFacadeIT {
     @Autowired
     private UserFacade userFac;
 
-    private UserDTO user;
+    private UserRegisterDTO userRegisterDto;
 
     @Before
     public void setup() {
-        this.user = FacadeTestHelper.initUser();
+        this.userRegisterDto = FacadeTestHelper.initUserRegister();
     }
 
     @Test
     @Transactional
     @Rollback()
     public void testCreateUser() {
-        Long userId = userFac.createUser(user);
+        Long userId = userFac.createUser(userRegisterDto);
         UserDTO foundUser = this.userFac.getUser(userId);
-        Assert.assertTrue(user.equals(foundUser));
+        Assert.assertTrue(userRegisterDto.getUsername().equals(foundUser.getUsername()));
     }
 
     @Test
@@ -47,24 +49,29 @@ public class UserFacadeIT {
     @Rollback()
     public void testEditUser() {
         final String newName = "Martin";
-        Long userId = userFac.createUser(user);
+        Long userId = userFac.createUser(userRegisterDto);
         //user id is needed for update
-        user.setId(userId);
+        UserUpdateDTO updateUserDto = new UserUpdateDTO();
+        updateUserDto.setId(userId);
         //lets change name
-        user.setName(newName);
-        userFac.editUser(user);
+        updateUserDto.setName(newName);
+        updateUserDto.setEmail(userRegisterDto.getEmail());
+        updateUserDto.setHeight(50);
+        updateUserDto.setWeight(50);
+        updateUserDto.setPassword(updateUserDto.getPassword());
+        userFac.editUser(updateUserDto);
         //lets get user with changed name
         UserDTO foundUser = this.userFac.getUser(userId);
 
-        Assert.assertEquals(foundUser, user);
-        Assert.assertEquals(user.getName(), newName);
+        Assert.assertEquals(foundUser.getId(), updateUserDto.getId());
+        Assert.assertEquals(updateUserDto.getName(), newName);
     }
 
     @Test
     @Transactional
     @Rollback()
     public void testRemoveUser() {
-        Long userId = userFac.createUser(user);
+        Long userId = userFac.createUser(userRegisterDto);
         userFac.removeUser(userId);
         UserDTO foundUser = this.userFac.getUser(userId);
         Assert.assertNull(foundUser);
@@ -74,7 +81,7 @@ public class UserFacadeIT {
     @Transactional
     @Rollback()
     public void testGetUserById() {
-        Long userId = userFac.createUser(user);
+        Long userId = userFac.createUser(userRegisterDto);
         UserDTO foundUser = this.userFac.getUser(userId);
         Assert.assertEquals(userId, foundUser.getId());
         //lets try to find nobody
@@ -85,24 +92,24 @@ public class UserFacadeIT {
     @Transactional
     @Rollback()
     public void testCreateUserFail() {
-        user.setUsername(null);
-        userFac.createUser(user);
+        userRegisterDto.setUsername(null);
+        userFac.createUser(userRegisterDto);
     }
 
     @Test
     @Transactional
     @Rollback()
     public void testGetUserByEmail() {
-        userFac.createUser(user);
-        UserDTO foundUser = this.userFac.getUser(user.getEmail());
-        Assert.assertEquals(user, foundUser);
+        userFac.createUser(userRegisterDto);
+        UserDTO foundUser = this.userFac.getUser(userRegisterDto.getEmail());
+        Assert.assertEquals(userRegisterDto.getUsername(), foundUser.getUsername());
     }
 
     @Test
     @Transactional
     @Rollback()
     public void testGetSetTrackingSettings() {
-        Long userId = userFac.createUser(user);
+        Long userId = userFac.createUser(userRegisterDto);
 
         TrackingSettingsDTO settings = new TrackingSettingsDTO();
         settings.setUserId(userId);
