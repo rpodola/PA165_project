@@ -2,6 +2,7 @@ package com.muni.fi.pa165project.rest.config;
 
 import com.muni.fi.pa165project.data.config.DataConfiguration;
 import com.muni.fi.pa165project.rest.controllers.UsersController;
+import com.muni.fi.pa165project.rest.security.AuthorizationHandlerInterceptor;
 import com.muni.fi.pa165project.service.config.ServiceConfiguration;
 import org.springframework.context.annotation.*;
 import org.springframework.http.MediaType;
@@ -30,5 +31,6 @@ public class RootWebContext extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AllowOriginInterceptor());
+        registry.addInterceptor(new AuthorizationHandlerInterceptor());
     }
 }

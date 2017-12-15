@@ -7,6 +7,8 @@ import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.rest.ApiUris;
 import com.muni.fi.pa165project.rest.exceptions.AlreadyExistsException;
 import com.muni.fi.pa165project.rest.exceptions.ResourceNotFoundException;
+import com.muni.fi.pa165project.rest.security.ApplyAuthorizeFilter;
+import com.muni.fi.pa165project.rest.security.SecurityLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -72,6 +74,7 @@ public class ActivitiesController {
      *
      * @throws ResourceNotFoundException
      */
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.ADMIN)
     @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteActivity(@RequestBody long id) {
         logger.debug("rest deleteActivity({})", id);
@@ -88,6 +91,7 @@ public class ActivitiesController {
      *
      * @param activity ActivityDTO with required fields for creation
     */
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.ADMIN)
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public final void createActivity(@RequestBody ActivityDTO activity){
@@ -105,6 +109,7 @@ public class ActivitiesController {
      *
      * @param activity ActivityDTO with required fields for edit
      */
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.ADMIN)
     @RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public final void editActivity(@RequestBody ActivityDTO activity){
         logger.debug("rest editActivity()");
