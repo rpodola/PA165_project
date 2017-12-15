@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
  * @author Radoslav Karlik
  */
 @Service
+@ComponentScan(basePackageClasses = UserService.class)
 public class AuthorizationService {
     
     final static Logger logger = LoggerFactory.getLogger(AuthorizationService.class);
