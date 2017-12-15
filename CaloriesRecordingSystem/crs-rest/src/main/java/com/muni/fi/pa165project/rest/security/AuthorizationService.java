@@ -9,7 +9,10 @@ import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.security.Key;
+import java.sql.Date;
+import java.time.LocalDate;
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +29,21 @@ public class AuthorizationService {
     
     @Inject
     private UserService userService;
+    
+    public static String getTokenForUser(long userId) {
+        Key key = KeyManager.getKey();
+        
+        String token = Jwts
+                .builder()
+                .claim("userId", userId)
+                .setExpiration(Date.valueOf(LocalDate.now().plusDays(1)))
+                .signWith(SignatureAlgorithm.HS256, key)
+                .compact();
+        
+        logger.debug("generated Token: " + token);
+        
+        return token;
+    }
     
     public boolean authorizeUser(String token, boolean shouldBeAdmin) {
         Key key = KeyManager.getKey();

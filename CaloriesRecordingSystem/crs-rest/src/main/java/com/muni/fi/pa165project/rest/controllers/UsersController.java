@@ -42,21 +42,5 @@ public class UsersController {
 
 		return user;
 	}
-	
-	
-
-	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public final UserDTO createUser(@RequestBody UserDTO  userDTO){
-        logger.debug("rest createUser()");
-
-        try {
-            long id = userFacade.createUser(userDTO);
-            return userFacade.getUser(id);
-        } catch (Exception ex) {
-            throw new ResourceNotFoundException();
-        }
-        
-	}
 
 }
