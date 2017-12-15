@@ -76,4 +76,19 @@ public class UserDaoImpl implements UserDao {
         return this.em.createQuery("SELECT u from User u", User.class).getResultList();
     }
 
+    @Override
+    public User findByCredentials(String username, String password) {
+        List<User> users = this.em
+                .createQuery("SELECT u FROM User u WHERE u.loginDetails.password=:password AND u.loginDetails.username=:username", User.class)
+                .setParameter("username", username)
+                .setParameter("password", password)
+                .getResultList();
+        
+        if (users.isEmpty()) {
+            return null;
+        }
+        
+        return users.get(0);
+    }
+
 }

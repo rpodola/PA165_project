@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.dao;
 
 import com.muni.fi.pa165project.entity.User;
+import com.muni.fi.pa165project.structures.LoginDetails;
 
 import java.util.List;
 
@@ -66,4 +67,13 @@ public interface UserDao {
      * @return found user
      */
     User findByUserName(String username);
+    
+    /**
+     * Finds user by his credentials
+     * @param password 
+     * @param username 
+     * @return User if credentials match, null otherwise
+     */
+    User findByCredentials(String username, String password);
+    
 }

@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
+import com.muni.fi.pa165project.dto.UserCredentialsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
@@ -92,5 +93,19 @@ public class UserFacadeImpl implements UserFacade {
             return null;
         settings.setUserId(user.getId());
         return settings;
+    }
+
+    @Override
+    public UserDTO findByCredentials(UserCredentialsDTO credentials) {
+        String username = credentials.getUsername();
+        String password = credentials.getPassword();
+        
+        User user = this.userService.findByCredentials(username, password);
+        
+        if (user == null) {
+            return null;
+        }
+        
+        return mapper.map(user, UserDTO.class);
     }
 }

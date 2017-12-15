@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.facade;
 
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
+import com.muni.fi.pa165project.dto.UserCredentialsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
 
 /**
@@ -59,4 +60,12 @@ public interface UserFacade {
      * @return tracking settings of user
      */
     TrackingSettingsDTO getTrackingSettings(long userId);
+    
+    /**
+     * Finds user by his credentials
+     * @param credentials  
+     * @return User if credentials match, null otherwise
+     */
+    UserDTO findByCredentials(UserCredentialsDTO credentials);
+    
 }

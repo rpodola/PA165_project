@@ -53,4 +53,13 @@ public interface UserService {
      * @return int percentage of fulfillment of a set week-calories goal
      */
     int getProgressOfWeeklyCaloriesGoal(long userId);
+    
+    /**
+     * Finds user by his credentials
+     * @param password 
+     * @param username 
+     * @return User if credentials match, null otherwise
+     */
+    User findByCredentials(String username, String password);
+    
 }

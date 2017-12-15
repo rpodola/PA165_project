@@ -78,4 +78,9 @@ public class UserServiceImpl implements UserService {
 
         return (int) ((sum / goal) * 100);
     }
+
+    @Override
+    public User findByCredentials(String username, String password) {
+        return this.userDao.findByCredentials(username, password);
+    }
 }
