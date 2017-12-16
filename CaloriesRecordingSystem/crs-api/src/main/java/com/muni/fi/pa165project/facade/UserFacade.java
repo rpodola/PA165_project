@@ -24,8 +24,9 @@ public interface UserFacade {
      * Edit User
      *
      * @param userDto user object
+     * @return edited user detail
      */
-    void editUser(UserUpdateDTO userDto);
+    UserDTO editUser(UserUpdateDTO userDto);
 
     /**
      * Remove User
@@ -69,5 +70,4 @@ public interface UserFacade {
      * @return User if credentials match, null otherwise
      */
     UserDTO findByCredentials(UserCredentialsDTO credentials);
-    
 }

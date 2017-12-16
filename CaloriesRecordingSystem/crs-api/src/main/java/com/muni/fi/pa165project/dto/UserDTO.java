@@ -1,15 +1,11 @@
 package com.muni.fi.pa165project.dto;
 
-import com.muni.fi.pa165project.enums.GenderEnum;
-import com.muni.fi.pa165project.enums.UserEnum;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
 /**
  * @author Lukáš Císar
  */
-
 public class UserDTO {
 
     private Long id;

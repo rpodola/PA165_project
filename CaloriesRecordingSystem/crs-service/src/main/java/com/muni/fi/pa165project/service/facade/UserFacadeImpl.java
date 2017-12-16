@@ -41,11 +41,12 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void editUser(UserUpdateDTO userDto) {
+    public UserDTO editUser(UserUpdateDTO userDto) {
         log.debug("Editing User with id <{}>", userDto.getId());
 
         User user = mapper.map(userDto, User.class);
         this.userService.updateUser(user);
+        return mapper.map(user, UserDTO.class);
     }
 
     @Override

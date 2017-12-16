@@ -60,11 +60,12 @@ public class ActivityFacadeImpl implements ActivityFacade {
     }
 
     @Override
-    public void editActivity(ActivityDTO activityDTO) {
+    public ActivityDetailExportDTO editActivity(ActivityDTO activityDTO) {
         log.debug("Editing activity with id <{}>", activityDTO.getId());
 
         Activity activity = mapper.map(activityDTO, Activity.class);
         this.activityService.update(activity);
+        return getActivityDetail(activity.getId());
     }
 
     @Override

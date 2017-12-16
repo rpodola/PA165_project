@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * @author Radoslav Karlik
- * * @author Lukáš Císar
  */
 public interface ActivityFacade {
 
@@ -28,8 +27,9 @@ public interface ActivityFacade {
      * Edit Activity object
      *
      * @param activityDTO updated activity information
+     * @return edited activity detail
      */
-    void editActivity(ActivityDTO activityDTO);
+    ActivityDetailExportDTO editActivity(ActivityDTO activityDTO);
 
     /**
      * Remove Activity object

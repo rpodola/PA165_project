@@ -24,8 +24,9 @@ public interface TrackingFacade {
      * Edit record
      *
      * @param recordDto record to edit
+     * @return edited record detail
      */
-    void editRecord(RecordDetailDTO recordDto);
+    RecordDetailDTO editRecord(RecordDetailDTO recordDto);
 
     /**
      * Remove record

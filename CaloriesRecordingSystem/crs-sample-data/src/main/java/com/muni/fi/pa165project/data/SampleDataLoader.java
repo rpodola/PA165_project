@@ -1,7 +1,5 @@
 package com.muni.fi.pa165project.data;
 
-import java.io.IOException;
-
 /**
  * Populates database with sample data.
  *
@@ -9,5 +7,8 @@ import java.io.IOException;
  */
 public interface SampleDataLoader {
 
-    void loadData() throws IOException;
+    /**
+     * Loads sample data
+     */
+    void loadData();
 }

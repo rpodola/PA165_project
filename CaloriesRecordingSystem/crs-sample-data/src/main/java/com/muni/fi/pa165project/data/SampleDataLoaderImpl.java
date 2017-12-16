@@ -26,12 +26,16 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
 
     @Override
     @SuppressWarnings("unused")
-    public void loadData() throws IOException {
+    public void loadData(){
         log.debug("loadData() start");
 
         File projectDir = new File(System.getProperty("user.dir")).getParentFile().getParentFile();
         File dataFile = new File(projectDir,"data/activities");
 
-        acFacade.importActivitiesData(dataFile);
+        try{
+            acFacade.importActivitiesData(dataFile);
+        }catch (IOException e){
+            log.error("Import data failed on file <{}>", dataFile.toString());
+        }
     }
 }

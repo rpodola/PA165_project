@@ -71,7 +71,7 @@ public class TrackingFacadeImpl implements TrackingFacade {
     }
 
     @Override
-    public void editRecord(RecordDetailDTO recordDetailDto) {
+    public RecordDetailDTO editRecord(RecordDetailDTO recordDetailDto) {
         log.debug("Editing Record with id <{}>", recordDetailDto.getId());
 
         Record record = this.recordService.getRecord(recordDetailDto.getId());
@@ -90,6 +90,7 @@ public class TrackingFacadeImpl implements TrackingFacade {
             record.setActivity(activity);
         }
         this.recordService.update(record);
+        return getRecord(record.getId());
     }
 
     @Override

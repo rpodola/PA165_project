@@ -8,8 +8,6 @@ import com.muni.fi.pa165project.dto.RecordDetailDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.enums.Category;
-import com.muni.fi.pa165project.enums.GenderEnum;
-import com.muni.fi.pa165project.enums.UserEnum;
 import com.muni.fi.pa165project.structures.CategoryObject;
 
 import java.time.LocalDate;

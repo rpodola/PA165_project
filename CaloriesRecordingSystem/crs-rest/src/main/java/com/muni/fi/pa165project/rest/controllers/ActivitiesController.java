@@ -2,7 +2,6 @@ package com.muni.fi.pa165project.rest.controllers;
 
 import com.muni.fi.pa165project.dto.ActivityDTO;
 import com.muni.fi.pa165project.dto.ActivityExportDTO;
-import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.rest.ApiUris;
 import com.muni.fi.pa165project.rest.exceptions.AlreadyExistsException;
@@ -21,7 +20,6 @@ import java.util.List;
  * REST Controller for Activities
  *
  * @author Radim Podola
- * @author Lukáš Císar
  */
 @RestController
 @RequestMapping(ApiUris.ROOT_URI_ACTIVITIES)
