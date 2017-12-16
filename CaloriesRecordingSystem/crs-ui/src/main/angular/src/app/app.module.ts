@@ -32,6 +32,7 @@ import { BurnedCaloriesListComponent } from './burned-calories-list/burned-calor
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import {fakeBackendProvider} from './_temp/fakeBackendProvider';
 import {AuthenticationService} from './_services/authentication.service';
+import {JwtInterceptorProvider} from './_http-helpers/JwtInterceptor';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import {AuthenticationService} from './_services/authentication.service';
     CategoryService,
     AccountService,
     AuthenticationService,
+    JwtInterceptorProvider,
     fakeBackendProvider,
   ],
   bootstrap: [AppComponent],
