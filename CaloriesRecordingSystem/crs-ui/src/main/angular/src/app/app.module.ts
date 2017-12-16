@@ -25,7 +25,6 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { ValidateEmailDirective } from './_validators/validate-email.directive';
 import { ValidateLengthDirective } from './_validators/validate-length.directive';
-import {AccountService} from './_services/account.service';
 import { NumberMinMaxDirective } from './_validators/number-min-max.directive';
 import { ActivityFormComponent } from './activity-form/activity-form.component';
 import { BurnedCaloriesListComponent } from './burned-calories-list/burned-calories-list.component';
@@ -68,7 +67,6 @@ import {JwtInterceptorProvider} from './_http-helpers/JwtInterceptor';
     ActivityService,
     RecordService,
     CategoryService,
-    AccountService,
     AuthenticationService,
     JwtInterceptorProvider,
     fakeBackendProvider,
