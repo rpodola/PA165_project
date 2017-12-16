@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AccountService} from '../_services/account.service';
 import {RegisterSettings} from '../_classes/RegisterSettings';
+import {dateToDDMMYYYY} from '../_utils/DateUtils';
 
 @Component({
   selector: 'app-register-form',
@@ -9,7 +10,7 @@ import {RegisterSettings} from '../_classes/RegisterSettings';
 })
 export class RegisterFormComponent implements OnInit {
   registerSettings = new RegisterSettings();
-
+  birthday: Date;
   usernameExists: boolean;
   emailExists: boolean;
 
@@ -19,7 +20,7 @@ export class RegisterFormComponent implements OnInit {
   constructor(
     private accountService: AccountService,
   ) {
-    this.registerSettings.birthday = new Date();
+    this.birthday = new Date();
   }
 
   passwordChanged() {
@@ -35,6 +36,7 @@ export class RegisterFormComponent implements OnInit {
   }
 
   registerAccount() {
+    this.registerSettings.birthday = dateToDDMMYYYY(this.birthday);
     this.accountService
       .loginExists({ username: this.registerSettings.username, email: this.registerSettings.email })
       .subscribe(result => {
