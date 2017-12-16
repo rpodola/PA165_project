@@ -98,6 +98,13 @@ const activities_const: ActivityDetail[] = [
     ],
   }
 ];
+const users_const: any[] = [
+  {
+    username: 'admin',
+    password: 'admin',
+    isAdmin: true,
+  },
+];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -106,7 +113,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // array in local storage
-    const users: any[] = JSON.parse(localStorage.getItem('users')) || [];
+    const users: any[] = JSON.parse(localStorage.getItem('users')) || users_const;
     const categories: Category[] = JSON.parse(localStorage.getItem('categories')) || categories_const;
     const records: RecordDetail[] = JSON.parse(localStorage.getItem('records')) || records_const;
     const activities: ActivityDetail[] = JSON.parse(localStorage.getItem('activities')) || activities_const;
@@ -125,6 +132,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           const user = filteredUsers[0];
           const body = {
             token: 'fake-jwt-token',
+            isAdmin: request.body.username === 'admin' ? true : undefined,
           };
 
           return of(new HttpResponse({ status: 200, body }));
@@ -151,8 +159,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         users.push(newUser);
         localStorage.setItem('users', JSON.stringify(users));
 
+        const body = {
+          token: 'fake_token' + newUser.id,
+          isAdmin: newUser.username === 'admin' ? true : undefined,
+        };
+
         // respond 200 OK
-        return of(new HttpResponse({ status: 200, body: { token: 'fake_token' + newUser.id } }));
+        return of(new HttpResponse({ status: 200, body }));
       }
 
       //  all categories

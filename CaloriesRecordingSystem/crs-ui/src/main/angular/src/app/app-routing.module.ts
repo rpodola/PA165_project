@@ -13,11 +13,12 @@ import {RegisterFormComponent} from './register-form/register-form.component';
 import {ActivityFormComponent} from './activity-form/activity-form.component';
 import {UserLoggedInGuard} from './_guards/UserLoggedInGuard';
 import {UserNotLoggedInGuard} from './_guards/UserNotLoggedInGuard';
+import {UserIsAdminGuard} from './_guards/UserIsAdminGuard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
   { path: 'activities', component: ActivityListComponent },
-  { path: 'activities/new', component: ActivityFormComponent },
+  { path: 'activities/new', component: ActivityFormComponent, canActivate: [UserIsAdminGuard] },
   { path: 'activities/:id', component: ActivityDetailComponent },
   { path: 'categories', component: CategoryListComponent },
   { path: 'categories/:id', component: CategoryDetailComponent },

@@ -35,6 +35,7 @@ import {JwtInterceptorProvider} from './_http-helpers/JwtInterceptor';
 import {UserLoggedInGuard} from './_guards/UserLoggedInGuard';
 import {UserNotLoggedInGuard} from './_guards/UserNotLoggedInGuard';
 import {LoginEventsService} from './_services/login-events.service';
+import {UserIsAdminGuard} from './_guards/UserIsAdminGuard';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import {LoginEventsService} from './_services/login-events.service';
     JwtInterceptorProvider,
     UserLoggedInGuard,
     UserNotLoggedInGuard,
+    UserIsAdminGuard,
     LoginEventsService,
     fakeBackendProvider,
   ],

@@ -52,6 +52,11 @@ export class AuthenticationService {
       });
   }
 
+  isUserAdmin() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    return currentUser && currentUser.isAdmin;
+  }
+
   isUserNotLoggedIn() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 

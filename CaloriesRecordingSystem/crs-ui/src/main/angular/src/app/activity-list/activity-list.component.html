@@ -31,6 +31,7 @@
       Show categories
     </span>
     <a
+      *ngIf="isUserAdmin"
       class="ml-2"
       routerLink="new"
     >

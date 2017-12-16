@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Activity} from '../_classes/Activity';
 import {ActivityService} from '../_services/activity.service';
+import {AuthenticationService} from '../_services/authentication.service';
 
 @Component({
   selector: 'app-activity-list',
@@ -14,13 +15,17 @@ export class ActivityListComponent implements OnInit {
 
   selectedCategoryIds: number[] = [];
 
-  nameFilter: string = '';
+  nameFilter = '';
 
   showCategories: boolean;
+  isUserAdmin: boolean;
 
   constructor(
     private activityService: ActivityService,
-  ) { }
+    private authService: AuthenticationService,
+  ) {
+    this.isUserAdmin = authService.isUserAdmin();
+  }
 
   filterChanged() {
     if (this.selectedCategoryIds.length === 0) {
