@@ -7,8 +7,9 @@ import 'rxjs/add/operator/dematerialize';
 import 'rxjs/add/observable/throw';
 import {Category} from '../_classes/Category';
 import {RecordDetail} from '../_classes/RecordDetail';
+import {ActivityDetail} from '../_classes/ActivityDetail';
 
-const categories: Category[] = [
+const categories_const: Category[] = [
   new Category(0, 'Exercise', 'Exercise is the best activity'),
   new Category(1, 'Aerobics'),
   new Category(2, 'Walking'),
@@ -24,7 +25,7 @@ const categories: Category[] = [
   new Category(12, 'Work8'),
   new Category(13, 'Work9'),
 ];
-const records: RecordDetail[] = [
+const records_const: RecordDetail[] = [
   {
     activityId: 0,
     activityName: 'First activity',
@@ -48,6 +49,55 @@ const records: RecordDetail[] = [
     weight: 56,
   },
 ];
+const activities_const: ActivityDetail[] = [
+  {
+    id: 0,
+    name: 'firstActivity',
+    description: 'desc',
+    category: {
+      name: 'Exercise',
+      description: 'Exercise is best activity',
+      id: 0,
+    },
+    burnedCaloriesList: [],
+  },
+  {
+    id: 1,
+    name: 'secondActivity',
+    description: 'desc2',
+    category: {
+      id: 1,
+      name: 'Aerobics',
+      description: 'Aerobics sucks',
+    },
+    burnedCaloriesList: [
+      {
+        upperWeightBoundary: 50,
+        amount: 150,
+      },
+      {
+        upperWeightBoundary: 75,
+        amount: 200,
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: 'hating on Dozer',
+    description: 'Automapper Dozer sucks',
+    category: {
+      id: 0,
+      name: 'Exercise',
+      description: '',
+    },
+    burnedCaloriesList: [
+      {
+        upperWeightBoundary: 0,
+        amount: 800,
+      },
+    ],
+  }
+];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -55,8 +105,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // array in local storage for registered users
+    // array in local storage
     const users: any[] = JSON.parse(localStorage.getItem('users')) || [];
+    const categories: Category[] = JSON.parse(localStorage.getItem('categories')) || categories_const;
+    const records: RecordDetail[] = JSON.parse(localStorage.getItem('records')) || records_const;
+    const activities: ActivityDetail[] = JSON.parse(localStorage.getItem('activities')) || activities_const;
 
     // wrap in delayed observable to simulate server api call
     return of(null).mergeMap(() => {
@@ -154,6 +207,75 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         return Observable.throw('Record doesnt exist');
+      }
+
+      //  all activities
+      if (request.url.endsWith('/activities/allActivities') && request.method === 'GET') {
+        return of(new HttpResponse({ status: 200, body: { activities } }));
+      }
+
+      //  activities from categories
+      if (request.url.endsWith('/activities/activitiesFromCategories') && request.method === 'POST') {
+        const { categoryIds } = request.body;
+
+        return of(activities.filter(activity => categoryIds.includes(activity.category.id)));
+      }
+
+      //  activity detail
+      const regexpAct = /activities\/(\d+)/;
+      const matchAct = regexpAct.exec(request.url);
+      if (matchAct && request.method === 'GET') {
+        const id = parseInt(matchAct[1], 10);
+        const activity = activities.find(act => act.id === id);
+
+        if (activity) {
+          return of(new HttpResponse({ status: 200, body: { activity } }));
+        }
+
+        return Observable.throw('Activity doesnt exist');
+      }
+
+      //  create activity
+      if (request.url.endsWith('/activities/create') && request.method === 'POST') {
+        const { activity } = request.body;
+
+        const nameExists = activities
+          .filter(ac => ac.name === activity.name)
+          .length > 0;
+
+        if (nameExists) {
+          return of(undefined);
+        }
+
+        const activityDetail: ActivityDetail = {
+          name: activity.name,
+          id: activities.length,
+          category: categories.find(cat => cat.id === parseInt(activity.categoryId, 10)),
+          burnedCaloriesList: [],
+          description: activity.description
+        };
+
+        activities.push(activityDetail);
+        localStorage.setItem('activities', JSON.stringify(activities));
+
+        return of(new HttpResponse({ status: 200, body: { id: activityDetail.id } }));
+      }
+
+      //  update activity
+      if (request.url.endsWith('/activities/update') && request.method === 'POST') {
+        const { activity } = request.body;
+
+        const oldActivity = activities.find(act => act.id === activity.id);
+
+        if (!oldActivity) {
+          return Observable.throw('Activity you are trying to update doesnt exist!');
+        }
+
+        const index = activities.indexOf(oldActivity);
+        activities[index] = activity;
+        localStorage.setItem('activities', JSON.stringify(activities));
+
+        return of(new HttpResponse({ status: 200 }));
       }
 
       // pass through any requests not handled above

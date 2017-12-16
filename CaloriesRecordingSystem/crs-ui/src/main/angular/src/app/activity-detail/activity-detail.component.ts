@@ -44,6 +44,12 @@ export class ActivityDetailComponent implements OnInit {
     }
   }
 
+  saveActivityDetails() {
+    this.activityService
+      .updateActivity(this.activity)
+      .subscribe();
+  }
+
   onRemoveBurnedCalories(burnedCalories: BurnedCalories) {
     this.activity.burnedCaloriesList = this.activity.burnedCaloriesList.filter(bc => bc !== burnedCalories);
   }

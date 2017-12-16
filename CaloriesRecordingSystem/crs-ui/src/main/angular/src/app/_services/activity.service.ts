@@ -1,110 +1,68 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Activity} from '../_classes/Activity';
-import {of} from 'rxjs/observable/of';
 import {HttpClient} from '@angular/common/http';
+import {Activity} from '../_classes/Activity';
 import {ActivityDetail} from '../_classes/ActivityDetail';
-import {Category} from '../_classes/Category';
 import {Activity2} from '../_classes/Activity2';
+
+const prefix = '/activities/';
+const allActivities = prefix + 'allActivities';
+const activitiesFromCategories = prefix + 'activitiesFromCategories';
+const activityDetail = prefix;
+const createActivity = prefix + 'create';
+const updateActivity = prefix + 'update';
+
+interface IActivities {
+  activities: Activity[];
+}
+
+interface IActivityDetail {
+  activity: ActivityDetail;
+}
+
+interface IActivityId {
+  id: number;
+}
+
 
 @Injectable()
 export class ActivityService {
-
-  static allActivitiesUrl = 'something';
-
-  /**
-   * Should be cached after loading from REST
-   */
-  activities: ActivityDetail[] = [
-    {
-      id: 0,
-      name: 'firstActivity',
-      description: 'desc',
-      category: {
-        name: 'Exercise',
-        description: 'Exercise is best activity',
-        id: 0,
-      },
-      burnedCaloriesList: [],
-    },
-    {
-      id: 1,
-      name: 'secondActivity',
-      description: 'desc2',
-      category: {
-        id: 1,
-        name: 'Aerobics',
-        description: 'Aerobics sucks',
-      },
-      burnedCaloriesList: [
-        {
-          upperWeightBoundary: 50,
-          amount: 150,
-        },
-        {
-          upperWeightBoundary: 75,
-          amount: 200,
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'hating on Dozer',
-      description: 'Automapper Dozer sucks',
-      category: {
-        id: 0,
-        name: 'Exercise',
-        description: '',
-      },
-      burnedCaloriesList: [
-        {
-          upperWeightBoundary: 0,
-          amount: 800,
-        },
-      ],
-    }
-  ];
-
   constructor(
     private http: HttpClient,
   ) { }
 
   getAllActivities(): Observable<Activity[]> {
-    return of(this.activities);
+    return this.http
+      .get<IActivities>(allActivities)
+      .map(response => response.activities);
   }
 
   getActivities(categoryIds: number[]): Observable<Activity[]> {
-    return of(this.activities.filter(activity => categoryIds.includes(activity.category.id)));
+    return this.http
+      .post<IActivities>(
+        activitiesFromCategories,
+        {
+          categoryIds,
+        }
+      )
+      .map(response => response.activities);
   }
 
   getActivityDetail(id: number): Observable<ActivityDetail> {
-    return of(this.activities.find(activity => activity.id === id));
+    return this.http
+      .get<IActivityDetail>(activityDetail + id)
+      .map(response => response.activity);
   }
 
   createNewActivity(activity: Activity2): Observable<number> {
-    const nameExists = this.activities
-      .filter(ac => ac.name === activity.name)
-      .length > 0;
+    return this.http
+      .post<IActivityId>(createActivity, { activity })
+      .map(response => response.id);
+  }
 
-    if (nameExists) {
-      return of(undefined);
-    }
-
-    const activityDetail: ActivityDetail = {
-      name: activity.name,
-      id: this.activities.length,
-      category: {
-        id: activity.categoryId,
-        name: 'fake',
-        description: 'fake',
-      },
-      burnedCaloriesList: [],
-      description: activity.description
-    };
-
-    this.activities.push(activityDetail);
-
-    return of(activityDetail.id);
+  updateActivity(activity: ActivityDetail): Observable<any> {
+    return this.http
+      .post<any>(updateActivity, { activity });
   }
 
 }
