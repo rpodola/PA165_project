@@ -11,6 +11,8 @@ export class LoginFormComponent implements OnInit {
 
   public loginCredentials = new LoginCredentials();
 
+  isIncorrectLogin: boolean;
+
   constructor(
     private authService: AuthenticationService
   ) { }
@@ -18,7 +20,7 @@ export class LoginFormComponent implements OnInit {
   login() {
     this.authService
       .login(this.loginCredentials)
-      .subscribe();
+      .subscribe(null, () => { this.isIncorrectLogin = true; });
   }
 
   ngOnInit() {
