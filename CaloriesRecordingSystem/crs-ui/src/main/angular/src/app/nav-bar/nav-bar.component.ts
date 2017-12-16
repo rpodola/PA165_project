@@ -13,4 +13,9 @@ export class NavBarComponent {
 
   constructor() { }
 
+  clearLocalStorage() {
+    localStorage.clear();
+    window.location.reload();
+  }
+
 }
