@@ -4,7 +4,7 @@ import {LoginCredentials} from '../_classes/LoginCredentials';
 import {RegisterSettings} from '../_classes/RegisterSettings';
 import {AuthenticatedUser} from '../_classes/AuthenticatedUser';
 
-const prefix = 'auth/';
+const prefix = '/auth/';
 const loginUri = prefix + 'login';
 const registerUri = prefix + 'register';
 
