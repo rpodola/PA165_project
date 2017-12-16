@@ -14,17 +14,6 @@
     <name>Spring MVC Angular</name>
 
     <dependencies>
-        <dependency>
-            <groupId>org.apache.taglibs</groupId>
-            <artifactId>taglibs-standard-spec</artifactId>
-            <version>${taglibs-standard.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.taglibs</groupId>
-            <artifactId>taglibs-standard-impl</artifactId>
-            <version>${taglibs-standard.version}</version>
-        </dependency>
-
         <!-- Spring MVC -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -46,6 +35,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+		
+		<dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
         </dependency>
     </dependencies>
 
