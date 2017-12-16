@@ -49,9 +49,10 @@ public class AuthorizationHandlerInterceptor extends HandlerInterceptorAdapter {
                     boolean shouldBeAdmin = authorizeFilter.securityLevel() == SecurityLevel.ADMIN;
                 
                     AuthorizationService authService = this.getAuthService();
-                    boolean isAuthorized = authService.authorizeUser(token, shouldBeAdmin);
+                    Long userId = authService.authorizeUser(token, shouldBeAdmin);
 
-                    if (isAuthorized) {
+                    if (userId != null) {
+                        request.setAttribute("userId", userId);
                         return true;
                     }
                 }

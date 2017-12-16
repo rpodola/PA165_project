@@ -47,7 +47,7 @@ public class AuthorizationService {
         return token;
     }
     
-    public boolean authorizeUser(String token, boolean shouldBeAdmin) {
+    public Long authorizeUser(String token, boolean shouldBeAdmin) {
         Key key = KeyManager.getKey();
         Claims claims;
 
@@ -67,12 +67,15 @@ public class AuthorizationService {
                 User user = this.userService.findById(userId);
 
                 if (user != null) {
-                    return shouldBeAdmin ? user.getIsAdmin() : true;
+                    // is authorized
+                    if (shouldBeAdmin ? user.getIsAdmin() : true) {
+                        return userId;
+                    }
                 }
             }
         }
         
-        return false;
+        return null;
     }
     
 }
