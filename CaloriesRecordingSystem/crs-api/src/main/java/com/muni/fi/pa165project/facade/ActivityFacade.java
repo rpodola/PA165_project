@@ -89,11 +89,4 @@ public interface ActivityFacade {
      * @return list of Activity objects
      */
     List<ActivityExportDTO> getActivitiesSortedByBurnedCalories(long userId);
-
-    /**
-     * Import Activities data from file in JSON format
-     *
-     * @param file file with data
-     */
-    void importActivitiesData(File file) throws IOException;
 }

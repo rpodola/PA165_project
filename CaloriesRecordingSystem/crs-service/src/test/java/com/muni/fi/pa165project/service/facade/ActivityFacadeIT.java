@@ -66,13 +66,12 @@ public class ActivityFacadeIT {
     @Rollback()
     public void testEditActivity() {
         final String newName = "Different activity";
-        //activity id is needed for update
+        //user id is needed for update
         activity.setId(acFac.createActivity(activity));
         //lets change name
         activity.setName(newName);
-        ActivityDetailExportDTO edited = acFac.editActivity(activity);
-        Assert.assertEquals(edited.getName(), newName);
-        //lets get activity with changed name
+        acFac.editActivity(activity);
+        //lets get user with changed name
         ActivityDetailExportDTO found = this.acFac.getActivityDetail(activity.getId());
         ActivityDetailExportDTO expected = new ActivityDetailExportDTO();
         expected.setId(activity.getId());

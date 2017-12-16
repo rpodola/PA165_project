@@ -1,14 +1,13 @@
 package com.muni.fi.pa165project.data;
 
+import com.muni.fi.pa165project.dto.ActivityDTO;
+import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Loads some sample data to populate the CRS database.
@@ -26,16 +25,21 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
 
     @Override
     @SuppressWarnings("unused")
-    public void loadData(){
+    public void loadData() {
         log.debug("loadData() start");
 
-        File projectDir = new File(System.getProperty("user.dir")).getParentFile().getParentFile();
-        File dataFile = new File(projectDir,"data/activities");
+        loadActivities();
+    }
 
-        try{
-            acFacade.importActivitiesData(dataFile);
-        }catch (IOException e){
-            log.error("Import data failed on file <{}>", dataFile.toString());
-        }
+    private void loadActivities() {
+        createActivity("ads", "ss", Category.EXERCISE);
+    }
+
+    private void createActivity(String name, String description, Category category){
+        ActivityDTO a = new ActivityDTO();
+        a.setName(name);
+        a.setDescription(description);
+        a.setCategory(category.getId());
+        acFacade.createActivity(a);
     }
 }

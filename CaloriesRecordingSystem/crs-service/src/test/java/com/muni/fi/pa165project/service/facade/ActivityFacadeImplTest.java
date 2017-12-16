@@ -219,5 +219,4 @@ public class ActivityFacadeImplTest {
 
         Assert.assertEquals(expected, result);
     }
-
 }

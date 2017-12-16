@@ -28,7 +28,7 @@ public class DataConfiguration {
     SampleDataLoader sampleDataLoader;
 
     @PostConstruct
-    public void dataLoading() throws IOException {
+    public void dataLoading() {
         log.debug("dataLoading()");
         sampleDataLoader.loadData();
     }
