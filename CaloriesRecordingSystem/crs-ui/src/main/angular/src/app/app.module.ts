@@ -30,6 +30,8 @@ import { NumberMinMaxDirective } from './_validators/number-min-max.directive';
 import { ActivityFormComponent } from './activity-form/activity-form.component';
 import { BurnedCaloriesListComponent } from './burned-calories-list/burned-calories-list.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import {fakeBackendProvider} from './_temp/fakeBackendProvider';
+import {AuthenticationService} from './_services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,8 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     RecordService,
     CategoryService,
     AccountService,
+    AuthenticationService,
+    fakeBackendProvider,
   ],
   bootstrap: [AppComponent],
 })
