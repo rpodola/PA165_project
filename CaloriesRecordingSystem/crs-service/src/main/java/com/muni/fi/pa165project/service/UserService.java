@@ -62,4 +62,18 @@ public interface UserService {
      */
     User findByCredentials(String username, String password);
     
+    /**
+     * Checks whether a user with given email exists
+     * @param email
+     * @return 
+     */
+    boolean userWithEmailExists(String email);
+    
+    /**
+     * Checks whether a user with given username exists
+     * @param username
+     * @return 
+     */
+    boolean userWithUsernameExists(String username);
+    
 }

@@ -83,4 +83,14 @@ public class UserServiceImpl implements UserService {
     public User findByCredentials(String username, String password) {
         return this.userDao.findByCredentials(username, password);
     }
+
+    @Override
+    public boolean userWithEmailExists(String email) {
+        return this.userDao.userWithEmailExists(email);
+    }
+
+    @Override
+    public boolean userWithUsernameExists(String username) {
+        return this.userDao.userWithUsernameExists(username);
+    }
 }

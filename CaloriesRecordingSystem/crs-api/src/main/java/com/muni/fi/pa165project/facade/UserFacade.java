@@ -1,5 +1,7 @@
 package com.muni.fi.pa165project.facade;
 
+import com.muni.fi.pa165project.dto.LoginExistsRequestDTO;
+import com.muni.fi.pa165project.dto.LoginExistsResponseDTO;
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserCredentialsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
@@ -70,4 +72,11 @@ public interface UserFacade {
      * @return User if credentials match, null otherwise
      */
     UserDTO findByCredentials(UserCredentialsDTO credentials);
+    
+    /**
+     * Checks whether any user with given username or email exists
+     * @param dto
+     * @return 
+     */
+    LoginExistsResponseDTO loginExists(LoginExistsRequestDTO dto);
 }

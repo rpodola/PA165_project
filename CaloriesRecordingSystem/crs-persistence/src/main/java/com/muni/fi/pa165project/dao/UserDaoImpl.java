@@ -91,4 +91,21 @@ public class UserDaoImpl implements UserDao {
         return users.get(0);
     }
 
+    @Override
+    public boolean userWithEmailExists(String email) {
+        return this.em
+                .createQuery("SELECT COUNT(u.id) FROM User u WHERE u.loginDetails.email=:email", Long.class)
+                .setParameter("email", email)
+                .getSingleResult() > 0;
+                
+    }
+
+    @Override
+    public boolean userWithUsernameExists(String username) {
+        return this.em
+                .createQuery("SELECT COUNT(u.id) FROM User u WHERE u.loginDetails.username=:username", Long.class)
+                .setParameter("username", username)
+                .getSingleResult() > 0;
+    }
+
 }

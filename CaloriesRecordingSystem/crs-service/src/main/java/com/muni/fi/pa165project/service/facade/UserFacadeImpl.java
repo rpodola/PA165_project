@@ -1,5 +1,7 @@
 package com.muni.fi.pa165project.service.facade;
 
+import com.muni.fi.pa165project.dto.LoginExistsRequestDTO;
+import com.muni.fi.pa165project.dto.LoginExistsResponseDTO;
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserCredentialsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
@@ -109,5 +111,17 @@ public class UserFacadeImpl implements UserFacade {
         }
         
         return mapper.map(user, UserDTO.class);
+    }
+
+    @Override
+    public LoginExistsResponseDTO loginExists(LoginExistsRequestDTO dto) {
+        boolean usernameExists = this.userService.userWithUsernameExists(dto.getUsername());
+        boolean emailExists = this.userService.userWithEmailExists(dto.getEmail());
+        
+        LoginExistsResponseDTO response = new LoginExistsResponseDTO();
+        response.setEmailExists(emailExists);
+        response.setUsernameExists(usernameExists);
+        
+        return response;
     }
 }
