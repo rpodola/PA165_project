@@ -2,11 +2,11 @@ import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
-import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/materialize';
 import 'rxjs/add/operator/dematerialize';
 import 'rxjs/add/observable/throw';
 import {Category} from '../_classes/Category';
+import {RecordDetail} from '../_classes/RecordDetail';
 
 const categories: Category[] = [
   new Category(0, 'Exercise', 'Exercise is the best activity'),
@@ -23,6 +23,30 @@ const categories: Category[] = [
   new Category(11, 'Work7'),
   new Category(12, 'Work8'),
   new Category(13, 'Work9'),
+];
+const records: RecordDetail[] = [
+  {
+    activityId: 0,
+    activityName: 'First activity',
+    burnedCalories: 500,
+    id: 0,
+    userId: 0,
+    date: '5.12.2017 8:51',
+    distance: 500,
+    duration: 20,
+    weight: 56,
+  },
+  {
+    activityId: 1,
+    activityName: 'Second activity',
+    burnedCalories: 566,
+    id: 1,
+    userId: 0,
+    date: '5.12.2017 15:25',
+    distance: 125,
+    duration: 80,
+    weight: 56,
+  },
 ];
 
 @Injectable()
@@ -78,6 +102,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return of(new HttpResponse({ status: 200 }));
       }
 
+      //  all categories
       if (request.url.endsWith('activities/allCategories') && request.method === 'GET') {
         const body = {
           categories,
@@ -86,6 +111,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return of(new HttpResponse({ status: 200, body }));
       }
 
+      //  category
       const regexpCat = /activities\/category\/(\d+)/;
       const matchCat = regexpCat.exec(request.url);
       if (matchCat && request.method === 'GET') {
@@ -103,11 +129,37 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return Observable.throw('Category doesnt exist');
       }
 
+      //  all records of User
+      if (request.url.endsWith('/records/allRecords') && request.method === 'GET') {
+        const body = {
+          records,
+        };
+
+        return of(new HttpResponse({ status: 200, body }));
+      }
+
+      //  record
+      const regexpRec = /records\/(\d+)/;
+      const matchRec = regexpRec.exec(request.url);
+      if (matchRec && request.method === 'GET') {
+        const id = parseInt(matchRec[1], 10);
+        const record = records.find(rec => rec.id === id);
+
+        if (record) {
+          const body = {
+            record,
+          };
+
+          return of(new HttpResponse({status: 200, body}));
+        }
+
+        return Observable.throw('Record doesnt exist');
+      }
+
       // pass through any requests not handled above
       return next.handle(request);
     })
       .materialize()
-      .delay(500)
       .dematerialize();
   }
 }
