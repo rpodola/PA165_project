@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {RegisterSettings} from '../_classes/RegisterSettings';
 import {dateToDDMMYYYY} from '../_utils/DateUtils';
 import {AuthenticationService} from '../_services/authentication.service';
+import {Router} from '@angular/router';
+import {LoginEventsService} from '../_services/login-events.service';
 
 @Component({
   selector: 'app-register-form',
@@ -19,6 +21,8 @@ export class RegisterFormComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
+    private loginEvents: LoginEventsService,
+    private router: Router,
   ) {
     this.registerSettings.male = true;
     this.birthday = new Date();
@@ -30,10 +34,6 @@ export class RegisterFormComponent implements OnInit {
 
   ngOnInit() { }
 
-  authenticate() {
-
-  }
-
   registerAccount() {
     this.registerSettings.birthday = dateToDDMMYYYY(this.birthday);
 
@@ -44,7 +44,8 @@ export class RegisterFormComponent implements OnInit {
         this.usernameExists = response.usernameExists;
 
         if (!this.usernameExists && !this.emailExists) {
-          this.authenticate();
+          this.loginEvents.loginStateChanged();
+          this.router.navigateByUrl('/');
         }
       });
   }

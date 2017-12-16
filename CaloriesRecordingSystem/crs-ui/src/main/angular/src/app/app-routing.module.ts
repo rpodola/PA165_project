@@ -11,6 +11,8 @@ import {SettingsComponent} from './settings/settings.component';
 import {LoginFormComponent} from './login-form/login-form.component';
 import {RegisterFormComponent} from './register-form/register-form.component';
 import {ActivityFormComponent} from './activity-form/activity-form.component';
+import {UserLoggedInGuard} from './_guards/UserLoggedInGuard';
+import {UserNotLoggedInGuard} from './_guards/UserNotLoggedInGuard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
@@ -19,11 +21,11 @@ const routes: Routes = [
   { path: 'activities/:id', component: ActivityDetailComponent },
   { path: 'categories', component: CategoryListComponent },
   { path: 'categories/:id', component: CategoryDetailComponent },
-  { path: 'records', component: RecordListComponent },
-  { path: 'records/:id', component: RecordDetailComponent },
-  { path: 'settings', component: SettingsComponent },
-  { path: 'login', component: LoginFormComponent },
-  { path: 'register', component: RegisterFormComponent },
+  { path: 'records', component: RecordListComponent, canActivate: [UserLoggedInGuard] },
+  { path: 'records/:id', component: RecordDetailComponent, canActivate: [UserLoggedInGuard] },
+  { path: 'settings', component: SettingsComponent, canActivate: [UserLoggedInGuard] },
+  { path: 'login', component: LoginFormComponent, canActivate: [UserNotLoggedInGuard] },
+  { path: 'register', component: RegisterFormComponent, canActivate: [UserNotLoggedInGuard] },
   //  catch all
   { path: '**', component: WrongPathComponent },
 ];

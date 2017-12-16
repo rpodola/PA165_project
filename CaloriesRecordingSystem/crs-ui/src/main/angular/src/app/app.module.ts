@@ -32,6 +32,9 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import {fakeBackendProvider} from './_temp/fakeBackendProvider';
 import {AuthenticationService} from './_services/authentication.service';
 import {JwtInterceptorProvider} from './_http-helpers/JwtInterceptor';
+import {UserLoggedInGuard} from './_guards/UserLoggedInGuard';
+import {UserNotLoggedInGuard} from './_guards/UserNotLoggedInGuard';
+import {LoginEventsService} from './_services/login-events.service';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,9 @@ import {JwtInterceptorProvider} from './_http-helpers/JwtInterceptor';
     CategoryService,
     AuthenticationService,
     JwtInterceptorProvider,
+    UserLoggedInGuard,
+    UserNotLoggedInGuard,
+    LoginEventsService,
     fakeBackendProvider,
   ],
   bootstrap: [AppComponent],

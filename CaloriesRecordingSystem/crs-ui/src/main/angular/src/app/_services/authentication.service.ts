@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {LoginCredentials} from '../_classes/LoginCredentials';
 import {RegisterSettings} from '../_classes/RegisterSettings';
 import {Observable} from 'rxjs/Observable';
+import jwt_decode from 'jwt-decode';
 
 const prefix = '/auth/';
 const loginUri = prefix + 'login';
@@ -49,5 +50,57 @@ export class AuthenticationService {
 
         return response;
       });
+  }
+
+  isUserNotLoggedIn() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    //  temporary fake access
+    if (0 === 0) { return currentUser === null; }
+
+    if (currentUser && currentUser.token) {
+      //  check expiration
+      let claims;
+      try {
+        claims = jwt_decode(currentUser.token);
+      } catch {
+        return true;
+      }
+
+      const { exp } = claims;
+
+      //  expiration
+      if (exp) {
+        return claims.exp < (Date.now() / 1000);
+      }
+    }
+
+    return true;
+  }
+
+  isUserLoggedIn() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    //  temporary fake access
+    if (0 === 0) { return currentUser !== null; }
+
+    if (currentUser && currentUser.token) {
+      //  check expiration
+      let claims;
+      try {
+        claims = jwt_decode(currentUser.token);
+      } catch {
+        return false;
+      }
+
+      const { exp } = claims;
+
+      //  expiration
+      if (exp) {
+        return claims.exp >= (Date.now() / 1000);
+      }
+    }
+
+    return false;
   }
 }
