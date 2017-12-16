@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 

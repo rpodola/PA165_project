@@ -12,8 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.annotation.Rollback;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

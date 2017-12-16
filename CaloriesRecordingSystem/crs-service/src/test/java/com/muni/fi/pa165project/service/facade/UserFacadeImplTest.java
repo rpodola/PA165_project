@@ -1,7 +1,6 @@
 package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
-import com.muni.fi.pa165project.dto.UserDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.dto.UserUpdateDTO;
 import com.muni.fi.pa165project.entity.User;
@@ -17,8 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.annotation.Rollback;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.mockito.Mockito.*;
 

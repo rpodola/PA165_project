@@ -59,12 +59,7 @@ public class ActivitiesController {
     public final List<ActivityExportDTO> getAllActivities() {
         logger.debug("rest getAllActivities()");
 
-        List<ActivityExportDTO> acList = acFacade.getAllActivities();
-        if (acList != null && !acList.isEmpty()) {
-            return acList;
-        } else {
-            throw new ResourceNotFoundException();
-        }
+        return acFacade.getAllActivities();
     }
    
     /**
