@@ -5,6 +5,8 @@
  */
 package com.muni.fi.pa165project.rest.controllers;
 
+import com.muni.fi.pa165project.dto.LoginExistsRequestDTO;
+import com.muni.fi.pa165project.dto.LoginExistsResponseDTO;
 import com.muni.fi.pa165project.dto.TokenDTO;
 import com.muni.fi.pa165project.dto.UserCredentialsDTO;
 import com.muni.fi.pa165project.dto.UserDTO;
@@ -49,9 +51,18 @@ public class AuthController {
     }
     
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final TokenDTO register(@RequestBody UserRegisterDTO userDTO){
+    public final Object register(@RequestBody UserRegisterDTO userDTO){
         logger.debug("rest register()");
 
+        LoginExistsRequestDTO dto = new LoginExistsRequestDTO();
+        dto.setEmail(userDTO.getEmail());
+        dto.setUsername(userDTO.getUsername());
+        LoginExistsResponseDTO response = this.userFacade.loginExists(dto);
+        
+        if (response.isEmailExists() || response.isUsernameExists()) {
+            return response;
+        }
+        
         long userId = this.userFacade.createUser(userDTO);
         
         String token = AuthorizationService.getTokenForUser(userId);
