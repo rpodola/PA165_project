@@ -20,6 +20,7 @@ export class RegisterFormComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
   ) {
+    this.registerSettings.male = true;
     this.birthday = new Date();
   }
 
@@ -30,9 +31,7 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit() { }
 
   authenticate() {
-    if (!this.usernameExists && !this.emailExists) {
 
-    }
   }
 
   registerAccount() {
@@ -40,12 +39,13 @@ export class RegisterFormComponent implements OnInit {
 
     this.authService
       .register(this.registerSettings)
-      .subscribe(result => {
-        /*
-        this.emailExists = result.emailExists;
-        this.usernameExists = result.usernameExists;*/
+      .subscribe(response => {
+        this.emailExists = response.emailExists;
+        this.usernameExists = response.usernameExists;
 
-        this.authenticate();
+        if (!this.usernameExists && !this.emailExists) {
+          this.authenticate();
+        }
       });
   }
 

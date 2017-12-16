@@ -143,7 +143,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const usernameExists = users.filter(user => user.username === newUser.username).length;
         const emailExists = users.filter(user => user.email === newUser.email).length;
         if (usernameExists || emailExists) {
-          return Observable.throw('Username or email is already taken');
+          return of(new HttpResponse({ status: 200, body: { emailExists, usernameExists } }));
         }
 
         // save new user
@@ -152,7 +152,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         localStorage.setItem('users', JSON.stringify(users));
 
         // respond 200 OK
-        return of(new HttpResponse({ status: 200 }));
+        return of(new HttpResponse({ status: 200, body: { token: 'fake_token' + newUser.id } }));
       }
 
       //  all categories

@@ -2,11 +2,20 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoginCredentials} from '../_classes/LoginCredentials';
 import {RegisterSettings} from '../_classes/RegisterSettings';
-import {AuthenticatedUser} from '../_classes/AuthenticatedUser';
+import {Observable} from 'rxjs/Observable';
 
 const prefix = '/auth/';
 const loginUri = prefix + 'login';
 const registerUri = prefix + 'register';
+
+export interface IAuthToken {
+  token: string;
+}
+
+export interface IRegisterResponse extends IAuthToken {
+  usernameExists: boolean;
+  emailExists: boolean;
+}
 
 @Injectable()
 export class AuthenticationService {
@@ -14,9 +23,9 @@ export class AuthenticationService {
     private http: HttpClient,
   ) { }
 
-  login(loginCredentials: LoginCredentials) {
+  login(loginCredentials: LoginCredentials): Observable<IAuthToken> {
     return this.http
-      .post<AuthenticatedUser>(loginUri, loginCredentials)
+      .post<IAuthToken>(loginUri, loginCredentials)
       .map(user => {
         if (user && user.token) {
           localStorage.setItem('currentUser', JSON.stringify(user));
@@ -30,15 +39,15 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
   }
 
-  register(registerDetails: RegisterSettings) {
+  register(registerDetails: RegisterSettings): Observable<IRegisterResponse> {
     return this.http
-      .post<AuthenticatedUser>(registerUri, registerDetails)
-      .map(user => {
-        if (user && user.token) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
+      .post<IRegisterResponse>(registerUri, registerDetails)
+      .map(response => {
+        if (response && response.token) {
+          localStorage.setItem('currentUser', JSON.stringify(response));
         }
 
-        return user;
+        return response;
       });
   }
 }
