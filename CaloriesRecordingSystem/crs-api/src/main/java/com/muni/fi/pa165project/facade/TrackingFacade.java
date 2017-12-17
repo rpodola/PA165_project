@@ -1,7 +1,9 @@
 package com.muni.fi.pa165project.facade;
 
+import com.muni.fi.pa165project.dto.RecordCreateDTO;
 import com.muni.fi.pa165project.dto.RecordDTO;
 import com.muni.fi.pa165project.dto.RecordDetailDTO;
+import com.muni.fi.pa165project.dto.RecordUpdateDTO;
 import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 
 import java.util.List;
@@ -18,7 +20,7 @@ public interface TrackingFacade {
      * @param recordDto record to create
      * @return record id or null if record was not created
      */
-    Long createRecord(RecordDetailDTO recordDto);
+    Long createRecord(RecordCreateDTO recordDto);
 
     /**
      * Edit record
@@ -26,7 +28,7 @@ public interface TrackingFacade {
      * @param recordDto record to edit
      * @return edited record detail
      */
-    RecordDetailDTO editRecord(RecordDetailDTO recordDto);
+    RecordDetailDTO editRecord(RecordUpdateDTO recordDto);
 
     /**
      * Remove record

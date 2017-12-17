@@ -5,6 +5,7 @@ import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.facade.TrackingFacade;
 import com.muni.fi.pa165project.facade.UserFacade;
+import com.muni.fi.pa165project.service.MappingService;
 import com.muni.fi.pa165project.service.config.ServiceConfiguration;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,29 +39,33 @@ public class TrackingFacadeIT {
     @Autowired
     private ActivityFacade acFac;
 
+    @Autowired
+    private MappingService mapper;
+
     private UserRegisterDTO userRegisterDto;
     private ActivityCreateDTO activity;
     private ActivityUpdateDTO activityUpdate;
-    private RecordDetailDTO record;
-    private long userId;
+    private RecordCreateDTO record;
+    private Long userId;
+    private Long activityId;
     
     @Before
     public void setup() {
         userRegisterDto = FacadeTestHelper.initUserRegister();
         userId = usFac.createUser(userRegisterDto);
         activity = FacadeTestHelper.initActivity();
-        activity.setId(acFac.createActivity(activity));
+        activityId = acFac.createActivity(activity);
 
         activityUpdate = new ActivityUpdateDTO();
         activityUpdate.setName(activity.getName());
         activityUpdate.setDescription(activity.getDescription());
         activityUpdate.setCategory(activity.getCategory());
-        activityUpdate.setId(activity.getId());
+        activityUpdate.setId(activityId);
         Set<BurnedCaloriesDTO> bc = new HashSet<>();
         bc.add(FacadeTestHelper.initBurnedCalories());
         activityUpdate.setBurnedCalories(bc);
         acFac.editActivity(activityUpdate);
-        record = FacadeTestHelper.initRecord(userId, activity.getId());
+        record = FacadeTestHelper.initCreateRecord(userId, activityId);
     }
 
     @Test
@@ -72,7 +77,8 @@ public class TrackingFacadeIT {
         Assert.assertNotNull(recordId);
         //lets try to find persisted record in DB
         RecordDetailDTO recordFound = trFac.getRecord(recordId);
-        Assert.assertEquals(record, recordFound);
+        Assert.assertEquals(recordId, recordFound.getId());
+        Assert.assertEquals(record.getActivityId(), recordFound.getActivityId());
     }
 
     @Test(expected = DataAccessException.class)
@@ -103,13 +109,16 @@ public class TrackingFacadeIT {
     @Transactional
     @Rollback()
     public void testEditRecord() {
-        record.setId(trFac.createRecord(record));
+        Long recordId = trFac.createRecord(record);
         //lets change duration
+        RecordUpdateDTO update = mapper.map(record, RecordUpdateDTO.class);
+        update.setId(recordId);
         record.setDuration(1);
-        trFac.editRecord(record);
+        trFac.editRecord(update);
         //lets get record with changed duration
-        RecordDetailDTO recordFound = trFac.getRecord(record.getId());
-        Assert.assertEquals(record, recordFound);
+        RecordDetailDTO recordFound = trFac.getRecord(recordId);
+        Assert.assertEquals(recordId, recordFound.getId());
+        Assert.assertEquals(record.getActivityId(), recordFound.getActivityId());
         Assert.assertEquals(record.getDuration(), recordFound.getDuration());
     }
 
@@ -117,11 +126,11 @@ public class TrackingFacadeIT {
     @Transactional
     @Rollback()
     public void testRemoveRecord() {
-        record.setId(trFac.createRecord(record));
+        Long recordId = trFac.createRecord(record);
         //lets remove record
-        trFac.removeRecord(record.getId());
+        trFac.removeRecord(recordId);
         //lets try get removed record
-        trFac.getRecord(record.getId());
+        trFac.getRecord(recordId);
     }
 
     @Test(expected = DataAccessException.class)
@@ -139,7 +148,7 @@ public class TrackingFacadeIT {
         Long recordId = trFac.createRecord(record);
         //lets try to find persisted record in DB
         RecordDetailDTO recordFound = trFac.getRecord(recordId);
-        Assert.assertEquals(record, recordFound);
+        Assert.assertEquals(recordId, recordFound.getId());
         Assert.assertEquals(record.getActivityId(), recordFound.getActivityId());
         Assert.assertEquals(record.getUserId(), recordFound.getUserId());
     }
@@ -149,17 +158,17 @@ public class TrackingFacadeIT {
     @Rollback()
     public void testGetAllRecords() {
         //lets persist record
-        record.setId(trFac.createRecord(record));
+        Long recordId = trFac.createRecord(record);
         //lets persist another record
-        RecordDetailDTO rec2 = FacadeTestHelper.initRecord(userId, activity.getId());
+        RecordCreateDTO rec2 = FacadeTestHelper.initCreateRecord(userId, activityId);
         rec2.setAtTime(LocalDateTime.now().plusMinutes(5));
-        rec2.setId(trFac.createRecord(rec2));
+        Long recordId2 = trFac.createRecord(rec2);
         //lets find all
         List<RecordDTO> recordsFound = trFac.getAllRecords(userId);
         Assert.assertEquals(recordsFound.size(), 2);
         //records should be sorted from newest
-        Assert.assertEquals(rec2, recordsFound.get(0));
-        Assert.assertEquals(record, recordsFound.get(1));
+        Assert.assertEquals(recordId2, recordsFound.get(0).getId());
+        Assert.assertEquals(recordId, recordsFound.get(1).getId());
 
         //lets try find records from different user
         Assert.assertTrue(trFac.getAllRecords(0).isEmpty());
@@ -170,20 +179,20 @@ public class TrackingFacadeIT {
     @Rollback()
     public void testGetLastNRecords() {
         //lets persist record
-        record.setId(trFac.createRecord(record));
+        Long recordId = trFac.createRecord(record);
         //lets persist another record
-        RecordDetailDTO rec2 = FacadeTestHelper.initRecord(userId, activity.getId());
+        RecordCreateDTO rec2 = FacadeTestHelper.initCreateRecord(userId, activityId);
         rec2.setAtTime(LocalDateTime.now().plusMinutes(5));
-        rec2.setId(trFac.createRecord(rec2));
+        Long recordId2 = trFac.createRecord(rec2);
         //lets find all 2 records
         List<RecordDTO> recordsFound = trFac.getLastNRecords(userId, 10);
         Assert.assertEquals(recordsFound.size(), 2);
         //records should be sorted from newest
-        Assert.assertEquals(rec2, recordsFound.get(0));
+        Assert.assertEquals(recordId2, recordsFound.get(0).getId());
         //lets find just 1 record
         recordsFound = trFac.getLastNRecords(userId, 1);
         Assert.assertEquals(recordsFound.size(), 1);
-        Assert.assertEquals(rec2, recordsFound.get(0));
+        Assert.assertEquals(recordId2, recordsFound.get(0).getId());
         //lets find 0 records
         recordsFound = trFac.getLastNRecords(userId, 0);
         Assert.assertTrue(recordsFound.isEmpty());
@@ -199,21 +208,21 @@ public class TrackingFacadeIT {
         filter.setFrom(record.getAtTime().minusDays(1));
         filter.setTo(record.getAtTime().plusDays(1));
         //lets persist record
-        record.setId(trFac.createRecord(record));
+        Long recordId = trFac.createRecord(record);
         //lets persist another record
-        RecordDetailDTO rec2 = FacadeTestHelper.initRecord(userId, activity.getId());
+        RecordCreateDTO rec2 = FacadeTestHelper.initCreateRecord(userId, activityId);
         rec2.setAtTime(LocalDateTime.now().plusMinutes(5));
-        rec2.setId(trFac.createRecord(rec2));
+        Long recordId2 = trFac.createRecord(rec2);
         //lets find all 2 records
         List<RecordDTO> recordsFound = trFac.getFilteredRecords(filter);
         Assert.assertEquals(recordsFound.size(), 2);
         //records should be sorted from oldest
-        Assert.assertEquals(record, recordsFound.get(0));
+        Assert.assertEquals(recordId, recordsFound.get(0).getId());
         //lets find just second by filter
         filter.setFrom(rec2.getAtTime());
         recordsFound = trFac.getFilteredRecords(filter);
         Assert.assertEquals(recordsFound.size(), 1);
-        Assert.assertEquals(rec2, recordsFound.get(0));
+        Assert.assertEquals(recordId2, recordsFound.get(0).getId());
         //lets find 0 records
         filter.setFrom(rec2.getAtTime().plusHours(1));
         recordsFound = trFac.getFilteredRecords(filter);
@@ -225,7 +234,7 @@ public class TrackingFacadeIT {
     @Rollback()
     public void testGetWeekProgressOfBurnedCaloriess() {
         //lets persist record
-        record.setId(trFac.createRecord(record));
+        Long recordId = trFac.createRecord(record);
         //lets add weekly goal
         TrackingSettingsDTO settings = new TrackingSettingsDTO();
         settings.setUserId(userId);

@@ -5,6 +5,8 @@ import java.util.Objects;
 
 /**
  * @author Radoslav Karlik
+ *
+ * DTO object used for list of Records
  */
 public class RecordDTO {
 

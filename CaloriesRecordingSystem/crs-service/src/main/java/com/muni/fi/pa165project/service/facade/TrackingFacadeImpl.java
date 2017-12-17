@@ -1,7 +1,9 @@
 package com.muni.fi.pa165project.service.facade;
 
+import com.muni.fi.pa165project.dto.RecordCreateDTO;
 import com.muni.fi.pa165project.dto.RecordDTO;
 import com.muni.fi.pa165project.dto.RecordDetailDTO;
+import com.muni.fi.pa165project.dto.RecordUpdateDTO;
 import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
@@ -43,14 +45,14 @@ public class TrackingFacadeImpl implements TrackingFacade {
     private BurnedCaloriesService burnedCaloriesService;
 
     @Override
-    public Long createRecord(RecordDetailDTO recordDetailDto) {
+    public Long createRecord(RecordCreateDTO recordCreateDto) {
         log.debug("Creating Record for user with id <{}>",
-                recordDetailDto.getUserId());
+                recordCreateDto.getUserId());
 
-        Record record = mapper.map(recordDetailDto, Record.class);
+        Record record = mapper.map(recordCreateDto, Record.class);
 
-        User user = this.userService.findById(recordDetailDto.getUserId());
-        Activity activity = this.activityService.findById(recordDetailDto.getActivityId());
+        User user = this.userService.findById(recordCreateDto.getUserId());
+        Activity activity = this.activityService.findById(recordCreateDto.getActivityId());
         if (user == null || activity == null) {
             throw new DataRetrievalFailureException("Activity or User ID not valid");
         }
@@ -70,22 +72,22 @@ public class TrackingFacadeImpl implements TrackingFacade {
     }
 
     @Override
-    public RecordDetailDTO editRecord(RecordDetailDTO recordDetailDto) {
-        log.debug("Editing Record with id <{}>", recordDetailDto.getId());
+    public RecordDetailDTO editRecord(RecordUpdateDTO recordUpdateDto) {
+        log.debug("Editing Record with id <{}>", recordUpdateDto.getId());
 
-        Record record = this.recordService.getRecord(recordDetailDto.getId());
-        record.setAtTime(recordDetailDto.getAtTime());
-        record.setDistance(recordDetailDto.getDistance());
-        record.setDuration(recordDetailDto.getDuration());
+        Record record = this.recordService.getRecord(recordUpdateDto.getId());
+        record.setAtTime(recordUpdateDto.getAtTime());
+        record.setDistance(recordUpdateDto.getDistance());
+        record.setDuration(recordUpdateDto.getDuration());
         record.setBurnedCalories(
                 (int) this.burnedCaloriesService.calculateAmountOfCalories(
-                        recordDetailDto.getActivityId(),
-                        recordDetailDto.getDuration(),
-                        recordDetailDto.getWeight()
+                        recordUpdateDto.getActivityId(),
+                        recordUpdateDto.getDuration(),
+                        recordUpdateDto.getWeight()
                 )
         );
-        if (record.getActivity().getId() != recordDetailDto.getActivityId()) {
-            Activity activity = this.activityService.findById(recordDetailDto.getActivityId());
+        if (record.getActivity().getId() != recordUpdateDto.getActivityId()) {
+            Activity activity = this.activityService.findById(recordUpdateDto.getActivityId());
             record.setActivity(activity);
         }
         this.recordService.update(record);

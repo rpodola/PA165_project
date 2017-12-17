@@ -2,6 +2,8 @@ package com.muni.fi.pa165project.dto;
 
 /**
  * @author Radim Podola
+ *
+ * DTO object used for Record detail
  */
 public class RecordDetailDTO extends RecordDTO {
 

@@ -65,9 +65,9 @@ public class ActivityFacadeIT {
     public void testEditActivity() {
         final String newName = "Different activity";
         //user id is needed for update
-        activity.setId(acFac.createActivity(activity));
+        Long activityId = acFac.createActivity(activity);
         //lets change name
-        ActivityDetailDTO detail = acFac.getActivityDetail(activity.getId());
+        ActivityDetailDTO detail = acFac.getActivityDetail(activityId);
         ActivityUpdateDTO changed = new ActivityUpdateDTO();
         changed.setName(newName);
         changed.setId(detail.getId());
@@ -76,7 +76,7 @@ public class ActivityFacadeIT {
         changed.setCategory(activity.getCategory());
         acFac.editActivity(changed);
         //lets get user with changed name
-        ActivityDetailDTO found = this.acFac.getActivityDetail(activity.getId());
+        ActivityDetailDTO found = this.acFac.getActivityDetail(activityId);
         
         Assert.assertEquals(found.getId(), changed.getId());
         Assert.assertEquals(found.getName(), newName);
@@ -86,9 +86,9 @@ public class ActivityFacadeIT {
     @Transactional
     @Rollback()
     public void testRemoveActivity() {
-        activity.setId(acFac.createActivity(activity));
-        acFac.removeActivity(activity.getId());
-        ActivityDetailDTO found = this.acFac.getActivityDetail(activity.getId());
+        Long activityId = acFac.createActivity(activity);
+        acFac.removeActivity(activityId);
+        ActivityDetailDTO found = this.acFac.getActivityDetail(activityId);
         Assert.assertNull(found);
     }
 
@@ -96,11 +96,11 @@ public class ActivityFacadeIT {
     @Transactional
     @Rollback()
     public void testGetActivityDetail() {
-        activity.setId(acFac.createActivity(activity));
-        ActivityDetailDTO found = this.acFac.getActivityDetail(activity.getId());
+        Long activityId = acFac.createActivity(activity);
+        ActivityDetailDTO found = this.acFac.getActivityDetail(activityId);
 
         ActivityDetailDTO expected = new ActivityDetailDTO();
-        expected.setId(activity.getId());
+        expected.setId(activityId);
         expected.setName(activity.getName());
         
         Assert.assertEquals(found, expected);
@@ -114,11 +114,11 @@ public class ActivityFacadeIT {
     public void testGetAllActivities() {
         Assert.assertTrue(this.acFac.getAllActivities().isEmpty());
 
-        activity.setId(acFac.createActivity(activity));
+        Long activityId = acFac.createActivity(activity);
         List<ActivityDTO> found = this.acFac.getAllActivities();
 
         ActivityDetailDTO expected = new ActivityDetailDTO();
-        expected.setId(activity.getId());
+        expected.setId(activityId);
         expected.setName(activity.getName());
         
         Assert.assertEquals(found.size(), 1);
@@ -135,7 +135,7 @@ public class ActivityFacadeIT {
     @Transactional
     @Rollback()
     public void testGetActivities() {
-        activity.setId(acFac.createActivity(activity));
+        Long activityId = acFac.createActivity(activity);
 
         HashSet<Integer> categories = new HashSet<>();
         ActivityFilterDTO filter = new ActivityFilterDTO();
@@ -147,7 +147,7 @@ public class ActivityFacadeIT {
         Assert.assertTrue(this.acFac.getActivities(filter).isEmpty());
 
         ActivityDetailDTO expected = new ActivityDetailDTO();
-        expected.setId(activity.getId());
+        expected.setId(activityId);
         expected.setName(activity.getName());
         
         categories.add(Category.RUNNING.getId());

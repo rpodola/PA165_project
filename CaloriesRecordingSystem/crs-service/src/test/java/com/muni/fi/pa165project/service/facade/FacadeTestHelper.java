@@ -53,8 +53,8 @@ public class FacadeTestHelper {
         return bc;
     }
 
-    public static RecordDetailDTO initRecord(Long userId, Long activityId) {
-        RecordDetailDTO record = new RecordDetailDTO();
+    public static RecordCreateDTO initCreateRecord(Long userId, Long activityId) {
+        RecordCreateDTO record = new RecordCreateDTO();
         record.setUserId(userId);
         record.setDistance(100);
         record.setDuration(1);

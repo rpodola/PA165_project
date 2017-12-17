@@ -1,7 +1,9 @@
 package com.muni.fi.pa165project.service.facade;
 
+import com.muni.fi.pa165project.dto.RecordCreateDTO;
 import com.muni.fi.pa165project.dto.RecordDTO;
 import com.muni.fi.pa165project.dto.RecordDetailDTO;
+import com.muni.fi.pa165project.dto.RecordUpdateDTO;
 import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
@@ -91,14 +93,14 @@ public class TrackingFacadeImplTest {
     @Transactional
     @Rollback()
     public void createRecord() {
-        RecordDetailDTO recordDetailDTO = mock(RecordDetailDTO.class);
-        when(mapper.map(recordDetailDTO, Record.class)).thenReturn(record);
-        when(recordDetailDTO.getActivityId()).thenReturn(1L);
-        when(recordDetailDTO.getUserId()).thenReturn(1L);
+        RecordCreateDTO recordCreate = mock(RecordCreateDTO.class);
+        when(mapper.map(recordCreate, Record.class)).thenReturn(record);
+        when(recordCreate.getActivityId()).thenReturn(1L);
+        when(recordCreate.getUserId()).thenReturn(1L);
         when(burnedCaloriesService.calculateAmountOfCalories(any(Long.class), any(Double.class), any(Double.class))).thenReturn(500.0);
         when(activityService.findById(any(Long.class))).thenReturn(activity);
         when(userService.findById(any(Long.class))).thenReturn(user);
-        trackingFacade.createRecord(recordDetailDTO);
+        trackingFacade.createRecord(recordCreate);
         verify(recordService).create(record);
     }
 
@@ -106,14 +108,14 @@ public class TrackingFacadeImplTest {
     @Transactional
     @Rollback
     public void updateRecordTest() {
-        RecordDetailDTO recordDetailDTO = mock(RecordDetailDTO.class);
+        RecordUpdateDTO recordUpdate = mock(RecordUpdateDTO.class);
         when(recordService.getRecord(any(Long.class))).thenReturn(record);
-        when(recordDetailDTO.getActivityId()).thenReturn(1L);
-        when(recordDetailDTO.getDuration()).thenReturn(record.getDistance());
-        when(recordDetailDTO.getWeight()).thenReturn(record.getWeight());
+        when(recordUpdate.getActivityId()).thenReturn(1L);
+        when(recordUpdate.getDuration()).thenReturn(record.getDistance());
+        when(recordUpdate.getWeight()).thenReturn(record.getWeight());
 
-        when(mapper.map(recordDetailDTO, Record.class)).thenReturn(record);
-        trackingFacade.editRecord(recordDetailDTO);
+        when(mapper.map(recordUpdate, Record.class)).thenReturn(record);
+        trackingFacade.editRecord(recordUpdate);
         verify(recordService).update(record);
     }
 

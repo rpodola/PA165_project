@@ -1,5 +1,6 @@
 package com.muni.fi.pa165project.rest.controllers;
 
+import com.muni.fi.pa165project.dto.RecordCreateDTO;
 import com.muni.fi.pa165project.dto.RecordDetailDTO;
 import com.muni.fi.pa165project.facade.TrackingFacade;
 import com.muni.fi.pa165project.rest.ApiUris;
@@ -36,7 +37,7 @@ public class RecordsController {
      */
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public final void createRecord(@RequestBody RecordDetailDTO recordDTO) {
+    public final void createRecord(@RequestBody RecordCreateDTO recordDTO) {
         logger.debug("rest createRecord");
         trackingFacade.createRecord(recordDTO);
     }
