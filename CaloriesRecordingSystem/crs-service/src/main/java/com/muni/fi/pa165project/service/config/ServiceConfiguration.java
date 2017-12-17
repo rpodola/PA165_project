@@ -38,6 +38,8 @@ public class ServiceConfiguration {
             protected void configure() {
                 mapping(Activity.class, ActivityCreateDTO.class, TypeMappingOptions.oneWay())
                         .fields("categoryObject", "category");
+                mapping(ActivityDTO.class, ActivityUpdateDTO.class, TypeMappingOptions.oneWay())
+                        .fields("category.id", "category");
                 mapping(Record.class, RecordDTO.class, TypeMappingOptions.oneWay())
                         .fields("activity.name", "activityName")
                         .fields("activity.id", "activityId")

@@ -1,12 +1,11 @@
 package com.muni.fi.pa165project.data;
 
-import com.muni.fi.pa165project.dto.ActivityCreateDTO;
-import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
-import com.muni.fi.pa165project.dto.UserRegisterDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.facade.UserFacade;
+import com.muni.fi.pa165project.service.MappingService;
 import com.muni.fi.pa165project.service.UserService;
 import com.muni.fi.pa165project.structures.LoginDetails;
 import org.slf4j.Logger;
@@ -37,6 +36,9 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    MappingService mapper;
 
     @Override
     @SuppressWarnings("unused")
@@ -152,6 +154,12 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
     }
 
     private void addBurnedCalories(Long activityId, int amount, int edge){
-        //TODO
+        ActivityDetailDTO detail = acFacade.getActivityDetail(activityId);
+        ActivityUpdateDTO update = mapper.map(detail, ActivityUpdateDTO.class);
+        BurnedCaloriesDTO bc = new BurnedCaloriesDTO();
+        bc.setAmount(amount);
+        bc.setUpperWeightBoundary(edge);
+        update.getBurnedCalories().add(bc);
+        acFacade.editActivity(update);
     }
 }

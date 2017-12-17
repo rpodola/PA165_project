@@ -4,6 +4,7 @@ import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
+import com.muni.fi.pa165project.service.MappingService;
 import com.muni.fi.pa165project.service.config.ServiceConfiguration;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +17,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,12 +31,15 @@ public class ActivityFacadeIT {
     @Autowired
     private ActivityFacade acFac;
 
-    private ActivityCreateDTO activity;
+    @Autowired
+    MappingService mapper;
+
+    private ActivityCreateDTO activityCreate;
     private ActivityDetailDTO activityDetail;
 
     @Before
     public void setup() {
-        activity = FacadeTestHelper.initActivity();
+        activityCreate = FacadeTestHelper.initActivity();
         activityDetail = FacadeTestHelper.initActivityDetail();
     }
 
@@ -45,7 +48,7 @@ public class ActivityFacadeIT {
     @Rollback()
     public void testCreateActivity() {
         //persist activityDetail
-        Long activityId = acFac.createActivity(activity);
+        Long activityId = acFac.createActivity(activityCreate);
         Assert.assertNotNull(activityId);
         ActivityDetailDTO found = acFac.getActivityDetail(activityId);
         Assert.assertEquals(activityDetail, found);
@@ -55,17 +58,17 @@ public class ActivityFacadeIT {
     @Transactional
     @Rollback()
     public void testCreateActivityNull() {
-        activity.setName(null);
-        acFac.createActivity(activity);
+        activityCreate.setName(null);
+        acFac.createActivity(activityCreate);
     }
 
     @Test
     @Transactional
     @Rollback()
     public void testEditActivity() {
-        final String newName = "Different activity";
+        final String newName = "Different activityCreate";
         //user id is needed for update
-        Long activityId = acFac.createActivity(activity);
+        Long activityId = acFac.createActivity(activityCreate);
         //lets change name
         ActivityDetailDTO detail = acFac.getActivityDetail(activityId);
         ActivityUpdateDTO changed = new ActivityUpdateDTO();
@@ -73,7 +76,7 @@ public class ActivityFacadeIT {
         changed.setId(detail.getId());
         changed.setBurnedCalories(detail.getBurnedCalories());
         changed.setDescription(detail.getDescription());
-        changed.setCategory(activity.getCategory());
+        changed.setCategory(activityCreate.getCategory());
         acFac.editActivity(changed);
         //lets get user with changed name
         ActivityDetailDTO found = this.acFac.getActivityDetail(activityId);
@@ -86,7 +89,7 @@ public class ActivityFacadeIT {
     @Transactional
     @Rollback()
     public void testRemoveActivity() {
-        Long activityId = acFac.createActivity(activity);
+        Long activityId = acFac.createActivity(activityCreate);
         acFac.removeActivity(activityId);
         ActivityDetailDTO found = this.acFac.getActivityDetail(activityId);
         Assert.assertNull(found);
@@ -96,12 +99,12 @@ public class ActivityFacadeIT {
     @Transactional
     @Rollback()
     public void testGetActivityDetail() {
-        Long activityId = acFac.createActivity(activity);
+        Long activityId = acFac.createActivity(activityCreate);
         ActivityDetailDTO found = this.acFac.getActivityDetail(activityId);
 
         ActivityDetailDTO expected = new ActivityDetailDTO();
         expected.setId(activityId);
-        expected.setName(activity.getName());
+        expected.setName(activityCreate.getName());
         
         Assert.assertEquals(found, expected);
         //lets try to find nobody
@@ -114,12 +117,12 @@ public class ActivityFacadeIT {
     public void testGetAllActivities() {
         Assert.assertTrue(this.acFac.getAllActivities().isEmpty());
 
-        Long activityId = acFac.createActivity(activity);
+        Long activityId = acFac.createActivity(activityCreate);
         List<ActivityDTO> found = this.acFac.getAllActivities();
 
         ActivityDetailDTO expected = new ActivityDetailDTO();
         expected.setId(activityId);
-        expected.setName(activity.getName());
+        expected.setName(activityCreate.getName());
         
         Assert.assertEquals(found.size(), 1);
         Assert.assertEquals(found.get(0), expected);
@@ -135,7 +138,7 @@ public class ActivityFacadeIT {
     @Transactional
     @Rollback()
     public void testGetActivities() {
-        Long activityId = acFac.createActivity(activity);
+        Long activityId = acFac.createActivity(activityCreate);
 
         HashSet<Integer> categories = new HashSet<>();
         ActivityFilterDTO filter = new ActivityFilterDTO();
@@ -148,7 +151,7 @@ public class ActivityFacadeIT {
 
         ActivityDetailDTO expected = new ActivityDetailDTO();
         expected.setId(activityId);
-        expected.setName(activity.getName());
+        expected.setName(activityCreate.getName());
         
         categories.add(Category.RUNNING.getId());
         List<ActivityDTO> found = this.acFac.getActivities(filter);
@@ -160,18 +163,13 @@ public class ActivityFacadeIT {
     @Transactional
     @Rollback()
     public void testAddAndRemoveBurnedCalories() {
-        Long activityId = acFac.createActivity(activity);
+        Long activityId = acFac.createActivity(activityCreate);
         ActivityDetailDTO found = acFac.getActivityDetail(activityId);
         Assert.assertTrue(found.getBurnedCalories().isEmpty());
 
-        ActivityUpdateDTO activityUpdate = new ActivityUpdateDTO();
-        activityUpdate.setName(activity.getName());
-        activityUpdate.setDescription(activity.getDescription());
-        activityUpdate.setCategory(activity.getCategory());
+        ActivityUpdateDTO activityUpdate = mapper.map(activityCreate, ActivityUpdateDTO.class);
         activityUpdate.setId(activityId);
-        Set<BurnedCaloriesDTO> bc = new HashSet<>();
-        bc.add(FacadeTestHelper.initBurnedCalories());
-        activityUpdate.setBurnedCalories(bc);
+        activityUpdate.getBurnedCalories().add(FacadeTestHelper.initBurnedCalories());
         acFac.editActivity(activityUpdate);
         //1 bc should be added
         found = acFac.getActivityDetail(activityId);
@@ -188,15 +186,10 @@ public class ActivityFacadeIT {
     @Transactional
     @Rollback()
     public void testEditBurnedCalories() {
-        Long activityId = acFac.createActivity(activity);
-        ActivityUpdateDTO activityUpdate = new ActivityUpdateDTO();
-        activityUpdate.setName(activity.getName());
-        activityUpdate.setDescription(activity.getDescription());
-        activityUpdate.setCategory(activity.getCategory());
+        Long activityId = acFac.createActivity(activityCreate);
+        ActivityUpdateDTO activityUpdate = mapper.map(activityCreate, ActivityUpdateDTO.class);
         activityUpdate.setId(activityId);
-        Set<BurnedCaloriesDTO> bc = new HashSet<>();
-        bc.add(FacadeTestHelper.initBurnedCalories());
-        activityUpdate.setBurnedCalories(bc);
+        activityUpdate.getBurnedCalories().add(FacadeTestHelper.initBurnedCalories());
         acFac.editActivity(activityUpdate);
         //1 bc should be added
         ActivityDetailDTO found = acFac.getActivityDetail(activityId);
