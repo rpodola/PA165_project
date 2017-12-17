@@ -28,7 +28,10 @@ export class CategoryDetailComponent implements OnInit {
 
     this.activityService
       .getActivities([cat.id])
-      .subscribe(activities => this.activitiesInCategory = activities);
+      .subscribe(activities => {
+        console.log(activities);
+        this.activitiesInCategory = activities;
+      });
   }
 
   ngOnInit() {
