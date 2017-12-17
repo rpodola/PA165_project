@@ -312,6 +312,7 @@
         type="submit"
         class="btn btn-success"
         [disabled]="nameValidation.errors || emailValidator.errors || !passwordsMatch || heightValidator.errors || bodyweightValidation.errors || validatePassword.errors"
+        (click)="saveSettings()"
       >
         <i class="fa fa-save">
         </i>

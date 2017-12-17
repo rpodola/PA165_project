@@ -74,10 +74,12 @@ const activities_const: IActivityDetail[] = [
     },
     burnedCaloriesList: [
       {
+        id: 0,
         upperWeightBoundary: 50,
         amount: 150,
       },
       {
+        id: 1,
         upperWeightBoundary: 75,
         amount: 200,
       },
@@ -94,6 +96,7 @@ const activities_const: IActivityDetail[] = [
     },
     burnedCaloriesList: [
       {
+        id: 3,
         upperWeightBoundary: 0,
         amount: 800,
       },
@@ -134,6 +137,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           const user = filteredUsers[0];
           const body = {
             token: 'fake-jwt-token',
+            user,
             isAdmin: request.body.username === 'admin' ? true : undefined,
           };
 
@@ -163,6 +167,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         const body = {
           token: 'fake_token' + newUser.id,
+          user: newUser,
           isAdmin: newUser.username === 'admin' ? true : undefined,
         };
 
@@ -277,6 +282,25 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         localStorage.setItem('activities', JSON.stringify(activities));
 
         return of(new HttpResponse({ status: 200, body: activities[index] }));
+      }
+
+      //  get user settings
+      if (request.url.endsWith('/users/settings') && request.method === 'GET') {
+        const currUser = JSON.parse(localStorage.getItem('currentUser'));
+        const user = users.find(u => u.id === currUser.user.id);
+
+        return of(new HttpResponse({ status: 200, body: user }));
+      }
+
+      //  save user settings
+      if (request.url.endsWith('/users/update') && request.method === 'POST') {
+        const currUser = JSON.parse(localStorage.getItem('currentUser'));
+        const index = users.findIndex(user => user.id === currUser.user.id);
+
+        users[index] = request.body;
+        localStorage.setItem('users', JSON.stringify(users));
+
+        return of(new HttpResponse({ status: 200, body: users[index] }));
       }
 
       // pass through any requests not handled above

@@ -38,6 +38,7 @@ import {LoginEventsService} from './_services/login-events.service';
 import {UserIsAdminGuard} from './_guards/UserIsAdminGuard';
 import { ActivityDetailFormComponent } from './activity-detail-form/activity-detail-form.component';
 import { ActivityDetailStaticComponent } from './activity-detail-static/activity-detail-static.component';
+import {UserService} from './_services/user.service';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { ActivityDetailStaticComponent } from './activity-detail-static/activity
     RecordService,
     CategoryService,
     AuthenticationService,
+    UserService,
     JwtInterceptorProvider,
     UserLoggedInGuard,
     UserNotLoggedInGuard,

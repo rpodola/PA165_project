@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserSettings} from '../_classes/UserSettings';
+import {UserService} from '../_services/user.service';
 
 @Component({
   selector: 'app-settings',
@@ -18,6 +19,7 @@ export class SettingsComponent implements OnInit {
   oldPasswordIsWrong: boolean;
 
   constructor(
+    private userService: UserService,
   ) {
     this.userSettings.weight = 1;
     this.userSettings.height = 1;
@@ -28,9 +30,23 @@ export class SettingsComponent implements OnInit {
   }
 
   getUserSettings() {
-   /* this.accountService
+    this.userService
       .getUserSettings()
-      .subscribe(userSettings => this.userSettings = userSettings);*/
+      .subscribe(userSettings => {
+        this.passwordOld = '';
+        this.passwordConfirm = '';
+        this.userSettings = { ...userSettings, password: undefined };
+      });
+  }
+
+  saveSettings() {
+    this.userService
+      .saveUserSettings(this.userSettings)
+      .subscribe(userSettings => {
+        this.passwordOld = '';
+        this.passwordConfirm = '';
+        this.userSettings = { ...userSettings, password: undefined };
+      });
   }
 
   ngOnInit() {

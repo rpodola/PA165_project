@@ -1,7 +1,6 @@
-export class UserSettings {
+export interface IUserSettings {
   name: string;
   weight: number;
   height: number;
-  password: string;
   email: string;
 }
