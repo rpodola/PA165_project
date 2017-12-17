@@ -5,4 +5,6 @@ export class RegisterSettings {
   email: string;
   password: string;
   birthday: string;
+  weight: number;
+  height: number;
 }

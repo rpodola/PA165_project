@@ -292,13 +292,89 @@
     </div>
 
     <div class="row">
+      <div class="col-md-3 field-label-responsive">
+        <label for="height">
+          Height
+        </label>
+      </div>
+      <div class="col-md-auto">
+        <div class="form-group has-danger">
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <input
+              type="number"
+              name="height"
+              class="form-control"
+              id="height"
+              required
+              [(ngModel)]="registerSettings.height"
+              appNumberMinMax
+              #heightValidator="ngModel"
+              [minValue]="1"
+              [wrongNumberMessage]="'Height must be at least 1'"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div
+          *ngIf="heightValidator.errors && (heightValidator.dirty || heightValidator.touched)"
+          class="form-control-feedback"
+        >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ heightValidator.errors.message }}
+              </i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3 field-label-responsive">
+        <label for="bodyweight">
+          Bodyweight
+        </label>
+      </div>
+      <div class="col-md-auto">
+        <div class="form-group has-danger">
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <input
+              type="number"
+              name="bodyweight"
+              class="form-control"
+              id="bodyweight"
+              required
+              [(ngModel)]="registerSettings.weight"
+              appNumberMinMax
+              #bodyweightValidation="ngModel"
+              [minValue]="1"
+              [wrongNumberMessage]="'Bodyweight must be at least 1'"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div
+          *ngIf="bodyweightValidation.errors && (bodyweightValidation.dirty || bodyweightValidation.touched)"
+          class="form-control-feedback"
+        >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ bodyweightValidation.errors.message }}
+              </i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-3"></div>
       <div class="col-md-3">
         <button
           type="submit"
           class="btn btn-success"
           (click)="registerAccount()"
-          [disabled]="usernameValidation.errors || passwordValidation.errors || !passwordsMatch || emailValidator.errors || nameValidation.errors"
+          [disabled]="usernameValidation.errors || passwordValidation.errors || !passwordsMatch || emailValidator.errors || nameValidation.errors || heightValidator.errors || bodyweightValidation.errors"
         >
           <i class="fa fa-user-plus">
           </i>

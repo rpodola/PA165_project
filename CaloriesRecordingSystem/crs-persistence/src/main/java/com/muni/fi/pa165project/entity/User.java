@@ -31,10 +31,10 @@ public class User implements Serializable {
     private LocalDate birthDate;
 
     @Min(1)
-    private double weight = 1;
+    private double weight;
 
     @Min(1)
-    private double height = 1;
+    private double height;
 
     private boolean isMale;
 

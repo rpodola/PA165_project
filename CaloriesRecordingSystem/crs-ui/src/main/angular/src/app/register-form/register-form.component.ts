@@ -25,6 +25,8 @@ export class RegisterFormComponent implements OnInit {
     private router: Router,
   ) {
     this.registerSettings.male = true;
+    this.registerSettings.weight = 1;
+    this.registerSettings.height = 1;
     this.birthday = new Date();
   }
 
