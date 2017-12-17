@@ -30,12 +30,16 @@
     <div class="col-md-6">
       <div class="form-group">
         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-          <span
+          <textarea
             class="form-control"
+            name="description"
             id="description"
+            placeholder="Description"
+            [(ngModel)]="category.description"
+            rows="4"
+            [disabled]="true"
           >
-            {{ category.description }}
-          </span>
+          </textarea>
         </div>
       </div>
     </div>

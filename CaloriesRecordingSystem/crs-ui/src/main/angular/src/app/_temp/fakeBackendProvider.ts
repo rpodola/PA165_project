@@ -10,7 +10,9 @@ import {RecordDetail} from '../_classes/RecordDetail';
 import {ActivityDetail} from '../_classes/ActivityDetail';
 
 const categories_const: Category[] = [
-  new Category(0, 'Exercise', 'Exercise is the best activity'),
+  new Category(0, 'Exercise', 'Exercise is the best activity he two-letter code of the language to use for month and day names. These will also be used as the input\'s value (and subsequently sent to the server in the case of form submissions). Currently ships with English (\'en\'), German (\'de\'), Brazilian (\'br\'), and Spanish (\'es\') translations, but others can be added (see I18N below). If an unknown language code is given, English will be used.\n' +
+    '\n' +
+    'forceParse'),
   new Category(1, 'Aerobics'),
   new Category(2, 'Walking'),
   new Category(3, 'Running'),

@@ -4,3 +4,8 @@
     text-align: right;
   }
 }
+
+textarea#description {
+  background-color: white !important;
+  resize: none;
+}

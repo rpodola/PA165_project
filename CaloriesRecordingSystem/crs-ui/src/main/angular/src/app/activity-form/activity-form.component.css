@@ -4,3 +4,7 @@
     text-align: right;
   }
 }
+
+textarea#description {
+  resize: none;
+}
