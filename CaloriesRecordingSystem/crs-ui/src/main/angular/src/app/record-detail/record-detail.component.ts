@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RecordService} from '../_services/record.service';
-import {RecordDetail} from '../_classes/RecordDetail';
+import {IRecordDetail} from '../_interfaces/IRecordDetail';
 
 @Component({
   selector: 'app-record-detail',
@@ -10,7 +10,7 @@ import {RecordDetail} from '../_classes/RecordDetail';
 })
 export class RecordDetailComponent implements OnInit {
 
-  record: RecordDetail;
+  record: IRecordDetail;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,7 +24,7 @@ export class RecordDetailComponent implements OnInit {
   getRecord(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.recordService
-      .getRecorDetail(id)
+      .getRecordDetail(id)
       .subscribe(record => {
         this.record = record;
       });

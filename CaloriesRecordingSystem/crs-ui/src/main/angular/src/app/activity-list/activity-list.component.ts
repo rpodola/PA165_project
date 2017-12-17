@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IActivity} from '../_classes/IActivity';
+import {IActivity} from '../_interfaces/IActivity';
 import {ActivityService} from '../_services/activity.service';
 import {AuthenticationService} from '../_services/authentication.service';
 

@@ -1,8 +1,8 @@
-import {Category} from './Category';
+import {ICategory} from './ICategory';
 
 export interface IActivity {
   id: number;
   name: string;
   description: string;
-  category: Category;
+  category: ICategory;
 }

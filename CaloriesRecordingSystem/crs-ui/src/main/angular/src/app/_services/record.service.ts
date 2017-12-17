@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Record} from '../_classes/Record';
+import {IRecord} from '../_interfaces/IRecord';
 import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
-import {RecordDetail} from '../_classes/RecordDetail';
+import {IRecordDetail} from '../_interfaces/IRecordDetail';
 
 const prefix = '/records/';
 
@@ -16,15 +15,13 @@ export class RecordService {
     private http: HttpClient,
   ) {}
 
-  getAllRecordsOfUser(): Observable<Record[]> {
+  getAllRecordsOfUser(): Observable<IRecord[]> {
     return this.http
-      .get<{ records: Record[] }>(allRecords)
-      .map(response => response.records);
+      .get<IRecord[]>(allRecords);
   }
 
-  getRecorDetail(recordId: number): Observable<RecordDetail> {
+  getRecordDetail(recordId: number): Observable<IRecordDetail> {
     return this.http
-      .get<{ record: RecordDetail }>(recordDetail + recordId)
-      .map(response => response.record);
+      .get<IRecordDetail>(recordDetail + recordId);
   }
 }

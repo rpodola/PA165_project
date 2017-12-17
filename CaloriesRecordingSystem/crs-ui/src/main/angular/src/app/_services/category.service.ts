@@ -15,14 +15,12 @@ export class CategoryService {
 
   getAllCategories(): Observable<Category[]> {
     return this.http
-      .get<{ categories: Category[] }>(allCategories)
-      .map(response => response.categories);
+      .get<Category[]>(allCategories);
   }
 
   getCategory(id: number): Observable<Category> {
     return this.http
-      .get<{ category: Category }>(category + id)
-      .map(response => response.category);
+      .get<Category>(category + id);
   }
 
 }

@@ -3,7 +3,7 @@ import {CategoryService} from '../_services/category.service';
 import {Category} from '../_classes/Category';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {IActivity} from '../_classes/IActivity';
+import {IActivity} from '../_interfaces/IActivity';
 import {ActivityService} from '../_services/activity.service';
 
 @Component({
@@ -29,7 +29,6 @@ export class CategoryDetailComponent implements OnInit {
     this.activityService
       .getActivities([cat.id])
       .subscribe(activities => {
-        console.log(activities);
         this.activitiesInCategory = activities;
       });
   }

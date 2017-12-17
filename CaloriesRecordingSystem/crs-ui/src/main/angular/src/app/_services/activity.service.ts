@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient} from '@angular/common/http';
-import {IActivity} from '../_classes/IActivity';
-import {IActivityDetail} from '../_classes/IActivityDetail';
+import {IActivity} from '../_interfaces/IActivity';
+import {IActivityDetail} from '../_interfaces/IActivityDetail';
 import {ActivityDetail} from '../_classes/ActivityDetail';
 import {Activity} from '../_classes/Activity';
 
@@ -13,19 +13,6 @@ const activityDetail = prefix;
 const createActivity = prefix + 'create';
 const updateActivity = prefix + 'update';
 
-interface IActivities {
-  activities: IActivity[];
-}
-
-interface IActivityDetailResponse {
-  activity: IActivityDetail;
-}
-
-interface IActivityId {
-  id: number;
-}
-
-
 @Injectable()
 export class ActivityService {
   constructor(
@@ -34,37 +21,32 @@ export class ActivityService {
 
   getAllActivities(): Observable<IActivity[]> {
     return this.http
-      .get<IActivities>(allActivities)
-      .map(response => response.activities);
+      .get<IActivity[]>(allActivities);
   }
 
   getActivities(categoryIds: number[]): Observable<IActivity[]> {
     return this.http
-      .post<IActivities>(
+      .post<IActivity[]>(
         activitiesFromCategories,
         {
           categoryIds,
         }
-      )
-      .map(response => response.activities);
+      );
   }
 
   getActivityDetail(id: number): Observable<IActivityDetail> {
     return this.http
-      .get<IActivityDetailResponse>(activityDetail + id)
-      .map(response => response.activity);
+      .get<IActivityDetail>(activityDetail + id);
   }
 
   createNewActivity(activity: Activity): Observable<number> {
     return this.http
-      .post<IActivityId>(createActivity, { activity })
-      .map(response => response.id);
+      .post<number>(createActivity, { activity });
   }
 
   updateActivity(activity: ActivityDetail): Observable<IActivityDetail> {
     return this.http
-      .post<any>(updateActivity, { activity })
-      .map(response => response.activity);
+      .post<IActivityDetail>(updateActivity, { activity });
   }
 
 }

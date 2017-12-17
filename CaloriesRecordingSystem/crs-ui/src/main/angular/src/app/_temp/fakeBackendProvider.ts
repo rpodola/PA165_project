@@ -6,8 +6,8 @@ import 'rxjs/add/operator/materialize';
 import 'rxjs/add/operator/dematerialize';
 import 'rxjs/add/observable/throw';
 import {Category} from '../_classes/Category';
-import {RecordDetail} from '../_classes/RecordDetail';
-import {IActivityDetail} from '../_classes/IActivityDetail';
+import {IRecordDetail} from '../_interfaces/IRecordDetail';
+import {IActivityDetail} from '../_interfaces/IActivityDetail';
 
 const categories_const: Category[] = [
   new Category(0, 'Exercise', 'Exercise is the best activity he two-letter code of the language to use for month and day names. These will also be used as the input\'s value (and subsequently sent to the server in the case of form submissions). Currently ships with English (\'en\'), German (\'de\'), Brazilian (\'br\'), and Spanish (\'es\') translations, but others can be added (see I18N below). If an unknown language code is given, English will be used.\n' +
@@ -27,7 +27,7 @@ const categories_const: Category[] = [
   new Category(12, 'Work8'),
   new Category(13, 'Work9'),
 ];
-const records_const: RecordDetail[] = [
+const records_const: IRecordDetail[] = [
   {
     activityId: 0,
     activityName: 'First activity',
@@ -117,7 +117,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     // array in local storage
     const users: any[] = JSON.parse(localStorage.getItem('users')) || users_const;
     const categories: Category[] = JSON.parse(localStorage.getItem('categories')) || categories_const;
-    const records: RecordDetail[] = JSON.parse(localStorage.getItem('records')) || records_const;
+    const records: IRecordDetail[] = JSON.parse(localStorage.getItem('records')) || records_const;
     const activities: IActivityDetail[] = JSON.parse(localStorage.getItem('activities')) || activities_const;
 
     // wrap in delayed observable to simulate server api call
@@ -172,11 +172,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       //  all categories
       if (request.url.endsWith('activities/allCategories') && request.method === 'GET') {
-        const body = {
-          categories,
-        };
-
-        return of(new HttpResponse({ status: 200, body }));
+        return of(new HttpResponse({ status: 200, body: categories }));
       }
 
       //  category
@@ -187,11 +183,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const category = categories.find(cat => cat.id === id);
 
         if (category) {
-          const body = {
-            category,
-          };
-
-          return of(new HttpResponse({status: 200, body}));
+          return of(new HttpResponse({status: 200, body: category }));
         }
 
         return Observable.throw('Category doesnt exist');
@@ -199,11 +191,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       //  all records of User
       if (request.url.endsWith('/records/allRecords') && request.method === 'GET') {
-        const body = {
-          records,
-        };
-
-        return of(new HttpResponse({ status: 200, body }));
+        return of(new HttpResponse({ status: 200, body: records }));
       }
 
       //  record
@@ -214,11 +202,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const record = records.find(rec => rec.id === id);
 
         if (record) {
-          const body = {
-            record,
-          };
-
-          return of(new HttpResponse({status: 200, body}));
+          return of(new HttpResponse({status: 200, body: record }));
         }
 
         return Observable.throw('Record doesnt exist');
@@ -226,7 +210,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       //  all activities
       if (request.url.endsWith('/activities/allActivities') && request.method === 'GET') {
-        return of(new HttpResponse({ status: 200, body: { activities } }));
+        return of(new HttpResponse({ status: 200, body: activities }));
       }
 
       //  activities from categories
@@ -234,7 +218,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const { categoryIds } = request.body;
         const filteredActivities = activities.filter(activity => categoryIds.includes(activity.category.id));
 
-        return of(new HttpResponse({ status: 200, body: { activities: filteredActivities } }));
+        return of(new HttpResponse({ status: 200, body: filteredActivities }));
       }
 
       //  activity detail
@@ -245,7 +229,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const activity = activities.find(act => act.id === id);
 
         if (activity) {
-          return of(new HttpResponse({ status: 200, body: { activity } }));
+          return of(new HttpResponse({ status: 200, body: activity }));
         }
 
         return Observable.throw('IActivity doesnt exist');
@@ -274,7 +258,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         activities.push(activityDetail);
         localStorage.setItem('activities', JSON.stringify(activities));
 
-        return of(new HttpResponse({ status: 200, body: { id: activityDetail.id } }));
+        return of(new HttpResponse({ status: 200, body: activityDetail.id }));
       }
 
       //  update activity
@@ -292,7 +276,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         activities[index] = Object.assign({}, { ...other, category: categories.find(cat => cat.id === parseInt(categoryId, 10)) });
         localStorage.setItem('activities', JSON.stringify(activities));
 
-        return of(new HttpResponse({ status: 200, body: { activity: activities[index] } }));
+        return of(new HttpResponse({ status: 200, body: activities[index] }));
       }
 
       // pass through any requests not handled above

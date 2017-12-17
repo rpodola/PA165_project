@@ -1,4 +1,4 @@
-export class Record {
+export interface IRecord {
   id: number;
   activityId: number;
   activityName: string;

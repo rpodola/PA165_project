@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {RecordService} from '../_services/record.service';
-import {Record} from '../_classes/Record';
+import {IRecord} from '../_interfaces/IRecord';
 
 @Component({
   selector: 'app-record-list',
@@ -9,8 +9,8 @@ import {Record} from '../_classes/Record';
 })
 export class RecordListComponent implements OnInit {
 
-  userRecordsCached: Record[];
-  userRecords: Record[];
+  userRecordsCached: IRecord[];
+  userRecords: IRecord[];
 
   constructor(
     private recordService: RecordService

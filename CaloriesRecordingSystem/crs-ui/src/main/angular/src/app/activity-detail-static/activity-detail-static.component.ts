@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivityService} from '../_services/activity.service';
 import {ActivatedRoute} from '@angular/router';
 import { Location } from '@angular/common';
-import {IActivityDetail} from '../_classes/IActivityDetail';
+import {IActivityDetail} from '../_interfaces/IActivityDetail';
 import {BurnedCalories} from '../_classes/BurnedCalories';
 
 @Component({
