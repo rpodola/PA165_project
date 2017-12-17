@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RecordService} from '../_services/record.service';
 import {IRecordDetail} from '../_interfaces/IRecordDetail';
+import {IActivity} from "../_interfaces/IActivity";
+import {ActivityService} from "../_services/activity.service";
 
 @Component({
   selector: 'app-record-detail',
@@ -11,14 +13,17 @@ import {IRecordDetail} from '../_interfaces/IRecordDetail';
 export class RecordDetailComponent implements OnInit {
 
   record: IRecordDetail;
+  activities: IActivity[];
 
   constructor(
     private route: ActivatedRoute,
     private recordService: RecordService,
+    private activityService: ActivityService
   ) { }
 
   ngOnInit(): void {
     this.getRecord();
+    this.getAllActivities();
   }
 
   getRecord(): void {
@@ -34,9 +39,19 @@ export class RecordDetailComponent implements OnInit {
     this.recordService
       .updateRecord(this.record)
       .subscribe(record => {
-        const { activity, ...other } = record;
-        this.record = Object.assign({}, { ...other, activityId: activity.id });
+        this.record = record;
       });
+  }
+
+  getAllActivities(){
+    this.activityService
+      .getAllActivities()
+      .subscribe(activities => {
+        this.activities = activities;
+        if(activities){
+          this.record.activityId = activities[0].id
+        }
+      })
   }
 
 }

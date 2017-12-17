@@ -28,13 +28,13 @@ export class RecordService {
       .get<IRecordDetail>(recordDetail + recordId);
   }
 
-  createNewRecord(record: Record): Observable<number>{
+  createNewRecord(record: Record): Observable<IRecordDetail>{
     return this.http
-      .post<number>(createRecord, { record })
+      .post<IRecordDetail>(createRecord, { record })
   }
 
-  updateRecord(record: number): Observable<number> {
+  updateRecord(record: IRecordDetail): Observable<IRecordDetail> {
     return this.http
-      .post<number>(updateRecord, { record });
+      .post<IRecordDetail>(updateRecord, { record });
   }
 }

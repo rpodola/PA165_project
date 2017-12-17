@@ -30,12 +30,18 @@
     <div class="col-md-3">
       <div class="form-group">
         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-          <a
-            routerLink="/activities/{{record.activityId}}"
-            class="form-control text-primary"
+          <select
+            id="activity"
+            name="activity"
+            [(ngModel)]="record.activityId"
           >
-            {{ record.activityName }}
-          </a>
+            <option
+              *ngFor="let activity of activities"
+              [value]="activity.id"
+            >
+              {{ activity.name }}
+            </option>
+          </select>
         </div>
       </div>
     </div>
@@ -43,13 +49,20 @@
 
   <div class="row">
     <div class="col-md-3 field-label-responsive">
-      <label for="birthday">
-        Time
+      <label>
+        Date
       </label>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <input
+            type="datetime-local"
+            name="date"
+            class="form-control"
+            id="date"
+            [(ngModel)]="record.date"
+          >
         </div>
       </div>
     </div>
@@ -92,8 +105,24 @@
             class="form-control"
             id="distance"
             [(ngModel)]="record.distance"
+            appNumberMinMax
+            #validateDistance="ngModel"
+            [minValue]="1"
+            [wrongNumberMessage]="'Distance must be at least 1'"
           >
         </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="validateDistance.errors && (validateDistance.dirty || validateDistance.touched)"
+        class="form-control-feedback"
+      >
+            <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ validateDistance.errors.message }}
+              </i>
+            </span>
       </div>
     </div>
   </div>
@@ -113,8 +142,24 @@
             class="form-control"
             id="duration"
             [(ngModel)]="record.duration"
+            appNumberMinMax
+            #validateDuration="ngModel"
+            [minValue]="1"
+            [wrongNumberMessage]="'Duration must be at least 1'"
           >
         </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="validateDuration.errors && (validateDuration.dirty || validateDuration.touched)"
+        class="form-control-feedback"
+      >
+            <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ validateDuration.errors.message }}
+              </i>
+            </span>
       </div>
     </div>
   </div>
@@ -134,14 +179,32 @@
             class="form-control"
             id="bodyweight"
             [(ngModel)]="record.weight"
+            appNumberMinMax
+            #validateWeight="ngModel"
+            [minValue]="20"
+            [wrongNumberMessage]="'Weight must be at least 20'"
           >
         </div>
       </div>
     </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="validateWeight.errors && (validateWeight.dirty || validateWeight.touched)"
+        class="form-control-feedback"
+      >
+            <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ validateWeight.errors.message }}
+              </i>
+            </span>
+      </div>
+    </div>
   </div>
+
   <button
     class="btn btn-success"
     (click)="saveRecordDetails()"
+    [disabled]="validateDuration.errors || validateDistance.errors || validateWeight.errors"
   >
     Save changes
   </button>

@@ -274,7 +274,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         });
         localStorage.setItem('records', JSON.stringify(records));
 
-        return of(new HttpResponse({status: 200, body: records));
+        return of(new HttpResponse({status: 200, body: record}));
       }
 
       //  all activities
