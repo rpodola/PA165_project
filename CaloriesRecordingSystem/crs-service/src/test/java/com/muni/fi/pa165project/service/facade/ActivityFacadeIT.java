@@ -201,4 +201,12 @@ public class ActivityFacadeIT {
         found = acFac.getActivityDetail(activityId);
         Assert.assertEquals(100, found.getBurnedCalories().iterator().next().getAmount());
     }
+
+    @Test
+    @Transactional
+    @Rollback()
+    public void testGetCategories() {
+        Assert.assertEquals(acFac.getAllCategories().get(0).getName(), Category.CYCLING.getName());
+        Assert.assertEquals(acFac.getAllCategories().size(), Category.values().length);
+    }
 }

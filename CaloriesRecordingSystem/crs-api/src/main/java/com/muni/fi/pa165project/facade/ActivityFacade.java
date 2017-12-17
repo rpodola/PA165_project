@@ -63,4 +63,11 @@ public interface ActivityFacade {
      * @return list of Activity objects
      */
     List<ActivityDTO> getActivitiesSortedByBurnedCalories(long userId);
+
+    /**
+     * Get list of Categories
+     *
+     * @return list of Category DTO
+     */
+    List<CategoryDTO> getAllCategories();
 }

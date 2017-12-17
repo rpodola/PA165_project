@@ -1,9 +1,6 @@
 package com.muni.fi.pa165project.rest.controllers;
 
-import com.muni.fi.pa165project.dto.ActivityCreateDTO;
-import com.muni.fi.pa165project.dto.ActivityDTO;
-import com.muni.fi.pa165project.dto.ActivityDetailDTO;
-import com.muni.fi.pa165project.dto.ActivityUpdateDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.rest.ApiUris;
@@ -174,5 +171,19 @@ public class ActivitiesController {
         } catch (Exception ex) {
             throw new ResourceNotFoundException();
         }
+    }
+
+    /**
+     * Get list of Categories.
+     * <p>
+     * TEST: curl -X GET -i http://localhost:8080/pa165/rest/activities/categories
+     *
+     * @return List of ActivityDTO
+     */
+    @RequestMapping(value = "/categories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final List<CategoryDTO> getCategories() {
+        logger.debug("rest getCategories()");
+
+        return acFacade.getAllCategories();
     }
 }

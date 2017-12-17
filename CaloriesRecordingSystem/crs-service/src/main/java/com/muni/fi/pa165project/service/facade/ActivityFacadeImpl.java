@@ -17,9 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -105,7 +103,7 @@ public class ActivityFacadeImpl implements ActivityFacade {
 
     @Override
     public List<ActivityDTO> getActivitiesSortedByBurnedCalories(long userId) {
-        log.trace("Calling getActivitiesSortedByBurnedCalories for user with id <{}>", userId);
+        log.debug("Calling getActivitiesSortedByBurnedCalories for user with id <{}>", userId);
 
         User user = this.userService.findById(userId);
         double weight = user.getWeight();
@@ -115,5 +113,15 @@ public class ActivityFacadeImpl implements ActivityFacade {
         List<Activity> sortedActivities = this.activityService.getActivitiesSortedByBurnedCalories(fn);
 
         return mapper.mapToList(sortedActivities, ActivityDTO.class);
+    }
+
+    public List<CategoryDTO> getAllCategories() {
+        log.debug("Calling getAllCategories()");
+
+        List<CategoryDTO> cats = new ArrayList<>();
+        for (Category c : Category.values()) {
+            cats.add(new CategoryDTO(c.getId(), c.getName(), c.getDescription()));
+        }
+        return cats;
     }
 }
