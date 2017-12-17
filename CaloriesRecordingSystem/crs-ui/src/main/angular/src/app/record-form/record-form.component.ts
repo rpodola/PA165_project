@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Record2} from "../_classes/Record2";
+import {Record} from "../_classes/Record";
 import {RecordService} from "../_services/record.service";
 import {Router} from "@angular/router";
 import {ActivityService} from "../_services/activity.service";
@@ -12,7 +12,7 @@ import {IActivity} from "../_interfaces/IActivity";
 })
 export class RecordFormComponent implements OnInit {
 
-  record = new Record2();
+  record = new Record();
   activities: IActivity[];
 
   constructor(

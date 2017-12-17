@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {IRecord} from '../_interfaces/IRecord';
 import {Observable} from 'rxjs/Observable';
 import {IRecordDetail} from '../_interfaces/IRecordDetail';
-import {Record2} from "../_classes/Record2";
+import {Record} from "../_classes/Record";
 
 const prefix = '/records/';
 
@@ -27,7 +27,7 @@ export class RecordService {
       .get<IRecordDetail>(recordDetail + recordId);
   }
 
-  createNewRecord(record: Record2): Observable<number>{
+  createNewRecord(record: Record): Observable<number>{
     return this.http
       .post<number>(createRecord, { record })
   }

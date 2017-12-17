@@ -1,4 +1,4 @@
-export class Record2 {
+export class Record {
   activityId: number;
   date: string;
   duration: number;
