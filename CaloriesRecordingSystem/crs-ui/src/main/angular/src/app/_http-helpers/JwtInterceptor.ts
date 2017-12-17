@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import {Router} from '@angular/router';
 
+const backend = 'http://localhost:8080/pa165/rest';
+
 @Injectable()
 class JwtInterceptor implements HttpInterceptor {
   constructor(
@@ -21,6 +23,11 @@ class JwtInterceptor implements HttpInterceptor {
         }
       });
     }
+
+    //  inject backend base url
+    request = request.clone({
+      url: backend + request.url
+    });
 
     return next
       .handle(request)
