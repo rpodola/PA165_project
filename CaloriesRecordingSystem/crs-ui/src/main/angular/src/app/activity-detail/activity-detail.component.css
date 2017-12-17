@@ -1,11 +1,1 @@
-@media(min-width: 768px) {
-  .field-label-responsive {
-    padding-top: .5rem;
-    text-align: right;
-  }
-}
 
-textarea#description {
-  background-color: white !important;
-  resize: none;
-}

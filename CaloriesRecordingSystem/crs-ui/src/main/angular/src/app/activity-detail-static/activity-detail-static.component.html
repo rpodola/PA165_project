@@ -1,0 +1,75 @@
+<div>
+  <a
+    class="btn btn-outline-primary"
+    routerLink="/activities"
+  >
+    View all activities
+  </a>
+</div>
+
+<div
+  class="container"
+  *ngIf="activity"
+>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h2>
+        {{ activity.name }}
+      </h2>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="category">
+        Category
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <a
+            id="category"
+            class="form-control text-primary"
+            routerLink="/categories/{{activity.category.id}}"
+          >
+            {{ activity.category.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="description">
+        Description
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <textarea
+            class="form-control"
+            name="description"
+            id="description"
+            placeholder="Description"
+            [(ngModel)]="activity.description"
+            rows="4"
+            [disabled]="true"
+          >
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-burned-calories-list
+    [burnedCaloriesList]="activity.burnedCaloriesList"
+  >
+  </app-burned-calories-list>
+
+</div>
+

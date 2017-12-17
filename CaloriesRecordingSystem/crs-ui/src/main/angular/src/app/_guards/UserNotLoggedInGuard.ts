@@ -10,7 +10,7 @@ export class UserNotLoggedInGuard implements CanActivate {
   ) {}
 
   canActivate() {
-    return this.authService.isUserNotLoggedIn();
+    return !this.authService.isUserLoggedIn();
   }
 
 }

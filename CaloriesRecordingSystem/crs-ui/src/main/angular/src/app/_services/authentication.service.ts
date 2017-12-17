@@ -57,32 +57,6 @@ export class AuthenticationService {
     return currentUser && currentUser.isAdmin;
   }
 
-  isUserNotLoggedIn() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-    //  temporary fake access
-    if (0 === 0) { return currentUser === null; }
-
-    if (currentUser && currentUser.token) {
-      //  check expiration
-      let claims;
-      try {
-        claims = jwt_decode(currentUser.token);
-      } catch {
-        return true;
-      }
-
-      const { exp } = claims;
-
-      //  expiration
-      if (exp) {
-        return claims.exp < (Date.now() / 1000);
-      }
-    }
-
-    return true;
-  }
-
   isUserLoggedIn() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 

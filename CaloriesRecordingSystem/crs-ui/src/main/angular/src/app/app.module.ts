@@ -36,6 +36,8 @@ import {UserLoggedInGuard} from './_guards/UserLoggedInGuard';
 import {UserNotLoggedInGuard} from './_guards/UserNotLoggedInGuard';
 import {LoginEventsService} from './_services/login-events.service';
 import {UserIsAdminGuard} from './_guards/UserIsAdminGuard';
+import { ActivityDetailFormComponent } from './activity-detail-form/activity-detail-form.component';
+import { ActivityDetailStaticComponent } from './activity-detail-static/activity-detail-static.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import {UserIsAdminGuard} from './_guards/UserIsAdminGuard';
     ActivityFormComponent,
     BurnedCaloriesListComponent,
     SearchBarComponent,
+    ActivityDetailFormComponent,
+    ActivityDetailStaticComponent,
   ],
   imports: [
     BrowserModule,

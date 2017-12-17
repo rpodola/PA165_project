@@ -1,6 +1,6 @@
-import {Activity} from './Activity';
 import {BurnedCalories} from './BurnedCalories';
+import {IActivity} from './IActivity';
 
-export class ActivityDetail extends Activity {
+export interface IActivityDetail extends IActivity {
   burnedCaloriesList: BurnedCalories[];
 }

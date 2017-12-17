@@ -9,89 +9,91 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-1 field-label-responsive">
-      <label for="weight">
-        Weight
-      </label>
-    </div>
-    <div class="col-md-1">
-      <div class="form-group">
-        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-          <input
-            class="form-control"
-            type="number"
-            id="weight"
-            name="weight"
-            [(ngModel)]="upperWeightBoundary"
-            appNumberMinMax
-            #validateWeightBoundary="ngModel"
-            [minValue]="1"
-            [wrongNumberMessage]="'Weight must be at least 1'"
-          />
+  <div *ngIf="canUserEdit">
+    <div class="row">
+      <div class="col-md-1 field-label-responsive">
+        <label for="weight">
+          Weight
+        </label>
+      </div>
+      <div class="col-md-1">
+        <div class="form-group">
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <input
+              class="form-control"
+              type="number"
+              id="weight"
+              name="weight"
+              [(ngModel)]="upperWeightBoundary"
+              appNumberMinMax
+              #validateWeightBoundary="ngModel"
+              [minValue]="1"
+              [wrongNumberMessage]="'Weight must be at least 1'"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div
+          *ngIf="validateWeightBoundary.errors && (validateWeightBoundary.dirty || validateWeightBoundary.touched)"
+          class="form-control-feedback"
+        >
+            <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ validateWeightBoundary.errors.message }}
+              </i>
+            </span>
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div
-        *ngIf="validateWeightBoundary.errors && (validateWeightBoundary.dirty || validateWeightBoundary.touched)"
-        class="form-control-feedback"
-      >
-          <span class="text-danger align-middle">
-            <i class="fa fa-close">
-              {{ validateWeightBoundary.errors.message }}
-            </i>
-          </span>
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-1 field-label-responsive">
-      <label for="amount">
-        Amount
-      </label>
-    </div>
-    <div class="col-md-1">
-      <div class="form-group">
-        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-          <input
-            class="form-control"
-            type="number"
-            id="amount"
-            name="amount"
-            [(ngModel)]="amount"
-            appNumberMinMax
-            #validateAmount="ngModel"
-            [minValue]="1"
-            [wrongNumberMessage]="'Amount must be at least 1'"
-          >
+    <div class="row">
+      <div class="col-md-1 field-label-responsive">
+        <label for="amount">
+          Amount
+        </label>
+      </div>
+      <div class="col-md-1">
+        <div class="form-group">
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <input
+              class="form-control"
+              type="number"
+              id="amount"
+              name="amount"
+              [(ngModel)]="amount"
+              appNumberMinMax
+              #validateAmount="ngModel"
+              [minValue]="1"
+              [wrongNumberMessage]="'Amount must be at least 1'"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div
+          *ngIf="validateAmount.errors && (validateAmount.dirty || validateAmount.touched)"
+          class="form-control-feedback"
+        >
+            <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ validateAmount.errors.message }}
+              </i>
+            </span>
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div
-        *ngIf="validateAmount.errors && (validateAmount.dirty || validateAmount.touched)"
-        class="form-control-feedback"
-      >
-          <span class="text-danger align-middle">
-            <i class="fa fa-close">
-              {{ validateAmount.errors.message }}
-            </i>
-          </span>
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-2">
-      <button
-        class="btn btn-primary"
-        (click)="addBurnedCaloriesToList()"
-        [disabled]="validateAmount.errors || validateWeightBoundary.errors"
-      >
-        Add
-      </button>
+    <div class="row">
+      <div class="col-md-2">
+        <button
+          class="btn btn-primary"
+          (click)="addBurnedCaloriesToList()"
+          [disabled]="validateAmount.errors || validateWeightBoundary.errors"
+        >
+          Add
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -114,7 +116,7 @@
       <td>
         {{ burnedCalories.amount }}
       </td>
-      <td>
+      <td *ngIf="canUserEdit">
         <button
           class="btn btn-danger"
           (click)="removeBurnedCaloriesFromList(burnedCalories)"

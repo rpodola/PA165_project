@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient} from '@angular/common/http';
-import {Activity} from '../_classes/Activity';
+import {IActivity} from '../_classes/IActivity';
+import {IActivityDetail} from '../_classes/IActivityDetail';
 import {ActivityDetail} from '../_classes/ActivityDetail';
-import {Activity2} from '../_classes/Activity2';
+import {Activity} from '../_classes/Activity';
 
 const prefix = '/activities/';
 const allActivities = prefix + 'allActivities';
@@ -13,11 +14,11 @@ const createActivity = prefix + 'create';
 const updateActivity = prefix + 'update';
 
 interface IActivities {
-  activities: Activity[];
+  activities: IActivity[];
 }
 
-interface IActivityDetail {
-  activity: ActivityDetail;
+interface IActivityDetailResponse {
+  activity: IActivityDetail;
 }
 
 interface IActivityId {
@@ -31,13 +32,13 @@ export class ActivityService {
     private http: HttpClient,
   ) { }
 
-  getAllActivities(): Observable<Activity[]> {
+  getAllActivities(): Observable<IActivity[]> {
     return this.http
       .get<IActivities>(allActivities)
       .map(response => response.activities);
   }
 
-  getActivities(categoryIds: number[]): Observable<Activity[]> {
+  getActivities(categoryIds: number[]): Observable<IActivity[]> {
     return this.http
       .post<IActivities>(
         activitiesFromCategories,
@@ -48,21 +49,22 @@ export class ActivityService {
       .map(response => response.activities);
   }
 
-  getActivityDetail(id: number): Observable<ActivityDetail> {
+  getActivityDetail(id: number): Observable<IActivityDetail> {
     return this.http
-      .get<IActivityDetail>(activityDetail + id)
+      .get<IActivityDetailResponse>(activityDetail + id)
       .map(response => response.activity);
   }
 
-  createNewActivity(activity: Activity2): Observable<number> {
+  createNewActivity(activity: Activity): Observable<number> {
     return this.http
       .post<IActivityId>(createActivity, { activity })
       .map(response => response.id);
   }
 
-  updateActivity(activity: ActivityDetail): Observable<any> {
+  updateActivity(activity: ActivityDetail): Observable<IActivityDetail> {
     return this.http
-      .post<any>(updateActivity, { activity });
+      .post<any>(updateActivity, { activity })
+      .map(response => response.activity);
   }
 
 }

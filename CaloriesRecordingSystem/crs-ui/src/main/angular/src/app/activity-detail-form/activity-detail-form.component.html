@@ -1,0 +1,143 @@
+<div>
+  <a
+    class="btn btn-outline-primary"
+    routerLink="/activities"
+  >
+    View all activities
+  </a>
+</div>
+
+<div
+  class="container"
+  *ngIf="activity"
+>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h2>
+        Create New Activity
+      </h2>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="name">
+        Name
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            id="name"
+            placeholder="Name"
+            [(ngModel)]="activity.name"
+            autofocus
+            #nameValidation="ngModel"
+            appValidateLength
+            [minLength]="3"
+            [maxLength]="127"
+            [minLengthMessage]="'Name must be at least 3 characters long'"
+            [maxLengthMessage]="'Name must be at max 63 characters long'"
+            [noValueMessage]="'Name is required'"
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="nameValidation.errors && (nameValidation.dirty || nameValidation.touched)"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ nameValidation.errors.message }}
+              </i>
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="description">
+        Description
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <textarea
+            class="form-control"
+            name="description"
+            id="description"
+            placeholder="Description"
+            [(ngModel)]="activity.description"
+            rows="4"
+            autofocus
+          >
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+      <label for="category">
+        Category
+      </label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <select
+            class="form-control"
+            id="category"
+            name="category"
+            [(ngModel)]="activity.categoryId"
+          >
+            <option
+              *ngFor="let category of categories"
+              [value]="category.id"
+            >
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        *ngIf="activity.categoryId === undefined"
+        class="form-control-feedback"
+      >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                Can't create activity without Category
+              </i>
+          </span>
+      </div>
+    </div>
+  </div>
+
+  <app-burned-calories-list
+    [burnedCaloriesList]="activity.burnedCaloriesList"
+    [canUserEdit]="true"
+    (addBurnedCalories)="onAddBurnedCalories($event)"
+    (removeBurnedCalories)="onRemoveBurnedCalories($event)"
+  >
+  </app-burned-calories-list>
+
+  <button
+    class="btn btn-success"
+    (click)="saveActivityDetails()"
+  >
+    Save changes
+  </button>
+</div>

@@ -9,6 +9,7 @@ import {BurnedCalories} from '../_classes/BurnedCalories';
 export class BurnedCaloriesListComponent implements OnInit {
 
   @Input() burnedCaloriesList: BurnedCalories[];
+  @Input() canUserEdit: boolean;
   @Output() addBurnedCalories = new EventEmitter<BurnedCalories>();
   @Output() removeBurnedCalories = new EventEmitter<BurnedCalories>();
 
