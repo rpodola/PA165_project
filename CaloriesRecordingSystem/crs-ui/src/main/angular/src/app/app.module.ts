@@ -39,6 +39,7 @@ import {UserIsAdminGuard} from './_guards/UserIsAdminGuard';
 import { ActivityDetailFormComponent } from './activity-detail-form/activity-detail-form.component';
 import { ActivityDetailStaticComponent } from './activity-detail-static/activity-detail-static.component';
 import {UserService} from './_services/user.service';
+import {RecordFormComponent} from "./record-form/record-form.component";
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {UserService} from './_services/user.service';
     SearchBarComponent,
     ActivityDetailFormComponent,
     ActivityDetailStaticComponent,
+    RecordFormComponent
   ],
   imports: [
     BrowserModule,

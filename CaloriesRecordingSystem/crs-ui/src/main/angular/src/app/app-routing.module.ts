@@ -14,6 +14,7 @@ import {ActivityFormComponent} from './activity-form/activity-form.component';
 import {UserLoggedInGuard} from './_guards/UserLoggedInGuard';
 import {UserNotLoggedInGuard} from './_guards/UserNotLoggedInGuard';
 import {UserIsAdminGuard} from './_guards/UserIsAdminGuard';
+import {RecordFormComponent} from "./record-form/record-form.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'categories', component: CategoryListComponent },
   { path: 'categories/:id', component: CategoryDetailComponent },
   { path: 'records', component: RecordListComponent, canActivate: [UserLoggedInGuard] },
+  { path: 'records/new', component: RecordFormComponent, canActivate: [UserLoggedInGuard] },
   { path: 'records/:id', component: RecordDetailComponent, canActivate: [UserLoggedInGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [UserLoggedInGuard] },
   { path: 'login', component: LoginFormComponent, canActivate: [UserNotLoggedInGuard] },

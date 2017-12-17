@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Record2} from "../_classes/Record2";
 import {RecordService} from "../_services/record.service";
 import {Router} from "@angular/router";
-import {Activity} from "../_classes/Activity";
 import {ActivityService} from "../_services/activity.service";
+import {IActivity} from "../_interfaces/IActivity";
 
 @Component({
   selector: 'app-record-form',
@@ -13,7 +13,7 @@ import {ActivityService} from "../_services/activity.service";
 export class RecordFormComponent implements OnInit {
 
   record = new Record2();
-  activities: Activity[];
+  activities: IActivity[];
 
   constructor(
     private recordService: RecordService,
