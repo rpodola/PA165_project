@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import { Location } from '@angular/common';
 import {ActivityDetail} from '../_classes/ActivityDetail';
 import {BurnedCalories} from '../_classes/BurnedCalories';
-import {Category} from '../_classes/Category';
+import {ICategory} from '../_interfaces/ICategory';
 import {CategoryService} from '../_services/category.service';
 
 @Component({
@@ -15,7 +15,7 @@ import {CategoryService} from '../_services/category.service';
 export class ActivityDetailFormComponent implements OnInit {
 
   activity: ActivityDetail;
-  categories: Category[];
+  categories: ICategory[];
 
   constructor(
     private activityService: ActivityService,

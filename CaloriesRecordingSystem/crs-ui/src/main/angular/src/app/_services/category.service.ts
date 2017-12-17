@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Category} from '../_classes/Category';
+import {ICategory} from '../_interfaces/ICategory';
 import {HttpClient} from '@angular/common/http';
 
 const prefix = 'activities/';
@@ -13,14 +13,14 @@ export class CategoryService {
     private http: HttpClient
   ) {}
 
-  getAllCategories(): Observable<Category[]> {
+  getAllCategories(): Observable<ICategory[]> {
     return this.http
-      .get<Category[]>(allCategories);
+      .get<ICategory[]>(allCategories);
   }
 
-  getCategory(id: number): Observable<Category> {
+  getCategory(id: number): Observable<ICategory> {
     return this.http
-      .get<Category>(category + id);
+      .get<ICategory>(category + id);
   }
 
 }

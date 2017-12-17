@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CategoryService} from '../_services/category.service';
-import {Category} from '../_classes/Category';
+import {ICategory} from '../_interfaces/ICategory';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {IActivity} from '../_interfaces/IActivity';
@@ -13,7 +13,7 @@ import {ActivityService} from '../_services/activity.service';
 })
 export class CategoryDetailComponent implements OnInit {
 
-  category: Category;
+  category: ICategory;
   activitiesInCategory: IActivity[];
 
   constructor(
@@ -23,7 +23,7 @@ export class CategoryDetailComponent implements OnInit {
     private route: ActivatedRoute,
   ) { }
 
-  setCategory(cat: Category) {
+  setCategory(cat: ICategory) {
     this.category = cat;
 
     this.activityService

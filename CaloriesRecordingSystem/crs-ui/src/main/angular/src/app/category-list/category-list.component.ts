@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CategoryService} from '../_services/category.service';
-import {Category} from '../_classes/Category';
+import {ICategory} from '../_interfaces/ICategory';
 
 @Component({
   selector: 'app-category-list',
@@ -9,7 +9,7 @@ import {Category} from '../_classes/Category';
 })
 export class CategoryListComponent implements OnInit {
 
-  categories: Category[];
+  categories: ICategory[];
 
   constructor(
     private categoryService: CategoryService,

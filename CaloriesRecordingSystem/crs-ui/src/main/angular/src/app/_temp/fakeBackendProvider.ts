@@ -5,27 +5,43 @@ import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/materialize';
 import 'rxjs/add/operator/dematerialize';
 import 'rxjs/add/observable/throw';
-import {Category} from '../_classes/Category';
+import {ICategory} from '../_interfaces/ICategory';
 import {IRecordDetail} from '../_interfaces/IRecordDetail';
 import {IActivityDetail} from '../_interfaces/IActivityDetail';
 
-const categories_const: Category[] = [
-  new Category(0, 'Exercise', 'Exercise is the best activity he two-letter code of the language to use for month and day names. These will also be used as the input\'s value (and subsequently sent to the server in the case of form submissions). Currently ships with English (\'en\'), German (\'de\'), Brazilian (\'br\'), and Spanish (\'es\') translations, but others can be added (see I18N below). If an unknown language code is given, English will be used.\n' +
+const categories_const: ICategory[] = [
+  {
+    id: 0,
+    name: 'Exercise',
+    description: 'Exercise is the best activity he two-letter code of the language to use for month and day names. These will also be used as the input\'s value (and subsequently sent to the server in the case of form submissions). Currently ships with English (\'en\'), German (\'de\'), Brazilian (\'br\'), and Spanish (\'es\') translations, but others can be added (see I18N below). If an unknown language code is given, English will be used.\n' +
     '\n' +
-    'forceParse'),
-  new Category(1, 'Aerobics'),
-  new Category(2, 'Walking'),
-  new Category(3, 'Running'),
-  new Category(4, 'Swimming'),
-  new Category(5, 'Work'),
-  new Category(6, 'Work2'),
-  new Category(7, 'Work3'),
-  new Category(8, 'Work4'),
-  new Category(9, 'Work5'),
-  new Category(10, 'Work6'),
-  new Category(11, 'Work7'),
-  new Category(12, 'Work8'),
-  new Category(13, 'Work9'),
+    'forceParse',
+  },
+  {
+    id: 1,
+    name: 'Aerobics',
+    description: '',
+  },
+  {
+    id: 2,
+    name: 'Walking',
+    description: '',
+  },
+  {
+    id: 3,
+    name: 'Running',
+    description: '',
+  },
+  {
+    id: 4,
+    name: 'Swimming',
+    description: '',
+  },
+  {
+    id: 5,
+    name: 'Work',
+    description: '',
+  },
 ];
 const records_const: IRecordDetail[] = [
   {
@@ -33,7 +49,6 @@ const records_const: IRecordDetail[] = [
     activityName: 'First activity',
     burnedCalories: 500,
     id: 0,
-    userId: 0,
     date: '5.12.2017 8:51',
     distance: 500,
     duration: 20,
@@ -44,7 +59,6 @@ const records_const: IRecordDetail[] = [
     activityName: 'Second activity',
     burnedCalories: 566,
     id: 1,
-    userId: 0,
     date: '5.12.2017 15:25',
     distance: 125,
     duration: 80,
@@ -119,7 +133,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // array in local storage
     const users: any[] = JSON.parse(localStorage.getItem('users')) || users_const;
-    const categories: Category[] = JSON.parse(localStorage.getItem('categories')) || categories_const;
+    const categories: ICategory[] = JSON.parse(localStorage.getItem('categories')) || categories_const;
     const records: IRecordDetail[] = JSON.parse(localStorage.getItem('records')) || records_const;
     const activities: IActivityDetail[] = JSON.parse(localStorage.getItem('activities')) || activities_const;
 
