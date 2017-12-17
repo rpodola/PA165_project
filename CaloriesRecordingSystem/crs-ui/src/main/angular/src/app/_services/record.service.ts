@@ -10,6 +10,7 @@ const prefix = '/records/';
 const allRecords = prefix + 'allRecords';
 const recordDetail = prefix;
 const createRecord = prefix + 'create';
+const updateRecord = prefix + 'update';
 
 @Injectable()
 export class RecordService {
@@ -30,5 +31,10 @@ export class RecordService {
   createNewRecord(record: Record): Observable<number>{
     return this.http
       .post<number>(createRecord, { record })
+  }
+
+  updateRecord(record: number): Observable<number> {
+    return this.http
+      .post<number>(updateRecord, { record });
   }
 }

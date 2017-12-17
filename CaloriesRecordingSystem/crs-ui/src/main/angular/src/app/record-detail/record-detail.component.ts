@@ -30,4 +30,13 @@ export class RecordDetailComponent implements OnInit {
       });
   }
 
+  saveRecordDetails() {
+    this.recordService
+      .updateRecord(this.record)
+      .subscribe(record => {
+        const { activity, ...other } = record;
+        this.record = Object.assign({}, { ...other, activityId: activity.id });
+      });
+  }
+
 }

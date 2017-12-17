@@ -1,4 +1,11 @@
-import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse
+} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
@@ -129,7 +136,8 @@ const users_const: any[] = [
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
 
-  constructor() { }
+  constructor() {
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // array in local storage
@@ -156,7 +164,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             isAdmin: request.body.username === 'admin' ? true : undefined,
           };
 
-          return of(new HttpResponse({ status: 200, body }));
+          return of(new HttpResponse({status: 200, body}));
         } else {
           // else return 400 bad request
           return Observable.throw('Username or password is incorrect');
@@ -172,7 +180,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const usernameExists = users.filter(user => user.username === newUser.username).length;
         const emailExists = users.filter(user => user.email === newUser.email).length;
         if (usernameExists || emailExists) {
-          return of(new HttpResponse({ status: 200, body: { emailExists, usernameExists } }));
+          return of(new HttpResponse({status: 200, body: {emailExists, usernameExists}}));
         }
 
         // save new user
@@ -187,12 +195,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         };
 
         // respond 200 OK
-        return of(new HttpResponse({ status: 200, body }));
+        return of(new HttpResponse({status: 200, body}));
       }
 
       //  all categories
       if (request.url.endsWith('activities/allCategories') && request.method === 'GET') {
-        return of(new HttpResponse({ status: 200, body: categories }));
+        return of(new HttpResponse({status: 200, body: categories}));
       }
 
       //  category
@@ -203,7 +211,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const category = categories.find(cat => cat.id === id);
 
         if (category) {
-          return of(new HttpResponse({status: 200, body: category }));
+          return of(new HttpResponse({status: 200, body: category}));
         }
 
         return Observable.throw('Category doesnt exist');
@@ -211,7 +219,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       //  all records of User
       if (request.url.endsWith('/records/allRecords') && request.method === 'GET') {
-        return of(new HttpResponse({ status: 200, body: records }));
+        return of(new HttpResponse({status: 200, body: records}));
       }
 
       //  record
@@ -222,23 +230,64 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const record = records.find(rec => rec.id === id);
 
         if (record) {
-          return of(new HttpResponse({status: 200, body: record }));
+          return of(new HttpResponse({status: 200, body: record}));
         }
 
-        return Observable.throw('Record doesnt exist');
+        return Observable.throw('Record does not exist');
+      }
+
+      if (request.url.endsWith('/records/create') && request.method === 'POST') {
+        const {record} = request.body;
+
+        const recordDetail: IRecordDetail = {
+          id: records.length,
+          activityId: record.activityId,
+          activityName: activities.find(act => act.id === parseInt(record.activityId, 10)).name,
+          date: record.date,
+          burnedCalories: 500,
+          duration: record.duration,
+          distance: record.distance,
+          weight: 200
+        };
+
+        records.push(recordDetail);
+        localStorage.setItem('records', JSON.stringify(records));
+
+        return of(new HttpResponse({status: 200, body: recordDetail.id}));
+      }
+
+      //  update record
+      if (request.url.endsWith('/records/update') && request.method === 'POST') {
+        const {record} = request.body;
+
+        const oldRecord = records.find(rc => rc.id === record.id);
+
+        if (!oldRecord) {
+          return Observable.throw('IRecord you are trying to update does not exist!');
+        }
+
+        const index = records.indexOf(oldRecord);
+        const {activityId, ...other} = record;
+        records[index] = Object.assign({}, {
+          ...other,
+          activity: activities.find(act => act.id === parseInt(activityId, 10))
+        });
+        localStorage.setItem('records', JSON.stringify(records));
+
+        return of(new HttpResponse({status: 200, body: records));
       }
 
       //  all activities
       if (request.url.endsWith('/activities/allActivities') && request.method === 'GET') {
-        return of(new HttpResponse({ status: 200, body: activities }));
+        return of(new HttpResponse({status: 200, body: activities}));
       }
 
       //  activities from categories
       if (request.url.endsWith('/activities/activitiesFromCategories') && request.method === 'POST') {
-        const { categoryIds } = request.body;
+        const {categoryIds} = request.body;
         const filteredActivities = activities.filter(activity => categoryIds.includes(activity.category.id));
 
-        return of(new HttpResponse({ status: 200, body: filteredActivities }));
+        return of(new HttpResponse({status: 200, body: filteredActivities}));
       }
 
       //  activity detail
@@ -249,7 +298,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const activity = activities.find(act => act.id === id);
 
         if (activity) {
-          return of(new HttpResponse({ status: 200, body: activity }));
+          return of(new HttpResponse({status: 200, body: activity}));
         }
 
         return Observable.throw('IActivity doesnt exist');
@@ -257,11 +306,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       //  create activity
       if (request.url.endsWith('/activities/create') && request.method === 'POST') {
-        const { activity } = request.body;
+        const {activity} = request.body;
 
         const nameExists = activities
-          .filter(ac => ac.name === activity.name)
-          .length > 0;
+            .filter(ac => ac.name === activity.name)
+            .length > 0;
 
         if (nameExists) {
           return of(undefined);
@@ -278,12 +327,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         activities.push(activityDetail);
         localStorage.setItem('activities', JSON.stringify(activities));
 
-        return of(new HttpResponse({ status: 200, body: activityDetail.id }));
+        return of(new HttpResponse({status: 200, body: activityDetail.id}));
       }
 
       //  update activity
       if (request.url.endsWith('/activities/update') && request.method === 'POST') {
-        const { activity } = request.body;
+        const {activity} = request.body;
 
         const oldActivity = activities.find(act => act.id === activity.id);
 
@@ -292,11 +341,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         const index = activities.indexOf(oldActivity);
-        const { categoryId, ...other } = activity;
-        activities[index] = Object.assign({}, { ...other, category: categories.find(cat => cat.id === parseInt(categoryId, 10)) });
+        const {categoryId, ...other} = activity;
+        activities[index] = Object.assign({}, {
+          ...other,
+          category: categories.find(cat => cat.id === parseInt(categoryId, 10))
+        });
         localStorage.setItem('activities', JSON.stringify(activities));
 
-        return of(new HttpResponse({ status: 200, body: activities[index] }));
+        return of(new HttpResponse({status: 200, body: activities[index]}));
       }
 
       //  get user settings
@@ -304,7 +356,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const currUser = JSON.parse(localStorage.getItem('currentUser'));
         const user = users.find(u => u.id === currUser.user.id);
 
-        return of(new HttpResponse({ status: 200, body: user }));
+        return of(new HttpResponse({status: 200, body: user}));
       }
 
       //  save user settings
@@ -315,7 +367,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         users[index] = request.body;
         localStorage.setItem('users', JSON.stringify(users));
 
-        return of(new HttpResponse({ status: 200, body: users[index] }));
+        return of(new HttpResponse({status: 200, body: users[index]}));
       }
 
       // pass through any requests not handled above
