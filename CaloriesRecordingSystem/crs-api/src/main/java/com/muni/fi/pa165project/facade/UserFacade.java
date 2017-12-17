@@ -4,7 +4,7 @@ import com.muni.fi.pa165project.dto.LoginExistsRequestDTO;
 import com.muni.fi.pa165project.dto.LoginExistsResponseDTO;
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserCredentialsDTO;
-import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.dto.UserUpdateDTO;
 
@@ -28,7 +28,7 @@ public interface UserFacade {
      * @param userDto user object
      * @return edited user detail
      */
-    UserDTO editUser(UserUpdateDTO userDto);
+    UserDetailDTO editUser(UserUpdateDTO userDto);
 
     /**
      * Remove User
@@ -42,14 +42,14 @@ public interface UserFacade {
      *
      * @param id user id
      */
-    UserDTO getUser(long id);
+    UserDetailDTO getUser(long id);
 
     /**
      * Get information about User by email
      *
      * @param email users's email
      */
-    UserDTO getUser(String email);
+    UserDetailDTO getUser(String email);
 
     /**
      * Set tracking settings for user (goals)
@@ -71,7 +71,7 @@ public interface UserFacade {
      * @param credentials  
      * @return User if credentials match, null otherwise
      */
-    UserDTO findByCredentials(UserCredentialsDTO credentials);
+    UserDetailDTO findByCredentials(UserCredentialsDTO credentials);
     
     /**
      * Checks whether any user with given username or email exists

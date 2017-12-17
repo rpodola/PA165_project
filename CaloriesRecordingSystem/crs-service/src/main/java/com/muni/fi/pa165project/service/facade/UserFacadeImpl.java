@@ -4,7 +4,7 @@ import com.muni.fi.pa165project.dto.LoginExistsRequestDTO;
 import com.muni.fi.pa165project.dto.LoginExistsResponseDTO;
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserCredentialsDTO;
-import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.dto.UserUpdateDTO;
 import com.muni.fi.pa165project.entity.User;
@@ -42,12 +42,12 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserDTO editUser(UserUpdateDTO userDto) {
+    public UserDetailDTO editUser(UserUpdateDTO userDto) {
         log.debug("Editing User with id <{}>", userDto.getId());
 
         User user = mapper.map(userDto, User.class);
         this.userService.updateUser(user);
-        return mapper.map(user, UserDTO.class);
+        return mapper.map(user, UserDetailDTO.class);
     }
 
     @Override
@@ -58,19 +58,19 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserDTO getUser(long id) {
+    public UserDetailDTO getUser(long id) {
         log.debug("Getting User with id <{}>", id);
 
         User user = this.userService.findById(id);
-        return mapper.map(user, UserDTO.class);
+        return mapper.map(user, UserDetailDTO.class);
     }
 
     @Override
-    public UserDTO getUser(String email) {
+    public UserDetailDTO getUser(String email) {
         log.debug("Getting User with email <{}>", email);
 
         User user = this.userService.findByEmail(email);
-        return mapper.map(user, UserDTO.class);
+        return mapper.map(user, UserDetailDTO.class);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserDTO findByCredentials(UserCredentialsDTO credentials) {
+    public UserDetailDTO findByCredentials(UserCredentialsDTO credentials) {
         String username = credentials.getUsername();
         String password = credentials.getPassword();
         
@@ -110,7 +110,7 @@ public class UserFacadeImpl implements UserFacade {
             return null;
         }
         
-        return mapper.map(user, UserDTO.class);
+        return mapper.map(user, UserDetailDTO.class);
     }
 
     @Override

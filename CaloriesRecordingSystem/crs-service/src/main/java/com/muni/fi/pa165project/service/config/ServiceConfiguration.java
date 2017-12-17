@@ -1,11 +1,7 @@
 package com.muni.fi.pa165project.service.config;
 
 import com.muni.fi.pa165project.config.AppContextConfiguration;
-import com.muni.fi.pa165project.dto.ActivityDTO;
-import com.muni.fi.pa165project.dto.RecordDTO;
-import com.muni.fi.pa165project.dto.UserDTO;
-import com.muni.fi.pa165project.dto.UserRegisterDTO;
-import com.muni.fi.pa165project.dto.UserUpdateDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
 import com.muni.fi.pa165project.entity.User;
@@ -46,9 +42,8 @@ public class ServiceConfiguration {
                         .fields("activity.name", "activityName")
                         .fields("activity.id", "activityId")
                         .fields("user.id", "userId");
-                mapping(User.class, UserDTO.class)
+                mapping(User.class, UserDetailDTO.class)
                         .fields("loginDetails.username", "username")
-                        .fields("loginDetails.password", "password")
                         .fields("loginDetails.email", "email");
                 mapping(UserRegisterDTO.class, User.class)
                         .fields("username", "loginDetails.username")

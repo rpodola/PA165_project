@@ -26,7 +26,7 @@ public class UserRegisterDTO {
     private double weight;
 
     private double height;
-    
+
     public String getUsername() {
         return username;
     }
@@ -90,5 +90,4 @@ public class UserRegisterDTO {
     public void setHeight(double height) {
         this.height = height;
     }
-    
 }

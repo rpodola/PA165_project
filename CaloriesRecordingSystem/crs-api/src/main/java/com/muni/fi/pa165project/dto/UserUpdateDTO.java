@@ -5,7 +5,7 @@ package com.muni.fi.pa165project.dto;
  * @author Radoslav Karlik
  */
 public class UserUpdateDTO {
-    
+
     private Long id;
 
     private String name;

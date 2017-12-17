@@ -1,22 +1,18 @@
 package com.muni.fi.pa165project.rest.controllers;
 
 
-import java.util.List;
-
 import javax.inject.Inject;
 import com.muni.fi.pa165project.rest.ApiUris;
-import com.muni.fi.pa165project.rest.exceptions.ResourceNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.facade.UserFacade;
 
 /**
@@ -35,10 +31,10 @@ public class UsersController {
 	private UserFacade userFacade;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public final UserDTO getUser(@PathVariable("user_id") long userId) {
+	public final UserDetailDTO getUser(@PathVariable("id") long userId) {
 
 		logger.debug("rest getUser({})", userId);
-		UserDTO user = userFacade.getUser(userId); 
+		UserDetailDTO user = userFacade.getUser(userId);
 
 		return user;
 	}

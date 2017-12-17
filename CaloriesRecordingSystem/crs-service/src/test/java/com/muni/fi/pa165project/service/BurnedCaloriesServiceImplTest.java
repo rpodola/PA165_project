@@ -37,7 +37,7 @@ public class BurnedCaloriesServiceImplTest {
     public void init() {
         activity = new Activity();
         activity.setId(1L);
-        activity.setCategory(Category.DANCING);
+        activity.setCategory(Category.DANCE);
         activity.setName("Dance");
 
         burnedCalories = new BurnedCalories();

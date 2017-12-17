@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * @author Lukáš Císar
  */
-public class UserDTO {
+public class UserDetailDTO {
 
     private Long id;
 
@@ -23,8 +23,6 @@ public class UserDTO {
     private boolean isAdmin;
 
     private String username;
-
-    private String password;
 
     private String email;
 
@@ -92,14 +90,6 @@ public class UserDTO {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -126,10 +116,10 @@ public class UserDTO {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof UserDTO)) {
+        if (!(obj instanceof UserDetailDTO)) {
             return false;
         }
-        final UserDTO other = (UserDTO) obj;
+        final UserDetailDTO other = (UserDetailDTO) obj;
         if (!this.username.equals(other.username)) {
             return false;
         }

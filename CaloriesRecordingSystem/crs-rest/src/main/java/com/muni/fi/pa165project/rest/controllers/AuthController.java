@@ -9,7 +9,7 @@ import com.muni.fi.pa165project.dto.LoginExistsRequestDTO;
 import com.muni.fi.pa165project.dto.LoginExistsResponseDTO;
 import com.muni.fi.pa165project.dto.TokenDTO;
 import com.muni.fi.pa165project.dto.UserCredentialsDTO;
-import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.rest.ApiUris;
@@ -40,7 +40,7 @@ public class AuthController {
     public final TokenDTO authenticate(@RequestBody UserCredentialsDTO credentials) {
         logger.debug("rest authenticate()");
 
-        UserDTO user = this.userFacade.findByCredentials(credentials);
+        UserDetailDTO user = this.userFacade.findByCredentials(credentials);
         
         if (user == null) {
             throw new IllegalArgumentException("credentials");

@@ -5,15 +5,16 @@ package com.muni.fi.pa165project.enums;
  */
 public enum Category {
     
-    CYCLING("Cycling"),
-    RUNNING("Running"),
-    WALKING("Walking"),
-    SWIMMING("Swimming"),
-    AEROBICS("Aerobics"),
-    DANCING("Dancing"),
-    EXERCISE("Exercise"),
-    WORK("Work"),
-    HOBBY("Hobby");
+    CYCLING("Cycling", "Riding bicycle"),
+    RUNNING("Running", "Running feet"),
+    WALKING("Walking", "Regular walking"),
+    SWIMMING("Swimming", "Swimming in the pool"),
+    AEROBICS("Aerobics", "Exercise aerobics techniques"),
+    DANCE("Dance", "Dancing"),
+    EXERCISE("Exercise", "Exercising"),
+    WORK("Work", "Working"),
+    HOBBY("Hobby", "Running a hobby"),
+    SPORT("Sport", "Playing sport games");
     
     private final String name;
     

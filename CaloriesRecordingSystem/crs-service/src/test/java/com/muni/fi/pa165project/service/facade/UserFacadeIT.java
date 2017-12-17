@@ -1,7 +1,7 @@
 package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
-import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.dto.UserUpdateDTO;
 import com.muni.fi.pa165project.facade.UserFacade;
@@ -40,7 +40,7 @@ public class UserFacadeIT {
     @Rollback()
     public void testCreateUser() {
         Long userId = userFac.createUser(userRegisterDto);
-        UserDTO foundUser = this.userFac.getUser(userId);
+        UserDetailDTO foundUser = this.userFac.getUser(userId);
         Assert.assertTrue(userRegisterDto.getUsername().equals(foundUser.getUsername()));
     }
 
@@ -61,7 +61,7 @@ public class UserFacadeIT {
         updateUserDto.setPassword(updateUserDto.getPassword());
         userFac.editUser(updateUserDto);
         //lets get user with changed name
-        UserDTO foundUser = this.userFac.getUser(userId);
+        UserDetailDTO foundUser = this.userFac.getUser(userId);
 
         Assert.assertEquals(foundUser.getId(), updateUserDto.getId());
         Assert.assertEquals(updateUserDto.getName(), newName);
@@ -73,7 +73,7 @@ public class UserFacadeIT {
     public void testRemoveUser() {
         Long userId = userFac.createUser(userRegisterDto);
         userFac.removeUser(userId);
-        UserDTO foundUser = this.userFac.getUser(userId);
+        UserDetailDTO foundUser = this.userFac.getUser(userId);
         Assert.assertNull(foundUser);
     }
 
@@ -82,7 +82,7 @@ public class UserFacadeIT {
     @Rollback()
     public void testGetUserById() {
         Long userId = userFac.createUser(userRegisterDto);
-        UserDTO foundUser = this.userFac.getUser(userId);
+        UserDetailDTO foundUser = this.userFac.getUser(userId);
         Assert.assertEquals(userId, foundUser.getId());
         //lets try to find nobody
         Assert.assertNull(this.userFac.getUser("asdasd"));
@@ -101,7 +101,7 @@ public class UserFacadeIT {
     @Rollback()
     public void testGetUserByEmail() {
         userFac.createUser(userRegisterDto);
-        UserDTO foundUser = this.userFac.getUser(userRegisterDto.getEmail());
+        UserDetailDTO foundUser = this.userFac.getUser(userRegisterDto.getEmail());
         Assert.assertEquals(userRegisterDto.getUsername(), foundUser.getUsername());
     }
 

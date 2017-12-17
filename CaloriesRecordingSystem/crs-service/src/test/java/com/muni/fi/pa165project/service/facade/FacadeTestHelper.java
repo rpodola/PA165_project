@@ -5,7 +5,7 @@ import com.muni.fi.pa165project.dto.ActivityDetailExportDTO;
 import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
 import com.muni.fi.pa165project.dto.CategoryDTO;
 import com.muni.fi.pa165project.dto.RecordDetailDTO;
-import com.muni.fi.pa165project.dto.UserDTO;
+import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.structures.CategoryObject;
@@ -26,20 +26,8 @@ public class FacadeTestHelper {
         user.setBirthDate(LocalDate.of(2017, Month.DECEMBER, 15).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         user.setIsMale(true);
         user.setName("Lukas");
-        user.setUsername("ciso112");
-        user.setPassword("abcdefgh");
-        user.setEmail("ciso112@protonmail.com");
-        return user;
-    }
-    
-    public static UserDTO initUser() {
-        UserDTO user = new UserDTO();
-        user.setBirthDate(LocalDate.now());
-        user.setIsMale(true);
-        user.setName("Lukas");
         user.setHeight(180);
         user.setWeight(77);
-        user.setIsAdmin(false);
         user.setUsername("ciso112");
         user.setPassword("abcdefgh");
         user.setEmail("ciso112@protonmail.com");
