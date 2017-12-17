@@ -4,3 +4,13 @@
     text-align: right;
   }
 }
+
+.calendarButtonsBorder {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.calendarButtonsBorder:hover {
+  cursor: pointer;
+}

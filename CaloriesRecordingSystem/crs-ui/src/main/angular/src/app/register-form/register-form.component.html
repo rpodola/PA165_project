@@ -242,11 +242,11 @@
     </div>
     <div class="row">
       <div class="col-md-3 field-label-responsive">
-        <label for="birthday">
+        <label>
           Birthday
         </label>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div class="form-group">
           <div class="input-group mb-2 mr-sm-2 mb-sm-0">
             <div class="input-group-addon" style="width: 2.6rem">
@@ -254,16 +254,39 @@
               </i>
             </div>
 
-            <span (click)="overridePopupWindowStyle()">
-              <ng-datepicker
-                id="birthday"
-                name="birthday"
-                position="bottom-right"
-                [(ngModel)]="birthday"
-              >
-              </ng-datepicker>
-            </span>
+            <div class="input-group">
+              <input
+                class="form-control"
+                style="float:none"
+                placeholder="Select your birth date"
+                [options]="datePickerOptions"
+                ngx-mydatepicker name="mydate"
+                #dp="ngx-mydatepicker"
+                (inputFieldChanged)="onInputFieldChanged($event)"
+              />
+
+              <span class="input-group-btn">
+                <a class="btn calendarButtonsBorder" (click)="dp.clearDate()">
+                    <i class="fa fa-close"></i>
+                </a>
+                <a class="btn calendarButtonsBorder" (click)="dp.toggleCalendar()">
+                  <i class="fa fa-calendar"></i>
+                </a>
+              </span>
+            </div>
           </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div
+          *ngIf="!isDateValid && birthday !== undefined"
+          class="form-control-feedback"
+        >
+          <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                Birth date has invalid format
+              </i>
+          </span>
         </div>
       </div>
     </div>
@@ -374,7 +397,7 @@
           type="submit"
           class="btn btn-success"
           (click)="registerAccount()"
-          [disabled]="usernameValidation.errors || passwordValidation.errors || !passwordsMatch || emailValidator.errors || nameValidation.errors || heightValidator.errors || bodyweightValidation.errors"
+          [disabled]="usernameValidation.errors || passwordValidation.errors || !passwordsMatch || emailValidator.errors || nameValidation.errors || heightValidator.errors || bodyweightValidation.errors || !isDateValid"
         >
           <i class="fa fa-user-plus">
           </i>

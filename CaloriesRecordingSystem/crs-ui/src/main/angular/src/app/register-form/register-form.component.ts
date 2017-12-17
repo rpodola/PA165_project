@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {RegisterSettings} from '../_classes/RegisterSettings';
-import {dateToDDMMYYYY} from '../_utils/DateUtils';
+import {dateToIMyDate} from '../_utils/DateUtils';
 import {AuthenticationService} from '../_services/authentication.service';
 import {Router} from '@angular/router';
 import {LoginEventsService} from '../_services/login-events.service';
+import { IMyInputFieldChanged, INgxMyDpOptions } from 'ngx-mydatepicker';
 
 @Component({
   selector: 'app-register-form',
@@ -12,12 +13,20 @@ import {LoginEventsService} from '../_services/login-events.service';
 })
 export class RegisterFormComponent implements OnInit {
   registerSettings = new RegisterSettings();
-  birthday: Date;
+
   usernameExists: boolean;
   emailExists: boolean;
 
   passwordRepeat: string;
   passwordsMatch: boolean;
+
+  birthday: string;
+  isDateValid: boolean;
+
+  datePickerOptions: INgxMyDpOptions = {
+    dateFormat: 'dd-mm-yyyy',
+    disableSince: dateToIMyDate(new Date()),
+  };
 
   constructor(
     private authService: AuthenticationService,
@@ -27,7 +36,6 @@ export class RegisterFormComponent implements OnInit {
     this.registerSettings.male = true;
     this.registerSettings.weight = 1;
     this.registerSettings.height = 1;
-    this.birthday = new Date();
   }
 
   passwordChanged() {
@@ -37,7 +45,7 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit() { }
 
   registerAccount() {
-    this.registerSettings.birthday = dateToDDMMYYYY(this.birthday);
+    this.registerSettings.birthday = this.birthday;
 
     this.authService
       .register(this.registerSettings)
@@ -52,15 +60,8 @@ export class RegisterFormComponent implements OnInit {
       });
   }
 
-  /**
-   * Required hack to override datepicker position which is implicitly under other components :/
-   */
-  overridePopupWindowStyle(): void {
-    const el = document.getElementsByClassName('ngx-datepicker-calendar-container');
-
-    if (el.length > 0) {
-      el[0]['style']['marginLeft'] = '75px';
-    }
+  onInputFieldChanged(event: IMyInputFieldChanged) {
+    this.isDateValid = event.valid;
+    this.birthday = event.value;
   }
-
 }

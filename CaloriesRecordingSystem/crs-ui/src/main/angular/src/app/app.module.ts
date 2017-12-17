@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { NgDatepickerModule } from 'ng2-datepicker';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 
 import { AppComponent } from './app.component';
 import { FormsModule} from '@angular/forms';
@@ -70,7 +70,7 @@ import {UserService} from './_services/user.service';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgDatepickerModule,
+    NgxMyDatePickerModule.forRoot(),
   ],
   providers: [
     ActivityService,

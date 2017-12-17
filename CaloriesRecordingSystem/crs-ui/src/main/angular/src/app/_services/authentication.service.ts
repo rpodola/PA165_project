@@ -4,6 +4,7 @@ import {LoginCredentials} from '../_classes/LoginCredentials';
 import {RegisterSettings} from '../_classes/RegisterSettings';
 import {Observable} from 'rxjs/Observable';
 import jwt_decode from 'jwt-decode';
+import 'rxjs/add/operator/map';
 
 const prefix = '/auth/';
 const loginUri = prefix + 'login';

@@ -5,6 +5,7 @@ import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/materialize';
 import 'rxjs/add/operator/dematerialize';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/mergeMap';
 import {ICategory} from '../_interfaces/ICategory';
 import {IRecordDetail} from '../_interfaces/IRecordDetail';
 import {IActivityDetail} from '../_interfaces/IActivityDetail';
