@@ -18,7 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Radim Podola
@@ -38,6 +40,7 @@ public class TrackingFacadeIT {
 
     private UserRegisterDTO userRegisterDto;
     private ActivityCreateDTO activity;
+    private ActivityUpdateDTO activityUpdate;
     private RecordDetailDTO record;
     private long userId;
     
@@ -47,7 +50,16 @@ public class TrackingFacadeIT {
         userId = usFac.createUser(userRegisterDto);
         activity = FacadeTestHelper.initActivity();
         activity.setId(acFac.createActivity(activity));
-        acFac.addBurnedCalorie(FacadeTestHelper.initBurnedCalories(activity.getId()));
+
+        activityUpdate = new ActivityUpdateDTO();
+        activityUpdate.setName(activity.getName());
+        activityUpdate.setDescription(activity.getDescription());
+        activityUpdate.setCategory(activity.getCategory());
+        activityUpdate.setId(activity.getId());
+        Set<BurnedCaloriesDTO> bc = new HashSet<>();
+        bc.add(FacadeTestHelper.initBurnedCalories());
+        activityUpdate.setBurnedCalories(bc);
+        acFac.editActivity(activityUpdate);
         record = FacadeTestHelper.initRecord(userId, activity.getId());
     }
 

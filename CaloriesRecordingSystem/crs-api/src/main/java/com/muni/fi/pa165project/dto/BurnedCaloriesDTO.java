@@ -7,8 +7,6 @@ public class BurnedCaloriesDTO {
 
     private Long id;
 
-    private long activityId;
-
     private int upperWeightBoundary;
 
     private int amount;
@@ -19,14 +17,6 @@ public class BurnedCaloriesDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public long getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(long activityId) {
-        this.activityId = activityId;
     }
 
     public int getUpperWeightBoundary() {
@@ -65,9 +55,6 @@ public class BurnedCaloriesDTO {
             return false;
         }
         final BurnedCaloriesDTO other = (BurnedCaloriesDTO) obj;
-        if (this.activityId != other.getActivityId()) {
-            return false;
-        }
         if (this.upperWeightBoundary != other.getUpperWeightBoundary()) {
             return false;
         }

@@ -34,27 +34,6 @@ public interface ActivityFacade {
     void removeActivity(long id);
 
     /**
-     * Add Burned Calorie record to Activity
-     *
-     * @param burnedCaloriesDTO burned calorie object
-     */
-    void addBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO);
-
-    /**
-     * Edit Burned Calorie record in Activity
-     *
-     * @param burnedCaloriesDTO burned calorie object
-     */
-    void editBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO);
-
-    /**
-     * Remove Burned Calorie record from Activity
-     *
-     * @param burnedCaloriesDTO burned calorie object
-     */
-    void removeBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO);
-
-    /**
      * Get activity detail including calories table
      *
      * @param id activity id

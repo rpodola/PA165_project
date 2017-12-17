@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Radim Podola
@@ -158,59 +159,53 @@ public class ActivityFacadeIT {
     @Test
     @Transactional
     @Rollback()
-    public void testAddBurnedCalorie() {
-        activity.setId(acFac.createActivity(activity));
+    public void testAddAndRemoveBurnedCalories() {
+        Long activityId = acFac.createActivity(activity);
+        ActivityDetailDTO found = acFac.getActivityDetail(activityId);
+        Assert.assertTrue(found.getBurnedCalories().isEmpty());
 
-        BurnedCaloriesDTO bc = FacadeTestHelper.initBurnedCalories(activity.getId());
-        acFac.addBurnedCalorie(bc);
-
-        ActivityDetailDTO found = this.acFac.getActivityDetail(activity.getId());
-        Assert.assertEquals(found.getBurnedCalories().size(), 1);
-        Assert.assertTrue(found.getBurnedCalories().contains(bc));
+        ActivityUpdateDTO activityUpdate = new ActivityUpdateDTO();
+        activityUpdate.setName(activity.getName());
+        activityUpdate.setDescription(activity.getDescription());
+        activityUpdate.setCategory(activity.getCategory());
+        activityUpdate.setId(activityId);
+        Set<BurnedCaloriesDTO> bc = new HashSet<>();
+        bc.add(FacadeTestHelper.initBurnedCalories());
+        activityUpdate.setBurnedCalories(bc);
+        acFac.editActivity(activityUpdate);
+        //1 bc should be added
+        found = acFac.getActivityDetail(activityId);
+        Assert.assertEquals(1, found.getBurnedCalories().size());
+        //new remove it
+        activityUpdate.getBurnedCalories().clear();
+        acFac.editActivity(activityUpdate);
+        //0 bc should be at presence
+        found = acFac.getActivityDetail(activityId);
+        Assert.assertEquals(0, found.getBurnedCalories().size());
     }
 
     @Test
     @Transactional
     @Rollback()
-    public void testEditBurnedCalorie() {
-        activity.setId(acFac.createActivity(activity));
-
-        BurnedCaloriesDTO bc = FacadeTestHelper.initBurnedCalories(activity.getId());
-        //lets persist burned calories
-        acFac.addBurnedCalorie(bc);
-        //lets get burned calories
-        ActivityDetailDTO found = acFac.getActivityDetail(activity.getId());
-        List<BurnedCaloriesDTO> listBC = new ArrayList<>();
-        listBC.addAll(found.getBurnedCalories());
-        bc.setId(listBC.get(0).getId());
-        //lets change property
-        bc.setAmount(100);
-        Assert.assertFalse(found.getBurnedCalories().contains(bc));
-        acFac.editBurnedCalorie(bc);
-        found = acFac.getActivityDetail(activity.getId());
-        Assert.assertEquals(found.getBurnedCalories().size(), 1);
-        Assert.assertTrue(found.getBurnedCalories().contains(bc));
-    }
-
-    @Test
-    @Transactional
-    @Rollback()
-    public void testRemoveBurnedCalorie() {
-        activity.setId(acFac.createActivity(activity));
-
-        BurnedCaloriesDTO bc = FacadeTestHelper.initBurnedCalories(activity.getId());
-        acFac.addBurnedCalorie(bc);
-
-        ActivityDetailDTO found = acFac.getActivityDetail(activity.getId());
-        Assert.assertEquals(found.getBurnedCalories().size(), 1);
-
-        //lets get burned calories and set id
-        List<BurnedCaloriesDTO> listBC = new ArrayList<>();
-        listBC.addAll(found.getBurnedCalories());
-        bc.setId(listBC.get(0).getId());
-        //lets remove burned calories
-        acFac.removeBurnedCalorie(bc);
-        found = acFac.getActivityDetail(activity.getId());
-        Assert.assertEquals(found.getBurnedCalories().size(), 0);
+    public void testEditBurnedCalories() {
+        Long activityId = acFac.createActivity(activity);
+        ActivityUpdateDTO activityUpdate = new ActivityUpdateDTO();
+        activityUpdate.setName(activity.getName());
+        activityUpdate.setDescription(activity.getDescription());
+        activityUpdate.setCategory(activity.getCategory());
+        activityUpdate.setId(activityId);
+        Set<BurnedCaloriesDTO> bc = new HashSet<>();
+        bc.add(FacadeTestHelper.initBurnedCalories());
+        activityUpdate.setBurnedCalories(bc);
+        acFac.editActivity(activityUpdate);
+        //1 bc should be added
+        ActivityDetailDTO found = acFac.getActivityDetail(activityId);
+        Assert.assertEquals(1, found.getBurnedCalories().size());
+        Assert.assertEquals(50, found.getBurnedCalories().iterator().next().getAmount());
+        //lets change it
+        activityUpdate.getBurnedCalories().iterator().next().setAmount(100);
+        acFac.editActivity(activityUpdate);
+        found = acFac.getActivityDetail(activityId);
+        Assert.assertEquals(100, found.getBurnedCalories().iterator().next().getAmount());
     }
 }

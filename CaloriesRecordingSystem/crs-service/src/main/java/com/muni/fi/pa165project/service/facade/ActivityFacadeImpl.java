@@ -58,6 +58,9 @@ public class ActivityFacadeImpl implements ActivityFacade {
         log.debug("Editing activity with id <{}>", activityUpdateDTO.getId());
 
         Activity activity = mapper.map(activityUpdateDTO, Activity.class);
+        for (BurnedCalories bc : activity.getBurnedCalories()){
+            bc.setActivity(activity);
+        }
         this.activityService.update(activity);
         return getActivityDetail(activity.getId());
     }
@@ -75,12 +78,7 @@ public class ActivityFacadeImpl implements ActivityFacade {
 
         Activity activity = this.activityService.findById(id);
         ActivityDetailDTO activityDTO = mapper.map(activity, ActivityDetailDTO.class);
-        if (activityDTO != null
-                && activityDTO.getBurnedCalories() != null
-                && !activityDTO.getBurnedCalories().isEmpty())
-            for (BurnedCaloriesDTO b : activityDTO.getBurnedCalories()) {
-                b.setActivityId(id);
-            }
+
         return activityDTO;
     }
 
@@ -103,36 +101,6 @@ public class ActivityFacadeImpl implements ActivityFacade {
                 .collect(Collectors.toSet());
         List<Activity> filteredActivities = this.activityService.getFilteredActivities(categories);
         return mapper.mapToList(filteredActivities, ActivityDTO.class);
-    }
-
-    @Override
-    public void addBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
-        BurnedCalories bc = mapper.map(burnedCaloriesDTO, BurnedCalories.class);
-        long activityId = burnedCaloriesDTO.getActivityId();
-
-        log.debug("Adding Burned Calories to activity with id <{}>", activityId);
-
-        Activity activity = this.activityService.findById(activityId);
-        activity.addBurnedCaloriesItem(bc);
-        this.activityService.update(activity);
-    }
-
-    @Override
-    public void editBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
-        log.debug("Editing Burned Calories with id <{}>", burnedCaloriesDTO.getId());
-
-        BurnedCalories bc = mapper.map(burnedCaloriesDTO, BurnedCalories.class);
-        this.burnedCaloriesService.updateBurnedCalories(bc);
-    }
-
-    @Override
-    public void removeBurnedCalorie(BurnedCaloriesDTO burnedCaloriesDTO) {
-        log.debug("Removing Burned Calories with id <{}> from activity with id <{}>",
-                burnedCaloriesDTO.getId(), burnedCaloriesDTO.getActivityId());
-
-        Activity activity = this.activityService.findById(burnedCaloriesDTO.getActivityId());
-        activity.getBurnedCalories().removeIf(bc -> Objects.equals(bc.getId(), burnedCaloriesDTO.getId()));
-        this.activityService.update(activity);
     }
 
     @Override

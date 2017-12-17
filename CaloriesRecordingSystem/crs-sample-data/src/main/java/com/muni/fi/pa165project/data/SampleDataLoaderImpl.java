@@ -152,10 +152,6 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
     }
 
     private void addBurnedCalories(Long activityId, int amount, int edge){
-        BurnedCaloriesDTO b = new BurnedCaloriesDTO();
-        b.setActivityId(activityId);
-        b.setAmount(amount);
-        b.setUpperWeightBoundary(edge);
-        acFacade.addBurnedCalorie(b);
+        //TODO
     }
 }

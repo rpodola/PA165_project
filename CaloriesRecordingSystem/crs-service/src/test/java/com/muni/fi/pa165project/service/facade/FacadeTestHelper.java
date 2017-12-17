@@ -46,9 +46,8 @@ public class FacadeTestHelper {
         return activity;
     }
 
-    public static BurnedCaloriesDTO initBurnedCalories(Long activityId) {
+    public static BurnedCaloriesDTO initBurnedCalories() {
         BurnedCaloriesDTO bc = new BurnedCaloriesDTO();
-        bc.setActivityId(activityId);
         bc.setUpperWeightBoundary(200);
         bc.setAmount(50);
         return bc;

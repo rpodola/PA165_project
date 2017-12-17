@@ -79,22 +79,6 @@ public class ActivityFacadeImplTest {
     @Rollback
     @Transactional
     @Test
-    public void addBurnedCaloriesTest() {
-        BurnedCalories burnedCalories = new BurnedCalories();
-        BurnedCaloriesDTO burnedCaloriesDTO = new BurnedCaloriesDTO();
-        burnedCaloriesDTO.setId(1L);
-        burnedCaloriesDTO.setActivityId(activity.getId());
-        when(mapper.map(burnedCaloriesDTO, BurnedCalories.class)).thenReturn(burnedCalories);
-        when(activityService.findById(activity.getId())).thenReturn(activity);
-        activityFacade.addBurnedCalorie(burnedCaloriesDTO);
-
-        Assert.assertTrue(activity.getBurnedCalories().contains(burnedCalories));
-        verify(activityService).update(activity);
-    }
-
-    @Rollback
-    @Transactional
-    @Test
     public void getAllActivitiesTest() {
         List<Activity> activities = new ArrayList<>();
         activities.add(activity);
@@ -107,19 +91,6 @@ public class ActivityFacadeImplTest {
         List<ActivityDTO> result = activityFacade.getAllActivities();
 
         Assert.assertEquals(activitiesExportDTOs, result);
-    }
-
-    @Rollback
-    @Transactional
-    @Test
-    public void removeBurnedCaloriesTest() {
-        BurnedCaloriesDTO burnedCaloriesDTO = new BurnedCaloriesDTO();
-        burnedCaloriesDTO.setId(1L);
-        burnedCaloriesDTO.setActivityId(activity.getId());
-
-        when(activityService.findById(activity.getId())).thenReturn(activity);
-        activityFacade.removeBurnedCalorie(burnedCaloriesDTO);
-        verify(activityService).update(activity);
     }
 
     @Rollback
@@ -146,7 +117,7 @@ public class ActivityFacadeImplTest {
         List<ActivityDTO> expected = new ArrayList<ActivityDTO>() {{
             add(activityDTO);
         }};
-        
+
         Collection<Category> categories = activityFilterDTO
             .getCategories()
             .stream()
@@ -168,19 +139,6 @@ public class ActivityFacadeImplTest {
         when(mapper.map(activityUpdateDTO, Activity.class)).thenReturn(activity);
         activityFacade.editActivity(activityUpdateDTO);
         verify(activityService).update(activity);
-    }
-
-    @Rollback
-    @Transactional
-    @Test
-    public void editBurnedCaloriesTest() {
-        BurnedCaloriesDTO burnedCaloriesDTO = new BurnedCaloriesDTO();
-        burnedCaloriesDTO.setId(1L);
-        burnedCaloriesDTO.setActivityId(activity.getId());
-        BurnedCalories burnedCalories = new BurnedCalories();
-        when(mapper.map(burnedCaloriesDTO, BurnedCalories.class)).thenReturn(burnedCalories);
-        activityFacade.editBurnedCalorie(burnedCaloriesDTO);
-        verify(burnedCaloriesService).updateBurnedCalories(burnedCalories);
     }
 
     @Rollback
