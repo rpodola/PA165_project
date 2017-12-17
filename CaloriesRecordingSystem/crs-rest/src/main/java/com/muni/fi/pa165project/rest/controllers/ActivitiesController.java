@@ -1,8 +1,9 @@
 package com.muni.fi.pa165project.rest.controllers;
 
+import com.muni.fi.pa165project.dto.ActivityCreateDTO;
+import com.muni.fi.pa165project.dto.ActivityDetailDTO;
+import com.muni.fi.pa165project.dto.ActivityUpdateDTO;
 import com.muni.fi.pa165project.dto.ActivityDTO;
-import com.muni.fi.pa165project.dto.ActivityDetailExportDTO;
-import com.muni.fi.pa165project.dto.ActivityExportDTO;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.rest.ApiUris;
 import com.muni.fi.pa165project.rest.exceptions.AlreadyExistsException;
@@ -40,10 +41,10 @@ public class ActivitiesController {
      */
     //@ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ActivityDetailExportDTO getActivityDetail(@PathVariable("id") long id) {
+    public final ActivityDetailDTO getActivityDetail(@PathVariable("id") long id) {
         logger.debug("rest getActivityDetail({})", id);
 
-        ActivityDetailExportDTO ac = acFacade.getActivityDetail(id);
+        ActivityDetailDTO ac = acFacade.getActivityDetail(id);
         if (ac != null) {
             return ac;
         } else {
@@ -58,7 +59,7 @@ public class ActivitiesController {
      */
     //@ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final List<ActivityExportDTO> getAllActivities() {
+    public final List<ActivityDTO> getAllActivities() {
         logger.debug("rest getAllActivities()");
 
         return acFacade.getAllActivities();
@@ -84,12 +85,12 @@ public class ActivitiesController {
     /**
      * Create a new Activity by POST method
      *
-     * @param activity ActivityDTO with required fields for creation
+     * @param activity ActivityCreateDTO with required fields for creation
     */
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.ADMIN)
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public final Long createActivity(@RequestBody ActivityDTO activity){
+    public final Long createActivity(@RequestBody ActivityCreateDTO activity){
         logger.debug("rest createActivity()");
         Long id;
         try {
@@ -103,13 +104,13 @@ public class ActivitiesController {
     /**
      * Edit the Activity by PUT method
      *
-     * @param activity ActivityDTO with required fields for edit
+     * @param activity ActivityCreateDTO with required fields for edit
      */
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.ADMIN)
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public final ActivityDetailExportDTO editActivity(@PathVariable("id") long id, @RequestBody ActivityDTO activity){
+    public final ActivityDetailDTO editActivity(@PathVariable("id") long id, @RequestBody ActivityUpdateDTO activity){
         logger.debug("rest editActivity()");
-        ActivityDetailExportDTO a;
+        ActivityDetailDTO a;
         try {
             activity.setId(id);
             a = acFacade.editActivity(activity);

@@ -36,7 +36,7 @@ public class ServiceConfiguration {
         BeanMappingBuilder builder = new BeanMappingBuilder() {
             @Override
             protected void configure() {
-                mapping(Activity.class, ActivityDTO.class, TypeMappingOptions.oneWay())
+                mapping(Activity.class, ActivityCreateDTO.class, TypeMappingOptions.oneWay())
                         .fields("categoryObject", "category");
                 mapping(Record.class, RecordDTO.class, TypeMappingOptions.oneWay())
                         .fields("activity.name", "activityName")

@@ -1,12 +1,7 @@
 package com.muni.fi.pa165project.service.facade;
 
-import com.muni.fi.pa165project.dto.ActivityDTO;
-import com.muni.fi.pa165project.dto.ActivityDetailExportDTO;
-import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
-import com.muni.fi.pa165project.dto.CategoryDTO;
-import com.muni.fi.pa165project.dto.RecordDetailDTO;
-import com.muni.fi.pa165project.dto.UserDetailDTO;
-import com.muni.fi.pa165project.dto.UserRegisterDTO;
+import com.muni.fi.pa165project.dto.*;
+import com.muni.fi.pa165project.dto.ActivityCreateDTO;
 import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.structures.CategoryObject;
 
@@ -34,8 +29,8 @@ public class FacadeTestHelper {
         return user;
     }
 
-    public static ActivityDetailExportDTO initActivityDetail() {
-        ActivityDetailExportDTO activity = new ActivityDetailExportDTO();
+    public static ActivityDetailDTO initActivityDetail() {
+        ActivityDetailDTO activity = new ActivityDetailDTO();
         activity.setName("Running as hell");
         activity.setDescription("Some dummy description");
         CategoryObject category = CategoryObject.from(Category.RUNNING);
@@ -43,8 +38,8 @@ public class FacadeTestHelper {
         return activity;
     }
     
-    public static ActivityDTO initActivity() {
-        ActivityDTO activity = new ActivityDTO();
+    public static ActivityCreateDTO initActivity() {
+        ActivityCreateDTO activity = new ActivityCreateDTO();
         activity.setName("Running as hell");
         activity.setDescription("Some dummy description");
         activity.setCategory(Category.RUNNING.getId());

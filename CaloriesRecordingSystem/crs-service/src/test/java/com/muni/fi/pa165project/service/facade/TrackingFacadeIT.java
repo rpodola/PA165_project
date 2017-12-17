@@ -37,7 +37,7 @@ public class TrackingFacadeIT {
     private ActivityFacade acFac;
 
     private UserRegisterDTO userRegisterDto;
-    private ActivityDTO  activity;
+    private ActivityCreateDTO activity;
     private RecordDetailDTO record;
     private long userId;
     

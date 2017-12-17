@@ -1,9 +1,6 @@
 package com.muni.fi.pa165project.service.facade;
 
-import com.muni.fi.pa165project.dto.ActivityDTO;
-import com.muni.fi.pa165project.dto.ActivityDetailExportDTO;
-import com.muni.fi.pa165project.dto.ActivityExportDTO;
-import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.BurnedCalories;
@@ -48,19 +45,19 @@ public class ActivityFacadeImpl implements ActivityFacade {
     private UserService userService;
 
     @Override
-    public Long createActivity(ActivityDTO activityDTO) {
-        log.debug("Creating activity with name <{}>", activityDTO.getName());
+    public Long createActivity(ActivityCreateDTO activityCreateDTO) {
+        log.debug("Creating activity with name <{}>", activityCreateDTO.getName());
 
-        Activity activity = mapper.map(activityDTO, Activity.class);
+        Activity activity = mapper.map(activityCreateDTO, Activity.class);
         this.activityService.create(activity);
         return activity.getId();
     }
 
     @Override
-    public ActivityDetailExportDTO editActivity(ActivityDTO activityDTO) {
-        log.debug("Editing activity with id <{}>", activityDTO.getId());
+    public ActivityDetailDTO editActivity(ActivityUpdateDTO activityUpdateDTO) {
+        log.debug("Editing activity with id <{}>", activityUpdateDTO.getId());
 
-        Activity activity = mapper.map(activityDTO, Activity.class);
+        Activity activity = mapper.map(activityUpdateDTO, Activity.class);
         this.activityService.update(activity);
         return getActivityDetail(activity.getId());
     }
@@ -73,11 +70,11 @@ public class ActivityFacadeImpl implements ActivityFacade {
     }
 
     @Override
-    public ActivityDetailExportDTO getActivityDetail(long id) {
+    public ActivityDetailDTO getActivityDetail(long id) {
         log.debug("Getting activity detail with id <{}>", id);
 
         Activity activity = this.activityService.findById(id);
-        ActivityDetailExportDTO activityDTO = mapper.map(activity, ActivityDetailExportDTO.class);
+        ActivityDetailDTO activityDTO = mapper.map(activity, ActivityDetailDTO.class);
         if (activityDTO != null
                 && activityDTO.getBurnedCalories() != null
                 && !activityDTO.getBurnedCalories().isEmpty())
@@ -88,15 +85,15 @@ public class ActivityFacadeImpl implements ActivityFacade {
     }
 
     @Override
-    public List<ActivityExportDTO> getAllActivities() {
+    public List<ActivityDTO> getAllActivities() {
         log.debug("Calling getAllActivities()");
 
         List<Activity> activities = this.activityService.getAllActivities();
-        return mapper.mapToList(activities, ActivityExportDTO.class);
+        return mapper.mapToList(activities, ActivityDTO.class);
     }
 
     @Override
-    public List<ActivityExportDTO> getActivities(ActivityFilterDTO activityFilter) {
+    public List<ActivityDTO> getActivities(ActivityFilterDTO activityFilter) {
         log.debug("Calling getActivities(): {}", activityFilter.toString());
 
         Collection<Integer> categoryIds = activityFilter.getCategories();
@@ -105,7 +102,7 @@ public class ActivityFacadeImpl implements ActivityFacade {
                 .map(catId -> Category.values()[catId])
                 .collect(Collectors.toSet());
         List<Activity> filteredActivities = this.activityService.getFilteredActivities(categories);
-        return mapper.mapToList(filteredActivities, ActivityExportDTO.class);
+        return mapper.mapToList(filteredActivities, ActivityDTO.class);
     }
 
     @Override
@@ -139,7 +136,7 @@ public class ActivityFacadeImpl implements ActivityFacade {
     }
 
     @Override
-    public List<ActivityExportDTO> getActivitiesSortedByBurnedCalories(long userId) {
+    public List<ActivityDTO> getActivitiesSortedByBurnedCalories(long userId) {
         log.trace("Calling getActivitiesSortedByBurnedCalories for user with id <{}>", userId);
 
         User user = this.userService.findById(userId);
@@ -148,8 +145,7 @@ public class ActivityFacadeImpl implements ActivityFacade {
         Function<Long, Integer> fn = (activityId) -> this.burnedCaloriesService.getBurnedCaloriesPerHour(activityId, weight);
 
         List<Activity> sortedActivities = this.activityService.getActivitiesSortedByBurnedCalories(fn);
-        List<ActivityExportDTO> sortedActivitiesDTO = mapper.mapToList(sortedActivities, ActivityExportDTO.class);
 
-        return sortedActivitiesDTO;
+        return mapper.mapToList(sortedActivities, ActivityDTO.class);
     }
 }

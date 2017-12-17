@@ -5,8 +5,10 @@ import java.util.Set;
 
 /**
  * @author Radim Podola
+ *
+ * DTO object used for Activity editation
  */
-public class ActivityDetailExportDTO extends ActivityExportDTO {
+public class ActivityUpdateDTO extends ActivityCreateDTO {
 
     private Set<BurnedCaloriesDTO> burnedCalories = new HashSet<>();
 

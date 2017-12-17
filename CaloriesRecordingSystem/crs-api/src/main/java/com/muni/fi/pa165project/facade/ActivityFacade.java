@@ -1,13 +1,8 @@
 package com.muni.fi.pa165project.facade;
 
-import com.muni.fi.pa165project.dto.ActivityDTO;
-import com.muni.fi.pa165project.dto.ActivityDetailExportDTO;
-import com.muni.fi.pa165project.dto.ActivityExportDTO;
-import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -18,18 +13,18 @@ public interface ActivityFacade {
     /**
      * Create Activity object
      *
-     * @param activityDTO activity information
+     * @param activityCreateDTO activity information
      * @return activity id or null if activity was not created
      */
-    Long createActivity(ActivityDTO activityDTO);
+    Long createActivity(ActivityCreateDTO activityCreateDTO);
 
     /**
      * Edit Activity object
      *
-     * @param activityDTO updated activity information
+     * @param activityUpdateDTO updated activity information
      * @return edited activity detail
      */
-    ActivityDetailExportDTO editActivity(ActivityDTO activityDTO);
+    ActivityDetailDTO editActivity(ActivityUpdateDTO activityUpdateDTO);
 
     /**
      * Remove Activity object
@@ -65,14 +60,14 @@ public interface ActivityFacade {
      * @param id activity id
      * @return Activity detail object
      */
-    ActivityDetailExportDTO getActivityDetail(long id);
+    ActivityDetailDTO getActivityDetail(long id);
 
     /**
      * Get list of all activities
      *
      * @return list of Activity objects
      */
-    List<ActivityExportDTO> getAllActivities();
+    List<ActivityDTO> getAllActivities();
 
     /**
      * Get list of filtered activities
@@ -80,7 +75,7 @@ public interface ActivityFacade {
      * @param activityFilter activity filter
      * @return list of Activity objects
      */
-    List<ActivityExportDTO> getActivities(ActivityFilterDTO activityFilter);
+    List<ActivityDTO> getActivities(ActivityFilterDTO activityFilter);
 
     /**
      * Get list of activities sorted by how much calories user would burn doing them
@@ -88,5 +83,5 @@ public interface ActivityFacade {
      * @param userId user id
      * @return list of Activity objects
      */
-    List<ActivityExportDTO> getActivitiesSortedByBurnedCalories(long userId);
+    List<ActivityDTO> getActivitiesSortedByBurnedCalories(long userId);
 }

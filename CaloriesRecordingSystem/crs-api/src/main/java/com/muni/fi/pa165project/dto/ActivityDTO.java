@@ -4,16 +4,18 @@ import java.util.Objects;
 
 /**
  * @author Radoslav Karlik
+ *
+ * DTO object used for list of Activities
  */
 public class ActivityDTO {
-
+    
     private Long id;
-
+    
     private String name;
-
+    
     private String description;
-
-    private int category;
+    
+    private CategoryDTO category;
 
     public Long getId() {
         return id;
@@ -39,18 +41,18 @@ public class ActivityDTO {
         this.description = description;
     }
 
-    public int getCategory() {
+    public CategoryDTO getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(CategoryDTO category) {
         this.category = category;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 13 * hash + Objects.hashCode(this.name);
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.name);
         return hash;
     }
 
@@ -66,9 +68,10 @@ public class ActivityDTO {
             return false;
         }
         final ActivityDTO other = (ActivityDTO) obj;
-        if (!Objects.equals(this.name, other.getName())) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         return true;
     }
+    
 }

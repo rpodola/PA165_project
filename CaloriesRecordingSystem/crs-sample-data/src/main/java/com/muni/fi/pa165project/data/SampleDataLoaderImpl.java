@@ -1,8 +1,7 @@
 package com.muni.fi.pa165project.data;
 
-import com.muni.fi.pa165project.dto.ActivityDTO;
+import com.muni.fi.pa165project.dto.ActivityCreateDTO;
 import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
-import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.enums.Category;
@@ -13,7 +12,6 @@ import com.muni.fi.pa165project.structures.LoginDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -146,7 +144,7 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
     }
 
     private Long createActivity(String name, String description, Category category){
-        ActivityDTO a = new ActivityDTO();
+        ActivityCreateDTO a = new ActivityCreateDTO();
         a.setName(name);
         a.setDescription(description);
         a.setCategory(category.getId());

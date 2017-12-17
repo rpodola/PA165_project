@@ -1,9 +1,6 @@
 package com.muni.fi.pa165project.service.facade;
 
-import com.muni.fi.pa165project.dto.ActivityDTO;
-import com.muni.fi.pa165project.dto.ActivityDetailExportDTO;
-import com.muni.fi.pa165project.dto.ActivityExportDTO;
-import com.muni.fi.pa165project.dto.BurnedCaloriesDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.dto.filters.ActivityFilterDTO;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.BurnedCalories;
@@ -53,8 +50,9 @@ public class ActivityFacadeImplTest {
     @Mock
     private MappingService mapper;
     private Activity activity;
+    private ActivityCreateDTO activityCreateDTO;
     private ActivityDTO activityDTO;
-    private ActivityExportDTO activityExportDTO;
+    private ActivityUpdateDTO activityUpdateDTO;
 
 
     @Before
@@ -64,16 +62,17 @@ public class ActivityFacadeImplTest {
         activity.setBurnedCalories(new HashSet<>());
         activity.setCategory(Category.AEROBICS);
 
+        activityCreateDTO = new ActivityCreateDTO();
         activityDTO = new ActivityDTO();
-        activityExportDTO = new ActivityExportDTO();
+        activityUpdateDTO = new ActivityUpdateDTO();
     }
 
     @Rollback
     @Transactional
     @Test
     public void createActivityTest() {
-        when(mapper.map(activityDTO, Activity.class)).thenReturn(activity);
-        activityFacade.createActivity(activityDTO);
+        when(mapper.map(activityCreateDTO, Activity.class)).thenReturn(activity);
+        activityFacade.createActivity(activityCreateDTO);
         verify(activityService).create(activity);
     }
 
@@ -100,12 +99,12 @@ public class ActivityFacadeImplTest {
         List<Activity> activities = new ArrayList<>();
         activities.add(activity);
 
-        List<ActivityExportDTO> activitiesExportDTOs = new ArrayList<>();
-        activitiesExportDTOs.add(activityExportDTO);
+        List<ActivityDTO> activitiesExportDTOs = new ArrayList<>();
+        activitiesExportDTOs.add(activityDTO);
 
-        when(mapper.mapToList(activities, ActivityExportDTO.class)).thenReturn(activitiesExportDTOs);
+        when(mapper.mapToList(activities, ActivityDTO.class)).thenReturn(activitiesExportDTOs);
         when(activityService.getAllActivities()).thenReturn(activities);
-        List<ActivityExportDTO> result = activityFacade.getAllActivities();
+        List<ActivityDTO> result = activityFacade.getAllActivities();
 
         Assert.assertEquals(activitiesExportDTOs, result);
     }
@@ -144,8 +143,8 @@ public class ActivityFacadeImplTest {
             add(activity);
         }};
 
-        List<ActivityExportDTO> expected = new ArrayList<ActivityExportDTO>() {{
-            add(activityExportDTO);
+        List<ActivityDTO> expected = new ArrayList<ActivityDTO>() {{
+            add(activityDTO);
         }};
         
         Collection<Category> categories = activityFilterDTO
@@ -155,9 +154,9 @@ public class ActivityFacadeImplTest {
             .collect(Collectors.toSet());
         when(activityService.getFilteredActivities(categories)).thenReturn(activities);
 
-        when(mapper.mapToList(activities, ActivityExportDTO.class)).thenReturn(expected);
+        when(mapper.mapToList(activities, ActivityDTO.class)).thenReturn(expected);
 
-        List<ActivityExportDTO> result = activityFacade.getActivities(activityFilterDTO);
+        List<ActivityDTO> result = activityFacade.getActivities(activityFilterDTO);
 
         Assert.assertEquals(expected, result);
     }
@@ -166,8 +165,8 @@ public class ActivityFacadeImplTest {
     @Transactional
     @Test
     public void editActivityTest() {
-        when(mapper.map(activityDTO, Activity.class)).thenReturn(activity);
-        activityFacade.editActivity(activityDTO);
+        when(mapper.map(activityUpdateDTO, Activity.class)).thenReturn(activity);
+        activityFacade.editActivity(activityUpdateDTO);
         verify(activityService).update(activity);
     }
 
@@ -188,10 +187,10 @@ public class ActivityFacadeImplTest {
     @Transactional
     @Test
     public void getActivityDetailTest() {
-        ActivityDetailExportDTO expected = new ActivityDetailExportDTO();
+        ActivityDetailDTO expected = new ActivityDetailDTO();
         when(activityService.findById(activity.getId())).thenReturn(activity);
-        when(mapper.map(activity, ActivityDetailExportDTO.class)).thenReturn(expected);
-        ActivityDetailExportDTO result = activityFacade.getActivityDetail(activity.getId());
+        when(mapper.map(activity, ActivityDetailDTO.class)).thenReturn(expected);
+        ActivityDetailDTO result = activityFacade.getActivityDetail(activity.getId());
 
         Assert.assertEquals(expected, result);
     }
@@ -206,16 +205,16 @@ public class ActivityFacadeImplTest {
 
         List<Activity> activities = new ArrayList<>();
         activities.add(activity);
-        List<ActivityExportDTO> expected = new ArrayList<>();
-        expected.add(activityExportDTO);
+        List<ActivityDTO> expected = new ArrayList<>();
+        expected.add(activityDTO);
 
         when(userService.findById(userId)).thenReturn(user);
         when(burnedCaloriesService.getBurnedCaloriesPerHour(activity.getId(), user.getWeight())).thenReturn(500);
         when(activityService.getActivitiesSortedByBurnedCalories(any(Function.class))).thenReturn(activities);
 
-        when(mapper.mapToList(activities, ActivityExportDTO.class)).thenReturn(expected);
+        when(mapper.mapToList(activities, ActivityDTO.class)).thenReturn(expected);
 
-        List<ActivityExportDTO> result = activityFacade.getActivitiesSortedByBurnedCalories(userId);
+        List<ActivityDTO> result = activityFacade.getActivitiesSortedByBurnedCalories(userId);
 
         Assert.assertEquals(expected, result);
     }
