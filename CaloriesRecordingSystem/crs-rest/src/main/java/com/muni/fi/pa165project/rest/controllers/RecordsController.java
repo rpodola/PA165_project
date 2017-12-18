@@ -1,9 +1,6 @@
 package com.muni.fi.pa165project.rest.controllers;
 
-import com.muni.fi.pa165project.dto.RecordCreateDTO;
-import com.muni.fi.pa165project.dto.RecordDTO;
-import com.muni.fi.pa165project.dto.RecordDetailDTO;
-import com.muni.fi.pa165project.dto.RecordUpdateDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.facade.TrackingFacade;
 import com.muni.fi.pa165project.rest.ApiUris;
 import com.muni.fi.pa165project.rest.exceptions.AlreadyExistsException;
@@ -102,19 +99,18 @@ public class RecordsController {
      * @throws InternalException            in case of any other error
      */
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final RecordDetailDTO editRecord(@PathVariable("id") long id, @RequestBody RecordUpdateDTO recordUpdateDTO) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public final void editRecord(@PathVariable("id") long id, @RequestBody RecordUpdateDTO recordUpdateDTO) {
         logger.debug("rest editRecord()");
-        RecordDetailDTO recordDetailDTO;
         try {
             recordUpdateDTO.setId(id);
-            recordDetailDTO = trackingFacade.editRecord(recordUpdateDTO);
+            trackingFacade.editRecord(recordUpdateDTO);
         } catch (ConstraintViolationException ex) {
             throw new UnprocessableEntityException();
         } catch (Exception ex) {
             throw new InternalException();
         }
-        return recordDetailDTO;
+
     }
 
     /**
@@ -130,6 +126,30 @@ public class RecordsController {
     public final RecordDetailDTO getRecord(@PathVariable("id") long id) {
         logger.debug("rest getRecord({})", id);
         RecordDetailDTO record = trackingFacade.getRecord(id);
+        if (record != null) {
+            return record;
+        } else {
+            throw new ResourceNotFoundException();
+        }
+    }
+
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
+    @RequestMapping(value = "/getForUpdate/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final RecordGetUpdateDTO getRecordGetUpdateDTO(@PathVariable("id") long id) {
+        logger.debug("rest getRecordGetUpdateDTO({})", id);
+        RecordGetUpdateDTO record = trackingFacade.getRecordGetUpdateDTO(id);
+        if (record != null) {
+            return record;
+        } else {
+            throw new ResourceNotFoundException();
+        }
+    }
+
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
+    @RequestMapping(value = "/getForUpdate/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final RecordGetUpdateDTO editRecordGetUpdateDTO(@PathVariable("id") long id) {
+        logger.debug("rest getRecordGetUpdateDTO({})", id);
+        RecordGetUpdateDTO record = trackingFacade.getRecordGetUpdateDTO(id);
         if (record != null) {
             return record;
         } else {

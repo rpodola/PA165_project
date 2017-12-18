@@ -2,10 +2,12 @@ package com.muni.fi.pa165project.dto;
 
 /**
  * @author Radim Podola
- *
- * DTO object used for Record editation
+ *         <p>
+ *         DTO object used for Record editation
  */
-public class RecordUpdateDTO extends RecordCreateDTO {
+public class RecordUpdateDTO extends RecordGetUpdateDTO {
+
+    private long userId;
 
     private Long id;
 
@@ -25,5 +27,13 @@ public class RecordUpdateDTO extends RecordCreateDTO {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }

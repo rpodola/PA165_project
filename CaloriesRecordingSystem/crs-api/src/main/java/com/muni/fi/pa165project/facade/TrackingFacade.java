@@ -1,9 +1,6 @@
 package com.muni.fi.pa165project.facade;
 
-import com.muni.fi.pa165project.dto.RecordCreateDTO;
-import com.muni.fi.pa165project.dto.RecordDTO;
-import com.muni.fi.pa165project.dto.RecordDetailDTO;
-import com.muni.fi.pa165project.dto.RecordUpdateDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 
 import java.util.List;
@@ -44,6 +41,14 @@ public interface TrackingFacade {
      * @return record
      */
     RecordDetailDTO getRecord(long id);
+
+    /**
+     * Get record
+     *
+     * @param id record id
+     * @return record
+     */
+    RecordGetUpdateDTO getRecordGetUpdateDTO(long id);
 
     /**
      * Get all user's records sorted by time from newest

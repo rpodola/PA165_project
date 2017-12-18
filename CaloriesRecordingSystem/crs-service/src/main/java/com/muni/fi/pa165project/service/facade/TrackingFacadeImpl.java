@@ -1,9 +1,6 @@
 package com.muni.fi.pa165project.service.facade;
 
-import com.muni.fi.pa165project.dto.RecordCreateDTO;
-import com.muni.fi.pa165project.dto.RecordDTO;
-import com.muni.fi.pa165project.dto.RecordDetailDTO;
-import com.muni.fi.pa165project.dto.RecordUpdateDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.dto.filters.RecordTimeFilterDTO;
 import com.muni.fi.pa165project.entity.Activity;
 import com.muni.fi.pa165project.entity.Record;
@@ -112,6 +109,18 @@ public class TrackingFacadeImpl implements TrackingFacade {
 
         RecordDetailDTO recordDetailDto = mapper.map(record, RecordDetailDTO.class);
 
+        return recordDetailDto;
+    }
+
+    @Override
+    public RecordGetUpdateDTO getRecordGetUpdateDTO(long id) {
+        log.debug("Getting RecordGetUpdateDTO with id <{}>", id);
+
+        Record record = this.recordService.getRecord(id);
+        if (record == null)
+            throw new DataRetrievalFailureException("Record not found");
+
+        RecordGetUpdateDTO recordDetailDto = mapper.map(record, RecordGetUpdateDTO.class);
         return recordDetailDto;
     }
 

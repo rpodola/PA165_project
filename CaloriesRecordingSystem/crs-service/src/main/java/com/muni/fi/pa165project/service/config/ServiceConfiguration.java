@@ -9,11 +9,14 @@ import com.muni.fi.pa165project.service.UserServiceImpl;
 import com.muni.fi.pa165project.service.facade.UserFacadeImpl;
 import org.dozer.DozerBeanMapper;
 import org.dozer.loader.api.BeanMappingBuilder;
+import org.dozer.loader.api.FieldsMappingOptions;
 import org.dozer.loader.api.TypeMappingOptions;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 import java.util.Collections;
-import org.dozer.loader.api.FieldsMappingOptions;
 
 /**
  * @author Radoslav Karlik
@@ -55,6 +58,10 @@ public class ServiceConfiguration {
                 mapping(UserUpdateDTO.class, User.class)
                         .fields("password", "loginDetails.password")
                         .fields("email", "loginDetails.email");
+                mapping(RecordCreateDTO.class, Record.class)
+                        .fields("atTime", "atTime", FieldsMappingOptions.customConverter(LocalDateTimeConverter.class));
+                mapping(RecordDTO.class, RecordGetUpdateDTO.class)
+                        .fields("atTime", "atTime", FieldsMappingOptions.customConverter(LocalDateTimeConverter.class));
             }
         };
 

@@ -16,8 +16,6 @@ public class RecordDTO {
 
     private String activityName;
 
-    private long userId;
-
     private LocalDateTime atTime;
 
     private int burnedCalories;
@@ -46,14 +44,6 @@ public class RecordDTO {
         this.activityName = activityName;
     }
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
     public LocalDateTime getAtTime() {
         return atTime;
     }
@@ -73,7 +63,6 @@ public class RecordDTO {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 17 * hash + (int) (this.userId ^ (this.userId >>> 32));
         hash = 17 * hash + Objects.hashCode(this.atTime);
         return hash;
     }
@@ -90,9 +79,6 @@ public class RecordDTO {
             return false;
         }
         final RecordDTO other = (RecordDTO) obj;
-        if (this.userId != other.userId) {
-            return false;
-        }
         if (!Objects.equals(this.atTime, other.atTime)) {
             return false;
         }
