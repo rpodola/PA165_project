@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {IRecord} from '../_interfaces/IRecord';
 import {Observable} from 'rxjs/Observable';
@@ -10,14 +10,16 @@ const prefix = '/records/';
 const allRecords = prefix;
 const recordDetail = prefix;
 const createRecord = prefix + 'create';
+
 const updateRecord = prefix;
 const deleteRecord = prefix;
+const progress = prefix + 'progress';
+
 
 @Injectable()
 export class RecordService {
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient,) {
+  }
 
   getAllRecordsOfUser(): Observable<IRecord[]> {
     return this.http
@@ -32,10 +34,16 @@ export class RecordService {
   createNewRecord(record: Record): Observable<IRecordDetail> {
     return this.http
       .post<IRecordDetail>(createRecord, { record });
+
   }
 
   updateRecord(record: IRecordDetail): Observable<IRecordDetail> {
     return this.http
-      .post<IRecordDetail>(updateRecord, { record });
+      .post<IRecordDetail>(updateRecord, {record});
+  }
+
+  getWeekProgressOfBurnedCalories(): Observable<number> {
+    return this.http
+      .get<number>(progress);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RecordService} from '../_services/record.service';
 import {IRecord} from '../_interfaces/IRecord';
 
@@ -11,10 +11,10 @@ export class RecordListComponent implements OnInit {
 
   userRecordsCached: IRecord[];
   userRecords: IRecord[];
+  progress: number;
 
-  constructor(
-    private recordService: RecordService
-  ) { }
+  constructor(private recordService: RecordService) {
+  }
 
   loadAllUserRecordsFromServer() {
     this.recordService
@@ -26,9 +26,15 @@ export class RecordListComponent implements OnInit {
     this.userRecords = this.userRecordsCached;
   }
 
+  getWeekProgressOfBurnedCalories() {
+    this.recordService.getWeekProgressOfBurnedCalories()
+      .subscribe(progress => this.progress = progress.toString() + '%')
+  }
+
   ngOnInit() {
     this.loadAllUserRecordsFromServer();
     this.getAllUserRecords();
+    this.getWeekProgressOfBurnedCalories();
   }
 
 }
