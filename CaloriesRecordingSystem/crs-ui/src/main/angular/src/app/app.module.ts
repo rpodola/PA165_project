@@ -40,6 +40,7 @@ import { ActivityDetailFormComponent } from './activity-detail-form/activity-det
 import { ActivityDetailStaticComponent } from './activity-detail-static/activity-detail-static.component';
 import {UserService} from './_services/user.service';
 import {RecordFormComponent} from "./record-form/record-form.component";
+import { TrackingSettingsComponent } from './tracking-settings/tracking-settings.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import {RecordFormComponent} from "./record-form/record-form.component";
     SearchBarComponent,
     ActivityDetailFormComponent,
     ActivityDetailStaticComponent,
-    RecordFormComponent
+    RecordFormComponent,
+    TrackingSettingsComponent
   ],
   imports: [
     BrowserModule,

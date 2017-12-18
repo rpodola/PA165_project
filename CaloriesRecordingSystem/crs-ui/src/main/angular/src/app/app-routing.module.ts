@@ -15,6 +15,7 @@ import {UserLoggedInGuard} from './_guards/UserLoggedInGuard';
 import {UserNotLoggedInGuard} from './_guards/UserNotLoggedInGuard';
 import {UserIsAdminGuard} from './_guards/UserIsAdminGuard';
 import {RecordFormComponent} from "./record-form/record-form.component";
+import {TrackingSettingsComponent} from './tracking-settings/tracking-settings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/activities', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'records/new', component: RecordFormComponent, canActivate: [UserLoggedInGuard] },
   { path: 'records/:id', component: RecordDetailComponent, canActivate: [UserLoggedInGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [UserLoggedInGuard] },
+  { path: 'trackingSettings', component: TrackingSettingsComponent, canActivate: [UserLoggedInGuard] },
   { path: 'login', component: LoginFormComponent, canActivate: [UserNotLoggedInGuard] },
   { path: 'register', component: RegisterFormComponent, canActivate: [UserNotLoggedInGuard] },
   //  catch all
