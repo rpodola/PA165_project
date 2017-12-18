@@ -141,16 +141,15 @@ public class ActivitiesController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public final ActivityDetailDTO editActivity(@PathVariable("id") long id, @RequestBody ActivityUpdateDTO activity) {
         logger.debug("rest editActivity()");
-        ActivityDetailDTO a;
+
         try {
             activity.setId(id);
-            a = acFacade.editActivity(activity);
+            return acFacade.editActivity(activity);
         } catch (ConstraintViolationException ex) {
             throw new UnprocessableEntityException();
         } catch (Exception ex) {
             throw new InternalException();
         }
-        return a;
     }
 
     /**
