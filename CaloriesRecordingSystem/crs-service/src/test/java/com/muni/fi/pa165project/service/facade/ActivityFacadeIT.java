@@ -6,6 +6,9 @@ import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
 import com.muni.fi.pa165project.service.MappingService;
 import com.muni.fi.pa165project.service.config.ServiceConfiguration;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -196,7 +199,11 @@ public class ActivityFacadeIT {
         Assert.assertEquals(1, found.getBurnedCalories().size());
         Assert.assertEquals(50, found.getBurnedCalories().iterator().next().getAmount());
         //lets change it
+        BurnedCaloriesDTO bcAfterUpdate = new ArrayList<>(found.getBurnedCalories()).get(0);
+        activityUpdate.getBurnedCalories().iterator().next().setId(bcAfterUpdate.getId());
         activityUpdate.getBurnedCalories().iterator().next().setAmount(100);
+      
+        System.out.println("editss");
         acFac.editActivity(activityUpdate);
         found = acFac.getActivityDetail(activityId);
         Assert.assertEquals(100, found.getBurnedCalories().iterator().next().getAmount());

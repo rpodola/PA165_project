@@ -39,7 +39,6 @@ public class BurnedCaloriesDTO {
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + this.upperWeightBoundary;
-        hash = 97 * hash + this.amount;
         return hash;
     }
 
@@ -56,9 +55,6 @@ public class BurnedCaloriesDTO {
         }
         final BurnedCaloriesDTO other = (BurnedCaloriesDTO) obj;
         if (this.upperWeightBoundary != other.getUpperWeightBoundary()) {
-            return false;
-        }
-        if (this.amount != other.getAmount()) {
             return false;
         }
         return true;

@@ -29,4 +29,9 @@ public class MappingServiceImpl implements MappingService {
     public <T> T map(Object source, Class<T> destinationClass) {
         return source == null ? null : this.mapper.map(source, destinationClass);
     }
+
+    @Override
+    public void map(Object source, Object destination) {
+        this.mapper.map(source, destination);
+    }
 }

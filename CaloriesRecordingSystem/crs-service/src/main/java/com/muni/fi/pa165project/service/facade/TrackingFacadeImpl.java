@@ -76,9 +76,9 @@ public class TrackingFacadeImpl implements TrackingFacade {
         log.debug("Editing Record with id <{}>", recordUpdateDto.getId());
 
         Record record = this.recordService.getRecord(recordUpdateDto.getId());
-        record.setAtTime(recordUpdateDto.getAtTime());
-        record.setDistance(recordUpdateDto.getDistance());
-        record.setDuration(recordUpdateDto.getDuration());
+        
+        mapper.map(recordUpdateDto, record);
+        
         record.setBurnedCalories(
                 (int) this.burnedCaloriesService.calculateAmountOfCalories(
                         recordUpdateDto.getActivityId(),

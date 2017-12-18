@@ -68,8 +68,12 @@ public class BurnedCalories implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        
+        if (id != null) {
+            return prime * result + id.hashCode();
+        }
+        
         result = prime * result + upperWeightBoundary;
-        result = prime * result + amount;
         result = prime * result + ((activity == null) ? 0 : activity.hashCode());
         return result;
     }
@@ -86,15 +90,16 @@ public class BurnedCalories implements Serializable {
 
         final BurnedCalories other = (BurnedCalories) obj;
 
+        if (id != null && other.id != null) {
+            return id.equals(other.getId());
+        }
+        
         if (activity == null) {
             return false;
-        } else if (!activity.equals(other.activity))
+        } else if (!activity.equals(other.getActivity()))
             return false;
 
-        if (upperWeightBoundary != other.upperWeightBoundary)
-            return false;
-
-        if (amount != other.amount)
+        if (upperWeightBoundary != other.getUpperWeightBoundary())
             return false;
 
         return true;

@@ -55,10 +55,17 @@ public class ActivityFacadeImpl implements ActivityFacade {
     public ActivityDetailDTO editActivity(ActivityUpdateDTO activityUpdateDTO) {
         log.debug("Editing activity with id <{}>", activityUpdateDTO.getId());
 
-        Activity activity = mapper.map(activityUpdateDTO, Activity.class);
+        Activity activity = this.activityService.findById(activityUpdateDTO.getId());
+        
+        //TODO: docasne riesenie pretoze Dozer ked mapuje set na set a v novom
+        //je entita s tym istym ID tak necha tu staru.
+        activity.getBurnedCalories().clear();
+        
+        mapper.map(activityUpdateDTO, activity);
         for (BurnedCalories bc : activity.getBurnedCalories()){
             bc.setActivity(activity);
-        }
+        } 
+
         this.activityService.update(activity);
         return getActivityDetail(activity.getId());
     }

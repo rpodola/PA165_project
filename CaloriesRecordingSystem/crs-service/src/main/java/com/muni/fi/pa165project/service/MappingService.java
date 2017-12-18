@@ -11,4 +11,7 @@ public interface MappingService {
     <FROM, TO> List<TO> mapToList(Collection<FROM> fromList, final Class<TO> toClass);
 
     <T> T map(Object source, Class<T> destinationClass);
+
+    void map(Object source, Object destination);
+    
 }
