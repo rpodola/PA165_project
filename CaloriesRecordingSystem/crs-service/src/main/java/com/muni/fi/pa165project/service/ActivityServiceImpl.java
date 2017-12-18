@@ -30,8 +30,8 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public void update(Activity activity) {
-        this.activityDao.update(activity);
+    public Activity update(Activity activity) {
+        return this.activityDao.update(activity);
     }
 
     @Override

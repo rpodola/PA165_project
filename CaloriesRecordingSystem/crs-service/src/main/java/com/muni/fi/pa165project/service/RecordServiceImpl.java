@@ -24,8 +24,8 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public void update(Record record) {
-        this.recordDao.update(record);
+    public Record update(Record record) {
+        return this.recordDao.update(record);
     }
 
     @Override

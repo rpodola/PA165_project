@@ -90,8 +90,9 @@ public class TrackingFacadeImpl implements TrackingFacade {
             Activity activity = this.activityService.findById(recordUpdateDto.getActivityId());
             record.setActivity(activity);
         }
-        this.recordService.update(record);
-        return getRecord(record.getId());
+        Record updatedRecord = this.recordService.update(record);
+        
+        return mapper.map(updatedRecord, RecordDetailDTO.class);
     }
 
     @Override

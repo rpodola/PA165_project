@@ -29,8 +29,9 @@ public interface RecordDao {
      * Update record in database
      *
      * @param record record object
+     * @return updated record
      */
-    void update(Record record);
+    Record update(Record record);
 
     /**
      * Delete record from database

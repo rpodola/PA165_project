@@ -193,19 +193,17 @@ public class ActivityFacadeIT {
         ActivityUpdateDTO activityUpdate = mapper.map(activityCreate, ActivityUpdateDTO.class);
         activityUpdate.setId(activityId);
         activityUpdate.getBurnedCalories().add(FacadeTestHelper.initBurnedCalories());
-        acFac.editActivity(activityUpdate);
+        
+        ActivityDetailDTO found = acFac.editActivity(activityUpdate);
         //1 bc should be added
-        ActivityDetailDTO found = acFac.getActivityDetail(activityId);
         Assert.assertEquals(1, found.getBurnedCalories().size());
         Assert.assertEquals(50, found.getBurnedCalories().iterator().next().getAmount());
         //lets change it
         BurnedCaloriesDTO bcAfterUpdate = new ArrayList<>(found.getBurnedCalories()).get(0);
         activityUpdate.getBurnedCalories().iterator().next().setId(bcAfterUpdate.getId());
         activityUpdate.getBurnedCalories().iterator().next().setAmount(100);
-      
-        System.out.println("editss");
-        acFac.editActivity(activityUpdate);
-        found = acFac.getActivityDetail(activityId);
+        
+        found = acFac.editActivity(activityUpdate);
         Assert.assertEquals(100, found.getBurnedCalories().iterator().next().getAmount());
     }
 

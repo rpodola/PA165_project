@@ -66,8 +66,9 @@ public class ActivityFacadeImpl implements ActivityFacade {
             bc.setActivity(activity);
         } 
 
-        this.activityService.update(activity);
-        return getActivityDetail(activity.getId());
+        Activity updatedActivity = this.activityService.update(activity);
+
+        return mapper.map(updatedActivity, ActivityDetailDTO.class);
     }
 
     @Override

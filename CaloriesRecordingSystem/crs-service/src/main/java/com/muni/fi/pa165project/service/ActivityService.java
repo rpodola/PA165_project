@@ -32,8 +32,9 @@ public interface ActivityService {
      * Updates activity
      *
      * @param activity activity entity
+     * @return updated activity
      */
-    void update(Activity activity);
+    Activity update(Activity activity);
 
     /**
      * Return all activities

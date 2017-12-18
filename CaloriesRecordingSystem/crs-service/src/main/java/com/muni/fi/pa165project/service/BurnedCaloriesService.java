@@ -11,8 +11,9 @@ public interface BurnedCaloriesService {
      * Update weight range(burned calories) in its activity
      *
      * @param burnedCalories burned calories entity
+     * @return updated burned caloriess
      */
-    void updateBurnedCalories(BurnedCalories burnedCalories);
+    BurnedCalories updateBurnedCalories(BurnedCalories burnedCalories);
 
     /**
      * Returns amount of burned calories per hour from activity

@@ -29,8 +29,9 @@ public interface ActivityDao {
      * Update activity in database
      *
      * @param activity activity object
+     * @return updated activity
      */
-    void update(Activity activity);
+    Activity update(Activity activity);
 
     /**
      * Delete activity from database

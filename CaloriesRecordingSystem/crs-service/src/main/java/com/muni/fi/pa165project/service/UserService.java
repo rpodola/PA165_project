@@ -43,8 +43,9 @@ public interface UserService {
      * Update user
      *
      * @param user user to update
+     * @return updated user
      */
-    void updateUser(User user);
+    User updateUser(User user);
 
     /**
      * Get progress of weekly calories goal

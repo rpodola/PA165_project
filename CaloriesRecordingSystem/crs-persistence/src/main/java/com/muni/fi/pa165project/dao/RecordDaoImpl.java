@@ -29,8 +29,8 @@ public class RecordDaoImpl implements RecordDao {
     }
 
     @Override
-    public void update(Record record) {
-        this.em.merge(record);
+    public Record update(Record record) {
+        return this.em.merge(record);
     }
 
     @Override

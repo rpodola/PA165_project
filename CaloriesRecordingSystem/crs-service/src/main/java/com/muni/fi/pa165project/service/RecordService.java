@@ -22,8 +22,9 @@ public interface RecordService {
      * Update record
      *
      * @param record record to update
+     * @return updated record
      */
-    void update(Record record);
+    Record update(Record record);
 
     /**
      * Delete record

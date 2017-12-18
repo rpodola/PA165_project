@@ -48,8 +48,9 @@ public class UserFacadeImpl implements UserFacade {
         User user = this.userService.findById(userDto.getId());
         
         mapper.map(userDto, user);
-        this.userService.updateUser(user);
-        return mapper.map(user, UserDetailDTO.class);
+        User updatedUser = this.userService.updateUser(user);
+        
+        return mapper.map(updatedUser, UserDetailDTO.class);
     }
 
     @Override

@@ -22,8 +22,8 @@ public class BurnedCaloriesDaoImpl implements BurnedCaloriesDao {
     }
 
     @Override
-    public void update(BurnedCalories burnedCalories) {
-        this.em.merge(burnedCalories);
+    public BurnedCalories update(BurnedCalories burnedCalories) {
+        return this.em.merge(burnedCalories);
     }
 
     @Override

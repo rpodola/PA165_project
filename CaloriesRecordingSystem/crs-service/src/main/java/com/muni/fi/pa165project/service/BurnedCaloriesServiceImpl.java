@@ -15,8 +15,8 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
     private BurnedCaloriesDao burnedCaloriesDao;
 
     @Override
-    public void updateBurnedCalories(BurnedCalories burnedCalories) {
-        this.burnedCaloriesDao.update(burnedCalories);
+    public BurnedCalories updateBurnedCalories(BurnedCalories burnedCalories) {
+        return this.burnedCaloriesDao.update(burnedCalories);
     }
 
     @Override

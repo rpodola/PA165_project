@@ -20,8 +20,9 @@ public interface UserDao {
      * Updates user in database
      *
      * @param user user object
+     * @return updated user
      */
-    void update(User user);
+    User update(User user);
 
     /**
      * Deletes user from database

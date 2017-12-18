@@ -35,8 +35,9 @@ public interface BurnedCaloriesDao {
      * Updates record in database
      *
      * @param burnedCalories burned calories object
+     * @return updated burned calories item
      */
-    void update(BurnedCalories burnedCalories);
+    BurnedCalories update(BurnedCalories burnedCalories);
 
     /**
      * Deletes record from database

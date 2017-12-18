@@ -25,8 +25,8 @@ public class ActivityDaoImpl implements ActivityDao {
     }
 
     @Override
-    public void update(Activity activity) {
-        this.em.merge(activity);
+    public Activity update(Activity activity) {
+        return this.em.merge(activity);
     }
 
     @Override

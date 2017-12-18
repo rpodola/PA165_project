@@ -50,8 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
-        this.userDao.update(user);
+    public User updateUser(User user) {
+        return this.userDao.update(user);
     }
 
     @Override
