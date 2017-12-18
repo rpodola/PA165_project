@@ -11,7 +11,7 @@ export class RecordListComponent implements OnInit {
 
   userRecordsCached: IRecord[];
   userRecords: IRecord[];
-  progress: number;
+  progress: string;
 
   constructor(private recordService: RecordService) {
   }

@@ -36,15 +36,20 @@ public class RecordsController {
     @Inject
     private TrackingFacade trackingFacade;
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public final Long createRecord(@RequestBody RecordCreateDTO recordDTO) {
-        logger.debug("rest createRecord");
-        Long id;
-        //todo get userId from token
-        recordDTO.setUserId(1);
+    /**
+     * Create a new Record
+     * @param recordDTO RecordCreateDTO with required fields for creation
+     * @throws AlreadyExistsException       if resource already exists
+     * @throws UnprocessableEntityException if resource contains wrong attributes
+     * @throws InternalException            in case of any other error
+     */
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
+    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final Long createRecord(@RequestAttribute("userId") long userId, @RequestBody RecordCreateDTO recordDTO) {
+        logger.debug("rest createRecord for user {}", userId);
+        recordDTO.setUserId(userId);
         try {
-            id = trackingFacade.createRecord(recordDTO);
+            return trackingFacade.createRecord(recordDTO);
         } catch (DataIntegrityViolationException ex) {
             throw new AlreadyExistsException();
         } catch (ConstraintViolationException ex) {
@@ -52,48 +57,29 @@ public class RecordsController {
         } catch (Exception ex) {
             throw new InternalException();
         }
-        return id;
     }
 
     /**
      * Get list of Records.
-     * <p>
-     * TEST: curl -X GET -i http://localhost:8080/pa165/rest/records
-     *
      * @return List of RecordDTO
      */
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final List<RecordDTO> getAllRecords() {
-        logger.debug("rest getAllRecords()");
-        //TODO GET USER ID FROM TOKEN
-        long userId = 1L;
+    public final List<RecordDTO> getAllRecords(@RequestAttribute("userId") long userId) {
+        logger.debug("rest getAllRecords() for user {}", userId);
         return trackingFacade.getAllRecords(userId);
     }
-
-    /**
-     * Create a new Record
-     * <p>
-     * TEST: curl -X POST -i -H "Content-Type: application/json"
-     *
-     * @param recordDTO RecordCreateDTO with required fields for creation
-     * @throws AlreadyExistsException       if resource already exists
-     * @throws UnprocessableEntityException if resource contains wrong attributes
-     * @throws InternalException            in case of any other error
-     */
 
 
     /**
      * Delete Record by identifier.
      * Identifier is taken from the URL path.
-     * <p>
-     * TEST: curl -X DELETE -i http://localhost:8080/pa165/rest/records/1
-     *
      * @throws ResourceNotFoundException if resource is not found
      */
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public final void deleteRecord(@PathVariable("id") long id) {
         logger.debug("rest deleteRecord({})", id);
-
         try {
             trackingFacade.removeRecord(id);
         } catch (Exception ex) {
@@ -107,39 +93,12 @@ public class RecordsController {
      * New data are sent in HTTP BODY by PUT method.
      * Name must match the Record which is referred by ID in URL path.
      * <p>
-     * TEST: curl -X PUT -i -H "Content-Type: application/json"
-     * --data '{
-     "activityId": 1,
-     "userId": 1,
-     "atTime": {
-     "month": "DECEMBER",
-     "year": 2017,
-     "dayOfMonth": 18,
-     "dayOfWeek": "MONDAY",
-     "dayOfYear": 352,
-     "monthValue": 12,
-     "hour": 5,
-     "minute": 41,
-     "nano": 83000000,
-     "second": 30,
-     "chronology": {
-     "id": "ISO",
-     "calendarType": "iso8601"
-     }
-     },
-     "distance": 100,
-     "duration": 50,
-     "weight": 60,
-     "id": 1
-     }'
-     * http://localhost:8080/pa165/rest/records/1
-     *
      * @param recordUpdateDTO RecordUpdateDTO with required fields for edit
      * @throws UnprocessableEntityException if resource contains wrong attributes
      * @throws InternalException            in case of any other error
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final RecordDetailDTO editRecord(@PathVariable("id") long id, @RequestBody RecordUpdateDTO recordUpdateDTO) {
         logger.debug("rest editRecord()");
         RecordDetailDTO recordDetailDTO;
@@ -157,17 +116,14 @@ public class RecordsController {
     /**
      * Get a Record detail by identifier.
      * Identifier is taken from the URL path.
-     * <p>
-     * TEST: curl -X GET -i  http://localhost:8080/pa165/rest/records/1
-     *
      * @param id identifier for a record
      * @return Record detail Data Transfer Object
      * @throws ResourceNotFoundException if resource is not found
      */
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final RecordDetailDTO getRecord(@PathVariable("id") long id) {
         logger.debug("rest getRecord({})", id);
-
         RecordDetailDTO record = trackingFacade.getRecord(id);
         if (record != null) {
             return record;
@@ -179,9 +135,6 @@ public class RecordsController {
     /**
      * Get the user's weekly goal progress by user identifier.
      * Identifier is taken from login info.
-     * <p>
-     * TEST: curl -X GET -i  http://localhost:8080/pa165/rest/records/progress
-     *
      * @param userId identifier for a user
      * @return goal progress
      */
@@ -189,7 +142,6 @@ public class RecordsController {
     @RequestMapping(value = "/progress", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final int getGoalProgress(@RequestAttribute("userId") long userId) {
         logger.debug("rest getRecord({})", userId);
-
         try {
             return trackingFacade.getWeekProgressOfBurnedCalories(userId);
         } catch (Exception ex) {
