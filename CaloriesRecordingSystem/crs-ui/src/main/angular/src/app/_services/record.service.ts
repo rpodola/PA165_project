@@ -7,10 +7,11 @@ import {Record} from "../_classes/Record";
 
 const prefix = '/records/';
 
-const allRecords = prefix + 'allRecords';
+const allRecords = prefix;
 const recordDetail = prefix;
 const createRecord = prefix + 'create';
-const updateRecord = prefix + 'update';
+const updateRecord = prefix;
+const deleteRecord = prefix;
 
 @Injectable()
 export class RecordService {
@@ -28,9 +29,9 @@ export class RecordService {
       .get<IRecordDetail>(recordDetail + recordId);
   }
 
-  createNewRecord(record: Record): Observable<IRecordDetail>{
+  createNewRecord(record: Record): Observable<IRecordDetail> {
     return this.http
-      .post<IRecordDetail>(createRecord, { record })
+      .post<IRecordDetail>(createRecord, { record });
   }
 
   updateRecord(record: IRecordDetail): Observable<IRecordDetail> {

@@ -4,8 +4,8 @@ import {ICategory} from '../_interfaces/ICategory';
 import {HttpClient} from '@angular/common/http';
 
 const prefix = 'activities/';
-const allCategories = prefix + 'allCategories';
-const category = prefix + 'category/';
+const allCategories = prefix + 'categories/';
+const category = allCategories;
 
 @Injectable()
 export class CategoryService {

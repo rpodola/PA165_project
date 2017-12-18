@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserSettings} from '../_classes/UserSettings';
-import {UserService} from '../_services/user.service';
+import {SettingsService} from '../_services/settings.service';
 
 @Component({
   selector: 'app-settings',
@@ -19,7 +19,7 @@ export class SettingsComponent implements OnInit {
   oldPasswordIsWrong: boolean;
 
   constructor(
-    private userService: UserService,
+    private userService: SettingsService,
   ) {
     this.userSettings.weight = 1;
     this.userSettings.height = 1;

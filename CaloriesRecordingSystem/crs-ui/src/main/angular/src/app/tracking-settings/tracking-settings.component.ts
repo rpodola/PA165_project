@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../_services/user.service';
+import {SettingsService} from '../_services/settings.service';
 import {TrackingSettings} from '../_classes/TrackingSettings';
 
 @Component({
@@ -12,7 +12,7 @@ export class TrackingSettingsComponent  implements OnInit {
   trackingSettings = new TrackingSettings();
 
   constructor(
-    private userService: UserService,
+    private userService: SettingsService,
   ) {
     this.trackingSettings.weeklyBurnedCaloriesGoal = 0;
   }

@@ -8,10 +8,11 @@ import {Activity} from '../_classes/Activity';
 
 const prefix = '/activities/';
 const allActivities = prefix + 'allActivities';
-const activitiesFromCategories = prefix + 'activitiesFromCategories';
+const activitiesFromCategories = allActivities;
 const activityDetail = prefix;
 const createActivity = prefix + 'create';
-const updateActivity = prefix + 'update';
+const updateActivity = prefix;
+const deleteActivity = prefix;
 
 @Injectable()
 export class ActivityService {
@@ -28,9 +29,7 @@ export class ActivityService {
     return this.http
       .post<IActivity[]>(
         activitiesFromCategories,
-        {
-          categoryIds,
-        }
+        categoryIds,
       );
   }
 
@@ -41,12 +40,12 @@ export class ActivityService {
 
   createNewActivity(activity: Activity): Observable<number> {
     return this.http
-      .post<number>(createActivity, { activity });
+      .post<number>(createActivity, activity);
   }
 
   updateActivity(activity: ActivityDetail): Observable<IActivityDetail> {
     return this.http
-      .post<IActivityDetail>(updateActivity, { activity });
+      .put<IActivityDetail>(updateActivity, activity);
   }
 
 }

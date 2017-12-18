@@ -8,14 +8,14 @@ import {TrackingSettings} from '../_classes/TrackingSettings';
 
 const prefix = '/users/';
 
-const settings = prefix + 'settings';
-const updateSettings = prefix + 'update';
+const settings = prefix + 'settings/';
+const updateSettings = settings + 'update';
 
-const trackingSettings = prefix + 'trackingSettings';
-const updateTrackingSettings = prefix + 'updateTrackingSettings';
+const trackingSettings = prefix + 'trackingSettings/';
+const updateTrackingSettings = trackingSettings + 'updateTrackingSettings';
 
 @Injectable()
-export class UserService {
+export class SettingsService {
   constructor(
     private http: HttpClient,
   ) {}

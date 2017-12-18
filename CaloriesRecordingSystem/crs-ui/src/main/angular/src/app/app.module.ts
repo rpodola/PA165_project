@@ -37,7 +37,7 @@ import {LoginEventsService} from './_services/login-events.service';
 import {UserIsAdminGuard} from './_guards/UserIsAdminGuard';
 import { ActivityDetailFormComponent } from './activity-detail-form/activity-detail-form.component';
 import { ActivityDetailStaticComponent } from './activity-detail-static/activity-detail-static.component';
-import {UserService} from './_services/user.service';
+import {SettingsService} from './_services/settings.service';
 import {RecordFormComponent} from './record-form/record-form.component';
 import { TrackingSettingsComponent } from './tracking-settings/tracking-settings.component';
 
@@ -80,7 +80,7 @@ import { TrackingSettingsComponent } from './tracking-settings/tracking-settings
     RecordService,
     CategoryService,
     AuthenticationService,
-    UserService,
+    SettingsService,
     JwtInterceptorProvider,
     UserLoggedInGuard,
     UserNotLoggedInGuard,

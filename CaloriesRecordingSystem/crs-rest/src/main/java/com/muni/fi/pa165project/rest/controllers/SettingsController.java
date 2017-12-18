@@ -1,4 +1,4 @@
-package com.muni.fi.pa165project.rest.controllers;
+    package com.muni.fi.pa165project.rest.controllers;
 
 import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.dto.UserUpdateDTO;
