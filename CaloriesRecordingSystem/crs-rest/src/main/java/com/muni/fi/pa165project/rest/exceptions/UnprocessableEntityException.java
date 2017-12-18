@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * @author Radim Podola
  */
-@ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY, reason = "The resource is wrong")
+@ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY, reason = "The resource data is wrong")
 public class UnprocessableEntityException extends RuntimeException {
 
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.muni.fi.pa165project.rest.controllers;
 
 import com.muni.fi.pa165project.dto.LoginExistsRequestDTO;
@@ -13,6 +8,7 @@ import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.rest.ApiUris;
+import com.muni.fi.pa165project.rest.exceptions.UnprocessableEntityException;
 import com.muni.fi.pa165project.rest.security.AuthorizationService;
 import javax.inject.Inject;
 import org.slf4j.Logger;
@@ -38,15 +34,15 @@ public class AuthController {
     
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public final TokenDTO authenticate(@RequestBody UserCredentialsDTO credentials) {
-        logger.debug("rest authenticate()");
+        logger.debug("rest authenticate() username <{}>", credentials.getUsername());
 
         UserDetailDTO user = this.userFacade.findByCredentials(credentials);
         
         if (user == null) {
-            throw new IllegalArgumentException("credentials");
+            throw new UnprocessableEntityException();
         }
         
-        String token = AuthorizationService.getTokenForUser(user.getId());
+        String token = AuthorizationService.getTokenForUser(user);
         return new TokenDTO(token);
     }
     
@@ -64,8 +60,9 @@ public class AuthController {
         }
         
         long userId = this.userFacade.createUser(userDTO);
+        UserDetailDTO user = this.userFacade.getUser(userId);
         
-        String token = AuthorizationService.getTokenForUser(userId);
+        String token = AuthorizationService.getTokenForUser(user);
         return new TokenDTO(token);
 	}
 }

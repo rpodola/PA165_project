@@ -5,6 +5,7 @@
  */
 package com.muni.fi.pa165project.rest.security;
 
+import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.service.UserService;
 import io.jsonwebtoken.Claims;
@@ -32,12 +33,13 @@ public class AuthorizationService {
     @Inject
     private UserService userService;
     
-    public static String getTokenForUser(long userId) {
+    public static String getTokenForUser(UserDetailDTO user) {
         Key key = KeyManager.getKey();
         
         String token = Jwts
                 .builder()
-                .claim("userId", userId)
+                .claim("userId", user.getId())
+                .claim("isAdmin", user.getIsAdmin())
                 .setExpiration(Date.valueOf(LocalDate.now().plusDays(1)))
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
