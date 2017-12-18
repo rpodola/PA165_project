@@ -58,10 +58,15 @@ public class AuthController {
         if (response.isEmailExists() || response.isUsernameExists()) {
             return response;
         }
-        
-        long userId = this.userFacade.createUser(userDTO);
-        UserDetailDTO user = this.userFacade.getUser(userId);
-        
+
+        UserDetailDTO user;
+        try {
+            long userId = this.userFacade.createUser(userDTO);
+            user = this.userFacade.getUser(userId);
+        } catch (Exception e){
+            throw new UnprocessableEntityException();
+        }
+
         String token = AuthorizationService.getTokenForUser(user);
         return new TokenDTO(token);
 	}

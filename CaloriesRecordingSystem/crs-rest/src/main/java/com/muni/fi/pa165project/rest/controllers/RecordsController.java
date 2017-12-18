@@ -10,6 +10,8 @@ import com.muni.fi.pa165project.rest.exceptions.AlreadyExistsException;
 import com.muni.fi.pa165project.rest.exceptions.InternalException;
 import com.muni.fi.pa165project.rest.exceptions.ResourceNotFoundException;
 import com.muni.fi.pa165project.rest.exceptions.UnprocessableEntityException;
+import com.muni.fi.pa165project.rest.security.ApplyAuthorizeFilter;
+import com.muni.fi.pa165project.rest.security.SecurityLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -171,6 +173,27 @@ public class RecordsController {
             return record;
         } else {
             throw new ResourceNotFoundException();
+        }
+    }
+
+    /**
+     * Get the user's weekly goal progress by user identifier.
+     * Identifier is taken from login info.
+     * <p>
+     * TEST: curl -X GET -i  http://localhost:8080/pa165/rest/records/progress
+     *
+     * @param userId identifier for a user
+     * @return goal progress
+     */
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
+    @RequestMapping(value = "/progress", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final int getGoalProgress(@RequestAttribute("userId") long userId) {
+        logger.debug("rest getRecord({})", userId);
+
+        try {
+            return trackingFacade.getWeekProgressOfBurnedCalories(userId);
+        } catch (Exception ex) {
+            return 0;
         }
     }
 }
