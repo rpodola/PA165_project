@@ -7,7 +7,7 @@ import {ActivityDetail} from '../_classes/ActivityDetail';
 import {Activity} from '../_classes/Activity';
 
 const prefix = '/activities/';
-const allActivities = prefix + 'allActivities';
+const allActivities = prefix;
 const activitiesFromCategories = allActivities;
 const activityDetail = prefix;
 const createActivity = prefix + 'create';
