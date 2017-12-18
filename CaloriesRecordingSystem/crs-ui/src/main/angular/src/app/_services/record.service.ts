@@ -18,8 +18,9 @@ const progress = prefix + 'progress';
 
 @Injectable()
 export class RecordService {
-  constructor(private http: HttpClient,) {
-  }
+  constructor(
+    private http: HttpClient,
+  ) {}
 
   getAllRecordsOfUser(): Observable<IRecord[]> {
     return this.http
