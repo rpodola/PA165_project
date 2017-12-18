@@ -16,6 +16,7 @@ import 'rxjs/add/operator/mergeMap';
 import {ICategory} from '../_interfaces/ICategory';
 import {IRecordDetail} from '../_interfaces/IRecordDetail';
 import {IActivityDetail} from '../_interfaces/IActivityDetail';
+import {TrackingSettings} from '../_classes/TrackingSettings';
 
 const categories_const: ICategory[] = [
   {
@@ -185,6 +186,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         // save new user
         newUser.id = users.length + 1;
+        newUser.trackingSettings = new TrackingSettings();
+        newUser.trackingSettings.weeklyBurnedCaloriesGoal = 0;
         users.push(newUser);
         localStorage.setItem('users', JSON.stringify(users));
 
@@ -351,6 +354,25 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return of(new HttpResponse({status: 200, body: activities[index]}));
       }
 
+      //  get tracking settings
+      if (request.url.endsWith('/users/trackingSettings') && request.method === 'GET') {
+        const currUser = JSON.parse(localStorage.getItem('currentUser'));
+        const user = users.find(u => u.id === currUser.user.id);
+
+        return of(new HttpResponse({ status: 200, body: user.trackingSettings }));
+      }
+
+      //  save tracking settings
+      if (request.url.endsWith('/users/updateTrackingSettings') && request.method === 'POST') {
+        const currUser = JSON.parse(localStorage.getItem('currentUser'));
+        const index = users.findIndex(user => user.id === currUser.user.id);
+
+        users[index].trackingSettings = request.body;
+        localStorage.setItem('users', JSON.stringify(users));
+
+        return of(new HttpResponse({ status: 200, body: users[index].trackingSettings }));
+      }
+
       //  get user settings
       if (request.url.endsWith('/users/settings') && request.method === 'GET') {
         const currUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -363,7 +385,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       if (request.url.endsWith('/users/update') && request.method === 'POST') {
         const currUser = JSON.parse(localStorage.getItem('currentUser'));
         const index = users.findIndex(user => user.id === currUser.user.id);
-
+        const oldTrackingSettings = users[index].trackingSettings;
+        request.body.trackingSettings = oldTrackingSettings;
         users[index] = request.body;
         localStorage.setItem('users', JSON.stringify(users));
 
