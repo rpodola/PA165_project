@@ -32,9 +32,4 @@ export class NavBarComponent {
     this.router.navigateByUrl('/login');
   }
 
-  clearLocalStorage() {
-    localStorage.clear();
-    window.location.reload();
-  }
-
 }

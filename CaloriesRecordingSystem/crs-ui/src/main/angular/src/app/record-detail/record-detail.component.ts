@@ -11,6 +11,7 @@ import {IRecordDetail} from '../_interfaces/IRecordDetail';
 export class RecordDetailComponent implements OnInit {
 
   record: IRecordDetail;
+  id: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,9 +23,9 @@ export class RecordDetailComponent implements OnInit {
   }
 
   getRecord(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+    this.id = +this.route.snapshot.paramMap.get('id');
     this.recordService
-      .getRecordDetail(id)
+      .getRecordDetail(this.id)
       .subscribe(record => this.record = record);
   }
 
