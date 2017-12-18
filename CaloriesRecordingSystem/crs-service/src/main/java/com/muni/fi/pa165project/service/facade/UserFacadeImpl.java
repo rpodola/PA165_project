@@ -1,12 +1,6 @@
 package com.muni.fi.pa165project.service.facade;
 
-import com.muni.fi.pa165project.dto.LoginExistsRequestDTO;
-import com.muni.fi.pa165project.dto.LoginExistsResponseDTO;
-import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
-import com.muni.fi.pa165project.dto.UserCredentialsDTO;
-import com.muni.fi.pa165project.dto.UserDetailDTO;
-import com.muni.fi.pa165project.dto.UserRegisterDTO;
-import com.muni.fi.pa165project.dto.UserUpdateDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.MappingService;
@@ -77,7 +71,7 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public TrackingSettingsDTO setTrackingSettings(TrackingSettingsDTO trackingSettings) {
+    public TrackingSettingsUpdateDTO setTrackingSettings(TrackingSettingsDTO trackingSettings) {
         log.debug("Setting tracking settings with goal <{}> to User with id <{}>", trackingSettings.getWeeklyCaloriesGoal(), trackingSettings.getUserId());
 
         User user = this.userService.findById(trackingSettings.getUserId());
@@ -86,28 +80,18 @@ public class UserFacadeImpl implements UserFacade {
             user = this.userService.updateUser(user);
         }
 
-        TrackingSettingsDTO settings = mapper.map(user.getTrackingSettings(), TrackingSettingsDTO.class);
-        if (settings == null) {
-            return null;
-        }
-        settings.setUserId(user.getId());
-        return settings;
+        return mapper.map(user.getTrackingSettings(), TrackingSettingsUpdateDTO.class);
     }
 
     @Override
-    public TrackingSettingsDTO getTrackingSettings(long userId) {
+    public TrackingSettingsUpdateDTO getTrackingSettings(long userId) {
         log.debug("Getting tracking settings for User with id <{}>", userId);
 
         User user = this.userService.findById(userId);
         if (user == null) {
             return null;
         }
-        TrackingSettingsDTO settings = mapper.map(user.getTrackingSettings(), TrackingSettingsDTO.class);
-        if (settings == null) {
-            return null;
-        }
-        settings.setUserId(user.getId());
-        return settings;
+        return mapper.map(user.getTrackingSettings(), TrackingSettingsUpdateDTO.class);
     }
 
     @Override

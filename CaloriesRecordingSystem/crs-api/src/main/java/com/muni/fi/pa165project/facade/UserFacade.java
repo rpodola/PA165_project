@@ -1,12 +1,6 @@
 package com.muni.fi.pa165project.facade;
 
-import com.muni.fi.pa165project.dto.LoginExistsRequestDTO;
-import com.muni.fi.pa165project.dto.LoginExistsResponseDTO;
-import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
-import com.muni.fi.pa165project.dto.UserCredentialsDTO;
-import com.muni.fi.pa165project.dto.UserDetailDTO;
-import com.muni.fi.pa165project.dto.UserRegisterDTO;
-import com.muni.fi.pa165project.dto.UserUpdateDTO;
+import com.muni.fi.pa165project.dto.*;
 
 /**
  * @author Radoslav Karlik
@@ -56,7 +50,7 @@ public interface UserFacade {
      *
      * @param trackingSettings tracking settings of user
      */
-    TrackingSettingsDTO setTrackingSettings(TrackingSettingsDTO trackingSettings);
+    TrackingSettingsUpdateDTO setTrackingSettings(TrackingSettingsDTO trackingSettings);
 
     /**
      * Get tracking settings
@@ -64,19 +58,21 @@ public interface UserFacade {
      * @param userId user id
      * @return tracking settings of user
      */
-    TrackingSettingsDTO getTrackingSettings(long userId);
-    
+    TrackingSettingsUpdateDTO getTrackingSettings(long userId);
+
     /**
      * Finds user by his credentials
-     * @param credentials  
+     *
+     * @param credentials
      * @return User if credentials match, null otherwise
      */
     UserDetailDTO findByCredentials(UserCredentialsDTO credentials);
-    
+
     /**
      * Checks whether any user with given username or email exists
+     *
      * @param dto
-     * @return 
+     * @return
      */
     LoginExistsResponseDTO loginExists(LoginExistsRequestDTO dto);
 }

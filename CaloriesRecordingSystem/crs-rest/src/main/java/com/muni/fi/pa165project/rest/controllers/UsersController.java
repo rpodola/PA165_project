@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.rest.controllers;
 
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
+import com.muni.fi.pa165project.dto.TrackingSettingsUpdateDTO;
 import com.muni.fi.pa165project.dto.UserDetailDTO;
 import com.muni.fi.pa165project.dto.UserUpdateDTO;
 import com.muni.fi.pa165project.facade.UserFacade;
@@ -96,7 +97,7 @@ public class UsersController {
 
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
     @RequestMapping(value = "/settings/tracking", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public final TrackingSettingsDTO setTrackingSettings(@RequestAttribute("userId") long userId, @RequestBody TrackingSettingsDTO ts) {
+    public final TrackingSettingsUpdateDTO setTrackingSettings(@RequestAttribute("userId") long userId, @RequestBody TrackingSettingsDTO ts) {
         logger.debug("rest editTrackingSettings({}) for user <{}>", ts.getWeeklyCaloriesGoal(), userId);
 
         try {
@@ -109,7 +110,7 @@ public class UsersController {
 
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
     @RequestMapping(value = "/settings/tracking", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final TrackingSettingsDTO getTrackingSettings(@RequestAttribute("userId") long userId) {
+    public final TrackingSettingsUpdateDTO getTrackingSettings(@RequestAttribute("userId") long userId) {
         logger.debug("rest getTrackingSettings({})", userId);
 
         try {

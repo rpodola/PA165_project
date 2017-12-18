@@ -1,9 +1,6 @@
 package com.muni.fi.pa165project.service.facade;
 
-import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
-import com.muni.fi.pa165project.dto.UserDetailDTO;
-import com.muni.fi.pa165project.dto.UserRegisterDTO;
-import com.muni.fi.pa165project.dto.UserUpdateDTO;
+import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.config.ServiceConfiguration;
 import org.junit.Assert;
@@ -116,8 +113,8 @@ public class UserFacadeIT {
         settings.setWeeklyCaloriesGoal(100);
 
         userFac.setTrackingSettings(settings);
-        TrackingSettingsDTO settingsFound = userFac.getTrackingSettings(userId);
-        Assert.assertEquals(settings, settingsFound);
+        TrackingSettingsUpdateDTO settingsFound = userFac.getTrackingSettings(userId);
+        Assert.assertEquals(settings.getWeeklyCaloriesGoal(), settingsFound.getWeeklyCaloriesGoal());
         Assert.assertNull(userFac.getTrackingSettings(58));
     }
 }

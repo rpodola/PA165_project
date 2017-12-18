@@ -1,6 +1,7 @@
 package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
+import com.muni.fi.pa165project.dto.TrackingSettingsUpdateDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
@@ -70,16 +71,16 @@ public class UserFacadeImplTest {
     /**
      * @TODO: @PeterKrasnansky
      * Test nerefeklektuje aktualny stav fasady
-    @Test
-    @Transactional
-    @Rollback
-        public void editUserTest() {
-        UserUpdateDTO userDTO = mock(UserUpdateDTO.class);
-        when(mapper.map(userDTO, User.class)).thenReturn(user);
-        userFacade.editUser(userDTO);
-        verify(userService).updateUser(user);
-    }*/
-    
+     * @Test
+     * @Transactional
+     * @Rollback public void editUserTest() {
+     * UserUpdateDTO userDTO = mock(UserUpdateDTO.class);
+     * when(mapper.map(userDTO, User.class)).thenReturn(user);
+     * userFacade.editUser(userDTO);
+     * verify(userService).updateUser(user);
+     * }
+     */
+
     @Test
     @Transactional
     @Rollback
@@ -99,7 +100,6 @@ public class UserFacadeImplTest {
         when(userService.updateUser(user)).thenReturn(user);
         userFacade.setTrackingSettings(trackingSettingsDTO);
         verify(userService).updateUser(user);
-
     }
 
     @Test
@@ -108,6 +108,6 @@ public class UserFacadeImplTest {
     public void getTrackingSettingsTest() {
         when(userService.findById(1L)).thenReturn(user);
         userFacade.getTrackingSettings(1L);
-        verify(mapper).map(user.getTrackingSettings(), TrackingSettingsDTO.class);
+        verify(mapper).map(user.getTrackingSettings(), TrackingSettingsUpdateDTO.class);
     }
 }
