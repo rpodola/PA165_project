@@ -1,3 +1,3 @@
 export class TrackingSettings {
-  weeklyBurnedCaloriesGoal: number;
+  weeklyCaloriesGoal: number;
 }

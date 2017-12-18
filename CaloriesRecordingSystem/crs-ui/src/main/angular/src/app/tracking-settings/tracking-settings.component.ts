@@ -14,13 +14,15 @@ export class TrackingSettingsComponent  implements OnInit {
   constructor(
     private userService: SettingsService,
   ) {
-    this.trackingSettings.weeklyBurnedCaloriesGoal = 0;
+    this.trackingSettings.weeklyCaloriesGoal = 0;
   }
 
   getTrackingSettings() {
     this.userService
       .getTrackingSettings()
-      .subscribe(trackingSettings => this.trackingSettings = trackingSettings);
+      .subscribe(trackingSettings => {
+        this.trackingSettings = trackingSettings;
+      });
   }
 
   saveTrackingSettings() {

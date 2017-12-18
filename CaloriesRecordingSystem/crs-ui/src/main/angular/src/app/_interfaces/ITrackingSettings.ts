@@ -1,3 +1,3 @@
 export interface ITrackingSettings {
-  weeklyBurnedCaloriesGoal: number;
+  weeklyCaloriesGoal: number;
 }

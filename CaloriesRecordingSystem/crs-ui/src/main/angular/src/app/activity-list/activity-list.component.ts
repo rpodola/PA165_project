@@ -44,11 +44,10 @@ export class ActivityListComponent implements OnInit {
   loadAllActivitesFromServer() {
     this.activityService
       .getAllActivities()
-      .subscribe(activities => this.activitiesCache = activities);
-  }
-
-  getAllActivities() {
-    this.activities = this.activitiesCache;
+      .subscribe(activities => {
+        this.activitiesCache = activities;
+        this.filterChanged();
+      });
   }
 
   showHide() {
@@ -63,7 +62,6 @@ export class ActivityListComponent implements OnInit {
 
   ngOnInit() {
     this.loadAllActivitesFromServer();
-    this.getAllActivities();
   }
 
 }

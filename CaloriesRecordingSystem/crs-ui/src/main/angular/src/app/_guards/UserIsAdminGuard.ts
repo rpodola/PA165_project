@@ -10,7 +10,6 @@ export class UserIsAdminGuard implements CanActivate {
   ) {}
 
   canActivate() {
-    console.log('admin requested');
     return this.authService.isUserAdmin();
   }
 

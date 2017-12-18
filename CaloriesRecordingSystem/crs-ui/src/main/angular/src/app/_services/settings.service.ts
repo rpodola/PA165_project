@@ -9,10 +9,10 @@ import {TrackingSettings} from '../_classes/TrackingSettings';
 const prefix = '/users/';
 
 const settings = prefix + 'settings/';
-const updateSettings = settings + 'update';
+const updateSettings = settings;
 
-const trackingSettings = prefix + 'trackingSettings/';
-const updateTrackingSettings = trackingSettings + 'updateTrackingSettings';
+const trackingSettings = settings + 'tracking';
+const updateTrackingSettings = trackingSettings;
 
 @Injectable()
 export class SettingsService {
