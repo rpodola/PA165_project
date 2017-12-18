@@ -80,10 +80,8 @@ public class UsersController {
      * @throws InternalException            in case of any other error
      */
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
-    @RequestMapping(value = "/settings", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public final UserDetailDTO editUserSettingsDetail(@RequestAttribute("userId") long userId,
-                                                      @RequestBody UserUpdateDTO user) {
+    @RequestMapping(value = "/settings", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public final UserDetailDTO editUserSettingsDetail(@RequestAttribute("userId") long userId, @RequestBody UserUpdateDTO user) {
         logger.debug("rest editUserSettingsDetail({})", userId);
 
         try {
@@ -97,24 +95,21 @@ public class UsersController {
     }
 
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
-    @RequestMapping(value = "/settings/tracking", method = RequestMethod.PUT,
-            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public final void setTrackingSettings(@RequestAttribute("userId") long userId,
-                                          @RequestBody TrackingSettingsDTO ts){
+    @RequestMapping(value = "/settings/tracking", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public final TrackingSettingsDTO setTrackingSettings(@RequestAttribute("userId") long userId, @RequestBody TrackingSettingsDTO ts) {
         logger.debug("rest editTrackingSettings({}) for user <{}>", ts.getWeeklyCaloriesGoal(), userId);
 
         try {
             ts.setUserId(userId);
-            userFacade.setTrackingSettings(ts);
+            return userFacade.setTrackingSettings(ts);
         } catch (Exception ex) {
             throw new ResourceNotFoundException();
         }
     }
 
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
-    @RequestMapping(value = "/settings/tracking", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public final TrackingSettingsDTO getTrackingSettings(@RequestAttribute("userId") long userId){
+    @RequestMapping(value = "/settings/tracking", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final TrackingSettingsDTO getTrackingSettings(@RequestAttribute("userId") long userId) {
         logger.debug("rest getTrackingSettings({})", userId);
 
         try {

@@ -38,6 +38,7 @@ public class RecordsController {
 
     /**
      * Create a new Record
+     *
      * @param recordDTO RecordCreateDTO with required fields for creation
      * @throws AlreadyExistsException       if resource already exists
      * @throws UnprocessableEntityException if resource contains wrong attributes
@@ -61,6 +62,7 @@ public class RecordsController {
 
     /**
      * Get list of Records.
+     *
      * @return List of RecordDTO
      */
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
@@ -74,6 +76,7 @@ public class RecordsController {
     /**
      * Delete Record by identifier.
      * Identifier is taken from the URL path.
+     *
      * @throws ResourceNotFoundException if resource is not found
      */
     @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
@@ -93,6 +96,7 @@ public class RecordsController {
      * New data are sent in HTTP BODY by PUT method.
      * Name must match the Record which is referred by ID in URL path.
      * <p>
+     *
      * @param recordUpdateDTO RecordUpdateDTO with required fields for edit
      * @throws UnprocessableEntityException if resource contains wrong attributes
      * @throws InternalException            in case of any other error
@@ -116,6 +120,7 @@ public class RecordsController {
     /**
      * Get a Record detail by identifier.
      * Identifier is taken from the URL path.
+     *
      * @param id identifier for a record
      * @return Record detail Data Transfer Object
      * @throws ResourceNotFoundException if resource is not found
@@ -135,6 +140,7 @@ public class RecordsController {
     /**
      * Get the user's weekly goal progress by user identifier.
      * Identifier is taken from login info.
+     *
      * @param userId identifier for a user
      * @return goal progress
      */

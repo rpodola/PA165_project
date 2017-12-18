@@ -56,7 +56,7 @@ public interface UserFacade {
      *
      * @param trackingSettings tracking settings of user
      */
-    void setTrackingSettings(TrackingSettingsDTO trackingSettings);
+    TrackingSettingsDTO setTrackingSettings(TrackingSettingsDTO trackingSettings);
 
     /**
      * Get tracking settings

@@ -2,7 +2,6 @@ package com.muni.fi.pa165project.service.facade;
 
 import com.muni.fi.pa165project.dto.TrackingSettingsDTO;
 import com.muni.fi.pa165project.dto.UserRegisterDTO;
-import com.muni.fi.pa165project.dto.UserUpdateDTO;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.MappingService;
@@ -97,7 +96,7 @@ public class UserFacadeImplTest {
         when(trackingSettingsDTO.getUserId()).thenReturn(1L);
         when(trackingSettingsDTO.getWeeklyCaloriesGoal()).thenReturn(2000);
         when(userService.findById(1L)).thenReturn(user);
-
+        when(userService.updateUser(user)).thenReturn(user);
         userFacade.setTrackingSettings(trackingSettingsDTO);
         verify(userService).updateUser(user);
 

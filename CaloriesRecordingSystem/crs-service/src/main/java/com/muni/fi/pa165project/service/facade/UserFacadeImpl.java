@@ -46,10 +46,10 @@ public class UserFacadeImpl implements UserFacade {
         log.debug("Editing User with id <{}>", userDto.getId());
 
         User user = this.userService.findById(userDto.getId());
-        
+
         mapper.map(userDto, user);
         User updatedUser = this.userService.updateUser(user);
-        
+
         return mapper.map(updatedUser, UserDetailDTO.class);
     }
 
@@ -77,15 +77,21 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void setTrackingSettings(TrackingSettingsDTO trackingSettings) {
-        log.debug("Setting tracking settings with goal <{}> to User with id <{}>",
-                trackingSettings.getWeeklyCaloriesGoal(), trackingSettings.getUserId());
+    public TrackingSettingsDTO setTrackingSettings(TrackingSettingsDTO trackingSettings) {
+        log.debug("Setting tracking settings with goal <{}> to User with id <{}>", trackingSettings.getWeeklyCaloriesGoal(), trackingSettings.getUserId());
 
         User user = this.userService.findById(trackingSettings.getUserId());
         if (user != null) {
             user.getTrackingSettings().setWeeklyCaloriesGoal(trackingSettings.getWeeklyCaloriesGoal());
-            this.userService.updateUser(user);
+            user = this.userService.updateUser(user);
         }
+
+        TrackingSettingsDTO settings = mapper.map(user.getTrackingSettings(), TrackingSettingsDTO.class);
+        if (settings == null) {
+            return null;
+        }
+        settings.setUserId(user.getId());
+        return settings;
     }
 
     @Override
@@ -93,11 +99,13 @@ public class UserFacadeImpl implements UserFacade {
         log.debug("Getting tracking settings for User with id <{}>", userId);
 
         User user = this.userService.findById(userId);
-        if (user == null)
+        if (user == null) {
             return null;
+        }
         TrackingSettingsDTO settings = mapper.map(user.getTrackingSettings(), TrackingSettingsDTO.class);
-        if (settings == null)
+        if (settings == null) {
             return null;
+        }
         settings.setUserId(user.getId());
         return settings;
     }
@@ -106,13 +114,13 @@ public class UserFacadeImpl implements UserFacade {
     public UserDetailDTO findByCredentials(UserCredentialsDTO credentials) {
         String username = credentials.getUsername();
         String password = credentials.getPassword();
-        
+
         User user = this.userService.findByCredentials(username, password);
-        
+
         if (user == null) {
             return null;
         }
-        
+
         return mapper.map(user, UserDetailDTO.class);
     }
 
@@ -120,11 +128,11 @@ public class UserFacadeImpl implements UserFacade {
     public LoginExistsResponseDTO loginExists(LoginExistsRequestDTO dto) {
         boolean usernameExists = this.userService.userWithUsernameExists(dto.getUsername());
         boolean emailExists = this.userService.userWithEmailExists(dto.getEmail());
-        
+
         LoginExistsResponseDTO response = new LoginExistsResponseDTO();
         response.setEmailExists(emailExists);
         response.setUsernameExists(usernameExists);
-        
+
         return response;
     }
 }
