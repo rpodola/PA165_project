@@ -4,6 +4,7 @@ import {IRecord} from '../_interfaces/IRecord';
 import {Observable} from 'rxjs/Observable';
 import {IRecordDetail} from '../_interfaces/IRecordDetail';
 import {Record} from "../_classes/Record";
+import {IRecordForUpdate} from '../_interfaces/IRecordForUpdate';
 
 const prefix = '/records/';
 
@@ -11,6 +12,7 @@ const allRecords = prefix;
 const recordDetail = prefix;
 const createRecord = prefix + 'create';
 
+const getRecordForUpdate = prefix + 'getForUpdate/';
 const updateRecord = prefix;
 const deleteRecord = prefix;
 const progress = prefix + 'progress';
@@ -36,6 +38,11 @@ export class RecordService {
     return this.http
       .post<IRecordDetail>(createRecord, { record });
 
+  }
+
+  getRecordForUpdate(recordId: number): Observable<IRecordForUpdate> {
+    return this.http
+      .get<IRecordForUpdate>(getRecordForUpdate + recordId);
   }
 
   updateRecord(record: IRecordDetail): Observable<IRecordDetail> {
