@@ -15,11 +15,12 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @author Radim Podola
  */
 public class AllowOriginInterceptor extends HandlerInterceptorAdapter {
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods","GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
         return true;
     }
 
