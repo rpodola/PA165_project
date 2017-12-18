@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 
 import { AppComponent } from './app.component';
 import { FormsModule} from '@angular/forms';
@@ -74,6 +75,7 @@ import { TrackingSettingsComponent } from './tracking-settings/tracking-settings
     HttpClientModule,
     AppRoutingModule,
     NgxMyDatePickerModule.forRoot(),
+    AngularDateTimePickerModule,
   ],
   providers: [
     ActivityService,

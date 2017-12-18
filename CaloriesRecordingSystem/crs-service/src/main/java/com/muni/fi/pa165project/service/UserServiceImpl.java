@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         for (Record r : lastWeekRecords) {
             sum += r.getBurnedCalories();
         }
-        return (int) Math.max(((sum / goal) * 100), 100);
+        return (int) Math.min(((sum / goal) * 100), 100);
     }
 
     @Override

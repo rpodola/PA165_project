@@ -7,6 +7,17 @@ export const dateToDDMMYYYY = (date: Date) => {
   ].join('-');
 };
 
+export const dateToDDMMYYYMMHH = (date: Date) => {
+  const datePart = [date.getFullYear(),
+    ('0' + (date.getMonth() + 1)).slice(-2),
+    ('0' + (date.getDate())).slice(-2),
+  ].join('-');
+
+  const timePart = date.getHours() + ':' + date.getMinutes();
+
+  return datePart + ' ' + timePart;
+};
+
 export const dateToIMyDate = (date: Date) => {
   const myDate: IMyDate = {
     year: date.getFullYear(),
