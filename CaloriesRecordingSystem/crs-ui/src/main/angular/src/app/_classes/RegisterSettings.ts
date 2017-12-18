@@ -4,7 +4,7 @@ export class RegisterSettings {
   username: string;
   email: string;
   password: string;
-  birthday: string;
+  birthDate: string;
   weight: number;
   height: number;
 }

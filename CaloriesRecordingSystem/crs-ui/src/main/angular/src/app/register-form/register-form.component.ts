@@ -45,7 +45,7 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit() { }
 
   registerAccount() {
-    this.registerSettings.birthday = this.birthday;
+    this.registerSettings.birthDate = this.birthday;
 
     this.authService
       .register(this.registerSettings)
