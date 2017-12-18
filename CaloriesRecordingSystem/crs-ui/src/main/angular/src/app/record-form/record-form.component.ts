@@ -4,7 +4,7 @@ import {RecordService} from '../_services/record.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ActivityService} from '../_services/activity.service';
 import {IActivity} from '../_interfaces/IActivity';
-import {dateToDDMMYYYMMHH} from '../_utils/DateUtils';
+import {dateToDDMMYYYMMHH, stringDateTimeToDate} from '../_utils/DateUtils';
 
 @Component({
   selector: 'app-record-form',
@@ -12,6 +12,8 @@ import {dateToDDMMYYYMMHH} from '../_utils/DateUtils';
   styleUrls: ['./record-form.component.css']
 })
 export class RecordFormComponent implements OnInit {
+
+  id: number;
 
   record = new Record();
   activities: IActivity[];
@@ -22,6 +24,8 @@ export class RecordFormComponent implements OnInit {
     timePicker: true,
     format: 'dd-MM-yyyy HH:mm',
   };
+
+  isUpdating: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,14 +60,26 @@ export class RecordFormComponent implements OnInit {
       .subscribe(() => this.router.navigateByUrl('/records/'));
   }
 
+  updateRecord() {
+    this.recordService
+      .updateRecord(this.id, this.record)
+      .subscribe();
+  }
+
   getRecord() {
     const routeId = this.route.snapshot.paramMap.get('id');
 
     if (routeId) {
-      const id = +routeId;
+      this.id = +routeId;
       this.recordService
-        .getRecordForUpdate(id)
-        .subscribe(record => this.record = record);
+        .getRecordForUpdate(this.id)
+        .subscribe(record => {
+          this.record = record;
+          this.isUpdating = true;
+          this.selectedDate = stringDateTimeToDate(this.record.atTime);
+        });
+    } else {
+      this.isUpdating = false;
     }
   }
 

@@ -102,6 +102,7 @@ public class RecordsController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public final void editRecord(@PathVariable("id") long id, @RequestAttribute("userId") long userId, @RequestBody RecordUpdateDTO recordUpdateDTO) {
         logger.debug("rest editRecord()");
+
         try {
             recordUpdateDTO.setUserId(userId);
             recordUpdateDTO.setId(id);

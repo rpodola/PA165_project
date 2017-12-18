@@ -45,10 +45,7 @@ public class ServiceConfiguration {
                         .fields("categoryObject", "category");
                 mapping(ActivityDTO.class, ActivityUpdateDTO.class, TypeMappingOptions.oneWay())
                         .fields("category.id", "category");
-                mapping(RecordDTO.class, Record.class, TypeMappingOptions.oneWay())
-                        .fields("activityName", "activity.name")
-                        .fields("activityId", "activity.id");
-                mapping(UserDetailDTO.class, User.class, TypeMappingOptions.oneWay())
+                mapping(UserDetailDTO.class, User.class)
                         .fields("username", "loginDetails.username")
                         .fields("email", "loginDetails.email");
                 mapping(User.class, UserRegisterDTO.class)
@@ -59,9 +56,16 @@ public class ServiceConfiguration {
                 mapping(User.class, UserUpdateDTO.class)
                         .fields("loginDetails.password", "password")
                         .fields("loginDetails.email", "email");
+                mapping(RecordDTO.class, Record.class)
+                        .fields("activityName", "activity.name")
+                        .fields("activityId", "activity.id")
+                        .fields("atTime", "atTime", FieldsMappingOptions.customConverter(LocalDateTimeConverter.class));
                 mapping(Record.class, RecordCreateDTO.class)
                         .fields("atTime", "atTime", FieldsMappingOptions.customConverter(LocalDateTimeConverter.class));
-                mapping(RecordGetUpdateDTO.class, RecordDTO.class)
+                mapping(Record.class, RecordUpdateDTO.class)
+                        .fields("atTime", "atTime", FieldsMappingOptions.customConverter(LocalDateTimeConverter.class));
+                mapping(RecordGetUpdateDTO.class, Record.class)
+                        .fields("activityId", "activity.id")
                         .fields("atTime", "atTime", FieldsMappingOptions.customConverter(LocalDateTimeConverter.class));
             }
         };

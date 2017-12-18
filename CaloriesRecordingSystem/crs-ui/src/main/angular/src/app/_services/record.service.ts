@@ -36,7 +36,7 @@ export class RecordService {
 
   createNewRecord(record: Record): Observable<IRecordDetail> {
     return this.http
-      .post<IRecordDetail>(createRecord, { record });
+      .post<IRecordDetail>(createRecord, record);
 
   }
 
@@ -45,9 +45,9 @@ export class RecordService {
       .get<IRecordForUpdate>(getRecordForUpdate + recordId);
   }
 
-  updateRecord(record: IRecordDetail): Observable<IRecordDetail> {
+  updateRecord(id: number, record: Record) {
     return this.http
-      .post<IRecordDetail>(updateRecord, {record});
+      .put(updateRecord + id, record);
   }
 
   getWeekProgressOfBurnedCalories(): Observable<number> {

@@ -73,9 +73,14 @@ public class TrackingFacadeImpl implements TrackingFacade {
         log.debug("Editing Record with id <{}>", recordUpdateDto.getId());
 
         Record record = this.recordService.getRecord(recordUpdateDto.getId());
+
+        if (record.getActivity().getId() != recordUpdateDto.getActivityId()) {
+            Activity activity = this.activityService.findById(recordUpdateDto.getActivityId());
+            record.setActivity(activity);
+        }
         
         mapper.map(recordUpdateDto, record);
-        
+ 
         record.setBurnedCalories(
                 (int) this.burnedCaloriesService.calculateAmountOfCalories(
                         recordUpdateDto.getActivityId(),
@@ -83,10 +88,7 @@ public class TrackingFacadeImpl implements TrackingFacade {
                         recordUpdateDto.getWeight()
                 )
         );
-        if (record.getActivity().getId() != recordUpdateDto.getActivityId()) {
-            Activity activity = this.activityService.findById(recordUpdateDto.getActivityId());
-            record.setActivity(activity);
-        }
+        
         Record updatedRecord = this.recordService.update(record);
         
         return mapper.map(updatedRecord, RecordDetailDTO.class);

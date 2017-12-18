@@ -147,10 +147,10 @@
       <button
         type="submit"
         class="btn btn-success"
-        (click)="createNewRecord()"
+        (click)="isUpdating ? updateRecord() : createNewRecord()"
         [disabled]="validateDuration.errors || validateDistance.errors"
       >
-        Create
+        {{ isUpdating ? 'Update' : 'Create' }}
       </button>
     </div>
   </div>
