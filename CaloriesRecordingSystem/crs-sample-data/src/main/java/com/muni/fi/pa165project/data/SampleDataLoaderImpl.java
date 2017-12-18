@@ -4,6 +4,7 @@ import com.muni.fi.pa165project.dto.*;
 import com.muni.fi.pa165project.entity.User;
 import com.muni.fi.pa165project.enums.Category;
 import com.muni.fi.pa165project.facade.ActivityFacade;
+import com.muni.fi.pa165project.facade.TrackingFacade;
 import com.muni.fi.pa165project.facade.UserFacade;
 import com.muni.fi.pa165project.service.MappingService;
 import com.muni.fi.pa165project.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -35,6 +37,9 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
     UserFacade userFacade;
 
     @Autowired
+    TrackingFacade trackingFacade;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -46,7 +51,26 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
         log.debug("loadData() start");
 
         loadActivities();
-        loadUsers();
+        loadUsers();loadRecords();
+    }
+
+    private void loadRecords() {
+        long userId = userFacade.getUser("admin@fi.muni.cz").getId();
+        long activityId = acFacade.getAllActivities().get(0).getId();
+        createRecord(userId, activityId, LocalDateTime.now(), 100, 50);
+        createRecord(userId, activityId, LocalDateTime.now(), 200, 100);
+        createRecord(userId, activityId, LocalDateTime.now(), 10, 10);
+    }
+
+    private Long createRecord(long userId, long activityId, LocalDateTime time, int distance, int duration) {
+        RecordCreateDTO record = new RecordCreateDTO();
+        record.setUserId(userId);
+        record.setActivityId(activityId);
+        record.setAtTime(time);
+        record.setDistance(distance);
+        record.setDuration(duration);
+
+        return trackingFacade.createRecord(record);
     }
 
     private void loadUsers(){
