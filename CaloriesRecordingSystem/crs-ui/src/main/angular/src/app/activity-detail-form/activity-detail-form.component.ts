@@ -14,6 +14,7 @@ import {CategoryService} from '../_services/category.service';
 })
 export class ActivityDetailFormComponent implements OnInit {
 
+  id: number;
   activity: ActivityDetail;
   categories: ICategory[];
 
@@ -22,7 +23,7 @@ export class ActivityDetailFormComponent implements OnInit {
     private categoryService: CategoryService,
     private location: Location,
     private route: ActivatedRoute,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getActivity();
@@ -38,36 +39,36 @@ export class ActivityDetailFormComponent implements OnInit {
   }
 
   getActivity(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+    this.id = +this.route.snapshot.paramMap.get('id');
     this.activityService
-      .getActivityDetail(id)
+      .getActivityDetail(this.id)
       .subscribe(activity => {
         const { category, ...other } = activity;
-        this.activity = Object.assign({}, { ...other, categoryId: category.id });
+        this.activity = Object.assign({ ...other, category: category.id });
       });
   }
 
   onAddBurnedCalories(burnedCalories: BurnedCalories) {
-    const burned = this.activity.burnedCaloriesList.filter(bc => bc.upperWeightBoundary === burnedCalories.upperWeightBoundary);
+    const burned = this.activity.burnedCalories.filter(bc => bc.upperWeightBoundary === burnedCalories.upperWeightBoundary);
 
     if (burned.length > 0) {
       burned[0].amount = burnedCalories.amount;
     } else {
-      this.activity.burnedCaloriesList.push(burnedCalories);
-      this.activity.burnedCaloriesList.sort((bc1, bc2) => bc1.upperWeightBoundary - bc2.upperWeightBoundary);
+      this.activity.burnedCalories.push(burnedCalories);
+      this.activity.burnedCalories.sort((bc1, bc2) => bc1.upperWeightBoundary - bc2.upperWeightBoundary);
     }
   }
 
   saveActivityDetails() {
     this.activityService
-      .updateActivity(this.activity)
+      .updateActivity(this.id, this.activity)
       .subscribe(activity => {
         const { category, ...other } = activity;
-        this.activity = Object.assign({}, { ...other, categoryId: category.id });
+        this.activity = Object.assign({}, { ...other, category: category.id });
       });
   }
 
   onRemoveBurnedCalories(burnedCalories: BurnedCalories) {
-    this.activity.burnedCaloriesList = this.activity.burnedCaloriesList.filter(bc => bc !== burnedCalories);
+    this.activity.burnedCalories = this.activity.burnedCalories.filter(bc => bc !== burnedCalories);
   }
 }

@@ -19,7 +19,7 @@ export class SettingsComponent implements OnInit {
   oldPasswordIsWrong: boolean;
 
   constructor(
-    private userService: SettingsService,
+    private settingsService: SettingsService,
   ) {
     this.userSettings.weight = 1;
     this.userSettings.height = 1;
@@ -30,7 +30,7 @@ export class SettingsComponent implements OnInit {
   }
 
   getUserSettings() {
-    this.userService
+    this.settingsService
       .getUserSettings()
       .subscribe(userSettings => {
         this.passwordOld = '';
@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit {
   }
 
   saveSettings() {
-    this.userService
+    this.settingsService
       .saveUserSettings(this.userSettings)
       .subscribe(userSettings => {
         this.passwordOld = '';

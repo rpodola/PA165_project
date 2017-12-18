@@ -20,9 +20,7 @@ export class TrackingSettingsComponent  implements OnInit {
   getTrackingSettings() {
     this.userService
       .getTrackingSettings()
-      .subscribe(trackingSettings => {
-        this.trackingSettings = trackingSettings;
-      });
+      .subscribe(trackingSettings => this.trackingSettings = trackingSettings);
   }
 
   saveTrackingSettings() {

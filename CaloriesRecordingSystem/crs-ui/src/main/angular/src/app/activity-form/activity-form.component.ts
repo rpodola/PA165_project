@@ -30,7 +30,7 @@ export class ActivityFormComponent implements OnInit {
         this.categories = categories;
 
         if (categories) {
-          this.activity.categoryId = categories[0].id;
+          this.activity.category = categories[0].id;
         }
       });
   }

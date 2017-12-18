@@ -43,9 +43,9 @@ export class ActivityService {
       .post<number>(createActivity, activity);
   }
 
-  updateActivity(activity: ActivityDetail): Observable<IActivityDetail> {
+  updateActivity(id: number, activity: ActivityDetail): Observable<IActivityDetail> {
     return this.http
-      .put<IActivityDetail>(updateActivity, activity);
+      .put<IActivityDetail>(updateActivity + id, activity);
   }
 
 }

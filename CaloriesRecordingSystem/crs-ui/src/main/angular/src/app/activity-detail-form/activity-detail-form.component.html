@@ -100,7 +100,7 @@
             class="form-control"
             id="category"
             name="category"
-            [(ngModel)]="activity.categoryId"
+            [(ngModel)]="activity.category"
           >
             <option
               *ngFor="let category of categories"
@@ -114,7 +114,7 @@
     </div>
     <div class="col-md-3">
       <div
-        *ngIf="activity.categoryId === undefined"
+        *ngIf="activity.category === undefined"
         class="form-control-feedback"
       >
           <span class="text-danger align-middle">
@@ -127,17 +127,27 @@
   </div>
 
   <app-burned-calories-list
-    [burnedCaloriesList]="activity.burnedCaloriesList"
+    [burnedCaloriesList]="activity.burnedCalories"
     [canUserEdit]="true"
     (addBurnedCalories)="onAddBurnedCalories($event)"
     (removeBurnedCalories)="onRemoveBurnedCalories($event)"
   >
   </app-burned-calories-list>
 
-  <button
-    class="btn btn-success"
-    (click)="saveActivityDetails()"
-  >
-    Save changes
-  </button>
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <button
+            class="btn btn-success"
+            (click)="saveActivityDetails()"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

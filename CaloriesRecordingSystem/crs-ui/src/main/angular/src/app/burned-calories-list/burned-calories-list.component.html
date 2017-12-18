@@ -1,17 +1,23 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-md-6">
-      <h2>
-        Burned calories per bodyweight
-      </h2>
-      <hr>
+    <div class="col-md-3 field-label-responsive">
+    </div>
+    <div class="col-md-2">
+      <div class="form-group">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <h2>
+            Burned calories per bodyweight
+          </h2>
+          <hr>
+        </div>
+      </div>
     </div>
   </div>
 
   <div *ngIf="canUserEdit">
     <div class="row">
-      <div class="col-md-1 field-label-responsive">
+      <div class="col-md-3 field-label-responsive">
         <label for="weight">
           Weight
         </label>
@@ -33,21 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
-        <div
-          *ngIf="validateWeightBoundary.errors && (validateWeightBoundary.dirty || validateWeightBoundary.touched)"
-          class="form-control-feedback"
-        >
-            <span class="text-danger align-middle">
-              <i class="fa fa-close">
-                {{ validateWeightBoundary.errors.message }}
-              </i>
-            </span>
-        </div>
-      </div>
-    </div>
 
-    <div class="row">
       <div class="col-md-1 field-label-responsive">
         <label for="amount">
           Amount
@@ -70,6 +62,37 @@
           </div>
         </div>
       </div>
+
+      <div class="col-md-1">
+        <button
+          class="btn btn-primary"
+          (click)="addBurnedCaloriesToList()"
+          [disabled]="validateAmount.errors || validateWeightBoundary.errors"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2 field-label-responsive">
+      </div>
+      <div class="col-md-3">
+        <div
+          *ngIf="validateWeightBoundary.errors && (validateWeightBoundary.dirty || validateWeightBoundary.touched)"
+          class="form-control-feedback"
+        >
+            <span class="text-danger align-middle">
+              <i class="fa fa-close">
+                {{ validateWeightBoundary.errors.message }}
+              </i>
+            </span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="col-md-2 field-label-responsive">
+      </div>
       <div class="col-md-3">
         <div
           *ngIf="validateAmount.errors && (validateAmount.dirty || validateAmount.touched)"
@@ -83,48 +106,40 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col-md-2">
-        <button
-          class="btn btn-primary"
-          (click)="addBurnedCaloriesToList()"
-          [disabled]="validateAmount.errors || validateWeightBoundary.errors"
-        >
-          Add
-        </button>
-      </div>
+  <div class="row">
+    <div class="col-md-3 field-label-responsive">
+    </div>
+    <div class="col-md-6">
+      <table class="table">
+        <thead>
+          <th>
+            Weight
+          </th>
+          <th>
+            Calories
+          </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let burnedCalories of burnedCaloriesList">
+            <td>
+              {{ burnedCalories.upperWeightBoundary }}
+            </td>
+            <td>
+              {{ burnedCalories.amount }}
+            </td>
+            <td *ngIf="canUserEdit">
+              <button
+                class="btn btn-danger"
+                (click)="removeBurnedCaloriesFromList(burnedCalories)"
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-</div>
-
-<div>
-  <table class="table">
-    <thead>
-    <th>
-      Weight
-    </th>
-    <th>
-      Calories
-    </th>
-    </thead>
-    <tbody>
-    <tr *ngFor="let burnedCalories of burnedCaloriesList">
-      <td>
-        {{ burnedCalories.upperWeightBoundary }}
-      </td>
-      <td>
-        {{ burnedCalories.amount }}
-      </td>
-      <td *ngIf="canUserEdit">
-        <button
-          class="btn btn-danger"
-          (click)="removeBurnedCaloriesFromList(burnedCalories)"
-        >
-          Remove
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
 </div>

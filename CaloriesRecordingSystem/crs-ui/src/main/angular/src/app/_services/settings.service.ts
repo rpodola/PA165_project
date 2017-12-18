@@ -27,7 +27,7 @@ export class SettingsService {
 
   saveUserSettings(newSettings: UserSettings): Observable<IUserSettings> {
     return this.http
-      .post<IUserSettings>(updateSettings, newSettings);
+      .put<IUserSettings>(updateSettings, newSettings);
   }
 
   getTrackingSettings(): Observable<ITrackingSettings> {
@@ -37,6 +37,6 @@ export class SettingsService {
 
   saveTrackingSettings(newSettings: TrackingSettings): Observable<ITrackingSettings> {
     return this.http
-      .post<ITrackingSettings>(updateTrackingSettings, newSettings);
+      .put<ITrackingSettings>(updateTrackingSettings, newSettings);
   }
 }
