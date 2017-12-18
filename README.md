@@ -23,6 +23,6 @@ password: 12345
 ```
 
 #### REST
-Rest service avaible at `http://localhost:8080/pa165/rest`
+Rest service should be available at `http://localhost:8080/pa165/rest`
 
-To see hints how to test REST API see javadoc at REST controller's methods.
+To see hints, how to test REST API, look at javadoc for certain REST controller method. Because of applied authorization on a REST layer, there is option to openly test just methods where @ApplyAuthorizeFilter annotation is not used.
