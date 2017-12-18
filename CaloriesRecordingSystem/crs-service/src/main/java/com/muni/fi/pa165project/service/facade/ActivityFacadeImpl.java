@@ -124,4 +124,11 @@ public class ActivityFacadeImpl implements ActivityFacade {
         }
         return cats;
     }
+
+    public CategoryDTO getCategory(long id) {
+        log.debug("Calling getCategory({})", id);
+
+        Category c = Category.values()[(int)id];
+        return new CategoryDTO(c.getId(), c.getName(), c.getDescription());
+    }
 }

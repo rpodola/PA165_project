@@ -70,4 +70,11 @@ public interface ActivityFacade {
      * @return list of Category DTO
      */
     List<CategoryDTO> getAllCategories();
+
+    /**
+     * Get Category detail
+     *
+     * @return Category DTO
+     */
+    CategoryDTO getCategory(long id);
 }

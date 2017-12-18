@@ -185,4 +185,25 @@ public class ActivitiesController {
 
         return acFacade.getAllCategories();
     }
+
+    /**
+     * Get detail of category by identifier.
+     * Identifier is taken from the URL path.
+     * <p>
+     * TEST: curl -X GET -i  http://localhost:8080/pa165/rest/activities/categories/1
+     *
+     * @param id identifier for a category
+     * @return Category Data Transfer Object
+     * @throws ResourceNotFoundException if resource is not found
+     */
+    @RequestMapping(value = "/categories/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final CategoryDTO getCategoryDetail(@PathVariable("id") long id) {
+        logger.debug("rest getCategoryDetail({})", id);
+
+        try {
+            return acFacade.getCategory(id);
+        } catch (Exception ex){
+            throw new ResourceNotFoundException();
+        }
+    }
 }
