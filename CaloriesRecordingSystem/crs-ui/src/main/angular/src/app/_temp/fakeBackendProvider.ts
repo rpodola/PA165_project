@@ -150,7 +150,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     // wrap in delayed observable to simulate server api call
     return of(null).mergeMap(() => {
       // authenticate
-      if (request.url.endsWith('/auth/login') && request.method === 'POST') {
+      if (request.url.endsWith('/auth_fake/login') && request.method === 'POST') {
         // find if any user matches login credentials
         const filteredUsers = users.filter(user => {
           return user.username === request.body.username && user.password === request.body.password;
@@ -173,7 +173,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       }
 
       // create user
-      if (request.url.endsWith('/auth/register') && request.method === 'POST') {
+      if (request.url.endsWith('/auth_fake/register') && request.method === 'POST') {
         // get new user object from post body
         const newUser = request.body;
 

@@ -29,7 +29,6 @@ import { NumberMinMaxDirective } from './_validators/number-min-max.directive';
 import { ActivityFormComponent } from './activity-form/activity-form.component';
 import { BurnedCaloriesListComponent } from './burned-calories-list/burned-calories-list.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
-import {fakeBackendProvider} from './_temp/fakeBackendProvider';
 import {AuthenticationService} from './_services/authentication.service';
 import {JwtInterceptorProvider} from './_http-helpers/JwtInterceptor';
 import {UserLoggedInGuard} from './_guards/UserLoggedInGuard';
@@ -39,7 +38,7 @@ import {UserIsAdminGuard} from './_guards/UserIsAdminGuard';
 import { ActivityDetailFormComponent } from './activity-detail-form/activity-detail-form.component';
 import { ActivityDetailStaticComponent } from './activity-detail-static/activity-detail-static.component';
 import {UserService} from './_services/user.service';
-import {RecordFormComponent} from "./record-form/record-form.component";
+import {RecordFormComponent} from './record-form/record-form.component';
 import { TrackingSettingsComponent } from './tracking-settings/tracking-settings.component';
 
 @NgModule({
@@ -87,7 +86,6 @@ import { TrackingSettingsComponent } from './tracking-settings/tracking-settings
     UserNotLoggedInGuard,
     UserIsAdminGuard,
     LoginEventsService,
-    fakeBackendProvider,
   ],
   bootstrap: [AppComponent],
 })

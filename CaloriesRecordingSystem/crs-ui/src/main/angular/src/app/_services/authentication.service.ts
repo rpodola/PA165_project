@@ -19,6 +19,14 @@ export interface IRegisterResponse extends IAuthToken {
   emailExists: boolean;
 }
 
+const getClaims = (currentUser: { token: string }) => {
+  try {
+    return jwt_decode(currentUser.token);
+  } catch {
+    return null;
+  }
+};
+
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -55,21 +63,23 @@ export class AuthenticationService {
 
   isUserAdmin() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    return currentUser && currentUser.isAdmin;
+    const claims = getClaims(currentUser);
+
+    if (!claims) {
+      return false;
+    }
+
+    return claims.isAdmin;
   }
 
   isUserLoggedIn() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    //  temporary fake access
-    if (0 === 0) { return currentUser !== null; }
-
-    if (currentUser && currentUser.token) {
+    if (currentUser) {
       //  check expiration
-      let claims;
-      try {
-        claims = jwt_decode(currentUser.token);
-      } catch {
+      const claims = getClaims(currentUser);
+
+      if (!claims) {
         return false;
       }
 
