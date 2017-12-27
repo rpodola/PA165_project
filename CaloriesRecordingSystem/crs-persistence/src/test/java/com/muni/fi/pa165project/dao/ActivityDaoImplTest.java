@@ -32,10 +32,7 @@ public class ActivityDaoImplTest {
 
     @Before
     public void init() {
-        activity = new Activity();
-        activity.setDescription("description");
-        activity.setName("Initial Activity");
-        activity.setCategory(Category.AEROBICS);
+        activity = PersistenceTestUtil.initActivity("Initial Activity", Category.AEROBICS);
         activityDao.create(activity);
     }
 

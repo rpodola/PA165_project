@@ -63,6 +63,7 @@ public class UserFacadeImplTest {
     public void createUserTest() {
         UserRegisterDTO userDTO = mock(UserRegisterDTO.class);
         when(mapper.map(userDTO, User.class)).thenReturn(user);
+        when(userDTO.getPassword()).thenReturn("123456");
         userFacade.createUser(userDTO);
         verify(userService).createUser(user);
 

@@ -11,6 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
+
 /**
  * @author Radoslav Karlik
  */
@@ -31,7 +37,13 @@ public class UserFacadeImpl implements UserFacade {
         log.debug("Creating User with username <{}>", userDto.getUsername());
 
         User user = mapper.map(userDto, User.class);
+
+        //hashing password with generated salt
+        String salt = getSalt();
+        user.getLoginDetails().setSalt(salt);
+        user.getLoginDetails().setPassword(getHashedPass(userDto.getPassword(), salt));
         this.userService.createUser(user);
+
         return user.getId();
     }
 
@@ -40,10 +52,10 @@ public class UserFacadeImpl implements UserFacade {
         log.debug("Editing User with id <{}>", userDto.getId());
 
         User user = this.userService.findById(userDto.getId());
-
+        
         mapper.map(userDto, user);
         User updatedUser = this.userService.updateUser(user);
-
+        
         return mapper.map(updatedUser, UserDetailDTO.class);
     }
 
@@ -98,13 +110,14 @@ public class UserFacadeImpl implements UserFacade {
     public UserDetailDTO findByCredentials(UserCredentialsDTO credentials) {
         String username = credentials.getUsername();
         String password = credentials.getPassword();
-
-        User user = this.userService.findByCredentials(username, password);
-
+        
+        User user = this.userService.findByUsername(username);
         if (user == null) {
             return null;
         }
-
+        if (!user.getLoginDetails().getPassword().equals(getHashedPass(password, user.getLoginDetails().getSalt())))
+            return null;
+        
         return mapper.map(user, UserDetailDTO.class);
     }
 
@@ -112,11 +125,31 @@ public class UserFacadeImpl implements UserFacade {
     public LoginExistsResponseDTO loginExists(LoginExistsRequestDTO dto) {
         boolean usernameExists = this.userService.userWithUsernameExists(dto.getUsername());
         boolean emailExists = this.userService.userWithEmailExists(dto.getEmail());
-
+        
         LoginExistsResponseDTO response = new LoginExistsResponseDTO();
         response.setEmailExists(emailExists);
         response.setUsernameExists(usernameExists);
-
+        
         return response;
+    }
+
+    private String getHashedPass(String pass, String salt){
+        byte[] hashPass = pass.concat(salt).getBytes();
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(hashPass);
+            byte[] digest = md.digest();
+            return DatatypeConverter.printHexBinary(digest);
+        } catch (NoSuchAlgorithmException e) {
+            log.error("No MD5 Algorithm to hash password");
+            return pass;
+        }
+    }
+
+    private String getSalt(){
+        final Random r = new SecureRandom();
+        byte[] salt = new byte[16];
+        r.nextBytes(salt);
+        return DatatypeConverter.printHexBinary(salt);
     }
 }

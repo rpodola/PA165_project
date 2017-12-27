@@ -37,18 +37,10 @@ public class BurnedCaloriesDaoImplTest {
 
     private Activity ac;
 
-    @Transactional
-    private void createDummyActivity() {
-        this.ac = new Activity();
-        this.ac.setName("Activity 1");
-        this.ac.setDescription("test activity");
-        this.ac.setCategory(Category.RUNNING);
-        this.acDao.create(ac);
-    }
-
     @Before
     public void init() {
-        createDummyActivity();
+        ac = PersistenceTestUtil.initActivity();
+        acDao.create(ac);
 
         this.bc1 = new BurnedCalories();
         this.bc1.setUpperWeightBoundary(100);

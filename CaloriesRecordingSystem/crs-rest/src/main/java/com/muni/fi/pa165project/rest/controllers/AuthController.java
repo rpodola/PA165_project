@@ -36,7 +36,7 @@ public class AuthController {
     public final TokenDTO authenticate(@RequestBody UserCredentialsDTO credentials) {
         logger.debug("rest authenticate() username <{}>", credentials.getUsername());
 
-        UserDetailDTO user = this.userFacade.findByCredentials(credentials);
+        UserDetailDTO user = this.userFacade.checkUserCredentials(credentials);
         
         if (user == null) {
             throw new UnprocessableEntityException();

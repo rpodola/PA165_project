@@ -56,12 +56,11 @@ public interface UserService {
     int getProgressOfWeeklyCaloriesGoal(long userId);
     
     /**
-     * Finds user by his credentials
-     * @param password 
+     * Finds user by his Username
      * @param username 
      * @return User if credentials match, null otherwise
      */
-    User findByCredentials(String username, String password);
+    User findByUsername(String username);
     
     /**
      * Checks whether a user with given email exists

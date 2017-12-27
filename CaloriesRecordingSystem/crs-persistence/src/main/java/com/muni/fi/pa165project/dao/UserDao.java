@@ -70,12 +70,11 @@ public interface UserDao {
     User findByUserName(String username);
     
     /**
-     * Finds user by his credentials
-     * @param password 
+     * Finds user by his username
      * @param username 
      * @return User if credentials match, null otherwise
      */
-    User findByCredentials(String username, String password);
+    User findByUsername(String username);
     
     /**
      * Checks whether a user with given email exists

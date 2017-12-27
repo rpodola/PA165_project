@@ -42,37 +42,10 @@ public class RecordDaoImplTest {
     private Record record;
 
     @Before
-    public void initActivity() {
-        this.act = new Activity();
-        this.act.setName("Run");
-        this.act.setDescription("running by feet");
-        this.act.setCategory(Category.RUNNING);
-    }
-
-    @Before
-    public void initUser() {
-        this.user = new User();
-        this.user.setName("Radim");
-        this.user.setIsMale(true);
-        this.user.setBirthDate(LocalDate.now());
-        this.user.setIsAdmin(false);
-        LoginDetails login = new LoginDetails();
-        user.setHeight(123);
-        user.setWeight(75);
-        login.setUsername("rpo");
-        login.setPassword("12312345");
-        login.setEmail("rp@see.com");
-        this.user.setLoginDetails(login);
-    }
-
-    @Before
-    public void initRecord() {
-        this.record = new Record();
-        this.record.setAtTime(LocalDateTime.now());
-        this.record.setActivity(this.act);
-        this.record.setUser(this.user);
-        this.record.setDistance(100);
-        this.record.setWeight(user.getWeight());
+    public void setup() {
+        user = PersistenceTestUtil.initUser();
+        act = PersistenceTestUtil.initActivity();
+        record = PersistenceTestUtil.initRecord(user, act);
     }
 
     /**

@@ -28,20 +28,8 @@ public class UserDaoImplTest {
     private User user;
 
     @Before
-    public void initUser() {
-        this.user = new User();
-        user.setBirthDate(LocalDate.now());
-        user.setIsMale(true);
-        user.setName("Lukas");
-        user.setHeight(180);
-        user.setWeight(77);
-        user.setIsAdmin(true);
-
-        LoginDetails login = new LoginDetails();
-        login.setUsername("ciso112");
-        login.setPassword("abcdefgh");
-        login.setEmail("ciso112@protonmail.com");
-        this.user.setLoginDetails(login);
+    public void setup() {
+        user = PersistenceTestUtil.initUser();
         userDao.create(user);
     }
 
@@ -49,7 +37,6 @@ public class UserDaoImplTest {
     @Transactional
     @Rollback(true)
     public void testCreate() {
-
         userDao.create(user);
 
         List<User> users = this.userDao.findAll();
@@ -60,10 +47,6 @@ public class UserDaoImplTest {
     @Transactional
     @Rollback(true)
     public void testUpdate() {
-
-        userDao.create(user);
-
-
         user.setName("Martin");
         userDao.update(user);
 
@@ -76,7 +59,6 @@ public class UserDaoImplTest {
     @Transactional
     @Rollback(true)
     public void testDelete() {
-
         int initialCount = userDao.findAll().size();
         Assert.assertTrue("Nothing to delete", initialCount != 0);
 
@@ -117,6 +99,7 @@ public class UserDaoImplTest {
         login.setUsername("eavf");
         login.setPassword("abcdefgh");
         login.setEmail("vlado@protonmail.com");
+        login.setSalt("RANDOM");
         usr.setLoginDetails(login);
         userDao.create(usr);
         users = userDao.findAll();

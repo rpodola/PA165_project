@@ -18,8 +18,11 @@ public class LoginDetails implements Serializable {
     private String username;
 
     @Column(nullable = false)
-    @Length(min = 5, max = 63)
+    @Length(min = 5, max = 100)
     private String password;
+
+    @Column(nullable = false)
+    private String salt;
 
     @Email
     @Column(nullable = false, unique = true)
@@ -47,5 +50,13 @@ public class LoginDetails implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

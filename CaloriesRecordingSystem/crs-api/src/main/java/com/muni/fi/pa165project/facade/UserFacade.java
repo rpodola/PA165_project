@@ -61,18 +61,17 @@ public interface UserFacade {
     TrackingSettingsUpdateDTO getTrackingSettings(long userId);
 
     /**
-     * Finds user by his credentials
-     *
-     * @param credentials
+     * Finds user by his credentials and check password
+     * @param credentials  
      * @return User if credentials match, null otherwise
      */
-    UserDetailDTO findByCredentials(UserCredentialsDTO credentials);
-
+    UserDetailDTO checkUserCredentials(UserCredentialsDTO credentials);
+    
     /**
      * Checks whether any user with given username or email exists
      *
      * @param dto
-     * @return
+     * @return 
      */
     LoginExistsResponseDTO loginExists(LoginExistsRequestDTO dto);
 }
