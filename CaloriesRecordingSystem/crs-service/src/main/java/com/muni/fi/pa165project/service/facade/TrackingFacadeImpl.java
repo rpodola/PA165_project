@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -147,8 +150,9 @@ public class TrackingFacadeImpl implements TrackingFacade {
         log.debug("Getting filtered Records by: {}", timeFilter.toString());
 
         long userId = timeFilter.getUserId();
-        List<Record> filteredRecords = this.recordService.
-                getFilteredRecords(userId, timeFilter.getFrom(), timeFilter.getTo());
+        LocalDateTime from = LocalDateTime.parse(timeFilter.getFrom(), DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+        LocalDateTime to = LocalDateTime.parse(timeFilter.getTo(), DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+        List<Record> filteredRecords = this.recordService.getFilteredRecords(userId, from, to);
 
         return mapper.mapToList(filteredRecords, RecordDTO.class);
     }

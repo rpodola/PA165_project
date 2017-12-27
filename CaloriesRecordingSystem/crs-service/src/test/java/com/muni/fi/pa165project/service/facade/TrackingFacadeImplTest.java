@@ -162,8 +162,8 @@ public class TrackingFacadeImplTest {
     public void getFilteredRecordsTest() {
         RecordTimeFilterDTO timeFilterDTO = mock(RecordTimeFilterDTO.class);
         when(timeFilterDTO.getUserId()).thenReturn(1L);
-        when(timeFilterDTO.getFrom()).thenReturn(LocalDateTime.now());
-        when(timeFilterDTO.getTo()).thenReturn(LocalDateTime.now());
+        when(timeFilterDTO.getFrom()).thenReturn(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm").format(LocalDateTime.now()));
+        when(timeFilterDTO.getTo()).thenReturn(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm").format(LocalDateTime.now()));
         List<Record> filteredRecords = new ArrayList<>();
         when(recordService.getFilteredRecords(any(Long.class), any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn(filteredRecords);
 

@@ -107,7 +107,7 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserDetailDTO findByCredentials(UserCredentialsDTO credentials) {
+    public UserDetailDTO checkUserCredentials(UserCredentialsDTO credentials) {
         String username = credentials.getUsername();
         String password = credentials.getPassword();
         

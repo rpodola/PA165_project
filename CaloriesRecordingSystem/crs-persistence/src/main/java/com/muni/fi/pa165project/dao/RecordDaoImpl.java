@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,25 +61,29 @@ public class RecordDaoImpl implements RecordDao {
                 .getResultList();
     }
 
-    //Due to weird BETWEEN behaviour with Java8 Times, t has to be like this
+    //Due to weird BETWEEN behaviour with Java8 Times, it has to be like this
     @Override
     public List<Record> findByTime(long userId, LocalDateTime from, LocalDateTime to) {
         List<Record> sorted = this.em.createQuery("SELECT r FROM Record r " +
-                        "WHERE r.user.id=:userId ORDER BY r.atTime ASC", Record.class)
+                        "WHERE r.user.id=:userId", Record.class)
                 .setParameter("userId", userId)
                 .getResultList();
         return sorted.stream()
                 .filter(r -> r.getAtTime().isAfter(from) && r.getAtTime().isBefore(to)
                         || r.getAtTime().isEqual(from) || r.getAtTime().isEqual(to))
+                .sorted(Comparator.comparing(Record::getAtTime))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Record> getAllRecordsOfUserSortedFromNewest(long userId) {
-        return this.em.createQuery("SELECT r FROM Record r WHERE r.user.id=:userId ORDER BY r.atTime DESC",
+        return this.em.createQuery("SELECT r FROM Record r WHERE r.user.id=:userId",
                 Record.class)
                 .setParameter("userId", userId)
-                .getResultList();
+                .getResultList()
+                .stream()
+                .sorted(Comparator.comparing(Record::getAtTime).reversed())
+                .collect(Collectors.toList());
     }
 
 }

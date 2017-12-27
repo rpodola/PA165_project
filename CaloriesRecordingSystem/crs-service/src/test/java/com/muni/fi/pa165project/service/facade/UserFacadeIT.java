@@ -113,8 +113,8 @@ public class UserFacadeIT {
         settings.setWeeklyCaloriesGoal(100);
 
         userFac.setTrackingSettings(settings);
-        TrackingSettingsDTO settingsFound = userFac.getTrackingSettings(userId);
-        Assert.assertEquals(settings, settingsFound);
+        TrackingSettingsUpdateDTO settingsFound = userFac.getTrackingSettings(userId);
+        Assert.assertEquals(settings.getWeeklyCaloriesGoal(), settingsFound.getWeeklyCaloriesGoal());
         Assert.assertNull(userFac.getTrackingSettings(58));
     }
 

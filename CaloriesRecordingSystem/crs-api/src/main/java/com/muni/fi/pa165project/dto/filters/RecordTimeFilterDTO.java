@@ -1,7 +1,5 @@
 package com.muni.fi.pa165project.dto.filters;
 
-import java.time.LocalDateTime;
-
 /**
  * @author Radim Podola
  */
@@ -9,9 +7,9 @@ public class RecordTimeFilterDTO {
 
     private long userId;
 
-    private LocalDateTime from;
+    private String from;
 
-    private LocalDateTime to;
+    private String to;
 
     public long getUserId() {
         return userId;
@@ -21,19 +19,19 @@ public class RecordTimeFilterDTO {
         this.userId = userId;
     }
 
-    public LocalDateTime getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(LocalDateTime from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
-    public LocalDateTime getTo() {
+    public String getTo() {
         return to;
     }
 
-    public void setTo(LocalDateTime to) {
+    public void setTo(String to) {
         this.to = to;
     }
 
