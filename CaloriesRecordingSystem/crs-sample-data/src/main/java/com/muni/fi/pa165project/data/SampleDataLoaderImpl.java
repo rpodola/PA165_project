@@ -101,19 +101,16 @@ public class SampleDataLoaderImpl implements SampleDataLoader {
 
     private void createAdmin(String name, boolean male, String date, int height, int weight, boolean admin,
                              String username, String password, String email){
-        User user = new User();
+        UserRegisterDTO user = new UserRegisterDTO();
         user.setName(name);
         user.setIsMale(male);
-        user.setBirthDate(LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        user.setBirthDate(date);
         user.setHeight(height);
         user.setWeight(weight);
-        user.setIsAdmin(admin);
-        LoginDetails ld = new LoginDetails();
-        ld.setUsername(username);
-        ld.setPassword(password);
-        ld.setEmail(email);
-        user.setLoginDetails(ld);
-        userService.createUser(user);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        userFacade.createAdmin(user);
     }
 
     private void loadActivities() {

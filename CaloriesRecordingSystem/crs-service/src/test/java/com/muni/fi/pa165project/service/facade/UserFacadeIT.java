@@ -44,6 +44,16 @@ public class UserFacadeIT {
     @Test
     @Transactional
     @Rollback()
+    public void testCreateAdmin() {
+        Long userId = userFac.createAdmin(userRegisterDto);
+        UserDetailDTO foundUser = this.userFac.getUser(userId);
+        Assert.assertTrue(userRegisterDto.getUsername().equals(foundUser.getUsername()));
+        Assert.assertTrue(foundUser.getIsAdmin());
+    }
+
+    @Test
+    @Transactional
+    @Rollback()
     public void testEditUser() {
         final String newName = "Martin";
         Long userId = userFac.createUser(userRegisterDto);

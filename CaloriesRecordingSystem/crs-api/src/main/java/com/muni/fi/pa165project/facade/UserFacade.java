@@ -17,6 +17,14 @@ public interface UserFacade {
     Long createUser(UserRegisterDTO userDto);
 
     /**
+     * Create Admin
+     *
+     * @param userDto user object
+     * @return user id or null if user was not created
+     */
+    Long createAdmin(UserRegisterDTO userDto);
+
+    /**
      * Edit User
      *
      * @param userDto user object

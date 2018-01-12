@@ -544,8 +544,6 @@ module.exports.InvalidTokenError = InvalidTokenError;
 
 /***/ }),
 
-<<<<<<< HEAD
-=======
 /***/ "../../../../moment/locale/af.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16869,7 +16867,6 @@ return hooks;
 
 /***/ }),
 
->>>>>>> Apply fixes
 /***/ "../../../../ngx-mydatepicker/dist/directives/ngx-my-date-picker.focus.directive.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -24584,8 +24581,6 @@ module.exports = g;
 
 /***/ }),
 
-<<<<<<< HEAD
-=======
 /***/ "../../../../webpack/buildin/module.js":
 /***/ (function(module, exports) {
 
@@ -24615,7 +24610,6 @@ module.exports = function(module) {
 
 /***/ }),
 
->>>>>>> Apply fixes
 /***/ "../../../common/esm5/common.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

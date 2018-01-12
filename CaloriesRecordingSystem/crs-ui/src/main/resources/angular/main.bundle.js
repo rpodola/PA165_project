@@ -561,25 +561,15 @@ var RecordService = /** @class */ (function () {
     };
     RecordService.prototype.createNewRecord = function (record) {
         return this.http
-<<<<<<< HEAD
-            .post(createRecord, { record: record });
-=======
             .post(createRecord, record);
->>>>>>> Apply fixes
     };
     RecordService.prototype.getRecordForUpdate = function (recordId) {
         return this.http
             .get(getRecordForUpdate + recordId);
     };
-<<<<<<< HEAD
-    RecordService.prototype.updateRecord = function (record) {
-        return this.http
-            .post(updateRecord, { record: record });
-=======
     RecordService.prototype.updateRecord = function (id, record) {
         return this.http
             .put(updateRecord + id, record);
->>>>>>> Apply fixes
     };
     RecordService.prototype.getWeekProgressOfBurnedCalories = function () {
         return this.http
@@ -654,24 +644,6 @@ var SettingsService = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-<<<<<<< HEAD
-/* unused harmony export dateToDDMMYYYY */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return dateToDDMMYYYMMHH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return dateToIMyDate; });
-var dateToDDMMYYYY = function (date) {
-    return [date.getFullYear(),
-        ('0' + (date.getMonth() + 1)).slice(-2),
-        ('0' + (date.getDate())).slice(-2),
-    ].join('-');
-};
-var dateToDDMMYYYMMHH = function (date) {
-    var datePart = [date.getFullYear(),
-        ('0' + (date.getMonth() + 1)).slice(-2),
-        ('0' + (date.getDate())).slice(-2),
-    ].join('-');
-    var timePart = date.getHours() + ':' + date.getMinutes();
-    return datePart + ' ' + timePart;
-=======
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return dateToDDMMYYYMMHH; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return stringDateTimeToDate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return dateToIMyDate; });
@@ -683,7 +655,6 @@ var dateToDDMMYYYMMHH = function (date) {
 };
 var stringDateTimeToDate = function (dateTime) {
     return __WEBPACK_IMPORTED_MODULE_0_moment__(dateTime, 'DD-MM-YYYY HH:mm').toDate();
->>>>>>> Apply fixes
 };
 var dateToIMyDate = function (date) {
     var myDate = {
@@ -2348,11 +2319,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/record-form/record-form.component.html":
 /***/ (function(module, exports) {
 
-<<<<<<< HEAD
-module.exports = "<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3\"></div>\r\n    <div class=\"col-md-6\">\r\n      <h2>\r\n        Create New Record\r\n      </h2>\r\n      <hr>\r\n    </div>\r\n  </div>\r\n</div>\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3 field-label-responsive\">\r\n      <label for=\"activity\">\r\n        Activity\r\n      </label>\r\n    </div>\r\n    <div class=\"col-md-6\">\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group mb-2 mr-sm-2 mb-sm-0\">\r\n          <select\r\n            class=\"form-control\"\r\n            id=\"activity\"\r\n            name=\"activity\"\r\n            [(ngModel)]=\"record.activityId\"\r\n          >\r\n            <option\r\n              *ngFor=\"let activity of activities\"\r\n              [value]=\"activity.id\"\r\n            >\r\n              {{ activity.name }}\r\n            </option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-md-3\">\r\n      <div\r\n        *ngIf=\"record.activityId === undefined\"\r\n        class=\"form-control-feedback\"\r\n      >\r\n          <span class=\"text-danger align-middle\">\r\n              <i class=\"fa fa-close\">\r\n                Can't create record without Activity\r\n              </i>\r\n          </span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3 field-label-responsive\">\r\n      <label>\r\n        Date\r\n      </label>\r\n    </div>\r\n    <div class=\"col-md-6\">\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group mb-2 mr-sm-2 mb-sm-0\">\r\n          <angular2-date-picker\r\n            [(ngModel)]=\"selectedDate\"\r\n            [settings]=\"settings\"\r\n            (onDateSelect)=\"onDateSelect($event)\"\r\n          >\r\n          </angular2-date-picker>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3 field-label-responsive\">\r\n      <label for=\"duration\">\r\n        Duration\r\n      </label>\r\n    </div>\r\n    <div class=\"col-md-auto\">\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group mb-2 mr-sm-2 mb-sm-0\">\r\n          <input\r\n            type=\"number\"\r\n            name=\"duration\"\r\n            class=\"form-control\"\r\n            id=\"duration\"\r\n            [(ngModel)]=\"record.duration\"\r\n            appNumberMinMax\r\n            #validateDuration=\"ngModel\"\r\n            [minValue]=\"1\"\r\n            [wrongNumberMessage]=\"'Duration must be at least 1'\"\r\n          />\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-md-3\">\r\n      <div\r\n        *ngIf=\"validateDuration.errors && (validateDuration.dirty || validateDuration.touched)\"\r\n        class=\"form-control-feedback\"\r\n      >\r\n            <span class=\"text-danger align-middle\">\r\n              <i class=\"fa fa-close\">\r\n                {{ validateDuration.errors.message }}\r\n              </i>\r\n            </span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3 field-label-responsive\">\r\n      <label for=\"distance\">\r\n        Distance\r\n      </label>\r\n    </div>\r\n    <div class=\"col-md-auto\">\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group mb-2 mr-sm-2 mb-sm-0\">\r\n          <input\r\n            type=\"number\"\r\n            name=\"distance\"\r\n            class=\"form-control\"\r\n            id=\"distance\"\r\n            [(ngModel)]=\"record.distance\"\r\n            appNumberMinMax\r\n            #validateDistance=\"ngModel\"\r\n            [minValue]=\"1\"\r\n            [wrongNumberMessage]=\"'Distance must be at least 1'\"\r\n          />\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-md-3\">\r\n      <div\r\n        *ngIf=\"validateDistance.errors && (validateDistance.dirty || validateDistance.touched)\"\r\n        class=\"form-control-feedback\"\r\n      >\r\n            <span class=\"text-danger align-middle\">\r\n              <i class=\"fa fa-close\">\r\n                {{ validateDistance.errors.message }}\r\n              </i>\r\n            </span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3\"></div>\r\n    <div class=\"col-md-3\">\r\n      <button\r\n        type=\"submit\"\r\n        class=\"btn btn-success\"\r\n        (click)=\"createNewRecord()\"\r\n        [disabled]=\"validateDuration.errors || validateDistance.errors\"\r\n      >\r\n        Create\r\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
-=======
 module.exports = "<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3\"></div>\r\n    <div class=\"col-md-6\">\r\n      <h2>\r\n        Create New Record\r\n      </h2>\r\n      <hr>\r\n    </div>\r\n  </div>\r\n</div>\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3 field-label-responsive\">\r\n      <label for=\"activity\">\r\n        Activity\r\n      </label>\r\n    </div>\r\n    <div class=\"col-md-6\">\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group mb-2 mr-sm-2 mb-sm-0\">\r\n          <select\r\n            class=\"form-control\"\r\n            id=\"activity\"\r\n            name=\"activity\"\r\n            [(ngModel)]=\"record.activityId\"\r\n          >\r\n            <option\r\n              *ngFor=\"let activity of activities\"\r\n              [value]=\"activity.id\"\r\n            >\r\n              {{ activity.name }}\r\n            </option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-md-3\">\r\n      <div\r\n        *ngIf=\"record.activityId === undefined\"\r\n        class=\"form-control-feedback\"\r\n      >\r\n          <span class=\"text-danger align-middle\">\r\n              <i class=\"fa fa-close\">\r\n                Can't create record without Activity\r\n              </i>\r\n          </span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3 field-label-responsive\">\r\n      <label>\r\n        Date\r\n      </label>\r\n    </div>\r\n    <div class=\"col-md-6\">\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group mb-2 mr-sm-2 mb-sm-0\">\r\n          <angular2-date-picker\r\n            [(ngModel)]=\"selectedDate\"\r\n            [settings]=\"settings\"\r\n            (onDateSelect)=\"onDateSelect($event)\"\r\n          >\r\n          </angular2-date-picker>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3 field-label-responsive\">\r\n      <label for=\"duration\">\r\n        Duration\r\n      </label>\r\n    </div>\r\n    <div class=\"col-md-auto\">\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group mb-2 mr-sm-2 mb-sm-0\">\r\n          <input\r\n            type=\"number\"\r\n            name=\"duration\"\r\n            class=\"form-control\"\r\n            id=\"duration\"\r\n            [(ngModel)]=\"record.duration\"\r\n            appNumberMinMax\r\n            #validateDuration=\"ngModel\"\r\n            [minValue]=\"1\"\r\n            [wrongNumberMessage]=\"'Duration must be at least 1'\"\r\n          />\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-md-3\">\r\n      <div\r\n        *ngIf=\"validateDuration.errors && (validateDuration.dirty || validateDuration.touched)\"\r\n        class=\"form-control-feedback\"\r\n      >\r\n            <span class=\"text-danger align-middle\">\r\n              <i class=\"fa fa-close\">\r\n                {{ validateDuration.errors.message }}\r\n              </i>\r\n            </span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3 field-label-responsive\">\r\n      <label for=\"distance\">\r\n        Distance\r\n      </label>\r\n    </div>\r\n    <div class=\"col-md-auto\">\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group mb-2 mr-sm-2 mb-sm-0\">\r\n          <input\r\n            type=\"number\"\r\n            name=\"distance\"\r\n            class=\"form-control\"\r\n            id=\"distance\"\r\n            [(ngModel)]=\"record.distance\"\r\n            appNumberMinMax\r\n            #validateDistance=\"ngModel\"\r\n            [minValue]=\"1\"\r\n            [wrongNumberMessage]=\"'Distance must be at least 1'\"\r\n          />\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-md-3\">\r\n      <div\r\n        *ngIf=\"validateDistance.errors && (validateDistance.dirty || validateDistance.touched)\"\r\n        class=\"form-control-feedback\"\r\n      >\r\n            <span class=\"text-danger align-middle\">\r\n              <i class=\"fa fa-close\">\r\n                {{ validateDistance.errors.message }}\r\n              </i>\r\n            </span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-3\"></div>\r\n    <div class=\"col-md-3\">\r\n      <button\r\n        type=\"submit\"\r\n        class=\"btn btn-success\"\r\n        (click)=\"isUpdating ? updateRecord() : createNewRecord()\"\r\n        [disabled]=\"validateDuration.errors || validateDistance.errors\"\r\n      >\r\n        {{ isUpdating ? 'Update' : 'Create' }}\r\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
->>>>>>> Apply fixes
 
 /***/ }),
 
@@ -2419,24 +2386,15 @@ var RecordFormComponent = /** @class */ (function () {
             .createNewRecord(this.record)
             .subscribe(function () { return _this.router.navigateByUrl('/records/'); });
     };
-<<<<<<< HEAD
-=======
     RecordFormComponent.prototype.updateRecord = function () {
         this.recordService
             .updateRecord(this.id, this.record)
             .subscribe();
     };
->>>>>>> Apply fixes
     RecordFormComponent.prototype.getRecord = function () {
         var _this = this;
         var routeId = this.route.snapshot.paramMap.get('id');
         if (routeId) {
-<<<<<<< HEAD
-            var id = +routeId;
-            this.recordService
-                .getRecordForUpdate(id)
-                .subscribe(function (record) { return _this.record = record; });
-=======
             this.id = +routeId;
             this.recordService
                 .getRecordForUpdate(this.id)
@@ -2448,7 +2406,6 @@ var RecordFormComponent = /** @class */ (function () {
         }
         else {
             this.isUpdating = false;
->>>>>>> Apply fixes
         }
     };
     RecordFormComponent.prototype.ngOnInit = function () {
@@ -3014,8 +2971,6 @@ Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-<<<<<<< HEAD
-=======
 /***/ "../../../../moment/locale recursive ^\\.\\/.*$":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3277,7 +3232,6 @@ webpackContext.id = "../../../../moment/locale recursive ^\\.\\/.*$";
 
 /***/ }),
 
->>>>>>> Apply fixes
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 

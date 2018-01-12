@@ -48,6 +48,21 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
+    public Long createAdmin(UserRegisterDTO userDto) {
+        log.debug("Creating Admin with username <{}>", userDto.getUsername());
+
+        User user = mapper.map(userDto, User.class);
+        user.setIsAdmin(true);
+        //hashing password with generated salt
+        String salt = getSalt();
+        user.getLoginDetails().setSalt(salt);
+        user.getLoginDetails().setPassword(getHashedPass(userDto.getPassword(), salt));
+        this.userService.createUser(user);
+
+        return user.getId();
+    }
+
+    @Override
     public UserDetailDTO editUser(UserUpdateDTO userDto) {
         log.debug("Editing User with id <{}>", userDto.getId());
 
