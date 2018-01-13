@@ -19,12 +19,16 @@ export class ActivityListComponent implements OnInit {
 
   showCategories: boolean;
   isUserAdmin: boolean;
+  isUserLoggedIn: boolean;
+
+  isSorted: boolean;
 
   constructor(
     private activityService: ActivityService,
     private authService: AuthenticationService,
   ) {
     this.isUserAdmin = authService.isUserAdmin();
+    this.isUserLoggedIn = authService.isUserLoggedIn();
   }
 
   filterChanged() {
@@ -46,6 +50,16 @@ export class ActivityListComponent implements OnInit {
       .getAllActivities()
       .subscribe(activities => {
         this.activitiesCache = activities;
+        this.filterChanged();
+      });
+  }
+
+  loadSortedActivities() {
+    this.activityService
+      .getSortedActivities()
+      .subscribe(activities => {
+        this.activitiesCache = activities;
+        this.isSorted = true;
         this.filterChanged();
       });
   }

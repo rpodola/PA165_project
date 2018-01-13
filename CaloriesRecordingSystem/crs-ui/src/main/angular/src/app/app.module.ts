@@ -67,7 +67,7 @@ import { TrackingSettingsComponent } from './tracking-settings/tracking-settings
     ActivityDetailFormComponent,
     ActivityDetailStaticComponent,
     RecordFormComponent,
-    TrackingSettingsComponent
+    TrackingSettingsComponent,
   ],
   imports: [
     BrowserModule,

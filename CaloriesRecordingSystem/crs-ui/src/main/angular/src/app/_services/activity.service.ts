@@ -9,6 +9,7 @@ import {Activity} from '../_classes/Activity';
 const prefix = '/activities/';
 const allActivities = prefix;
 const activitiesFromCategories = allActivities;
+const sortedActvities = prefix + 'sortedByBC';
 const activityDetail = prefix;
 const createActivity = prefix + 'create';
 const updateActivity = prefix;
@@ -31,6 +32,11 @@ export class ActivityService {
         activitiesFromCategories,
         categoryIds,
       );
+  }
+
+  getSortedActivities(): Observable<IActivity[]> {
+    return this.http
+      .get<IActivity[]>(sortedActvities);
   }
 
   getActivityDetail(id: number): Observable<IActivityDetail> {

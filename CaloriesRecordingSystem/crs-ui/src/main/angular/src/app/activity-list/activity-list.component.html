@@ -37,6 +37,13 @@
     >
       add new
     </a>
+    <button
+      *ngIf="!isSorted && isUserLoggedIn"
+      class="ml-2 btn btn-outline-primary"
+      (click)="loadSortedActivities()"
+    >
+      Show sorted by burned calories
+    </button>
     <app-activities
       [activities]="activities"
       [useButtonForActivityLink]="true"
