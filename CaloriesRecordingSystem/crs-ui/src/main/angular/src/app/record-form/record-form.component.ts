@@ -63,7 +63,7 @@ export class RecordFormComponent implements OnInit {
   updateRecord() {
     this.recordService
       .updateRecord(this.id, this.record)
-      .subscribe();
+      .subscribe(_ => this.router.navigateByUrl('records'));
   }
 
   getRecord() {

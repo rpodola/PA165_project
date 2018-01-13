@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivityService} from '../_services/activity.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Location } from '@angular/common';
 import {ActivityDetail} from '../_classes/ActivityDetail';
 import {BurnedCalories} from '../_classes/BurnedCalories';
@@ -23,6 +23,7 @@ export class ActivityDetailFormComponent implements OnInit {
     private categoryService: CategoryService,
     private location: Location,
     private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +66,7 @@ export class ActivityDetailFormComponent implements OnInit {
       .subscribe(activity => {
         const { category, ...other } = activity;
         this.activity = Object.assign({}, { ...other, category: category.id });
+        this.router.navigateByUrl('activities');
       });
   }
 
