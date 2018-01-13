@@ -65,6 +65,7 @@ public class ActivityServiceImpl implements ActivityService {
 
             return Double.compare(burnedCalories1, burnedCalories2);
         });
+        Collections.reverse(activities);
 
         return activities;
     }
