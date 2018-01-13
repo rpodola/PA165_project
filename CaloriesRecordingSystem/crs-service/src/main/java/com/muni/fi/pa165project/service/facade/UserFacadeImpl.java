@@ -67,8 +67,11 @@ public class UserFacadeImpl implements UserFacade {
         log.debug("Editing User with id <{}>", userDto.getId());
 
         User user = this.userService.findById(userDto.getId());
-        
+        ///lets get new salt
+        String salt = getSalt();
         mapper.map(userDto, user);
+        user.getLoginDetails().setSalt(salt);
+        user.getLoginDetails().setPassword(getHashedPass(userDto.getPassword(), salt));
         User updatedUser = this.userService.updateUser(user);
         
         return mapper.map(updatedUser, UserDetailDTO.class);

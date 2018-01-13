@@ -24,7 +24,7 @@ public class FacadeTestHelper {
         user.setHeight(180);
         user.setWeight(77);
         user.setUsername("ciso112");
-        user.setPassword("abcdefgh");
+        user.setPassword("12345");
         user.setEmail("ciso112@protonmail.com");
         return user;
     }

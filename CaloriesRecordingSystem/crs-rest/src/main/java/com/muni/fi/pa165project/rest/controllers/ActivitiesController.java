@@ -206,4 +206,17 @@ public class ActivitiesController {
             throw new ResourceNotFoundException();
         }
     }
+
+    /**
+     * Get list of Activities sorted by Burned Calories related to User's weight
+     *
+     * @return List of ActivityDTO
+     */
+    @ApplyAuthorizeFilter(securityLevel = SecurityLevel.MEMBER)
+    @RequestMapping(value = "/sortedByBC", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final List<ActivityDTO> getActivitiesSortedByBurnedCalories(@RequestAttribute("userId") long userId) {
+        logger.debug("rest getActivitiesSortedByBurnedCalories() for user {}", userId);
+
+        return acFacade.getActivitiesSortedByBurnedCalories(userId);
+    }
 }

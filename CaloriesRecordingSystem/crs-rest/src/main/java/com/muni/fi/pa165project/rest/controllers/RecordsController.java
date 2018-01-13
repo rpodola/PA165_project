@@ -69,7 +69,6 @@ public class RecordsController {
         return trackingFacade.getAllRecords(userId);
     }
 
-
     /**
      * Delete Record by identifier.
      * Identifier is taken from the URL path.

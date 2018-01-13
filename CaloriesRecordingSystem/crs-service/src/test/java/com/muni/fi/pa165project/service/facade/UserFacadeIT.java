@@ -54,6 +54,33 @@ public class UserFacadeIT {
     @Test
     @Transactional
     @Rollback()
+    public void testEditPassword() {
+        Long userId = userFac.createUser(userRegisterDto);
+
+        UserUpdateDTO updateUserDto = new UserUpdateDTO();
+        updateUserDto.setId(userId);
+        updateUserDto.setName(userRegisterDto.getName());
+        updateUserDto.setEmail(userRegisterDto.getEmail());
+        updateUserDto.setHeight(50);
+        updateUserDto.setWeight(50);
+        //lets change password
+        updateUserDto.setPassword("blablabla");
+        this.userFac.editUser(updateUserDto);
+
+        UserCredentialsDTO cr = new UserCredentialsDTO();
+        cr.setUsername(userRegisterDto.getUsername());
+        cr.setPassword("blablabla");
+        UserDetailDTO foundUser = this.userFac.checkUserCredentials(cr);
+        Assert.assertTrue(userRegisterDto.getUsername().equals(foundUser.getUsername()));
+
+        //lets try old password
+        cr.setPassword(userRegisterDto.getPassword());
+        Assert.assertNull(this.userFac.checkUserCredentials(cr));
+    }
+
+    @Test
+    @Transactional
+    @Rollback()
     public void testEditUser() {
         final String newName = "Martin";
         Long userId = userFac.createUser(userRegisterDto);
@@ -65,7 +92,7 @@ public class UserFacadeIT {
         updateUserDto.setEmail(userRegisterDto.getEmail());
         updateUserDto.setHeight(50);
         updateUserDto.setWeight(50);
-        updateUserDto.setPassword(updateUserDto.getPassword());
+        updateUserDto.setPassword(userRegisterDto.getPassword());
         userFac.editUser(updateUserDto);
         //lets get user with changed name
         UserDetailDTO foundUser = this.userFac.getUser(userId);
